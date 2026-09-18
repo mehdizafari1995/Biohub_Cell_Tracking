@@ -16,16 +16,16 @@ detection:
 
 linking:
   method: association_v2
-  max_distance_um: 15.0
+  max_distance_um: 12.0
   allow_divisions: false
   division_gap_um: 8.0
-  motion_model: constant_velocity
-  gate_um: 15.0
-  max_gap_frames: 1
-  assignment: gated_hungarian
-  intensity_weight: 0.35
-  track_start_penalty_um: 10.0
-  track_end_penalty_um: 10.0
-  boundary_margin_um: 6.0
+  motion_model: none
+  gate_um: 12.0
+  max_gap_frames: 2
+  assignment: greedy
+  intensity_weight: 0.5
+  track_start_penalty_um: 0.0
+  track_end_penalty_um: 0.0
+  boundary_margin_um: 0.0
   interpolate_gaps: true
   max_children: 1

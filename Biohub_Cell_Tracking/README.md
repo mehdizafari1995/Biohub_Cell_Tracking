@@ -42,7 +42,7 @@ python scripts\run_eval.py --config configs\baseline.yaml --role all_local --nam
 python scripts\run_eval.py --config configs\hungarian.yaml --role all_local --name hungarian_official
 ```
 
-Keep `configs\baseline.yaml` as the frozen baseline. Measured variants use `configs\hungarian.yaml` and `configs\physical_nms.yaml`.
+Keep `configs\baseline.yaml` as the frozen baseline. Measured variants use `configs\hungarian.yaml` and `configs\physical_nms.yaml`. `configs\baseline_v1.yaml` is the Kaggle kernel config.
 
 Official scores need `requirements-official.txt`. Without that extra, `run_eval.py` still records the labelled diagnostic.
 
@@ -50,7 +50,9 @@ Official scores need `requirements-official.txt`. Without that extra, `run_eval.
 
 See `docs/kaggle_submit.md`. Internet off. Discover `test/*.zarr` at runtime. A local `scripts\simulate_kaggle.py` run is **not** a Kaggle submission.
 
-The public getting-started kernel reports a public score of 0.143 for this class of method. That score was read from the kernel page; this repo has not submitted to the leaderboard.
+Private kernel `mahdimzafari/biohub-baseline-v1` version 2 completed on public test (595 s, audit_ok). It has **not** been submitted to the competition. No leaderboard score from this repo.
+
+Keep `configs\baseline.yaml` as the frozen original greedy baseline. `configs\baseline_v1.yaml` is anisotropic DoG + 4 µm NMS. Association/division experiments use `configs\association_v2.yaml` and `configs\division_v1.yaml` without overwriting baseline_v1.
 
 Organizer UNet + transformer code lives at
 https://github.com/royerlab/kaggle-cell-tracking-competition

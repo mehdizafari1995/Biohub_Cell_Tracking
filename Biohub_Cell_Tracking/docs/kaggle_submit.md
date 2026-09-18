@@ -55,16 +55,13 @@ python scripts\simulate_kaggle.py
 
 That script blocks `socket.socket` in-process and runs the notebook against local `data/test`. It is labelled `local_simulation`. It is **not** a Kaggle execution: the Kaggle image, hidden test, and 12-hour worker are different.
 
-## Runtime budget
+## Runtime from the actual Kaggle worker
 
-Measured on a **local simulation** of `notebooks/kaggle_inference.py` against one complete train volume used as a fake `test/` dataset (`6bba_05db0fb1`, T=100): **0.583 s/frame**.
+Version 2 of `mahdimzafari/biohub-baseline-v1` processed four public test volumes (T=100 each) in **595.24 s** (1.49 s/frame), peak RAM 435 MB. That is a Kaggle worker measurement.
 
-If the hidden test has 200 sequences of 100 frames (unverified; Data page only says it is about the same size as train, and the file listing 429’d):
+If hidden test is about the same size as train (~16 sequences): 16 × 149 s ≈ **40 minutes**.
 
-```
-hours ≈ 0.583 × 100 × 200 / 3600 = 3.24
-with 2× safety = 6.48  (limit 12)
-```
+If hidden test were 200 × 100 frames (unverified): 20000 × 1.49 s ≈ **8.3 h**, and a 2× safety factor exceeds the 12 h limit. Prefer the train-size hypothesis until the inventory is complete.
 
-The official-eval path on the same volume was 0.79 s/frame including scoring. Using that slower number: 8.8 h with 2× margin. This is a **local simulation**, not a Kaggle worker measurement.
+Earlier local simulation of `notebooks/kaggle_inference.py` on one train volume: 0.583 s/frame. That simulation is not a Kaggle execution.
 

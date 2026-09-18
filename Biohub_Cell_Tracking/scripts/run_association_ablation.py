@@ -101,16 +101,16 @@ def variants() -> list[dict]:
 def combined_v2(selected: dict) -> dict:
     linking = {
         "method": "association_v2",
-        "motion_model": "constant_velocity",
-        "max_distance_um": 15.0,
-        "gate_um": 15.0,
-        "max_gap_frames": 1,
+        "motion_model": "none",
+        "max_distance_um": 12.0,
+        "gate_um": 12.0,
+        "max_gap_frames": 2,
         "interpolate_gaps": True,
-        "assignment": "gated_hungarian",
-        "intensity_weight": 0.35,
-        "track_start_penalty_um": 10.0,
-        "track_end_penalty_um": 10.0,
-        "boundary_margin_um": 6.0,
+        "assignment": "greedy",
+        "intensity_weight": 0.5,
+        "track_start_penalty_um": 0.0,
+        "track_end_penalty_um": 0.0,
+        "boundary_margin_um": 0.0,
     }
     linking.update(selected)
     return {"name": "association_v2", "detection": "baseline_v1", "linking": linking}
