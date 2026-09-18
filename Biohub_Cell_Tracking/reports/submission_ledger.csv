@@ -1,0 +1,2 @@
+submission_label,timestamp_utc,git_commit,config_hash,validation_sequence,official_local_score,kaggle_kernel_slug,kaggle_kernel_version,actual_kaggle_runtime_sec,public_lb_score,private_lb_score,notes
+baseline_v1_kernel,2026-09-18T12:03:00Z,pending,pending,6bba_05db0fb1,0.49806172397325704,mahdimzafari/biohub-baseline-v1,1,pending,not_returned,not_returned,"Private internet-off kernel pushed. Not submitted to the competition. Public LB is not used for tuning."

@@ -1,0 +1,34 @@
+scale_zyx: [1.625, 0.40625, 0.40625]
+seed: 0
+max_timepoints: null
+timepoint_start: 0
+label: division_v1
+
+detection:
+  method: blob_dog
+  min_sigma: 2.0
+  max_sigma: 5.0
+  threshold: 0.05
+  normalize: minmax
+  min_distance_um: 4.0
+  suppress_duplicates: true
+  anisotropic: true
+
+linking:
+  method: association_v2
+  max_distance_um: 15.0
+  allow_divisions: true
+  division_gap_um: 8.0
+  motion_model: constant_velocity
+  gate_um: 15.0
+  max_gap_frames: 1
+  assignment: gated_hungarian
+  intensity_weight: 0.35
+  track_start_penalty_um: 10.0
+  track_end_penalty_um: 10.0
+  boundary_margin_um: 6.0
+  interpolate_gaps: true
+  min_child_separation_um: 6.0
+  max_parent_child_um: 9.0
+  intensity_sum_tolerance: 0.6
+  max_children: 2

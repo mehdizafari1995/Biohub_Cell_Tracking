@@ -1,0 +1,272 @@
+{
+  "note": "Priors use GEFF node/edge coordinates only. Validation image outcomes were not inspected while estimating these numbers. Thresholds should be locked on tuning GEFFs/volumes, then scored once on frozen validation.",
+  "datasets": {
+    "44b6_12dfb391": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_12dfb391",
+          "parent_id": 172000000050,
+          "parent_t": 66,
+          "parent_coord_zyx": [
+            46.0,
+            63.0,
+            160.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.875,
+            4.755034338729848
+          ],
+          "sibling_um": [
+            9.484001743067111
+          ]
+        }
+      ]
+    },
+    "44b6_267148e4": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_267148e4",
+          "parent_id": 16000000001,
+          "parent_t": 3,
+          "parent_coord_zyx": [
+            34.0,
+            84.0,
+            26.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            5.525597394173774,
+            7.094851236107774
+          ],
+          "sibling_um": [
+            11.504839335036365
+          ]
+        }
+      ]
+    },
+    "44b6_2a2eff9f": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_2a2eff9f",
+          "parent_id": 160000000048,
+          "parent_t": 11,
+          "parent_coord_zyx": [
+            63.0,
+            151.0,
+            61.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            0.5745242597140698,
+            8.384905522723557
+          ],
+          "sibling_um": [
+            8.75089281159357
+          ]
+        }
+      ]
+    },
+    "6bba_05db0fb1": {
+      "n_events": 3,
+      "events": [
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 25000381,
+          "parent_t": 24,
+          "parent_coord_zyx": [
+            38.0,
+            84.0,
+            116.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            6.953879874753374,
+            5.745242597140699
+          ],
+          "sibling_um": [
+            12.48847124601326
+          ]
+        },
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 53001011,
+          "parent_t": 52,
+          "parent_coord_zyx": [
+            49.0,
+            199.0,
+            233.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            2.6012692214570947,
+            6.358818311015027
+          ],
+          "sibling_um": [
+            8.52157189138248
+          ]
+        },
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 63001217,
+          "parent_t": 62,
+          "parent_coord_zyx": [
+            36.0,
+            45.0,
+            40.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            7.368707591056928,
+            2.03125
+          ],
+          "sibling_um": [
+            9.352577351992338
+          ]
+        }
+      ]
+    },
+    "6bba_c328f2fd": {
+      "n_events": 2,
+      "events": [
+        {
+          "dataset": "6bba_c328f2fd",
+          "parent_id": 67000304,
+          "parent_t": 66,
+          "parent_coord_zyx": [
+            15.0,
+            85.0,
+            29.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            13.381606137250492,
+            4.182599744775969
+          ],
+          "sibling_um": [
+            17.125256613040868
+          ]
+        },
+        {
+          "dataset": "6bba_c328f2fd",
+          "parent_id": 29000074,
+          "parent_t": 28,
+          "parent_coord_zyx": [
+            31.0,
+            92.0,
+            56.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            11.206905307108649,
+            12.32217259658377
+          ],
+          "sibling_um": [
+            14.921048733668153
+          ]
+        }
+      ]
+    }
+  },
+  "all_five": {
+    "label": "all_five_division_geffs",
+    "n_events": 8,
+    "parent_child_um": {
+      "n": 16,
+      "min": 0.5745242597140698,
+      "p25": 4.611925690241378,
+      "median": 6.0520304540778636,
+      "p75": 7.6227570739735855,
+      "p90": 11.764538951846209,
+      "max": 13.381606137250492
+    },
+    "sibling_um": {
+      "n": 8,
+      "min": 8.52157189138248,
+      "p25": 9.202156216892647,
+      "median": 10.494420539051738,
+      "p75": 13.096615617926982,
+      "p90": 15.582311097479966,
+      "max": 17.125256613040868
+    },
+    "dt_frames": {
+      "n": 16,
+      "min": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p90": 1.0,
+      "max": 1.0
+    },
+    "suggested_max_parent_child_um": 11.764538951846209,
+    "suggested_min_child_separation_um": 8.682096535530244
+  },
+  "tuning_three": {
+    "label": "tuning_44b6_division_geffs",
+    "n_events": 3,
+    "parent_child_um": {
+      "n": 6,
+      "min": 0.5745242597140698,
+      "p25": 4.7850257540473855,
+      "median": 5.200298697086887,
+      "p75": 6.702537775624274,
+      "p90": 7.739878379415665,
+      "max": 8.384905522723557
+    },
+    "sibling_um": {
+      "n": 3,
+      "min": 8.75089281159357,
+      "p25": 9.11744727733034,
+      "median": 9.484001743067111,
+      "p75": 10.494420539051738,
+      "p90": 11.100671816642514,
+      "max": 11.504839335036365
+    },
+    "dt_frames": {
+      "n": 6,
+      "min": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p90": 1.0,
+      "max": 1.0
+    },
+    "suggested_max_parent_child_um": 7.739878379415665,
+    "suggested_min_child_separation_um": 8.897514597888279
+  }
+}
