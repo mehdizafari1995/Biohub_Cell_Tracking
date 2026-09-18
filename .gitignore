@@ -1,0 +1,8 @@
+agent-tools/
+.venv/
+**/.venv/
+.env
+.env.*
+kaggle.json
+*.log
+.DS_Store

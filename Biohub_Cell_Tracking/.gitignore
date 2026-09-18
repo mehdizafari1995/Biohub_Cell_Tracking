@@ -16,6 +16,7 @@ data/
 artifacts/runs/
 artifacts/tmp/
 artifacts/kaggle/
+artifacts/cache/
 submission.csv
 *.log
 kaggle_kernel/**/wheels/*.whl
