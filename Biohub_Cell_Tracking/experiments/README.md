@@ -6,4 +6,4 @@ Required fields: configuration, seed, code version, validation score, runtime, a
 
 Keep `configs/baseline.yaml` unchanged so later experiments stay comparable.
 
-Local scores use the in-repo reimplementation of the published edge metric plus a simpler division proxy. They are not a Kaggle leaderboard submission.
+Reported competition-style scores use `biohub_tracking.official_eval` (organizer `tracking_cellmot.metrics`). `biohub_tracking.evaluate` is a labelled diagnostic. They are not a Kaggle leaderboard submission.

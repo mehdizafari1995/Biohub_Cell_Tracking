@@ -1,0 +1,6 @@
+# Official scorer extra. Baseline CPU tracking does not need these.
+# Install into the same isolated venv:
+#   python -m pip install -r requirements-official.txt
+polars==1.44.2
+geff==1.3.1.1.3
+tracksdata @ git+https://github.com/royerlab/tracksdata.git@7523bb39ed9ab1bf88512911fd6c69e46fcad188

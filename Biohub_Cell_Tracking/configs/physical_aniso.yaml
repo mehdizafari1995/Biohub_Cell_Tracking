@@ -1,0 +1,20 @@
+scale_zyx: [1.625, 0.40625, 0.40625]
+seed: 0
+max_timepoints: null
+timepoint_start: 0
+
+detection:
+  method: blob_dog
+  min_sigma: 2.0
+  max_sigma: 5.0
+  threshold: 0.05
+  normalize: minmax
+  min_distance_um: 4.0
+  suppress_duplicates: true
+  anisotropic: true
+
+linking:
+  method: greedy
+  max_distance_um: 15.0
+  allow_divisions: false
+  division_gap_um: 8.0

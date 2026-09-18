@@ -49,7 +49,11 @@ def download_zarr(split: str, name: str, dest_root: Path, timepoints: list[int])
         print(("OK" if ok else "skip"), file_name)
     for t in timepoints:
         file_name = f"{prefix}/0/c/{t}/0/0/0"
-        ok = download_file(file_name, dest_root / file_name)
+        dest = dest_root / file_name
+        if dest.exists() and dest.stat().st_size > 0:
+            print("have", file_name, flush=True)
+            continue
+        ok = download_file(file_name, dest)
         print(("OK" if ok else "skip"), file_name, flush=True)
 
 

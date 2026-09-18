@@ -12,7 +12,8 @@ zarr volume (T,Z,Y,X)
         ▼
  TrackGraph (nodes + directed edges)
         │
-        ├── local evaluator (if GEFF exists)
+        ├── official evaluator (tracking_cellmot.metrics) if installed
+        ├── diagnostic evaluator (biohub_tracking.evaluate)
         └── submission.csv
 ```
 
@@ -29,4 +30,4 @@ Default baseline (`configs/baseline.yaml`):
 
 Validation splits are by embryo ID (`44b6` vs `6bba`). Neighboring frames from one specimen are never randomly split.
 
-Local scores use `biohub_tracking.evaluate`, labelled as a local reimplementation of the published edge metric plus a division proxy.
+Local diagnostic scores use `biohub_tracking.evaluate`. Reported competition scores use the vendored official `tracking_cellmot.metrics` implementation. See `docs/coordinate_audit.md` and `third_party/THIRD_PARTY.md`.

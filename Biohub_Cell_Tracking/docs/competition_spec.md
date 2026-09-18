@@ -50,7 +50,7 @@ Sources:
 - https://github.com/royerlab/kaggle-cell-tracking-competition/blob/main/metrics.md
 - https://github.com/royerlab/kaggle-cell-tracking-competition/blob/main/src/tracking_cellmot/metrics.py
 
-This repo’s `biohub_tracking.evaluate` reimplements the published **edge** rules locally. Division scoring in this repo is a **parent–daughter diagnostic proxy**, not the official 5-generation window. Do not treat local `score` as a Kaggle leaderboard value.
+This repo reports competition-style scores with the organizer implementation vendored at `third_party/kaggle-cell-tracking-competition` (`075fc5f5`), via `biohub_tracking.official_eval`. `biohub_tracking.evaluate` remains a **labelled diagnostic** (published edge rules + parent–daughter division proxy). Combined score uses **adjusted** edge Jaccard, not the raw Edge Jaccard column. See `docs/coordinate_audit.md`.
 
 ## Input files
 

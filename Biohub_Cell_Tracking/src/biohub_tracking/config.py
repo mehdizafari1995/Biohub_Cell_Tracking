@@ -19,6 +19,8 @@ class DetectionConfig:
     threshold: float = 0.05
     normalize: str = "minmax"
     min_distance_um: float = 4.0
+    suppress_duplicates: bool = False
+    anisotropic: bool = False
 
 
 @dataclass(frozen=True)
@@ -51,6 +53,8 @@ class PipelineConfig:
                 "threshold": self.detection.threshold,
                 "normalize": self.detection.normalize,
                 "min_distance_um": self.detection.min_distance_um,
+                "suppress_duplicates": self.detection.suppress_duplicates,
+                "anisotropic": self.detection.anisotropic,
             },
             "linking": {
                 "method": self.linking.method,
@@ -88,6 +92,8 @@ def load_config(path: str | Path | None = None, overrides: dict[str, Any] | None
             threshold=float(det.get("threshold", 0.05)),
             normalize=str(det.get("normalize", "minmax")),
             min_distance_um=float(det.get("min_distance_um", 4.0)),
+            suppress_duplicates=bool(det.get("suppress_duplicates", False)),
+            anisotropic=bool(det.get("anisotropic", False)),
         ),
         linking=LinkingConfig(
             method=str(link.get("method", "greedy")),

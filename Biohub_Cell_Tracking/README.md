@@ -9,9 +9,10 @@ It is not shared with other Kaggle repos. Work stays in this folder.
 
 - Verified competition notes: `docs/competition_spec.md`
 - CPU baseline: 3D blob detection + nearest-neighbor linking
-- Local evaluator for the published **edge** metric, plus a labelled division proxy
-- Submission CSV export and a Kaggle notebook with the same pipeline
-- Embryo-level holdout splits (no random frame splits)
+- Official scorer vendored from `royerlab/kaggle-cell-tracking-competition` @ `075fc5f5` (optional extra)
+- Local diagnostic evaluator kept and labelled as such
+- Submission CSV export and Kaggle notebooks with dynamic `test/*.zarr` discovery
+- Frozen embryo-level holdout splits (no random frame splits)
 
 Detection is required. Official data does not include detections or masks.
 
@@ -25,6 +26,7 @@ py -3.12 -m venv .venv
 .venv\Scripts\activate
 python -m pip install -U pip
 python -m pip install -r requirements.txt
+python -m pip install -r requirements-official.txt
 python -m pip install -e .
 python -m pytest
 ```
@@ -36,17 +38,17 @@ python scripts\inspect_environment.py
 python scripts\list_kaggle_files.py
 python scripts\download_sample.py --dataset 44b6_0db75fae --timepoints 0-9,50,99
 python scripts\inspect_sample.py
-python scripts\run_baseline.py --config configs\baseline.yaml
+python scripts\run_eval.py --config configs\baseline.yaml --role all_local --name baseline_official
+python scripts\run_eval.py --config configs\hungarian.yaml --role all_local --name hungarian_official
 ```
 
-Keep `configs\baseline.yaml` as the frozen baseline. Measured variants use `configs\hungarian.yaml`.
+Keep `configs\baseline.yaml` as the frozen baseline. Measured variants use `configs\hungarian.yaml` and `configs\physical_nms.yaml`.
+
+Official scores need `requirements-official.txt`. Without that extra, `run_eval.py` still records the labelled diagnostic.
 
 ## Kaggle
 
-1. New notebook on this competition.
-2. Internet off.
-3. Paste `notebooks/kaggle_nn_baseline.py` or upload it.
-4. Save Version, then Submit. Output file must be `submission.csv`.
+See `docs/kaggle_submit.md`. Internet off. Discover `test/*.zarr` at runtime. A local `scripts\simulate_kaggle.py` run is **not** a Kaggle submission.
 
 The public getting-started kernel reports a public score of 0.143 for this class of method. That score was read from the kernel page; this repo has not submitted to the leaderboard.
 

@@ -18,3 +18,4 @@ artifacts/tmp/
 *.log
 .DS_Store
 Thumbs.db
+third_party/kaggle-cell-tracking-competition/.git/

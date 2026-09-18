@@ -45,6 +45,9 @@ def main() -> None:
             "pyyaml",
             "pillow",
             "pytest",
+            "polars",
+            "geff",
+            "tracksdata",
         ]:
             try:
                 packages[name] = md.version(name)
