@@ -1,0 +1,25 @@
+{
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "executable": "/workspace/Biohub_Cell_Tracking/.venv/bin/python",
+  "platform": "Linux-6.12.94+-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "cpu_count": 4,
+  "ram_total_gb": 16.4,
+  "ram_available_gb": 6.71,
+  "disk_total_gb": 270.44,
+  "disk_free_gb": 244.85,
+  "gpu": "none detected",
+  "kaggle_token_present": true,
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-image": "0.26.0",
+    "pandas": "3.0.6",
+    "matplotlib": "3.11.2",
+    "zarr": "3.4.0",
+    "numcodecs": "0.17.0",
+    "pyyaml": "6.0.3",
+    "pillow": "12.3.0",
+    "pytest": "9.1.1"
+  }
+}

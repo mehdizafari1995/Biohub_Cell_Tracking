@@ -1,0 +1,65 @@
+{
+  "dataset": "44b6_0db75fae",
+  "zarr": "/workspace/Biohub_Cell_Tracking/data/train/44b6_0db75fae.zarr",
+  "shape_TZYX": [
+    100,
+    64,
+    256,
+    256
+  ],
+  "dtype": "uint16",
+  "scale_TZYX": [
+    1.0,
+    1.625,
+    0.40625,
+    0.40625
+  ],
+  "time_unit": "second",
+  "space_unit": "micrometer",
+  "available_timepoints": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    50,
+    99
+  ],
+  "loaded_timepoint": 0,
+  "frame_min": 7,
+  "frame_max": 2497,
+  "frame_mean": 330.6166570186615,
+  "quantiles": {
+    "0.0": 0.0,
+    "0.001": 0.0,
+    "0.01": 0.0,
+    "0.1": 44.000000000000526,
+    "0.9": 1149.275,
+    "0.99": 1769.0,
+    "0.999": 2173.6666666667866,
+    "1.0": 2982.0
+  },
+  "gt_nodes": 157,
+  "gt_edges": 151,
+  "gt_t_min": 0,
+  "gt_t_max": 88,
+  "gt_z_range": [
+    0,
+    59
+  ],
+  "gt_y_range": [
+    72,
+    146
+  ],
+  "gt_x_range": [
+    2,
+    254
+  ],
+  "estimated_number_of_nodes": 15335.0,
+  "gt_divisions": 0
+}

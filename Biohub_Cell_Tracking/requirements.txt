@@ -1,0 +1,12 @@
+# Install into an isolated venv. Record exact versions with:
+#   python -m pip freeze > requirements.lock
+numpy>=1.26
+scipy>=1.11
+scikit-image>=0.22
+pandas>=2.1
+matplotlib>=3.8
+zarr>=3.0.10
+numcodecs>=0.13
+pyyaml>=6.0
+pillow>=10.0
+pytest>=8.0
