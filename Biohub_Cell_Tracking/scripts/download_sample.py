@@ -63,7 +63,7 @@ def main() -> None:
     parser.add_argument("--dataset", default="44b6_0db75fae")
     parser.add_argument("--split", default="train")
     parser.add_argument("--timepoints", default="0-9,50,99")
-    parser.add_argument("--with-sample-submission", action="store_true", default=True)
+    parser.add_argument("--with-sample-submission", action=argparse.BooleanOptionalAction, default=True)
     args = parser.parse_args()
     times: list[int] = []
     for part in args.timepoints.split(","):

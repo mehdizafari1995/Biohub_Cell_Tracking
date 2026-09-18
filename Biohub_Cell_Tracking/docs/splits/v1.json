@@ -1,0 +1,77 @@
+{
+  "version": "v1",
+  "created_utc": "2026-09-18T05:18:42Z",
+  "rule": "Hold out entire embryos. Crops from the same specimen stay together. Never split neighboring frames.",
+  "specimen_key": "folder prefix before first underscore (e.g. 44b6, 6bba)",
+  "tuning_embryos": [
+    "44b6"
+  ],
+  "validation_embryos": [
+    "6bba"
+  ],
+  "tuning": [
+    "44b6_12dfb391",
+    "44b6_267148e4"
+  ],
+  "validation": [
+    "6bba_05db0fb1",
+    "6bba_c328f2fd"
+  ],
+  "selected": [
+    "44b6_12dfb391",
+    "44b6_267148e4",
+    "6bba_05db0fb1",
+    "6bba_c328f2fd"
+  ],
+  "geff_summaries": {
+    "44b6_12dfb391": {
+      "dataset": "44b6_12dfb391",
+      "embryo": "44b6",
+      "n_nodes": 788,
+      "n_edges": 773,
+      "n_divisions": 1,
+      "t_min": 0,
+      "t_max": 99,
+      "n_timepoints_annotated": 100,
+      "estimated_n_nodes": 58672.0,
+      "coords_integer": true
+    },
+    "44b6_267148e4": {
+      "dataset": "44b6_267148e4",
+      "embryo": "44b6",
+      "n_nodes": 280,
+      "n_edges": 277,
+      "n_divisions": 1,
+      "t_min": 0,
+      "t_max": 99,
+      "n_timepoints_annotated": 100,
+      "estimated_n_nodes": 19130.0,
+      "coords_integer": true
+    },
+    "6bba_05db0fb1": {
+      "dataset": "6bba_05db0fb1",
+      "embryo": "6bba",
+      "n_nodes": 1229,
+      "n_edges": 1183,
+      "n_divisions": 3,
+      "t_min": 0,
+      "t_max": 99,
+      "n_timepoints_annotated": 100,
+      "estimated_n_nodes": 69800.0,
+      "coords_integer": true
+    },
+    "6bba_c328f2fd": {
+      "dataset": "6bba_c328f2fd",
+      "embryo": "6bba",
+      "n_nodes": 511,
+      "n_edges": 500,
+      "n_divisions": 2,
+      "t_min": 4,
+      "t_max": 99,
+      "n_timepoints_annotated": 96,
+      "estimated_n_nodes": 31228.0,
+      "coords_integer": true
+    }
+  },
+  "notes": []
+}

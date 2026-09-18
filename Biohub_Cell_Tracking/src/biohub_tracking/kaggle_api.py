@@ -92,8 +92,8 @@ def download_file(file_name: str, dest: Path, competition: str = COMPETITION) ->
     encoded = urllib.parse.quote(file_name, safe="")
     url = f"{API_ROOT}/competitions/data/download/{competition}/{encoded}"
     dest.parent.mkdir(parents=True, exist_ok=True)
-    delay = 2.0
-    for attempt in range(6):
+    delay = 4.0
+    for attempt in range(10):
         req = urllib.request.Request(url)
         req.add_header("Authorization", f"Bearer {_token()}")
         req.add_header("User-Agent", "biohub-cell-tracking/0.1")
@@ -104,9 +104,9 @@ def download_file(file_name: str, dest: Path, competition: str = COMPETITION) ->
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
                 return False
-            if exc.code in {429, 500, 502, 503} and attempt < 5:
+            if exc.code in {429, 500, 502, 503} and attempt < 9:
                 time.sleep(delay)
-                delay = min(delay * 2, 60.0)
+                delay = min(delay * 2, 90.0)
                 continue
             raise
     return False

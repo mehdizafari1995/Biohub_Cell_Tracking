@@ -15,6 +15,7 @@ kaggle.json
 data/
 artifacts/runs/
 artifacts/tmp/
+submission.csv
 *.log
 .DS_Store
 Thumbs.db

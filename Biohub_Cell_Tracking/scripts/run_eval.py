@@ -46,6 +46,7 @@ def main() -> None:
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data/train")
     parser.add_argument("--split", type=Path, default=ROOT / "docs/splits/v1.json")
     parser.add_argument("--role", choices=["validation", "tuning", "all_local"], default="validation")
+    parser.add_argument("--datasets", nargs="*", default=None, help="Override split role with explicit dataset names")
     parser.add_argument("--name", default="eval")
     args = parser.parse_args()
 
@@ -56,7 +57,10 @@ def main() -> None:
 
     names: list[str] = []
     split_info: dict = {}
-    if args.role == "all_local":
+    if args.datasets:
+        names = list(args.datasets)
+        split_info = {"role": "explicit", "datasets": names, "note": "explicit --datasets override"}
+    elif args.role == "all_local":
         names = [p.name.removesuffix(".zarr") for p in sorted(args.data_dir.glob("*.zarr"))]
         split_info = {"role": "all_local", "note": "no frozen split; using whatever zarrs are on disk"}
     elif args.split.exists():

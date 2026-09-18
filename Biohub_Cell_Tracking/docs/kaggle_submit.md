@@ -38,10 +38,14 @@ That script blocks `socket.socket` in-process and runs the notebook against loca
 
 ## Runtime budget
 
-Measure complete-sequence seconds/frame locally, then:
+Measured on a **local simulation** of `notebooks/kaggle_inference.py` against one complete train volume used as a fake `test/` dataset (`6bba_05db0fb1`, T=100): **0.583 s/frame**.
+
+If the hidden test has 200 sequences of 100 frames (unverified; Data page only says it is about the same size as train, and the file listing 429’d):
 
 ```
-hours ≈ (sec/frame) × T × N_hidden × safety
+hours ≈ 0.583 × 100 × 200 / 3600 = 3.24
+with 2× safety = 6.48  (limit 12)
 ```
 
-with `T ≈ 100`, `N_hidden ≈ N_train` (Data page: hidden test is about the same size as train), `safety = 2`, limit = 12 h. Record the numbers in `docs/local_results.md` after a complete-sequence run. Do not treat a partial-volume timing as the 12-hour estimate.
+The official-eval path on the same volume was 0.79 s/frame including scoring. Using that slower number: 8.8 h with 2× margin. This is a **local simulation**, not a Kaggle worker measurement.
+

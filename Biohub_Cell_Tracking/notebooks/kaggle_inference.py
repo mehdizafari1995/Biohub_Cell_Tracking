@@ -13,6 +13,7 @@ this machine is a LOCAL SIMULATION, not a Kaggle leaderboard submission.
 
 from __future__ import annotations
 
+import os
 import time
 from pathlib import Path
 
@@ -27,6 +28,8 @@ CANDIDATE_ROOTS = [
     Path("/kaggle/input/competitions/biohub-cell-tracking-during-development"),
     Path("data"),
 ]
+if os.environ.get("BIOHUB_DATA_ROOT"):
+    CANDIDATE_ROOTS.insert(0, Path(os.environ["BIOHUB_DATA_ROOT"]))
 SCALE_ZYX = np.array([1.625, 0.40625, 0.40625], dtype=np.float64)
 MAX_LINK_UM = 15.0
 BLOB_MIN_SIGMA = 2.0
@@ -34,7 +37,7 @@ BLOB_MAX_SIGMA = 5.0
 BLOB_THRESHOLD = 0.05
 SUPPRESS_DUPLICATES = True
 MIN_DISTANCE_UM = 4.0
-ANISOTROPIC = False
+ANISOTROPIC = True
 COLUMNS = [
     "id",
     "dataset",
