@@ -15,8 +15,11 @@ kaggle.json
 data/
 artifacts/runs/
 artifacts/tmp/
+artifacts/kaggle/
+artifacts/cache/
 submission.csv
 *.log
+kaggle_kernel/**/wheels/*.whl
 .DS_Store
 Thumbs.db
 third_party/kaggle-cell-tracking-competition/.git/
