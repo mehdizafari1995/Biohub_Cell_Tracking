@@ -1,0 +1,4044 @@
+{
+  "n_files": 24886,
+  "total_bytes": 87609892618,
+  "total_gb": 87.61,
+  "n_dataset_stores": 402,
+  "complete": true,
+  "train_geff_count": 199,
+  "train_zarr_count": 199,
+  "test_zarr_count": 4,
+  "train_embryos": [
+    "44b6",
+    "6bba"
+  ],
+  "train_geff_bytes": 2353863,
+  "train_zarr_bytes": 85701205857,
+  "extras": [
+    {
+      "name": "sample_submission.csv",
+      "bytes": 890
+    }
+  ],
+  "datasets": [
+    {
+      "bytes": 456757564,
+      "files": 102,
+      "kind": "zarr",
+      "split": "test",
+      "dataset": "44b6_0113de3b",
+      "embryo": "44b6",
+      "key": "test/44b6_0113de3b.zarr",
+      "mb": 456.76
+    },
+    {
+      "bytes": 547662847,
+      "files": 102,
+      "kind": "zarr",
+      "split": "test",
+      "dataset": "44b6_0b24845f",
+      "embryo": "44b6",
+      "key": "test/44b6_0b24845f.zarr",
+      "mb": 547.66
+    },
+    {
+      "bytes": 361668669,
+      "files": 102,
+      "kind": "zarr",
+      "split": "test",
+      "dataset": "6bba_05b6850b",
+      "embryo": "6bba",
+      "key": "test/6bba_05b6850b.zarr",
+      "mb": 361.67
+    },
+    {
+      "bytes": 540242928,
+      "files": 102,
+      "kind": "zarr",
+      "split": "test",
+      "dataset": "6bba_05db0fb1",
+      "embryo": "6bba",
+      "key": "test/6bba_05db0fb1.zarr",
+      "mb": 540.24
+    },
+    {
+      "bytes": 7617,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_0113de3b",
+      "embryo": "44b6",
+      "key": "train/44b6_0113de3b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 456757564,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_0113de3b",
+      "embryo": "44b6",
+      "key": "train/44b6_0113de3b.zarr",
+      "mb": 456.76
+    },
+    {
+      "bytes": 7618,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_0b24845f",
+      "embryo": "44b6",
+      "key": "train/44b6_0b24845f.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 547662847,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_0b24845f",
+      "embryo": "44b6",
+      "key": "train/44b6_0b24845f.zarr",
+      "mb": 547.66
+    },
+    {
+      "bytes": 7700,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_0c582fdc",
+      "embryo": "44b6",
+      "key": "train/44b6_0c582fdc.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 506002314,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_0c582fdc",
+      "embryo": "44b6",
+      "key": "train/44b6_0c582fdc.zarr",
+      "mb": 506.0
+    },
+    {
+      "bytes": 8572,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_0db75fae",
+      "embryo": "44b6",
+      "key": "train/44b6_0db75fae.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 394575075,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_0db75fae",
+      "embryo": "44b6",
+      "key": "train/44b6_0db75fae.zarr",
+      "mb": 394.58
+    },
+    {
+      "bytes": 12418,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_12dfb391",
+      "embryo": "44b6",
+      "key": "train/44b6_12dfb391.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 529443276,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_12dfb391",
+      "embryo": "44b6",
+      "key": "train/44b6_12dfb391.zarr",
+      "mb": 529.44
+    },
+    {
+      "bytes": 8132,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_144b256d",
+      "embryo": "44b6",
+      "key": "train/44b6_144b256d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 544335541,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_144b256d",
+      "embryo": "44b6",
+      "key": "train/44b6_144b256d.zarr",
+      "mb": 544.34
+    },
+    {
+      "bytes": 8547,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_1574802b",
+      "embryo": "44b6",
+      "key": "train/44b6_1574802b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 398567837,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_1574802b",
+      "embryo": "44b6",
+      "key": "train/44b6_1574802b.zarr",
+      "mb": 398.57
+    },
+    {
+      "bytes": 7965,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_18ced818",
+      "embryo": "44b6",
+      "key": "train/44b6_18ced818.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 560239657,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_18ced818",
+      "embryo": "44b6",
+      "key": "train/44b6_18ced818.zarr",
+      "mb": 560.24
+    },
+    {
+      "bytes": 9555,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_1d530831",
+      "embryo": "44b6",
+      "key": "train/44b6_1d530831.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 517798867,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_1d530831",
+      "embryo": "44b6",
+      "key": "train/44b6_1d530831.zarr",
+      "mb": 517.8
+    },
+    {
+      "bytes": 9182,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_24264f12",
+      "embryo": "44b6",
+      "key": "train/44b6_24264f12.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 467494128,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_24264f12",
+      "embryo": "44b6",
+      "key": "train/44b6_24264f12.zarr",
+      "mb": 467.49
+    },
+    {
+      "bytes": 9384,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_267148e4",
+      "embryo": "44b6",
+      "key": "train/44b6_267148e4.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 384925816,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_267148e4",
+      "embryo": "44b6",
+      "key": "train/44b6_267148e4.zarr",
+      "mb": 384.93
+    },
+    {
+      "bytes": 8976,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_2a2eff9f",
+      "embryo": "44b6",
+      "key": "train/44b6_2a2eff9f.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 514618389,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_2a2eff9f",
+      "embryo": "44b6",
+      "key": "train/44b6_2a2eff9f.zarr",
+      "mb": 514.62
+    },
+    {
+      "bytes": 7899,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_2f31fc2f",
+      "embryo": "44b6",
+      "key": "train/44b6_2f31fc2f.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 497888227,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_2f31fc2f",
+      "embryo": "44b6",
+      "key": "train/44b6_2f31fc2f.zarr",
+      "mb": 497.89
+    },
+    {
+      "bytes": 7587,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_33b596bf",
+      "embryo": "44b6",
+      "key": "train/44b6_33b596bf.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 474866037,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_33b596bf",
+      "embryo": "44b6",
+      "key": "train/44b6_33b596bf.zarr",
+      "mb": 474.87
+    },
+    {
+      "bytes": 8875,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_341df25f",
+      "embryo": "44b6",
+      "key": "train/44b6_341df25f.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 386087572,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_341df25f",
+      "embryo": "44b6",
+      "key": "train/44b6_341df25f.zarr",
+      "mb": 386.09
+    },
+    {
+      "bytes": 13308,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_3a861e03",
+      "embryo": "44b6",
+      "key": "train/44b6_3a861e03.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 493710406,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_3a861e03",
+      "embryo": "44b6",
+      "key": "train/44b6_3a861e03.zarr",
+      "mb": 493.71
+    },
+    {
+      "bytes": 9806,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_3bb3690f",
+      "embryo": "44b6",
+      "key": "train/44b6_3bb3690f.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 508635810,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_3bb3690f",
+      "embryo": "44b6",
+      "key": "train/44b6_3bb3690f.zarr",
+      "mb": 508.64
+    },
+    {
+      "bytes": 8803,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_40c45f5a",
+      "embryo": "44b6",
+      "key": "train/44b6_40c45f5a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 520833215,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_40c45f5a",
+      "embryo": "44b6",
+      "key": "train/44b6_40c45f5a.zarr",
+      "mb": 520.83
+    },
+    {
+      "bytes": 9671,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_415c0a3a",
+      "embryo": "44b6",
+      "key": "train/44b6_415c0a3a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 522285003,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_415c0a3a",
+      "embryo": "44b6",
+      "key": "train/44b6_415c0a3a.zarr",
+      "mb": 522.29
+    },
+    {
+      "bytes": 7769,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_53f95252",
+      "embryo": "44b6",
+      "key": "train/44b6_53f95252.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 546151671,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_53f95252",
+      "embryo": "44b6",
+      "key": "train/44b6_53f95252.zarr",
+      "mb": 546.15
+    },
+    {
+      "bytes": 8978,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_551a5dba",
+      "embryo": "44b6",
+      "key": "train/44b6_551a5dba.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 550837243,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_551a5dba",
+      "embryo": "44b6",
+      "key": "train/44b6_551a5dba.zarr",
+      "mb": 550.84
+    },
+    {
+      "bytes": 8733,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_5740d24b",
+      "embryo": "44b6",
+      "key": "train/44b6_5740d24b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 452260334,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_5740d24b",
+      "embryo": "44b6",
+      "key": "train/44b6_5740d24b.zarr",
+      "mb": 452.26
+    },
+    {
+      "bytes": 10097,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_587a1e22",
+      "embryo": "44b6",
+      "key": "train/44b6_587a1e22.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 411772332,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_587a1e22",
+      "embryo": "44b6",
+      "key": "train/44b6_587a1e22.zarr",
+      "mb": 411.77
+    },
+    {
+      "bytes": 9412,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_5f15d135",
+      "embryo": "44b6",
+      "key": "train/44b6_5f15d135.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 539933235,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_5f15d135",
+      "embryo": "44b6",
+      "key": "train/44b6_5f15d135.zarr",
+      "mb": 539.93
+    },
+    {
+      "bytes": 11713,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_668e0cc7",
+      "embryo": "44b6",
+      "key": "train/44b6_668e0cc7.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 462592772,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_668e0cc7",
+      "embryo": "44b6",
+      "key": "train/44b6_668e0cc7.zarr",
+      "mb": 462.59
+    },
+    {
+      "bytes": 8725,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_66f9292d",
+      "embryo": "44b6",
+      "key": "train/44b6_66f9292d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 522643965,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_66f9292d",
+      "embryo": "44b6",
+      "key": "train/44b6_66f9292d.zarr",
+      "mb": 522.64
+    },
+    {
+      "bytes": 8113,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_706092f0",
+      "embryo": "44b6",
+      "key": "train/44b6_706092f0.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 550630519,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_706092f0",
+      "embryo": "44b6",
+      "key": "train/44b6_706092f0.zarr",
+      "mb": 550.63
+    },
+    {
+      "bytes": 8141,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_71a4179f",
+      "embryo": "44b6",
+      "key": "train/44b6_71a4179f.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 543775447,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_71a4179f",
+      "embryo": "44b6",
+      "key": "train/44b6_71a4179f.zarr",
+      "mb": 543.78
+    },
+    {
+      "bytes": 8429,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_74d0c52e",
+      "embryo": "44b6",
+      "key": "train/44b6_74d0c52e.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 418504706,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_74d0c52e",
+      "embryo": "44b6",
+      "key": "train/44b6_74d0c52e.zarr",
+      "mb": 418.5
+    },
+    {
+      "bytes": 10697,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_7a302da0",
+      "embryo": "44b6",
+      "key": "train/44b6_7a302da0.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 581148135,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_7a302da0",
+      "embryo": "44b6",
+      "key": "train/44b6_7a302da0.zarr",
+      "mb": 581.15
+    },
+    {
+      "bytes": 11094,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_7e557709",
+      "embryo": "44b6",
+      "key": "train/44b6_7e557709.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 512003896,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_7e557709",
+      "embryo": "44b6",
+      "key": "train/44b6_7e557709.zarr",
+      "mb": 512.0
+    },
+    {
+      "bytes": 8748,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_808952d6",
+      "embryo": "44b6",
+      "key": "train/44b6_808952d6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 447428718,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_808952d6",
+      "embryo": "44b6",
+      "key": "train/44b6_808952d6.zarr",
+      "mb": 447.43
+    },
+    {
+      "bytes": 8731,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_81c256f0",
+      "embryo": "44b6",
+      "key": "train/44b6_81c256f0.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 406767384,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_81c256f0",
+      "embryo": "44b6",
+      "key": "train/44b6_81c256f0.zarr",
+      "mb": 406.77
+    },
+    {
+      "bytes": 8511,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_87bba6c4",
+      "embryo": "44b6",
+      "key": "train/44b6_87bba6c4.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 490466193,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_87bba6c4",
+      "embryo": "44b6",
+      "key": "train/44b6_87bba6c4.zarr",
+      "mb": 490.47
+    },
+    {
+      "bytes": 9747,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_8cc6506c",
+      "embryo": "44b6",
+      "key": "train/44b6_8cc6506c.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 526273798,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_8cc6506c",
+      "embryo": "44b6",
+      "key": "train/44b6_8cc6506c.zarr",
+      "mb": 526.27
+    },
+    {
+      "bytes": 11438,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_8f5ab931",
+      "embryo": "44b6",
+      "key": "train/44b6_8f5ab931.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 485921971,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_8f5ab931",
+      "embryo": "44b6",
+      "key": "train/44b6_8f5ab931.zarr",
+      "mb": 485.92
+    },
+    {
+      "bytes": 9586,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_8f9ecab4",
+      "embryo": "44b6",
+      "key": "train/44b6_8f9ecab4.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 547633463,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_8f9ecab4",
+      "embryo": "44b6",
+      "key": "train/44b6_8f9ecab4.zarr",
+      "mb": 547.63
+    },
+    {
+      "bytes": 7989,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_90724892",
+      "embryo": "44b6",
+      "key": "train/44b6_90724892.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 473810941,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_90724892",
+      "embryo": "44b6",
+      "key": "train/44b6_90724892.zarr",
+      "mb": 473.81
+    },
+    {
+      "bytes": 9897,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_949adeb1",
+      "embryo": "44b6",
+      "key": "train/44b6_949adeb1.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 517562962,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_949adeb1",
+      "embryo": "44b6",
+      "key": "train/44b6_949adeb1.zarr",
+      "mb": 517.56
+    },
+    {
+      "bytes": 8855,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_95029e92",
+      "embryo": "44b6",
+      "key": "train/44b6_95029e92.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 362988464,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_95029e92",
+      "embryo": "44b6",
+      "key": "train/44b6_95029e92.zarr",
+      "mb": 362.99
+    },
+    {
+      "bytes": 9192,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_97725144",
+      "embryo": "44b6",
+      "key": "train/44b6_97725144.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 545909170,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_97725144",
+      "embryo": "44b6",
+      "key": "train/44b6_97725144.zarr",
+      "mb": 545.91
+    },
+    {
+      "bytes": 9738,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_996155de",
+      "embryo": "44b6",
+      "key": "train/44b6_996155de.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 423932277,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_996155de",
+      "embryo": "44b6",
+      "key": "train/44b6_996155de.zarr",
+      "mb": 423.93
+    },
+    {
+      "bytes": 8849,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_9be80b04",
+      "embryo": "44b6",
+      "key": "train/44b6_9be80b04.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 548031429,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_9be80b04",
+      "embryo": "44b6",
+      "key": "train/44b6_9be80b04.zarr",
+      "mb": 548.03
+    },
+    {
+      "bytes": 9248,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_9bfa6a0a",
+      "embryo": "44b6",
+      "key": "train/44b6_9bfa6a0a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 514800940,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_9bfa6a0a",
+      "embryo": "44b6",
+      "key": "train/44b6_9bfa6a0a.zarr",
+      "mb": 514.8
+    },
+    {
+      "bytes": 9489,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_a21120c2",
+      "embryo": "44b6",
+      "key": "train/44b6_a21120c2.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 429380147,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_a21120c2",
+      "embryo": "44b6",
+      "key": "train/44b6_a21120c2.zarr",
+      "mb": 429.38
+    },
+    {
+      "bytes": 10036,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_a2bb48bb",
+      "embryo": "44b6",
+      "key": "train/44b6_a2bb48bb.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 607764799,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_a2bb48bb",
+      "embryo": "44b6",
+      "key": "train/44b6_a2bb48bb.zarr",
+      "mb": 607.76
+    },
+    {
+      "bytes": 8888,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_aaf8b0ea",
+      "embryo": "44b6",
+      "key": "train/44b6_aaf8b0ea.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 475579284,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_aaf8b0ea",
+      "embryo": "44b6",
+      "key": "train/44b6_aaf8b0ea.zarr",
+      "mb": 475.58
+    },
+    {
+      "bytes": 7969,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_abf82518",
+      "embryo": "44b6",
+      "key": "train/44b6_abf82518.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 429580884,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_abf82518",
+      "embryo": "44b6",
+      "key": "train/44b6_abf82518.zarr",
+      "mb": 429.58
+    },
+    {
+      "bytes": 8544,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_b2c44266",
+      "embryo": "44b6",
+      "key": "train/44b6_b2c44266.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 531018369,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_b2c44266",
+      "embryo": "44b6",
+      "key": "train/44b6_b2c44266.zarr",
+      "mb": 531.02
+    },
+    {
+      "bytes": 8045,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_c15fded2",
+      "embryo": "44b6",
+      "key": "train/44b6_c15fded2.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 442479736,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_c15fded2",
+      "embryo": "44b6",
+      "key": "train/44b6_c15fded2.zarr",
+      "mb": 442.48
+    },
+    {
+      "bytes": 9704,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_c50204e0",
+      "embryo": "44b6",
+      "key": "train/44b6_c50204e0.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 565311771,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_c50204e0",
+      "embryo": "44b6",
+      "key": "train/44b6_c50204e0.zarr",
+      "mb": 565.31
+    },
+    {
+      "bytes": 8974,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_c771cb04",
+      "embryo": "44b6",
+      "key": "train/44b6_c771cb04.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 575232437,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_c771cb04",
+      "embryo": "44b6",
+      "key": "train/44b6_c771cb04.zarr",
+      "mb": 575.23
+    },
+    {
+      "bytes": 8579,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_c8e2a523",
+      "embryo": "44b6",
+      "key": "train/44b6_c8e2a523.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 466004648,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_c8e2a523",
+      "embryo": "44b6",
+      "key": "train/44b6_c8e2a523.zarr",
+      "mb": 466.0
+    },
+    {
+      "bytes": 11417,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_c96cfa10",
+      "embryo": "44b6",
+      "key": "train/44b6_c96cfa10.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 502062575,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_c96cfa10",
+      "embryo": "44b6",
+      "key": "train/44b6_c96cfa10.zarr",
+      "mb": 502.06
+    },
+    {
+      "bytes": 7714,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_cf2536e8",
+      "embryo": "44b6",
+      "key": "train/44b6_cf2536e8.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 516692705,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_cf2536e8",
+      "embryo": "44b6",
+      "key": "train/44b6_cf2536e8.zarr",
+      "mb": 516.69
+    },
+    {
+      "bytes": 8837,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_cf8fed6b",
+      "embryo": "44b6",
+      "key": "train/44b6_cf8fed6b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 463357905,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_cf8fed6b",
+      "embryo": "44b6",
+      "key": "train/44b6_cf8fed6b.zarr",
+      "mb": 463.36
+    },
+    {
+      "bytes": 15698,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_d29c9ab2",
+      "embryo": "44b6",
+      "key": "train/44b6_d29c9ab2.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 492813035,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_d29c9ab2",
+      "embryo": "44b6",
+      "key": "train/44b6_d29c9ab2.zarr",
+      "mb": 492.81
+    },
+    {
+      "bytes": 9284,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_d2f34f90",
+      "embryo": "44b6",
+      "key": "train/44b6_d2f34f90.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 500553470,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_d2f34f90",
+      "embryo": "44b6",
+      "key": "train/44b6_d2f34f90.zarr",
+      "mb": 500.55
+    },
+    {
+      "bytes": 12933,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_d5e7d891",
+      "embryo": "44b6",
+      "key": "train/44b6_d5e7d891.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 545535218,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_d5e7d891",
+      "embryo": "44b6",
+      "key": "train/44b6_d5e7d891.zarr",
+      "mb": 545.54
+    },
+    {
+      "bytes": 7793,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_d754aa59",
+      "embryo": "44b6",
+      "key": "train/44b6_d754aa59.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 370169771,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_d754aa59",
+      "embryo": "44b6",
+      "key": "train/44b6_d754aa59.zarr",
+      "mb": 370.17
+    },
+    {
+      "bytes": 10633,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_d78e09d9",
+      "embryo": "44b6",
+      "key": "train/44b6_d78e09d9.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 441825506,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_d78e09d9",
+      "embryo": "44b6",
+      "key": "train/44b6_d78e09d9.zarr",
+      "mb": 441.83
+    },
+    {
+      "bytes": 8592,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_db3c847b",
+      "embryo": "44b6",
+      "key": "train/44b6_db3c847b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 446681470,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_db3c847b",
+      "embryo": "44b6",
+      "key": "train/44b6_db3c847b.zarr",
+      "mb": 446.68
+    },
+    {
+      "bytes": 11474,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_ddf577ad",
+      "embryo": "44b6",
+      "key": "train/44b6_ddf577ad.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 519255171,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_ddf577ad",
+      "embryo": "44b6",
+      "key": "train/44b6_ddf577ad.zarr",
+      "mb": 519.26
+    },
+    {
+      "bytes": 8262,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_deabac95",
+      "embryo": "44b6",
+      "key": "train/44b6_deabac95.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 390421570,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_deabac95",
+      "embryo": "44b6",
+      "key": "train/44b6_deabac95.zarr",
+      "mb": 390.42
+    },
+    {
+      "bytes": 9338,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_e28840c6",
+      "embryo": "44b6",
+      "key": "train/44b6_e28840c6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 542007583,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_e28840c6",
+      "embryo": "44b6",
+      "key": "train/44b6_e28840c6.zarr",
+      "mb": 542.01
+    },
+    {
+      "bytes": 7641,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_e29f0176",
+      "embryo": "44b6",
+      "key": "train/44b6_e29f0176.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 372784970,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_e29f0176",
+      "embryo": "44b6",
+      "key": "train/44b6_e29f0176.zarr",
+      "mb": 372.78
+    },
+    {
+      "bytes": 8160,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_e31261b4",
+      "embryo": "44b6",
+      "key": "train/44b6_e31261b4.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 529394335,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_e31261b4",
+      "embryo": "44b6",
+      "key": "train/44b6_e31261b4.zarr",
+      "mb": 529.39
+    },
+    {
+      "bytes": 9382,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_e35b117d",
+      "embryo": "44b6",
+      "key": "train/44b6_e35b117d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 539783775,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_e35b117d",
+      "embryo": "44b6",
+      "key": "train/44b6_e35b117d.zarr",
+      "mb": 539.78
+    },
+    {
+      "bytes": 8901,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_e57ff5c6",
+      "embryo": "44b6",
+      "key": "train/44b6_e57ff5c6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 488046940,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_e57ff5c6",
+      "embryo": "44b6",
+      "key": "train/44b6_e57ff5c6.zarr",
+      "mb": 488.05
+    },
+    {
+      "bytes": 10204,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_eb2880fc",
+      "embryo": "44b6",
+      "key": "train/44b6_eb2880fc.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 488171713,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_eb2880fc",
+      "embryo": "44b6",
+      "key": "train/44b6_eb2880fc.zarr",
+      "mb": 488.17
+    },
+    {
+      "bytes": 7791,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "44b6_f28707c6",
+      "embryo": "44b6",
+      "key": "train/44b6_f28707c6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 463528105,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "44b6_f28707c6",
+      "embryo": "44b6",
+      "key": "train/44b6_f28707c6.zarr",
+      "mb": 463.53
+    },
+    {
+      "bytes": 12964,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_05b6850b",
+      "embryo": "6bba",
+      "key": "train/6bba_05b6850b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 361668669,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_05b6850b",
+      "embryo": "6bba",
+      "key": "train/6bba_05b6850b.zarr",
+      "mb": 361.67
+    },
+    {
+      "bytes": 15343,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_05db0fb1",
+      "embryo": "6bba",
+      "key": "train/6bba_05db0fb1.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 540242928,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_05db0fb1",
+      "embryo": "6bba",
+      "key": "train/6bba_05db0fb1.zarr",
+      "mb": 540.24
+    },
+    {
+      "bytes": 13521,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_062c8d37",
+      "embryo": "6bba",
+      "key": "train/6bba_062c8d37.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 341782153,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_062c8d37",
+      "embryo": "6bba",
+      "key": "train/6bba_062c8d37.zarr",
+      "mb": 341.78
+    },
+    {
+      "bytes": 11425,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_07477033",
+      "embryo": "6bba",
+      "key": "train/6bba_07477033.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 325484898,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_07477033",
+      "embryo": "6bba",
+      "key": "train/6bba_07477033.zarr",
+      "mb": 325.48
+    },
+    {
+      "bytes": 9919,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_07e24132",
+      "embryo": "6bba",
+      "key": "train/6bba_07e24132.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 465682930,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_07e24132",
+      "embryo": "6bba",
+      "key": "train/6bba_07e24132.zarr",
+      "mb": 465.68
+    },
+    {
+      "bytes": 15244,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_085bf656",
+      "embryo": "6bba",
+      "key": "train/6bba_085bf656.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 380726889,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_085bf656",
+      "embryo": "6bba",
+      "key": "train/6bba_085bf656.zarr",
+      "mb": 380.73
+    },
+    {
+      "bytes": 19957,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_09961292",
+      "embryo": "6bba",
+      "key": "train/6bba_09961292.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 400084214,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_09961292",
+      "embryo": "6bba",
+      "key": "train/6bba_09961292.zarr",
+      "mb": 400.08
+    },
+    {
+      "bytes": 12016,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_0c7fa718",
+      "embryo": "6bba",
+      "key": "train/6bba_0c7fa718.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 371438547,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_0c7fa718",
+      "embryo": "6bba",
+      "key": "train/6bba_0c7fa718.zarr",
+      "mb": 371.44
+    },
+    {
+      "bytes": 8711,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_0e7c0d07",
+      "embryo": "6bba",
+      "key": "train/6bba_0e7c0d07.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 432565534,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_0e7c0d07",
+      "embryo": "6bba",
+      "key": "train/6bba_0e7c0d07.zarr",
+      "mb": 432.57
+    },
+    {
+      "bytes": 14705,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_12665c0e",
+      "embryo": "6bba",
+      "key": "train/6bba_12665c0e.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 358137475,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_12665c0e",
+      "embryo": "6bba",
+      "key": "train/6bba_12665c0e.zarr",
+      "mb": 358.14
+    },
+    {
+      "bytes": 12431,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_13f19531",
+      "embryo": "6bba",
+      "key": "train/6bba_13f19531.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 356511511,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_13f19531",
+      "embryo": "6bba",
+      "key": "train/6bba_13f19531.zarr",
+      "mb": 356.51
+    },
+    {
+      "bytes": 12493,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_15403b9a",
+      "embryo": "6bba",
+      "key": "train/6bba_15403b9a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 334482003,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_15403b9a",
+      "embryo": "6bba",
+      "key": "train/6bba_15403b9a.zarr",
+      "mb": 334.48
+    },
+    {
+      "bytes": 17452,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_1d0d8384",
+      "embryo": "6bba",
+      "key": "train/6bba_1d0d8384.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 420082204,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_1d0d8384",
+      "embryo": "6bba",
+      "key": "train/6bba_1d0d8384.zarr",
+      "mb": 420.08
+    },
+    {
+      "bytes": 12226,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_1ebfb80d",
+      "embryo": "6bba",
+      "key": "train/6bba_1ebfb80d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 391736321,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_1ebfb80d",
+      "embryo": "6bba",
+      "key": "train/6bba_1ebfb80d.zarr",
+      "mb": 391.74
+    },
+    {
+      "bytes": 9516,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_1f58c2f6",
+      "embryo": "6bba",
+      "key": "train/6bba_1f58c2f6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 457984180,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_1f58c2f6",
+      "embryo": "6bba",
+      "key": "train/6bba_1f58c2f6.zarr",
+      "mb": 457.98
+    },
+    {
+      "bytes": 10662,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_207c6aaf",
+      "embryo": "6bba",
+      "key": "train/6bba_207c6aaf.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 392166029,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_207c6aaf",
+      "embryo": "6bba",
+      "key": "train/6bba_207c6aaf.zarr",
+      "mb": 392.17
+    },
+    {
+      "bytes": 13737,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_20852818",
+      "embryo": "6bba",
+      "key": "train/6bba_20852818.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 378925732,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_20852818",
+      "embryo": "6bba",
+      "key": "train/6bba_20852818.zarr",
+      "mb": 378.93
+    },
+    {
+      "bytes": 14975,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_2312ac41",
+      "embryo": "6bba",
+      "key": "train/6bba_2312ac41.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 389511583,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_2312ac41",
+      "embryo": "6bba",
+      "key": "train/6bba_2312ac41.zarr",
+      "mb": 389.51
+    },
+    {
+      "bytes": 10698,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_23af9eeb",
+      "embryo": "6bba",
+      "key": "train/6bba_23af9eeb.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 350812322,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_23af9eeb",
+      "embryo": "6bba",
+      "key": "train/6bba_23af9eeb.zarr",
+      "mb": 350.81
+    },
+    {
+      "bytes": 10739,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_2540cd90",
+      "embryo": "6bba",
+      "key": "train/6bba_2540cd90.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 326798894,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_2540cd90",
+      "embryo": "6bba",
+      "key": "train/6bba_2540cd90.zarr",
+      "mb": 326.8
+    },
+    {
+      "bytes": 12208,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_2646afc7",
+      "embryo": "6bba",
+      "key": "train/6bba_2646afc7.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 353490088,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_2646afc7",
+      "embryo": "6bba",
+      "key": "train/6bba_2646afc7.zarr",
+      "mb": 353.49
+    },
+    {
+      "bytes": 11672,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_268e1230",
+      "embryo": "6bba",
+      "key": "train/6bba_268e1230.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 339424647,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_268e1230",
+      "embryo": "6bba",
+      "key": "train/6bba_268e1230.zarr",
+      "mb": 339.42
+    },
+    {
+      "bytes": 14219,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_2819ca14",
+      "embryo": "6bba",
+      "key": "train/6bba_2819ca14.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 329223531,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_2819ca14",
+      "embryo": "6bba",
+      "key": "train/6bba_2819ca14.zarr",
+      "mb": 329.22
+    },
+    {
+      "bytes": 16629,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_283bf9f1",
+      "embryo": "6bba",
+      "key": "train/6bba_283bf9f1.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 425991994,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_283bf9f1",
+      "embryo": "6bba",
+      "key": "train/6bba_283bf9f1.zarr",
+      "mb": 425.99
+    },
+    {
+      "bytes": 10809,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_312f0dc3",
+      "embryo": "6bba",
+      "key": "train/6bba_312f0dc3.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 370352855,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_312f0dc3",
+      "embryo": "6bba",
+      "key": "train/6bba_312f0dc3.zarr",
+      "mb": 370.35
+    },
+    {
+      "bytes": 13137,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_32db13fc",
+      "embryo": "6bba",
+      "key": "train/6bba_32db13fc.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 477612258,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_32db13fc",
+      "embryo": "6bba",
+      "key": "train/6bba_32db13fc.zarr",
+      "mb": 477.61
+    },
+    {
+      "bytes": 15601,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_337b1b3a",
+      "embryo": "6bba",
+      "key": "train/6bba_337b1b3a.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 459625871,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_337b1b3a",
+      "embryo": "6bba",
+      "key": "train/6bba_337b1b3a.zarr",
+      "mb": 459.63
+    },
+    {
+      "bytes": 14216,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_372c8cb8",
+      "embryo": "6bba",
+      "key": "train/6bba_372c8cb8.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 365395302,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_372c8cb8",
+      "embryo": "6bba",
+      "key": "train/6bba_372c8cb8.zarr",
+      "mb": 365.4
+    },
+    {
+      "bytes": 14907,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_3a1849c2",
+      "embryo": "6bba",
+      "key": "train/6bba_3a1849c2.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 361186029,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_3a1849c2",
+      "embryo": "6bba",
+      "key": "train/6bba_3a1849c2.zarr",
+      "mb": 361.19
+    },
+    {
+      "bytes": 13841,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_3abfe10a",
+      "embryo": "6bba",
+      "key": "train/6bba_3abfe10a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 539403678,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_3abfe10a",
+      "embryo": "6bba",
+      "key": "train/6bba_3abfe10a.zarr",
+      "mb": 539.4
+    },
+    {
+      "bytes": 12311,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_3c5691b6",
+      "embryo": "6bba",
+      "key": "train/6bba_3c5691b6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 364822686,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_3c5691b6",
+      "embryo": "6bba",
+      "key": "train/6bba_3c5691b6.zarr",
+      "mb": 364.82
+    },
+    {
+      "bytes": 10857,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_3db54e20",
+      "embryo": "6bba",
+      "key": "train/6bba_3db54e20.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 443248483,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_3db54e20",
+      "embryo": "6bba",
+      "key": "train/6bba_3db54e20.zarr",
+      "mb": 443.25
+    },
+    {
+      "bytes": 15396,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_3fda6b25",
+      "embryo": "6bba",
+      "key": "train/6bba_3fda6b25.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 378285046,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_3fda6b25",
+      "embryo": "6bba",
+      "key": "train/6bba_3fda6b25.zarr",
+      "mb": 378.29
+    },
+    {
+      "bytes": 13709,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_43fea39d",
+      "embryo": "6bba",
+      "key": "train/6bba_43fea39d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 317108747,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_43fea39d",
+      "embryo": "6bba",
+      "key": "train/6bba_43fea39d.zarr",
+      "mb": 317.11
+    },
+    {
+      "bytes": 9345,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_474be664",
+      "embryo": "6bba",
+      "key": "train/6bba_474be664.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 536288900,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_474be664",
+      "embryo": "6bba",
+      "key": "train/6bba_474be664.zarr",
+      "mb": 536.29
+    },
+    {
+      "bytes": 13618,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_48816121",
+      "embryo": "6bba",
+      "key": "train/6bba_48816121.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 429597138,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_48816121",
+      "embryo": "6bba",
+      "key": "train/6bba_48816121.zarr",
+      "mb": 429.6
+    },
+    {
+      "bytes": 12125,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_4aa14c89",
+      "embryo": "6bba",
+      "key": "train/6bba_4aa14c89.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 375599449,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_4aa14c89",
+      "embryo": "6bba",
+      "key": "train/6bba_4aa14c89.zarr",
+      "mb": 375.6
+    },
+    {
+      "bytes": 14388,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_4f99ce20",
+      "embryo": "6bba",
+      "key": "train/6bba_4f99ce20.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 347270978,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_4f99ce20",
+      "embryo": "6bba",
+      "key": "train/6bba_4f99ce20.zarr",
+      "mb": 347.27
+    },
+    {
+      "bytes": 12246,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_4ffd3da3",
+      "embryo": "6bba",
+      "key": "train/6bba_4ffd3da3.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 386003937,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_4ffd3da3",
+      "embryo": "6bba",
+      "key": "train/6bba_4ffd3da3.zarr",
+      "mb": 386.0
+    },
+    {
+      "bytes": 11870,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_55b7eebe",
+      "embryo": "6bba",
+      "key": "train/6bba_55b7eebe.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 386832188,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_55b7eebe",
+      "embryo": "6bba",
+      "key": "train/6bba_55b7eebe.zarr",
+      "mb": 386.83
+    },
+    {
+      "bytes": 10611,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_55c70843",
+      "embryo": "6bba",
+      "key": "train/6bba_55c70843.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 492410828,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_55c70843",
+      "embryo": "6bba",
+      "key": "train/6bba_55c70843.zarr",
+      "mb": 492.41
+    },
+    {
+      "bytes": 18027,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_57b7cc1e",
+      "embryo": "6bba",
+      "key": "train/6bba_57b7cc1e.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 551751513,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_57b7cc1e",
+      "embryo": "6bba",
+      "key": "train/6bba_57b7cc1e.zarr",
+      "mb": 551.75
+    },
+    {
+      "bytes": 12510,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_5a4d9360",
+      "embryo": "6bba",
+      "key": "train/6bba_5a4d9360.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 333698472,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_5a4d9360",
+      "embryo": "6bba",
+      "key": "train/6bba_5a4d9360.zarr",
+      "mb": 333.7
+    },
+    {
+      "bytes": 12132,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_5b28472a",
+      "embryo": "6bba",
+      "key": "train/6bba_5b28472a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 361337573,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_5b28472a",
+      "embryo": "6bba",
+      "key": "train/6bba_5b28472a.zarr",
+      "mb": 361.34
+    },
+    {
+      "bytes": 15323,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_5c039895",
+      "embryo": "6bba",
+      "key": "train/6bba_5c039895.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 381776867,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_5c039895",
+      "embryo": "6bba",
+      "key": "train/6bba_5c039895.zarr",
+      "mb": 381.78
+    },
+    {
+      "bytes": 15179,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_5c824876",
+      "embryo": "6bba",
+      "key": "train/6bba_5c824876.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 442682577,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_5c824876",
+      "embryo": "6bba",
+      "key": "train/6bba_5c824876.zarr",
+      "mb": 442.68
+    },
+    {
+      "bytes": 17370,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_5dfe9ad1",
+      "embryo": "6bba",
+      "key": "train/6bba_5dfe9ad1.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 451477177,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_5dfe9ad1",
+      "embryo": "6bba",
+      "key": "train/6bba_5dfe9ad1.zarr",
+      "mb": 451.48
+    },
+    {
+      "bytes": 13272,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_5f89039d",
+      "embryo": "6bba",
+      "key": "train/6bba_5f89039d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 349630666,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_5f89039d",
+      "embryo": "6bba",
+      "key": "train/6bba_5f89039d.zarr",
+      "mb": 349.63
+    },
+    {
+      "bytes": 11034,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_61dd1e0d",
+      "embryo": "6bba",
+      "key": "train/6bba_61dd1e0d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 411186738,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_61dd1e0d",
+      "embryo": "6bba",
+      "key": "train/6bba_61dd1e0d.zarr",
+      "mb": 411.19
+    },
+    {
+      "bytes": 11677,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_61ecbe65",
+      "embryo": "6bba",
+      "key": "train/6bba_61ecbe65.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 333237600,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_61ecbe65",
+      "embryo": "6bba",
+      "key": "train/6bba_61ecbe65.zarr",
+      "mb": 333.24
+    },
+    {
+      "bytes": 12755,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_6321a359",
+      "embryo": "6bba",
+      "key": "train/6bba_6321a359.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 356409674,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_6321a359",
+      "embryo": "6bba",
+      "key": "train/6bba_6321a359.zarr",
+      "mb": 356.41
+    },
+    {
+      "bytes": 11488,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_6479435d",
+      "embryo": "6bba",
+      "key": "train/6bba_6479435d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 410737206,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_6479435d",
+      "embryo": "6bba",
+      "key": "train/6bba_6479435d.zarr",
+      "mb": 410.74
+    },
+    {
+      "bytes": 10481,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_67ebd073",
+      "embryo": "6bba",
+      "key": "train/6bba_67ebd073.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 402989597,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_67ebd073",
+      "embryo": "6bba",
+      "key": "train/6bba_67ebd073.zarr",
+      "mb": 402.99
+    },
+    {
+      "bytes": 14472,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_6ca87370",
+      "embryo": "6bba",
+      "key": "train/6bba_6ca87370.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 358358550,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_6ca87370",
+      "embryo": "6bba",
+      "key": "train/6bba_6ca87370.zarr",
+      "mb": 358.36
+    },
+    {
+      "bytes": 10284,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_6db0e9b4",
+      "embryo": "6bba",
+      "key": "train/6bba_6db0e9b4.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 489138420,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_6db0e9b4",
+      "embryo": "6bba",
+      "key": "train/6bba_6db0e9b4.zarr",
+      "mb": 489.14
+    },
+    {
+      "bytes": 16563,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_6feb10f0",
+      "embryo": "6bba",
+      "key": "train/6bba_6feb10f0.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 460151383,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_6feb10f0",
+      "embryo": "6bba",
+      "key": "train/6bba_6feb10f0.zarr",
+      "mb": 460.15
+    },
+    {
+      "bytes": 16407,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_6feeb0b1",
+      "embryo": "6bba",
+      "key": "train/6bba_6feeb0b1.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 361653992,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_6feeb0b1",
+      "embryo": "6bba",
+      "key": "train/6bba_6feeb0b1.zarr",
+      "mb": 361.65
+    },
+    {
+      "bytes": 11298,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_705ec2c9",
+      "embryo": "6bba",
+      "key": "train/6bba_705ec2c9.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 318700700,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_705ec2c9",
+      "embryo": "6bba",
+      "key": "train/6bba_705ec2c9.zarr",
+      "mb": 318.7
+    },
+    {
+      "bytes": 11651,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_718b21f9",
+      "embryo": "6bba",
+      "key": "train/6bba_718b21f9.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 343568373,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_718b21f9",
+      "embryo": "6bba",
+      "key": "train/6bba_718b21f9.zarr",
+      "mb": 343.57
+    },
+    {
+      "bytes": 11236,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_74686d6a",
+      "embryo": "6bba",
+      "key": "train/6bba_74686d6a.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 490294349,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_74686d6a",
+      "embryo": "6bba",
+      "key": "train/6bba_74686d6a.zarr",
+      "mb": 490.29
+    },
+    {
+      "bytes": 11804,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_767a1e17",
+      "embryo": "6bba",
+      "key": "train/6bba_767a1e17.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 524244316,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_767a1e17",
+      "embryo": "6bba",
+      "key": "train/6bba_767a1e17.zarr",
+      "mb": 524.24
+    },
+    {
+      "bytes": 11351,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_76db78c1",
+      "embryo": "6bba",
+      "key": "train/6bba_76db78c1.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 353904769,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_76db78c1",
+      "embryo": "6bba",
+      "key": "train/6bba_76db78c1.zarr",
+      "mb": 353.9
+    },
+    {
+      "bytes": 19002,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_784a78c9",
+      "embryo": "6bba",
+      "key": "train/6bba_784a78c9.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 400400318,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_784a78c9",
+      "embryo": "6bba",
+      "key": "train/6bba_784a78c9.zarr",
+      "mb": 400.4
+    },
+    {
+      "bytes": 16870,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_786893ac",
+      "embryo": "6bba",
+      "key": "train/6bba_786893ac.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 552881058,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_786893ac",
+      "embryo": "6bba",
+      "key": "train/6bba_786893ac.zarr",
+      "mb": 552.88
+    },
+    {
+      "bytes": 12121,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_789f8168",
+      "embryo": "6bba",
+      "key": "train/6bba_789f8168.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 362281690,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_789f8168",
+      "embryo": "6bba",
+      "key": "train/6bba_789f8168.zarr",
+      "mb": 362.28
+    },
+    {
+      "bytes": 13219,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_78a7bd97",
+      "embryo": "6bba",
+      "key": "train/6bba_78a7bd97.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 499339098,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_78a7bd97",
+      "embryo": "6bba",
+      "key": "train/6bba_78a7bd97.zarr",
+      "mb": 499.34
+    },
+    {
+      "bytes": 14694,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_7af54fde",
+      "embryo": "6bba",
+      "key": "train/6bba_7af54fde.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 392961709,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_7af54fde",
+      "embryo": "6bba",
+      "key": "train/6bba_7af54fde.zarr",
+      "mb": 392.96
+    },
+    {
+      "bytes": 10990,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_7b5d3b2c",
+      "embryo": "6bba",
+      "key": "train/6bba_7b5d3b2c.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 404590757,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_7b5d3b2c",
+      "embryo": "6bba",
+      "key": "train/6bba_7b5d3b2c.zarr",
+      "mb": 404.59
+    },
+    {
+      "bytes": 15120,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_7d3058ae",
+      "embryo": "6bba",
+      "key": "train/6bba_7d3058ae.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 362091795,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_7d3058ae",
+      "embryo": "6bba",
+      "key": "train/6bba_7d3058ae.zarr",
+      "mb": 362.09
+    },
+    {
+      "bytes": 14040,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_7f87b3d8",
+      "embryo": "6bba",
+      "key": "train/6bba_7f87b3d8.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 372621981,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_7f87b3d8",
+      "embryo": "6bba",
+      "key": "train/6bba_7f87b3d8.zarr",
+      "mb": 372.62
+    },
+    {
+      "bytes": 11957,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_80d12824",
+      "embryo": "6bba",
+      "key": "train/6bba_80d12824.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 376461447,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_80d12824",
+      "embryo": "6bba",
+      "key": "train/6bba_80d12824.zarr",
+      "mb": 376.46
+    },
+    {
+      "bytes": 13693,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_825bd1c6",
+      "embryo": "6bba",
+      "key": "train/6bba_825bd1c6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 357347814,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_825bd1c6",
+      "embryo": "6bba",
+      "key": "train/6bba_825bd1c6.zarr",
+      "mb": 357.35
+    },
+    {
+      "bytes": 12498,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_87289e13",
+      "embryo": "6bba",
+      "key": "train/6bba_87289e13.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 402491165,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_87289e13",
+      "embryo": "6bba",
+      "key": "train/6bba_87289e13.zarr",
+      "mb": 402.49
+    },
+    {
+      "bytes": 12352,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_8b7818bf",
+      "embryo": "6bba",
+      "key": "train/6bba_8b7818bf.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 352063249,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_8b7818bf",
+      "embryo": "6bba",
+      "key": "train/6bba_8b7818bf.zarr",
+      "mb": 352.06
+    },
+    {
+      "bytes": 13654,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_907271db",
+      "embryo": "6bba",
+      "key": "train/6bba_907271db.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 368257600,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_907271db",
+      "embryo": "6bba",
+      "key": "train/6bba_907271db.zarr",
+      "mb": 368.26
+    },
+    {
+      "bytes": 15220,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_91951b3a",
+      "embryo": "6bba",
+      "key": "train/6bba_91951b3a.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 368011173,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_91951b3a",
+      "embryo": "6bba",
+      "key": "train/6bba_91951b3a.zarr",
+      "mb": 368.01
+    },
+    {
+      "bytes": 12364,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_96833384",
+      "embryo": "6bba",
+      "key": "train/6bba_96833384.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 346392310,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_96833384",
+      "embryo": "6bba",
+      "key": "train/6bba_96833384.zarr",
+      "mb": 346.39
+    },
+    {
+      "bytes": 12141,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_969618f6",
+      "embryo": "6bba",
+      "key": "train/6bba_969618f6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 387679675,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_969618f6",
+      "embryo": "6bba",
+      "key": "train/6bba_969618f6.zarr",
+      "mb": 387.68
+    },
+    {
+      "bytes": 13038,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_971fa5e0",
+      "embryo": "6bba",
+      "key": "train/6bba_971fa5e0.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 336233865,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_971fa5e0",
+      "embryo": "6bba",
+      "key": "train/6bba_971fa5e0.zarr",
+      "mb": 336.23
+    },
+    {
+      "bytes": 16498,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_9a41d029",
+      "embryo": "6bba",
+      "key": "train/6bba_9a41d029.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 431928222,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_9a41d029",
+      "embryo": "6bba",
+      "key": "train/6bba_9a41d029.zarr",
+      "mb": 431.93
+    },
+    {
+      "bytes": 13345,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_9e23430b",
+      "embryo": "6bba",
+      "key": "train/6bba_9e23430b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 388850863,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_9e23430b",
+      "embryo": "6bba",
+      "key": "train/6bba_9e23430b.zarr",
+      "mb": 388.85
+    },
+    {
+      "bytes": 12293,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_a5e926bb",
+      "embryo": "6bba",
+      "key": "train/6bba_a5e926bb.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 368194143,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_a5e926bb",
+      "embryo": "6bba",
+      "key": "train/6bba_a5e926bb.zarr",
+      "mb": 368.19
+    },
+    {
+      "bytes": 15184,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_a90a0b9c",
+      "embryo": "6bba",
+      "key": "train/6bba_a90a0b9c.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 506902329,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_a90a0b9c",
+      "embryo": "6bba",
+      "key": "train/6bba_a90a0b9c.zarr",
+      "mb": 506.9
+    },
+    {
+      "bytes": 15147,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_ab78413d",
+      "embryo": "6bba",
+      "key": "train/6bba_ab78413d.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 457336768,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_ab78413d",
+      "embryo": "6bba",
+      "key": "train/6bba_ab78413d.zarr",
+      "mb": 457.34
+    },
+    {
+      "bytes": 9741,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_acd782a8",
+      "embryo": "6bba",
+      "key": "train/6bba_acd782a8.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 390771704,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_acd782a8",
+      "embryo": "6bba",
+      "key": "train/6bba_acd782a8.zarr",
+      "mb": 390.77
+    },
+    {
+      "bytes": 17354,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_ae82a791",
+      "embryo": "6bba",
+      "key": "train/6bba_ae82a791.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 358934010,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_ae82a791",
+      "embryo": "6bba",
+      "key": "train/6bba_ae82a791.zarr",
+      "mb": 358.93
+    },
+    {
+      "bytes": 12665,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_aeee7805",
+      "embryo": "6bba",
+      "key": "train/6bba_aeee7805.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 351791970,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_aeee7805",
+      "embryo": "6bba",
+      "key": "train/6bba_aeee7805.zarr",
+      "mb": 351.79
+    },
+    {
+      "bytes": 16185,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_af149c94",
+      "embryo": "6bba",
+      "key": "train/6bba_af149c94.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 380294843,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_af149c94",
+      "embryo": "6bba",
+      "key": "train/6bba_af149c94.zarr",
+      "mb": 380.29
+    },
+    {
+      "bytes": 11714,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_afb141ff",
+      "embryo": "6bba",
+      "key": "train/6bba_afb141ff.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 324198678,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_afb141ff",
+      "embryo": "6bba",
+      "key": "train/6bba_afb141ff.zarr",
+      "mb": 324.2
+    },
+    {
+      "bytes": 11208,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_b1ae37b9",
+      "embryo": "6bba",
+      "key": "train/6bba_b1ae37b9.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 409019461,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_b1ae37b9",
+      "embryo": "6bba",
+      "key": "train/6bba_b1ae37b9.zarr",
+      "mb": 409.02
+    },
+    {
+      "bytes": 12580,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_b204cac7",
+      "embryo": "6bba",
+      "key": "train/6bba_b204cac7.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 358384772,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_b204cac7",
+      "embryo": "6bba",
+      "key": "train/6bba_b204cac7.zarr",
+      "mb": 358.38
+    },
+    {
+      "bytes": 15971,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_b329af44",
+      "embryo": "6bba",
+      "key": "train/6bba_b329af44.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 539582471,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_b329af44",
+      "embryo": "6bba",
+      "key": "train/6bba_b329af44.zarr",
+      "mb": 539.58
+    },
+    {
+      "bytes": 13794,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_b693381b",
+      "embryo": "6bba",
+      "key": "train/6bba_b693381b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 345372264,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_b693381b",
+      "embryo": "6bba",
+      "key": "train/6bba_b693381b.zarr",
+      "mb": 345.37
+    },
+    {
+      "bytes": 20060,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_bb9f20c3",
+      "embryo": "6bba",
+      "key": "train/6bba_bb9f20c3.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 403401162,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_bb9f20c3",
+      "embryo": "6bba",
+      "key": "train/6bba_bb9f20c3.zarr",
+      "mb": 403.4
+    },
+    {
+      "bytes": 13240,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_bbb708ca",
+      "embryo": "6bba",
+      "key": "train/6bba_bbb708ca.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 338000432,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_bbb708ca",
+      "embryo": "6bba",
+      "key": "train/6bba_bbb708ca.zarr",
+      "mb": 338.0
+    },
+    {
+      "bytes": 10801,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_c27cba08",
+      "embryo": "6bba",
+      "key": "train/6bba_c27cba08.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 344525471,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_c27cba08",
+      "embryo": "6bba",
+      "key": "train/6bba_c27cba08.zarr",
+      "mb": 344.53
+    },
+    {
+      "bytes": 10781,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_c328f2fd",
+      "embryo": "6bba",
+      "key": "train/6bba_c328f2fd.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 452924734,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_c328f2fd",
+      "embryo": "6bba",
+      "key": "train/6bba_c328f2fd.zarr",
+      "mb": 452.92
+    },
+    {
+      "bytes": 12663,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_c73a1d11",
+      "embryo": "6bba",
+      "key": "train/6bba_c73a1d11.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 414105331,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_c73a1d11",
+      "embryo": "6bba",
+      "key": "train/6bba_c73a1d11.zarr",
+      "mb": 414.11
+    },
+    {
+      "bytes": 16485,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_cdcfe533",
+      "embryo": "6bba",
+      "key": "train/6bba_cdcfe533.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 451182976,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_cdcfe533",
+      "embryo": "6bba",
+      "key": "train/6bba_cdcfe533.zarr",
+      "mb": 451.18
+    },
+    {
+      "bytes": 12928,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_cf35214c",
+      "embryo": "6bba",
+      "key": "train/6bba_cf35214c.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 474042573,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_cf35214c",
+      "embryo": "6bba",
+      "key": "train/6bba_cf35214c.zarr",
+      "mb": 474.04
+    },
+    {
+      "bytes": 17874,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_cff5865f",
+      "embryo": "6bba",
+      "key": "train/6bba_cff5865f.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 475497142,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_cff5865f",
+      "embryo": "6bba",
+      "key": "train/6bba_cff5865f.zarr",
+      "mb": 475.5
+    },
+    {
+      "bytes": 12838,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d0fc38b5",
+      "embryo": "6bba",
+      "key": "train/6bba_d0fc38b5.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 360975902,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d0fc38b5",
+      "embryo": "6bba",
+      "key": "train/6bba_d0fc38b5.zarr",
+      "mb": 360.98
+    },
+    {
+      "bytes": 12171,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d1acb6ff",
+      "embryo": "6bba",
+      "key": "train/6bba_d1acb6ff.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 378615185,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d1acb6ff",
+      "embryo": "6bba",
+      "key": "train/6bba_d1acb6ff.zarr",
+      "mb": 378.62
+    },
+    {
+      "bytes": 13656,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d2b9fc0c",
+      "embryo": "6bba",
+      "key": "train/6bba_d2b9fc0c.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 404821996,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d2b9fc0c",
+      "embryo": "6bba",
+      "key": "train/6bba_d2b9fc0c.zarr",
+      "mb": 404.82
+    },
+    {
+      "bytes": 13716,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d3da753b",
+      "embryo": "6bba",
+      "key": "train/6bba_d3da753b.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 382530438,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d3da753b",
+      "embryo": "6bba",
+      "key": "train/6bba_d3da753b.zarr",
+      "mb": 382.53
+    },
+    {
+      "bytes": 10715,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d5eae175",
+      "embryo": "6bba",
+      "key": "train/6bba_d5eae175.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 339047376,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d5eae175",
+      "embryo": "6bba",
+      "key": "train/6bba_d5eae175.zarr",
+      "mb": 339.05
+    },
+    {
+      "bytes": 13198,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d6ecebbb",
+      "embryo": "6bba",
+      "key": "train/6bba_d6ecebbb.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 335166055,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d6ecebbb",
+      "embryo": "6bba",
+      "key": "train/6bba_d6ecebbb.zarr",
+      "mb": 335.17
+    },
+    {
+      "bytes": 11019,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_d82a4fc6",
+      "embryo": "6bba",
+      "key": "train/6bba_d82a4fc6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 467636822,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_d82a4fc6",
+      "embryo": "6bba",
+      "key": "train/6bba_d82a4fc6.zarr",
+      "mb": 467.64
+    },
+    {
+      "bytes": 12752,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_debd7bfa",
+      "embryo": "6bba",
+      "key": "train/6bba_debd7bfa.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 377180189,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_debd7bfa",
+      "embryo": "6bba",
+      "key": "train/6bba_debd7bfa.zarr",
+      "mb": 377.18
+    },
+    {
+      "bytes": 11813,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_df673a83",
+      "embryo": "6bba",
+      "key": "train/6bba_df673a83.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 404547713,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_df673a83",
+      "embryo": "6bba",
+      "key": "train/6bba_df673a83.zarr",
+      "mb": 404.55
+    },
+    {
+      "bytes": 14074,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_e16ffc58",
+      "embryo": "6bba",
+      "key": "train/6bba_e16ffc58.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 357648954,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_e16ffc58",
+      "embryo": "6bba",
+      "key": "train/6bba_e16ffc58.zarr",
+      "mb": 357.65
+    },
+    {
+      "bytes": 12118,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_e5e44988",
+      "embryo": "6bba",
+      "key": "train/6bba_e5e44988.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 353738117,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_e5e44988",
+      "embryo": "6bba",
+      "key": "train/6bba_e5e44988.zarr",
+      "mb": 353.74
+    },
+    {
+      "bytes": 13110,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_ebdf3b34",
+      "embryo": "6bba",
+      "key": "train/6bba_ebdf3b34.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 490572114,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_ebdf3b34",
+      "embryo": "6bba",
+      "key": "train/6bba_ebdf3b34.zarr",
+      "mb": 490.57
+    },
+    {
+      "bytes": 16307,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_ebff6e76",
+      "embryo": "6bba",
+      "key": "train/6bba_ebff6e76.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 505296099,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_ebff6e76",
+      "embryo": "6bba",
+      "key": "train/6bba_ebff6e76.zarr",
+      "mb": 505.3
+    },
+    {
+      "bytes": 10938,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_ed9377fd",
+      "embryo": "6bba",
+      "key": "train/6bba_ed9377fd.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 343487378,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_ed9377fd",
+      "embryo": "6bba",
+      "key": "train/6bba_ed9377fd.zarr",
+      "mb": 343.49
+    },
+    {
+      "bytes": 12585,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_edf14583",
+      "embryo": "6bba",
+      "key": "train/6bba_edf14583.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 524341000,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_edf14583",
+      "embryo": "6bba",
+      "key": "train/6bba_edf14583.zarr",
+      "mb": 524.34
+    },
+    {
+      "bytes": 14089,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_eebc57a5",
+      "embryo": "6bba",
+      "key": "train/6bba_eebc57a5.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 392719071,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_eebc57a5",
+      "embryo": "6bba",
+      "key": "train/6bba_eebc57a5.zarr",
+      "mb": 392.72
+    },
+    {
+      "bytes": 15596,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_ef7b4f7e",
+      "embryo": "6bba",
+      "key": "train/6bba_ef7b4f7e.geff",
+      "mb": 0.02
+    },
+    {
+      "bytes": 348434711,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_ef7b4f7e",
+      "embryo": "6bba",
+      "key": "train/6bba_ef7b4f7e.zarr",
+      "mb": 348.43
+    },
+    {
+      "bytes": 14446,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_f17befbc",
+      "embryo": "6bba",
+      "key": "train/6bba_f17befbc.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 421894253,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_f17befbc",
+      "embryo": "6bba",
+      "key": "train/6bba_f17befbc.zarr",
+      "mb": 421.89
+    },
+    {
+      "bytes": 10519,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_f1fde7e0",
+      "embryo": "6bba",
+      "key": "train/6bba_f1fde7e0.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 353919079,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_f1fde7e0",
+      "embryo": "6bba",
+      "key": "train/6bba_f1fde7e0.zarr",
+      "mb": 353.92
+    },
+    {
+      "bytes": 14368,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_f20478e9",
+      "embryo": "6bba",
+      "key": "train/6bba_f20478e9.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 352854964,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_f20478e9",
+      "embryo": "6bba",
+      "key": "train/6bba_f20478e9.zarr",
+      "mb": 352.85
+    },
+    {
+      "bytes": 14049,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_f4ae811c",
+      "embryo": "6bba",
+      "key": "train/6bba_f4ae811c.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 371013137,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_f4ae811c",
+      "embryo": "6bba",
+      "key": "train/6bba_f4ae811c.zarr",
+      "mb": 371.01
+    },
+    {
+      "bytes": 10144,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_f8ffd5e7",
+      "embryo": "6bba",
+      "key": "train/6bba_f8ffd5e7.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 468961181,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_f8ffd5e7",
+      "embryo": "6bba",
+      "key": "train/6bba_f8ffd5e7.zarr",
+      "mb": 468.96
+    },
+    {
+      "bytes": 11669,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_fbc898dc",
+      "embryo": "6bba",
+      "key": "train/6bba_fbc898dc.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 340236936,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_fbc898dc",
+      "embryo": "6bba",
+      "key": "train/6bba_fbc898dc.zarr",
+      "mb": 340.24
+    },
+    {
+      "bytes": 12743,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_fc516dc6",
+      "embryo": "6bba",
+      "key": "train/6bba_fc516dc6.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 371747462,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_fc516dc6",
+      "embryo": "6bba",
+      "key": "train/6bba_fc516dc6.zarr",
+      "mb": 371.75
+    },
+    {
+      "bytes": 10502,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_fc5f39dc",
+      "embryo": "6bba",
+      "key": "train/6bba_fc5f39dc.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 378386783,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_fc5f39dc",
+      "embryo": "6bba",
+      "key": "train/6bba_fc5f39dc.zarr",
+      "mb": 378.39
+    },
+    {
+      "bytes": 14114,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_fc83837d",
+      "embryo": "6bba",
+      "key": "train/6bba_fc83837d.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 400026564,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_fc83837d",
+      "embryo": "6bba",
+      "key": "train/6bba_fc83837d.zarr",
+      "mb": 400.03
+    },
+    {
+      "bytes": 12040,
+      "files": 21,
+      "kind": "geff",
+      "split": "train",
+      "dataset": "6bba_fe670320",
+      "embryo": "6bba",
+      "key": "train/6bba_fe670320.geff",
+      "mb": 0.01
+    },
+    {
+      "bytes": 379179756,
+      "files": 102,
+      "kind": "zarr",
+      "split": "train",
+      "dataset": "6bba_fe670320",
+      "embryo": "6bba",
+      "key": "train/6bba_fe670320.zarr",
+      "mb": 379.18
+    }
+  ]
+}

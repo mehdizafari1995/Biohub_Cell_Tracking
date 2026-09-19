@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from .graphs import TrackGraph
@@ -80,8 +81,14 @@ def graphs_to_submission(graphs: list[TrackGraph]) -> pd.DataFrame:
     return df
 
 
-def validate_submission(df: pd.DataFrame, required_datasets: list[str] | None = None) -> list[str]:
+def validate_submission(
+    df: pd.DataFrame,
+    required_datasets: list[str] | None = None,
+    volume_shapes: dict[str, tuple[int, int, int, int]] | None = None,
+) -> list[str]:
     errors: list[str] = []
+    if df is None or len(df) == 0:
+        return ["submission.csv is empty"]
     missing_cols = [c for c in COLUMNS if c not in df.columns]
     if missing_cols:
         return [f"missing columns: {missing_cols}"]
@@ -89,24 +96,50 @@ def validate_submission(df: pd.DataFrame, required_datasets: list[str] | None = 
         errors.append(f"column order should be {COLUMNS}")
     if df["id"].tolist() != list(range(len(df))):
         errors.append("id must be consecutive integers starting at 0")
-    if set(df["row_type"].unique()) - {"node", "edge"}:
+    if set(df["row_type"].astype(str).unique()) - {"node", "edge"}:
         errors.append(f"invalid row_type values: {sorted(df['row_type'].unique())}")
     nodes = df[df["row_type"] == "node"]
     edges = df[df["row_type"] == "edge"]
     if (nodes[["source_id", "target_id"]] != -1).any().any():
         errors.append("node rows must use source_id=target_id=-1")
-    if (edges[["node_id", "t", "z", "y", "x"]] != -1).any().any():
+    if len(edges) and (edges[["node_id", "t", "z", "y", "x"]] != -1).any().any():
         errors.append("edge rows must use node_id,t,z,y,x=-1")
     for dataset, group in df.groupby("dataset"):
-        node_ids = set(group.loc[group["row_type"] == "node", "node_id"].tolist())
-        for _, row in group[group["row_type"] == "edge"].iterrows():
-            if int(row["source_id"]) not in node_ids or int(row["target_id"]) not in node_ids:
-                errors.append(
-                    f"{dataset}: edge {int(row['source_id'])}->{int(row['target_id'])} references missing node_id"
-                )
+        name = str(dataset)
+        gnodes = group[group["row_type"] == "node"]
+        gedges = group[group["row_type"] == "edge"]
+        if gnodes["node_id"].duplicated().any():
+            errors.append(f"{name}: duplicate node_id values")
+        if len(gedges) and gedges.duplicated(subset=["source_id", "target_id"]).any():
+            errors.append(f"{name}: duplicate edges")
+        node_ids = set(gnodes["node_id"].tolist())
+        for col in ("t", "z", "y", "x"):
+            vals = pd.to_numeric(gnodes[col], errors="coerce")
+            arr = vals.to_numpy(dtype=float)
+            if vals.isna().any() or np.isinf(arr).any():
+                errors.append(f"{name}: non-finite {col}")
+            elif not np.allclose(arr, np.round(arr)):
+                errors.append(f"{name}: {col} is not integer-valued")
+        shape = (volume_shapes or {}).get(name)
+        if shape is not None:
+            n_time, n_z, n_y, n_x = shape
+            if (gnodes["t"] < 0).any() or (gnodes["t"] >= n_time).any():
+                errors.append(f"{name}: t outside [0, {n_time - 1}]")
+            if (gnodes["z"] < 0).any() or (gnodes["z"] >= n_z).any():
+                errors.append(f"{name}: z outside bounds")
+            if (gnodes["y"] < 0).any() or (gnodes["y"] >= n_y).any():
+                errors.append(f"{name}: y outside bounds")
+            if (gnodes["x"] < 0).any() or (gnodes["x"] >= n_x).any():
+                errors.append(f"{name}: x outside bounds")
+        t_by_id = dict(zip(gnodes["node_id"].astype("int64"), gnodes["t"].astype("int64")))
+        for _, row in gedges.iterrows():
+            source_id, target_id = int(row["source_id"]), int(row["target_id"])
+            if source_id not in node_ids or target_id not in node_ids:
+                errors.append(f"{name}: edge {source_id}->{target_id} references missing node_id")
                 break
-        if group.loc[group["row_type"] == "node", "node_id"].duplicated().any():
-            errors.append(f"{dataset}: duplicate node_id values")
+            if t_by_id[target_id] <= t_by_id[source_id]:
+                errors.append(f"{name}: source time does not precede target time ({source_id}->{target_id})")
+                break
     if required_datasets is not None:
         present = set(df["dataset"].astype(str))
         missing = [d for d in required_datasets if d not in present]

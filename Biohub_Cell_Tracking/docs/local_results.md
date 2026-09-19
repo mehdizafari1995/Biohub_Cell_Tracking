@@ -88,3 +88,26 @@ Exact submit steps: `docs/kaggle_submit.md`.
 - Greedy one-child linking never predicts divisions; division Jaccard stays 0.
 - Dense-field identity switches remain after the detection improvement.
 - No actual Kaggle scoring rerun.
+
+## Later update (2026-09-18, after the notes above)
+
+Split volumes listed as incomplete above were finished (all four v1 zarrs are 100/100). `docs/splits/v1.json` was not changed. `docs/splits/v2.json` adds sanity sequence `44b6_2a2eff9f` only.
+
+### Actual Kaggle kernel (not a competition submit)
+
+Private kernel `mahdimzafari/biohub-baseline-v1` **version 1** failed: no `zarr` package. **Version 2 COMPLETE** on public test with internet off. Worker numbers from `run_manifest.json`: 595.24 s, 1.49 s/frame, 435 MB, 224788 rows, audit_ok. Decoder `blosc2 4.1.2`. No public or private leaderboard score was returned. Manual submit click: `docs/kaggle_submit.md`.
+
+Runtime projection from **this Kaggle run** (not the local 0.583 s/frame simulation): 1.49 s/frame. If hidden test ≈ train (16 sequences × 100 frames) ≈ 40 minutes. If someone still assumes 200 × 100 frames: 8.3 h, and 2× margin exceeds 12 h. The 200-sequence figure remains unverified.
+
+### Full frozen validation (two sequences, official scorer)
+
+New runs; previous tables above are unchanged.
+
+| experiment | config | official | raw J | adj | div J (TP/FP/FN) | recall | switches | fragments |
+|---|---|---|---|---|---|---|---|---|
+| `val_baseline_v1` | A greedy 15 µm | 0.537 | 0.530 | 0.537 | 0.0 (0/0/5) | 0.804 | 150 | 603 |
+| `val_association_v2` | B 12 µm + gap2 + intensity | **0.592** | 0.589 | 0.592 | 0.0 (0/0/5) | 0.838 | 135 | 483 |
+| `division_v1_val` | C + two-child proposals | 0.590 | 0.587 | 0.590 | 0.0 (0/3/5) | 0.838 | — | — |
+
+`6bba_05db0fb1` A is 0.498, matching `20260918T053718Z_val_aniso`. Comparison write-up: `reports/abc_comparison.md`.
+

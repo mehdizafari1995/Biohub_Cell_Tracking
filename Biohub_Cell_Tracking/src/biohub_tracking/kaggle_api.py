@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import random
 import time
 import urllib.error
 import urllib.parse
@@ -28,8 +29,15 @@ def _token() -> str:
     )
 
 
+def _sleep_backoff(delay: float) -> float:
+    """Exponential backoff with jitter. Never retry 429 immediately."""
+    jitter = random.uniform(0.0, 0.4 * delay)
+    time.sleep(delay + jitter)
+    return min(delay * 2.0, 120.0)
+
+
 def _request(url: str, retries: int = 8) -> Any:
-    delay = 2.0
+    delay = 3.0
     for attempt in range(retries):
         req = urllib.request.Request(url)
         req.add_header("Authorization", f"Bearer {_token()}")
@@ -38,9 +46,10 @@ def _request(url: str, retries: int = 8) -> Any:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 return json.loads(resp.read().decode())
         except urllib.error.HTTPError as exc:
+            if exc.code == 429:
+                delay = max(delay, 15.0)
             if exc.code in {429, 500, 502, 503} and attempt < retries - 1:
-                time.sleep(delay)
-                delay = min(delay * 2, 60.0)
+                delay = _sleep_backoff(delay)
                 continue
             raise
     raise RuntimeError(f"request failed: {url}")
@@ -83,30 +92,59 @@ def iter_competition_files(
             )
         if next_token:
             url = f"{API_ROOT}/competitions/data/list/{competition}?pageToken={urllib.parse.quote(str(next_token))}"
-            time.sleep(page_sleep)
+            time.sleep(page_sleep + random.uniform(0.0, 0.4 * page_sleep))
         else:
             url = None
 
 
-def download_file(file_name: str, dest: Path, competition: str = COMPETITION) -> bool:
+def download_file(
+    file_name: str,
+    dest: Path,
+    competition: str = COMPETITION,
+    expected_bytes: int | None = None,
+    min_interval_sec: float = 1.5,
+) -> bool:
     encoded = urllib.parse.quote(file_name, safe="")
     url = f"{API_ROOT}/competitions/data/download/{competition}/{encoded}"
     dest.parent.mkdir(parents=True, exist_ok=True)
-    delay = 4.0
+    if dest.exists() and dest.stat().st_size > 0:
+        if expected_bytes is None or dest.stat().st_size == int(expected_bytes):
+            return True
+    delay = 5.0
     for attempt in range(10):
+        existing = dest.stat().st_size if dest.exists() else 0
         req = urllib.request.Request(url)
         req.add_header("Authorization", f"Bearer {_token()}")
         req.add_header("User-Agent", "biohub-cell-tracking/0.1")
+        if existing > 0:
+            req.add_header("Range", f"bytes={existing}-")
         try:
             with urllib.request.urlopen(req, timeout=180) as resp:
-                dest.write_bytes(resp.read())
-            return True
+                status = getattr(resp, "status", 200)
+                payload = resp.read()
+                content_len = resp.headers.get("Content-Length")
+                if status == 206 and existing > 0:
+                    with dest.open("ab") as fh:
+                        fh.write(payload)
+                else:
+                    dest.write_bytes(payload)
+                actual = dest.stat().st_size
+                if expected_bytes is not None and actual != int(expected_bytes):
+                    if content_len is not None and existing == 0 and actual != int(content_len):
+                        dest.unlink(missing_ok=True)
+                        delay = _sleep_backoff(delay)
+                        continue
+                time.sleep(min_interval_sec + random.uniform(0.0, 0.5))
+            return dest.exists() and dest.stat().st_size > 0
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
                 return False
+            if exc.code == 416 and dest.exists() and dest.stat().st_size > 0:
+                return True
+            if exc.code == 429:
+                delay = max(delay, 20.0)
             if exc.code in {429, 500, 502, 503} and attempt < 9:
-                time.sleep(delay)
-                delay = min(delay * 2, 90.0)
+                delay = _sleep_backoff(delay)
                 continue
             raise
     return False

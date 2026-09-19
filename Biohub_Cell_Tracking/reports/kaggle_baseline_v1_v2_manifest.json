@@ -1,0 +1,35 @@
+{
+  "environment": "kaggle_input",
+  "config_label": "baseline_v1",
+  "config_hash": "d4f79f4af9958c85",
+  "kaggle_kernel": "mahdimzafari/biohub-baseline-v1",
+  "kaggle_kernel_version": 2,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "n_nodes": 117515,
+  "n_edges": 107273,
+  "n_predicted_divisions": 0,
+  "rows": 224788,
+  "submission_bytes": 11443248,
+  "submission_empty": false,
+  "runtime_sec": 595.241928898,
+  "sec_per_frame": 1.488104822245,
+  "peak_memory_mb": 435.015625,
+  "audit_ok": true,
+  "package_versions": {
+    "python": "3.12.13",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3",
+    "scikit-image": "0.25.2",
+    "pandas": "2.3.3",
+    "zarr": "missing",
+    "imagecodecs": "missing",
+    "numcodecs": "missing",
+    "blosc2": "4.1.2"
+  },
+  "note": "Copied from the Kaggle worker run_manifest.json. This is a real Kaggle kernel execution on public test. It is not a competition submission and reports no leaderboard score."
+}

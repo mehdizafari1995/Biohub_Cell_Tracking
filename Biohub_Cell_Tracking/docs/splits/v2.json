@@ -1,0 +1,22 @@
+{
+  "version": "v2",
+  "created_utc": "2026-09-18T12:27:00Z",
+  "parent": "v1",
+  "rule": "Hold out entire embryos. Crops from the same specimen stay together. Never split neighboring frames.",
+  "specimen_key": "folder prefix before first underscore (e.g. 44b6, 6bba)",
+  "note": "v1 is unchanged. v2 only adds a sanity sequence that was not used to choose association_v2 or division_v1 thresholds. Downloaded GEFFs contain only two specimen prefixes, so this sanity set is still embryo 44b6 (same prefix as tuning), not a third embryo.",
+  "tuning_embryos": ["44b6"],
+  "validation_embryos": ["6bba"],
+  "sanity_embryos": ["44b6"],
+  "tuning": ["44b6_12dfb391", "44b6_267148e4"],
+  "validation": ["6bba_05db0fb1", "6bba_c328f2fd"],
+  "sanity": ["44b6_2a2eff9f"],
+  "selected": [
+    "44b6_12dfb391",
+    "44b6_267148e4",
+    "6bba_05db0fb1",
+    "6bba_c328f2fd",
+    "44b6_2a2eff9f"
+  ],
+  "why_not_replace_v1": "Association and division operating points were locked against v1. Changing v1 after seeing model results would invalidate the holdout."
+}
