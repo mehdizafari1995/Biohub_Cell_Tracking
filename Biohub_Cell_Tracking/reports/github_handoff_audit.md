@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 33 passed (2026-09-18 and 2026-09-19 re-run).
+`python -m pytest Biohub_Cell_Tracking/tests` — 31 passed on `main` + this harness (2026-09-19). The 33-test count included association/kernel tests on the experiment branch.
 
 ## Official scorer
 

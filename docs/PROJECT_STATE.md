@@ -42,7 +42,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md` and `experiments/registry.c
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — see latest worker run. Baseline count before this harness: 33 passed (2026-09-19).
+`python -m pytest Biohub_Cell_Tracking/tests` — 31 passed (2026-09-19, this branch). The earlier 33-test count included association/kernel tests that live on the experiment branch.
 
 ## Privacy
 
