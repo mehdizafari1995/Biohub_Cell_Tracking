@@ -1,0 +1,42 @@
+{
+  "environment": "kaggle_input",
+  "config_label": "association_v2",
+  "config_hash": "2c6966b5204ba542",
+  "kaggle_kernel": "mahdimzafari/biohub-association-v2",
+  "kaggle_kernel_version": 3,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "n_nodes": 129500,
+  "n_edges": 124273,
+  "n_predicted_divisions": 0,
+  "n_interpolated": 11985,
+  "rows": 253773,
+  "submission_bytes": 12948601,
+  "submission_empty": false,
+  "runtime_sec": 593.528496317,
+  "sec_per_frame": 1.4838212407925,
+  "peak_memory_mb": 421.46484375,
+  "audit_ok": true,
+  "package_versions": {
+    "python": "3.12.13",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3",
+    "scikit-image": "0.25.2",
+    "pandas": "2.3.3",
+    "zarr": "missing",
+    "imagecodecs": "missing",
+    "numcodecs": "missing",
+    "blosc2": "4.1.2"
+  },
+  "per_dataset_nodes_edges_interp": {
+    "44b6_0113de3b": [28855, 27804, 1123],
+    "44b6_0b24845f": [24649, 23153, 4128],
+    "6bba_05b6850b": [8208, 7764, 755],
+    "6bba_05db0fb1": [67788, 65552, 5979]
+  },
+  "note": "Copied from the Kaggle worker run_manifest.json. This is a real Kaggle kernel execution on public test. It is not a competition submission and reports no leaderboard score. submission.csv was not downloaded into git."
+}

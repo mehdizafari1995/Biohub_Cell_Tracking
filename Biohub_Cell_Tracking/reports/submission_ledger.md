@@ -22,9 +22,20 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Competition submit:** not performed. No public or private leaderboard score was returned.
 - **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-baseline-v1 → version 2 → **Submit to Competition**.
 
+## association_v2_kernel_v3
+
+- **Status:** private kernel `mahdimzafari/biohub-association-v2` version **3** **COMPLETE**. Environment label `kaggle_input`. This is a real Kaggle execution on public `test/`.
+- **Config hash:** `2c6966b5204ba542` (anisotropic DoG + 4 µm NMS + greedy 12 µm gate + 2-frame gap close + intensity 0.5, interpolated consecutive nodes, no divisions).
+- **Datasets:** `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, `6bba_05db0fb1` (exact sample_submission stems).
+- **Output:** `/kaggle/working/submission.csv` 12 948 601 bytes, 253 773 rows, 129 500 nodes, 124 273 edges, 11 985 interpolated nodes, 0 predicted divisions. Worker audit: `audit_ok`. `submission.csv` was not copied into git.
+- **Worker:** 593.53 s (1.48 s/frame), peak RAM 421 MB. Decoder was `blosc2 4.1.2`; `zarr`/`imagecodecs`/`numcodecs` were missing.
+- **Local official score:** 0.592 on the full frozen validation split (`6bba_05db0fb1` + `6bba_c328f2fd`). That number is local official, not a leaderboard score.
+- **Competition submit:** not performed. No public or private leaderboard score was returned.
+- **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-association-v2 → version 3 → **Submit to Competition**.
+
 ## association_v2_local / division_v1_local
 
-Local official scores only. No Kaggle kernel and no leaderboard numbers. association_v2 improved frozen validation (0.537 → 0.592). division_v1 did not (0.590, 0/3/5 divisions).
+Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.
 
 ## Policy
 

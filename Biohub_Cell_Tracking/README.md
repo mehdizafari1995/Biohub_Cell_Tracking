@@ -50,7 +50,7 @@ Official scores need `requirements-official.txt`. Without that extra, `run_eval.
 
 See `docs/kaggle_submit.md`. Internet off. Discover `test/*.zarr` at runtime. A local `scripts\simulate_kaggle.py` run is **not** a Kaggle submission.
 
-Private kernel `mahdimzafari/biohub-baseline-v1` version 2 completed on public test (595 s, audit_ok). It has **not** been submitted to the competition. No leaderboard score from this repo.
+Private kernel `mahdimzafari/biohub-baseline-v1` version 2 completed on public test (595 s, audit_ok). Private kernel `mahdimzafari/biohub-association-v2` version 3 completed on public test (594 s, audit_ok). Neither has been submitted to the competition. No leaderboard score from this repo.
 
 Keep `configs\baseline.yaml` as the frozen original greedy baseline. `configs\baseline_v1.yaml` is anisotropic DoG + 4 µm NMS. Association/division experiments use `configs\association_v2.yaml` and `configs\division_v1.yaml` without overwriting baseline_v1.
 

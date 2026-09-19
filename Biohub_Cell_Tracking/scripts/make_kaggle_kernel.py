@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
-"""Build a private Kaggle notebook kernel from notebooks/kaggle_baseline_v1.py."""
+"""Build private internet-off Kaggle notebooks from self-contained kernel sources."""
 
 from __future__ import annotations
 
+import argparse
 import json
 import uuid
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "notebooks" / "kaggle_baseline_v1.py"
-NOTEBOOK = ROOT / "notebooks" / "kaggle_baseline_v1.ipynb"
-KERNEL_DIR = ROOT / "kaggle_kernel" / "baseline_v1"
-METADATA = KERNEL_DIR / "kernel-metadata.json"
-KERNEL_ID = "mahdimzafari/biohub-baseline-v1"
-TITLE = "Biohub Baseline V1"
 
-MARKDOWN = """# Biohub baseline_v1
+KERNELS: dict[str, dict[str, str]] = {
+    "baseline_v1": {
+        "source": "notebooks/kaggle_baseline_v1.py",
+        "notebook": "notebooks/kaggle_baseline_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/baseline_v1",
+        "code_file": "kaggle_baseline_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-baseline-v1",
+        "title": "Biohub Baseline V1",
+        "markdown": """# Biohub baseline_v1
 
 Private CPU kernel for **Biohub - Cell Tracking During Development**.
 
@@ -24,10 +27,32 @@ Private CPU kernel for **Biohub - Cell Tracking During Development**.
 - Discovers every `test/*.zarr` at runtime (no hard-coded public names).
 - Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
 - This notebook is the Kaggle source. A local simulation is not a Kaggle execution.
-"""
+""",
+    },
+    "association_v2": {
+        "source": "notebooks/kaggle_association_v2.py",
+        "notebook": "notebooks/kaggle_association_v2.ipynb",
+        "kernel_dir": "kaggle_kernel/association_v2",
+        "code_file": "kaggle_association_v2.ipynb",
+        "kernel_id": "mahdimzafari/biohub-association-v2",
+        "title": "Biohub Association V2",
+        "markdown": """# Biohub association_v2
+
+Private CPU kernel for **Biohub - Cell Tracking During Development**.
+
+- Config: anisotropic DoG + 4 µm NMS + greedy 12 µm gate + 2-frame gap close + intensity 0.5 (`association_v2`)
+- Same detections as `baseline_v1`. Linking interpolates skipped frames into consecutive edges.
+- Attach the competition dataset. **Internet OFF**. Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.
+- Discovers every `test/*.zarr` at runtime (no hard-coded public names).
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- This notebook is the Kaggle source. A local simulation is not a Kaggle execution.
+- Do **not** submit this version to the competition from this packaging step.
+""",
+    },
+}
 
 
-def build_notebook(source_text: str) -> dict:
+def build_notebook(source_text: str, markdown: str) -> dict:
     return {
         "nbformat": 4,
         "nbformat_minor": 5,
@@ -41,7 +66,7 @@ def build_notebook(source_text: str) -> dict:
                 "cell_type": "markdown",
                 "id": str(uuid.uuid4()),
                 "metadata": {},
-                "source": [line + "\n" for line in MARKDOWN.strip("\n").split("\n")],
+                "source": [line + "\n" for line in markdown.strip("\n").split("\n")],
             },
             {
                 "cell_type": "code",
@@ -56,11 +81,11 @@ def build_notebook(source_text: str) -> dict:
     }
 
 
-def metadata_payload() -> dict:
+def metadata_payload(spec: dict[str, str]) -> dict:
     return {
-        "id": KERNEL_ID,
-        "title": TITLE,
-        "code_file": "kaggle_baseline_v1.ipynb",
+        "id": spec["kernel_id"],
+        "title": spec["title"],
+        "code_file": spec["code_file"],
         "language": "python",
         "kernel_type": "notebook",
         "is_private": True,
@@ -75,16 +100,38 @@ def metadata_payload() -> dict:
     }
 
 
+def build_kernel(name: str) -> list[Path]:
+    if name not in KERNELS:
+        raise SystemExit(f"unknown kernel {name!r}; choose from {sorted(KERNELS)}")
+    spec = KERNELS[name]
+    source = ROOT / spec["source"]
+    notebook = ROOT / spec["notebook"]
+    kernel_dir = ROOT / spec["kernel_dir"]
+    metadata = kernel_dir / "kernel-metadata.json"
+    source_text = source.read_text()
+    nb = build_notebook(source_text, spec["markdown"])
+    notebook.write_text(json.dumps(nb, indent=1) + "\n")
+    kernel_dir.mkdir(parents=True, exist_ok=True)
+    kernel_nb = kernel_dir / spec["code_file"]
+    kernel_nb.write_text(json.dumps(nb, indent=1) + "\n")
+    metadata.write_text(json.dumps(metadata_payload(spec), indent=2) + "\n")
+    return [notebook, kernel_nb, metadata]
+
+
 def main() -> None:
-    source_text = SOURCE.read_text()
-    nb = build_notebook(source_text)
-    NOTEBOOK.write_text(json.dumps(nb, indent=1))
-    KERNEL_DIR.mkdir(parents=True, exist_ok=True)
-    (KERNEL_DIR / "kaggle_baseline_v1.ipynb").write_text(json.dumps(nb, indent=1))
-    METADATA.write_text(json.dumps(metadata_payload(), indent=2) + "\n")
-    print(f"wrote {NOTEBOOK}")
-    print(f"wrote {KERNEL_DIR / 'kaggle_baseline_v1.ipynb'}")
-    print(f"wrote {METADATA}")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "kernels",
+        nargs="*",
+        default=["association_v2"],
+        help="Kernel names to package (default: association_v2). Use 'all' for every known kernel.",
+    )
+    args = parser.parse_args()
+    names = list(KERNELS) if args.kernels == ["all"] else args.kernels
+    for name in names:
+        written = build_kernel(name)
+        for path in written:
+            print(f"wrote {path}")
 
 
 if __name__ == "__main__":

@@ -59,4 +59,4 @@ Visual inspection of the three `6bba_05db0fb1` events (t=24, 52, 62): dense MIP,
 
 ## Kaggle
 
-Only A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B improved frozen validation, so it is the next deliberate kernel if a second run is made. C did not improve. No competition submit was performed. No public or private leaderboard score was returned.
+A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. C did not improve locally and has no kernel. No competition submit was performed. No public or private leaderboard score was returned.

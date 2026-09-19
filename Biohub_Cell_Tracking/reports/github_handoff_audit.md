@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 33 passed (2026-09-18 and 2026-09-19 re-run).
+`python -m pytest Biohub_Cell_Tracking/tests` — 39 passed (2026-09-19, association_v2 kernel packaging).
 
 ## Official scorer
 
@@ -37,10 +37,11 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `submission.csv`, or local run artifacts.
 
-## 2026-09-19 re-audit (pre-push)
+## 2026-09-19 re-audit (association_v2 kernel)
 
-- `pytest` 33 passed.
+- `pytest` 39 passed.
 - Official scorer pin unchanged: `075fc5f5`.
-- Tracked files: 165 plus coordination docs in this commit; no `data/`, `submission.csv`, credentials, weights, or run artifacts tracked.
+- New private kernel slug `mahdimzafari/biohub-association-v2` is packaged under `kaggle_kernel/association_v2/`. Unauthenticated GET of the kernel page returned 404, same as the known-private `baseline_v1` kernel.
+- `submission.csv` from the worker was not downloaded into git. Sanitized worker numbers: `reports/kaggle_association_v2_v3_manifest.json`.
 - `KAGGLE_API_TOKEN` present in environment (value not printed). `~/.kaggle/kaggle.json` absent.
 - GitHub CLI authenticated as `mehdizafari1995` for the private repo.
