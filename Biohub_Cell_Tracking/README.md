@@ -40,6 +40,7 @@ python scripts\download_sample.py --dataset 44b6_0db75fae --timepoints 0-9,50,99
 python scripts\inspect_sample.py
 python scripts\run_eval.py --config configs\baseline.yaml --role all_local --name baseline_official
 python scripts\run_eval.py --config configs\hungarian.yaml --role all_local --name hungarian_official
+python scripts\run_complete_validation.py --config configs\baseline.yaml
 ```
 
 Keep `configs\baseline.yaml` as the frozen baseline. Measured variants use `configs\hungarian.yaml` and `configs\physical_nms.yaml`.
