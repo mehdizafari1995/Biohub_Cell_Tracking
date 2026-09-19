@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 33 passed (2026-09-18).
+`python -m pytest Biohub_Cell_Tracking/tests` — 33 passed (2026-09-18 and 2026-09-19 re-run).
 
 ## Official scorer
 
@@ -36,3 +36,11 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 ## Push policy
 
 Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `submission.csv`, or local run artifacts.
+
+## 2026-09-19 re-audit (pre-push)
+
+- `pytest` 33 passed.
+- Official scorer pin unchanged: `075fc5f5`.
+- Tracked files: 165 plus coordination docs in this commit; no `data/`, `submission.csv`, credentials, weights, or run artifacts tracked.
+- `KAGGLE_API_TOKEN` present in environment (value not printed). `~/.kaggle/kaggle.json` absent.
+- GitHub CLI authenticated as `mehdizafari1995` for the private repo.
