@@ -52,7 +52,8 @@ def load_tracksdata_geff(geff_path: str | Path):
     return result[0] if isinstance(result, tuple) else result
 
 
-def trackgraph_to_tracksdata(graph: TrackGraph):
+def trackgraph_to_tracksdata_mapped(graph: TrackGraph):
+    """Convert a TrackGraph and return (tracksdata graph, original_id -> td_id)."""
     import tracksdata as td
 
     g = td.graph.InMemoryGraph()
@@ -68,6 +69,11 @@ def trackgraph_to_tracksdata(graph: TrackGraph):
         g.bulk_add_edges(
             [{"source_id": id_map[int(s)], "target_id": id_map[int(d)]} for s, d in graph.edges]
         )
+    return g, id_map
+
+
+def trackgraph_to_tracksdata(graph: TrackGraph):
+    g, _ = trackgraph_to_tracksdata_mapped(graph)
     return g
 
 
@@ -203,6 +209,57 @@ def summarise_official(rows: list[OfficialSampleResult]) -> dict[str, Any]:
     summary["official_commit"] = OFFICIAL_COMMIT
     summary["source_url"] = OFFICIAL_REPO
     return summary
+
+
+def score_official_division_events(
+    pred: TrackGraph,
+    gt: TrackGraph,
+    scale_zyx: tuple[float, float, float] = DEFAULT_SCALE_ZYX,
+    max_distance_um: float = DEFAULT_MATCH_DISTANCE_UM,
+) -> dict[str, Any]:
+    """Score each annotated GT division with the organizer division metric.
+
+    Uses ``tracking_cellmot.division_metrics.score_divisions`` (local
+    grandparent → parent → children → grandchildren window). Returns original
+    TrackGraph node IDs, not the remapped tracksdata IDs.
+    """
+    if not official_scorer_available():
+        raise RuntimeError("Official scorer source is missing under third_party/")
+    _ensure_official_path()
+    from tracking_cellmot.division_metrics import score_divisions
+
+    pred_td, pred_map = trackgraph_to_tracksdata_mapped(pred)
+    gt_td, gt_map = trackgraph_to_tracksdata_mapped(gt)
+    inv_gt = {td_id: orig for orig, td_id in gt_map.items()}
+    inv_pred = {td_id: orig for orig, td_id in pred_map.items()}
+    scored = score_divisions(pred_td, gt_td, scale=scale_zyx, max_distance=max_distance_um)
+    events = []
+    for td_id, recovered in scored.scores.items():
+        events.append(
+            {
+                "dataset": gt.dataset,
+                "parent_id": int(inv_gt.get(td_id, td_id)),
+                "official_recovered": bool(recovered),
+                "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+                "official_commit": OFFICIAL_COMMIT,
+            }
+        )
+    events.sort(key=lambda row: (row["dataset"], row["parent_id"]))
+    tp = int(sum(1 for row in events if row["official_recovered"]))
+    fn = int(len(events) - tp)
+    fp_forks = [int(inv_pred.get(i, i)) for i in scored.fp_forks]
+    tp_forks = [int(inv_pred.get(i, i)) for i in scored.tp_forks]
+    return {
+        "dataset": gt.dataset,
+        "events": events,
+        "division_tp": tp,
+        "division_fn": fn,
+        "division_fp": int(len(fp_forks)),
+        "tp_forks": sorted(tp_forks),
+        "fp_forks": sorted(fp_forks),
+        "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+        "official_commit": OFFICIAL_COMMIT,
+    }
 
 
 def _safe_div_jaccard(tp: int, fp: int, fn: int) -> float:

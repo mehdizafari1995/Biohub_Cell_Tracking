@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-19 (GitHub handoff). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-19 (complete validation harness). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -36,9 +36,13 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md` and `experiments/registry.c
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `~/.kaggle/kaggle.json`. Never print tokens.
 
+## Complete validation harness
+
+`scripts/run_complete_validation.py` inventories both frozen validation sequences (`6bba_05db0fb1`, `6bba_c328f2fd`; 5 annotated divisions) and scores available graphs with the official scorer plus per-event `score_divisions`. It refuses a rewritten v1 split and does not retune. This environment has no train volumes, so the harness reports `complete=false` rather than a new official score.
+
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 33 passed (2026-09-19 re-run).
+`python -m pytest Biohub_Cell_Tracking/tests` — see latest worker run. Baseline count before this harness: 33 passed (2026-09-19).
 
 ## Privacy
 
