@@ -127,6 +127,26 @@ def test_kernel_matches_library_on_gap_and_rejects_far_pairs():
     assert n_interp_far == 0
 
 
+def test_two_frame_gap_is_closed_three_frame_gap_is_not():
+    closed = [
+        (0, np.array([[8.0, 10.0, 20.0]]), np.array([5.0]), np.array([5.0]), np.array([1])),
+        (3, np.array([[8.0, 16.0, 20.0]]), np.array([5.0]), np.array([5.0]), np.array([2])),
+    ]
+    nodes, edges, _, n_interp = link_detections(closed, next_id=3)
+    assert n_interp == 2
+    assert len(edges) == 3
+    assert len(nodes) == 4
+
+    too_far = [
+        (0, np.array([[8.0, 10.0, 20.0]]), np.array([5.0]), np.array([5.0]), np.array([1])),
+        (4, np.array([[8.0, 18.0, 20.0]]), np.array([5.0]), np.array([5.0]), np.array([2])),
+    ]
+    nodes_far, edges_far, _, n_interp_far = link_detections(too_far, next_id=3)
+    assert len(nodes_far) == 2
+    assert edges_far == []
+    assert n_interp_far == 0
+
+
 def test_intensity_cost_prefers_similar_appearance():
     close = appearance_cost(10.0, 10.5, INTENSITY_WEIGHT, GATE_UM)
     far = appearance_cost(10.0, 20.0, INTENSITY_WEIGHT, GATE_UM)

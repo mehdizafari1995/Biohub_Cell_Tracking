@@ -62,7 +62,7 @@ This repository does **not** authorize `kaggle competitions submit`. Do not subm
 ## Local simulation vs Kaggle
 
 ```bat
-python scripts\simulate_kaggle.py
+python scripts\simulate_kaggle.py --notebook notebooks\kaggle_association_v2.py
 ```
 
 That script blocks `socket.socket` in-process and runs the notebook against local `data/test`. It is labelled `local_simulation`. It is **not** a Kaggle execution: the Kaggle image, hidden test, and 12-hour worker are different.
