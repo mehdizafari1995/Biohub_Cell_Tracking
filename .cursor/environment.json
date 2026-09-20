@@ -1,0 +1,4 @@
+{
+  "name": "Biohub Cell Tracking",
+  "install": "sudo apt-get update\nsudo apt-get install -y python3.12-venv\ncd Biohub_Cell_Tracking\npython3 -m venv .venv\n. .venv/bin/activate\npython -m pip install -U pip\npython -m pip install -r requirements.txt\npython -m pip install -r requirements-official.txt\npython -m pip install -e .\npython -c \"import biohub_tracking; from biohub_tracking.official_eval import official_scorer_available; assert official_scorer_available(); print('install OK; official scorer available')\""
+}
