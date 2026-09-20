@@ -98,3 +98,29 @@ def detect_cells(image_zyx: np.ndarray, config: DetectionConfig, scale_zyx: tupl
             coords = suppress_close_centroids(coords, config.min_distance_um, scale_zyx)
         return coords
     raise ValueError(f"Unknown detection method: {config.method}")
+
+
+def sample_appearance(image_zyx: np.ndarray, coords_zyx: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Centroid intensity and 3x3x3 mean. Empty-safe."""
+    coords = np.asarray(coords_zyx, dtype=np.float64).reshape(-1, 3)
+    if len(coords) == 0:
+        empty = np.zeros((0,), dtype=np.float64)
+        return empty, empty
+    image = np.asarray(image_zyx)
+    z = np.clip(np.round(coords[:, 0]).astype(np.int64), 0, image.shape[0] - 1)
+    y = np.clip(np.round(coords[:, 1]).astype(np.int64), 0, image.shape[1] - 1)
+    x = np.clip(np.round(coords[:, 2]).astype(np.int64), 0, image.shape[2] - 1)
+    intensity = image[z, y, x].astype(np.float64)
+    patch = np.zeros(len(coords), dtype=np.float64)
+    for i, (zi, yi, xi) in enumerate(zip(z, y, x)):
+        sl = image[max(zi - 1, 0) : zi + 2, max(yi - 1, 0) : yi + 2, max(xi - 1, 0) : xi + 2]
+        patch[i] = float(np.mean(sl)) if sl.size else float(intensity[i])
+    return intensity, patch
+
+
+def detect_cells_with_appearance(
+    image_zyx: np.ndarray, config: DetectionConfig, scale_zyx: tuple[float, float, float]
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    coords = detect_cells(image_zyx, config, scale_zyx)
+    intensity, patch = sample_appearance(image_zyx, coords)
+    return coords, intensity, patch

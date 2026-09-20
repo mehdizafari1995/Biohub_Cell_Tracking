@@ -1,0 +1,40 @@
+{
+  "decision": "keep_division_v2",
+  "not_a_kaggle_run": true,
+  "not_a_leaderboard_score": true,
+  "retune_after_holdout": false,
+  "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+  "code_version_scored": "751587f",
+  "locked_association_hash": "2c6966b5204ba542",
+  "locked_division_hash": "0fa756963e5d42d1",
+  "runtime_sec": 139.402,
+  "peak_memory_mb": 760.8,
+  "association_v2": {
+    "score": 0.5915697467955445,
+    "edge_jaccard": 0.5888125613346418,
+    "adj_edge_jaccard": 0.5915697467955445,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 5,
+    "node_recall": 0.8382437474025468,
+    "per_sequence": {
+      "6bba_05db0fb1": 0.5643362235389078,
+      "6bba_c328f2fd": 0.6601944625665863
+    }
+  },
+  "division_v2": {
+    "score": 0.5915697467955445,
+    "edge_jaccard": 0.5888125613346418,
+    "adj_edge_jaccard": 0.5915697467955445,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 5,
+    "node_recall": 0.8382437474025468,
+    "per_sequence": {
+      "6bba_05db0fb1": 0.5643362235389078,
+      "6bba_c328f2fd": 0.6601944625665863
+    }
+  }
+}

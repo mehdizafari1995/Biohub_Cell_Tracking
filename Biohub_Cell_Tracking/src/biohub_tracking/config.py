@@ -29,6 +29,25 @@ class LinkingConfig:
     max_distance_um: float = DEFAULT_LINK_DISTANCE_UM
     allow_divisions: bool = False
     division_gap_um: float = 8.0
+    motion_model: str = "none"
+    gate_um: float | None = None
+    max_gap_frames: int = 0
+    assignment: str = "greedy"
+    intensity_weight: float = 0.0
+    track_start_penalty_um: float = 0.0
+    track_end_penalty_um: float = 0.0
+    boundary_margin_um: float = 0.0
+    interpolate_gaps: bool = True
+    min_child_separation_um: float = 2.0
+    max_parent_child_um: float | None = None
+    min_parent_child_um: float = 0.0
+    intensity_sum_tolerance: float = 0.6
+    max_children: int = 1
+    require_parent_predecessor: bool = False
+    require_no_alternative_parent: bool = False
+    alternative_parent_gate_um: float | None = None
+    max_sibling_alignment: float | None = None
+    min_displacement_um: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -61,6 +80,25 @@ class PipelineConfig:
                 "max_distance_um": self.linking.max_distance_um,
                 "allow_divisions": self.linking.allow_divisions,
                 "division_gap_um": self.linking.division_gap_um,
+                "motion_model": self.linking.motion_model,
+                "gate_um": self.linking.gate_um,
+                "max_gap_frames": self.linking.max_gap_frames,
+                "assignment": self.linking.assignment,
+                "intensity_weight": self.linking.intensity_weight,
+                "track_start_penalty_um": self.linking.track_start_penalty_um,
+                "track_end_penalty_um": self.linking.track_end_penalty_um,
+                "boundary_margin_um": self.linking.boundary_margin_um,
+                "interpolate_gaps": self.linking.interpolate_gaps,
+                "min_child_separation_um": self.linking.min_child_separation_um,
+                "max_parent_child_um": self.linking.max_parent_child_um,
+                "min_parent_child_um": self.linking.min_parent_child_um,
+                "intensity_sum_tolerance": self.linking.intensity_sum_tolerance,
+                "max_children": self.linking.max_children,
+                "require_parent_predecessor": self.linking.require_parent_predecessor,
+                "require_no_alternative_parent": self.linking.require_no_alternative_parent,
+                "alternative_parent_gate_um": self.linking.alternative_parent_gate_um,
+                "max_sibling_alignment": self.linking.max_sibling_alignment,
+                "min_displacement_um": self.linking.min_displacement_um,
             },
         }
 
@@ -100,6 +138,33 @@ def load_config(path: str | Path | None = None, overrides: dict[str, Any] | None
             max_distance_um=float(link.get("max_distance_um", DEFAULT_LINK_DISTANCE_UM)),
             allow_divisions=bool(link.get("allow_divisions", False)),
             division_gap_um=float(link.get("division_gap_um", 8.0)),
+            motion_model=str(link.get("motion_model", "none")),
+            gate_um=(None if link.get("gate_um") is None else float(link.get("gate_um"))),
+            max_gap_frames=int(link.get("max_gap_frames", 0)),
+            assignment=str(link.get("assignment", "greedy")),
+            intensity_weight=float(link.get("intensity_weight", 0.0)),
+            track_start_penalty_um=float(link.get("track_start_penalty_um", 0.0)),
+            track_end_penalty_um=float(link.get("track_end_penalty_um", 0.0)),
+            boundary_margin_um=float(link.get("boundary_margin_um", 0.0)),
+            interpolate_gaps=bool(link.get("interpolate_gaps", True)),
+            min_child_separation_um=float(link.get("min_child_separation_um", 2.0)),
+            max_parent_child_um=(
+                None if link.get("max_parent_child_um") is None else float(link.get("max_parent_child_um"))
+            ),
+            min_parent_child_um=float(link.get("min_parent_child_um", 0.0)),
+            intensity_sum_tolerance=float(link.get("intensity_sum_tolerance", 0.6)),
+            max_children=int(link.get("max_children", 1)),
+            require_parent_predecessor=bool(link.get("require_parent_predecessor", False)),
+            require_no_alternative_parent=bool(link.get("require_no_alternative_parent", False)),
+            alternative_parent_gate_um=(
+                None
+                if link.get("alternative_parent_gate_um") is None
+                else float(link.get("alternative_parent_gate_um"))
+            ),
+            max_sibling_alignment=(
+                None if link.get("max_sibling_alignment") is None else float(link.get("max_sibling_alignment"))
+            ),
+            min_displacement_um=float(link.get("min_displacement_um", 1.0)),
         ),
     )
 
