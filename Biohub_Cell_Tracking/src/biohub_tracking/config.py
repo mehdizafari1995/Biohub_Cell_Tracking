@@ -30,6 +30,9 @@ class DetectionConfig:
     complementary_min_distance_um: float = 6.0
     complementary_intensity_ratio: float = 0.45
     complementary_anisotropic: bool = True
+    complementary_require_temporal_link: bool = False
+    complementary_link_gate_um: float = 12.0
+    complementary_link_max_dt: int = 1
 
 
 @dataclass(frozen=True)
@@ -69,28 +72,34 @@ class PipelineConfig:
     timepoint_start: int = 0
 
     def to_dict(self) -> dict[str, Any]:
+        detection = {
+            "method": self.detection.method,
+            "min_sigma": self.detection.min_sigma,
+            "max_sigma": self.detection.max_sigma,
+            "threshold": self.detection.threshold,
+            "normalize": self.detection.normalize,
+            "min_distance_um": self.detection.min_distance_um,
+            "suppress_duplicates": self.detection.suppress_duplicates,
+            "anisotropic": self.detection.anisotropic,
+            "complementary_method": self.detection.complementary_method,
+            "complementary_threshold": self.detection.complementary_threshold,
+            "complementary_min_sigma": self.detection.complementary_min_sigma,
+            "complementary_max_sigma": self.detection.complementary_max_sigma,
+            "complementary_min_distance_um": self.detection.complementary_min_distance_um,
+            "complementary_intensity_ratio": self.detection.complementary_intensity_ratio,
+            "complementary_anisotropic": self.detection.complementary_anisotropic,
+        }
+        # Omit inactive temporal-link keys so locked complementary_v1 hash stays stable.
+        if self.detection.complementary_require_temporal_link:
+            detection["complementary_require_temporal_link"] = True
+            detection["complementary_link_gate_um"] = float(self.detection.complementary_link_gate_um)
+            detection["complementary_link_max_dt"] = int(self.detection.complementary_link_max_dt)
         return {
             "scale_zyx": list(self.scale_zyx),
             "seed": self.seed,
             "max_timepoints": self.max_timepoints,
             "timepoint_start": self.timepoint_start,
-            "detection": {
-                "method": self.detection.method,
-                "min_sigma": self.detection.min_sigma,
-                "max_sigma": self.detection.max_sigma,
-                "threshold": self.detection.threshold,
-                "normalize": self.detection.normalize,
-                "min_distance_um": self.detection.min_distance_um,
-                "suppress_duplicates": self.detection.suppress_duplicates,
-                "anisotropic": self.detection.anisotropic,
-                "complementary_method": self.detection.complementary_method,
-                "complementary_threshold": self.detection.complementary_threshold,
-                "complementary_min_sigma": self.detection.complementary_min_sigma,
-                "complementary_max_sigma": self.detection.complementary_max_sigma,
-                "complementary_min_distance_um": self.detection.complementary_min_distance_um,
-                "complementary_intensity_ratio": self.detection.complementary_intensity_ratio,
-                "complementary_anisotropic": self.detection.complementary_anisotropic,
-            },
+            "detection": detection,
             "linking": {
                 "method": self.linking.method,
                 "max_distance_um": self.linking.max_distance_um,
@@ -155,6 +164,9 @@ def load_config(path: str | Path | None = None, overrides: dict[str, Any] | None
             complementary_min_distance_um=float(det.get("complementary_min_distance_um", 6.0)),
             complementary_intensity_ratio=float(det.get("complementary_intensity_ratio", 0.45)),
             complementary_anisotropic=bool(det.get("complementary_anisotropic", True)),
+            complementary_require_temporal_link=bool(det.get("complementary_require_temporal_link", False)),
+            complementary_link_gate_um=float(det.get("complementary_link_gate_um", 12.0)),
+            complementary_link_max_dt=int(det.get("complementary_link_max_dt", 1)),
         ),
         linking=LinkingConfig(
             method=str(link.get("method", "greedy")),

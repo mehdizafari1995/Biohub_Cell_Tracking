@@ -1,9 +1,15 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
+
 import numpy as np
 from skimage.feature import blob_dog, peak_local_max
 
 from .config import DetectionConfig
+
+
+def _empty_coords() -> np.ndarray:
+    return np.zeros((0, 3), dtype=np.float64)
 
 
 def normalize_volume(image: np.ndarray, method: str = "minmax") -> np.ndarray:
@@ -193,7 +199,7 @@ def complementary_detections(
     """Second-pass detections kept only when isolated from the primary set."""
     method = str(config.complementary_method or "none").lower()
     if method in {"none", "", "off"}:
-        return np.zeros((0, 3), dtype=np.float64)
+        return _empty_coords()
     norm = normalize_volume(image_zyx, config.normalize)
     candidates = _run_detector(
         norm,
@@ -220,10 +226,12 @@ def complementary_detections(
     )
 
 
-def detect_cells(image_zyx: np.ndarray, config: DetectionConfig, scale_zyx: tuple[float, float, float]) -> np.ndarray:
-    """Return (N, 3) array of (z, y, x) centroids in voxels."""
+def detect_primary_cells(
+    image_zyx: np.ndarray, config: DetectionConfig, scale_zyx: tuple[float, float, float]
+) -> np.ndarray:
+    """Primary detector only. Complementary peaks are not attached."""
     norm = normalize_volume(image_zyx, config.normalize)
-    coords = _run_detector(
+    return _run_detector(
         norm,
         config.method,
         config.min_sigma,
@@ -234,10 +242,125 @@ def detect_cells(image_zyx: np.ndarray, config: DetectionConfig, scale_zyx: tupl
         scale_zyx,
         suppress=config.suppress_duplicates,
     )
+
+
+def select_linkable_coords(
+    extra_zyx: np.ndarray,
+    neighbor_zyx: np.ndarray,
+    scale_zyx: tuple[float, float, float],
+    gate_um: float,
+) -> np.ndarray:
+    """Keep extra peaks that sit inside ``gate_um`` of any neighbor-frame detection."""
+    extra = np.asarray(extra_zyx, dtype=np.float64).reshape(-1, 3)
+    if len(extra) == 0:
+        return extra
+    dist = nearest_physical_distance(extra, neighbor_zyx, scale_zyx)
+    return extra[dist <= float(gate_um)]
+
+
+def filter_temporally_linkable(
+    extra_by_t: dict[int, np.ndarray],
+    primary_by_t: dict[int, np.ndarray],
+    scale_zyx: tuple[float, float, float],
+    gate_um: float,
+    max_dt: int = 1,
+) -> dict[int, np.ndarray]:
+    """Keep complementary peaks that can attach to a primary detection nearby in time.
+
+    Neighbors are **primary** detections only, at ``t ± dt`` for ``1 <= dt <= max_dt``.
+    Complementary-to-complementary chains are not used, so unlinked local-max noise
+    cannot keep itself alive. This is the linkable_v1 T_pred control.
+    """
+    max_dt = max(int(max_dt), 0)
+    kept: dict[int, np.ndarray] = {}
+    for t, extra in extra_by_t.items():
+        extra = np.asarray(extra, dtype=np.float64).reshape(-1, 3)
+        if len(extra) == 0 or max_dt <= 0:
+            kept[int(t)] = extra
+            continue
+        neighbors: list[np.ndarray] = []
+        for dt in range(1, max_dt + 1):
+            for t2 in (int(t) - dt, int(t) + dt):
+                refs = primary_by_t.get(t2)
+                if refs is None:
+                    continue
+                refs = np.asarray(refs, dtype=np.float64).reshape(-1, 3)
+                if len(refs):
+                    neighbors.append(refs)
+        if not neighbors:
+            kept[int(t)] = _empty_coords()
+            continue
+        kept[int(t)] = select_linkable_coords(extra, np.vstack(neighbors), scale_zyx, gate_um)
+    return kept
+
+
+def merge_sequence_detections(
+    primary_by_t: dict[int, np.ndarray],
+    extra_by_t: dict[int, np.ndarray],
+    config: DetectionConfig,
+    scale_zyx: tuple[float, float, float],
+) -> dict[int, np.ndarray]:
+    """Stack primary detections with complementary peaks, optionally link-filtered."""
+    extras = extra_by_t
+    if config.complementary_require_temporal_link:
+        extras = filter_temporally_linkable(
+            extra_by_t,
+            primary_by_t,
+            scale_zyx,
+            gate_um=float(config.complementary_link_gate_um),
+            max_dt=int(config.complementary_link_max_dt),
+        )
+    times = sorted(set(int(t) for t in primary_by_t) | set(int(t) for t in extras))
+    merged: dict[int, np.ndarray] = {}
+    for t in times:
+        primary = np.asarray(primary_by_t.get(t, _empty_coords()), dtype=np.float64).reshape(-1, 3)
+        extra = np.asarray(extras.get(t, _empty_coords()), dtype=np.float64).reshape(-1, 3)
+        if len(extra):
+            merged[t] = np.vstack([primary, extra])
+        else:
+            merged[t] = primary
+    return merged
+
+
+def detect_cells(image_zyx: np.ndarray, config: DetectionConfig, scale_zyx: tuple[float, float, float]) -> np.ndarray:
+    """Return (N, 3) array of (z, y, x) centroids in voxels.
+
+    When ``complementary_require_temporal_link`` is set, extras are **not**
+    attached here; call ``detect_volume_with_appearance`` so adjacent frames
+    can be checked against the locked association gate.
+    """
+    coords = detect_primary_cells(image_zyx, config, scale_zyx)
+    if config.complementary_require_temporal_link:
+        return coords
     extra = complementary_detections(image_zyx, coords, config, scale_zyx)
     if len(extra):
         coords = np.vstack([coords, extra])
     return coords
+
+
+def detect_volume_with_appearance(
+    frames: Iterable[tuple[int, np.ndarray]],
+    config: DetectionConfig,
+    scale_zyx: tuple[float, float, float],
+) -> list[tuple[int, np.ndarray, np.ndarray, np.ndarray]]:
+    """Detect a whole sequence, applying the temporal-link filter when configured."""
+    items = [(int(t), np.asarray(image)) for t, image in frames]
+    primary_by_t: dict[int, np.ndarray] = {}
+    extra_by_t: dict[int, np.ndarray] = {}
+    images: dict[int, np.ndarray] = {}
+    for t, image in items:
+        images[t] = image
+        primary = detect_primary_cells(image, config, scale_zyx)
+        extra = complementary_detections(image, primary, config, scale_zyx)
+        primary_by_t[t] = primary
+        extra_by_t[t] = extra
+    merged = merge_sequence_detections(primary_by_t, extra_by_t, config, scale_zyx)
+    out: list[tuple[int, np.ndarray, np.ndarray, np.ndarray]] = []
+    for t, _image in items:
+        coords = merged.get(t, _empty_coords())
+        intensity, appearance = sample_appearance(images[t], coords)
+        out.append((t, coords, intensity, appearance))
+    return out
 
 
 def sample_appearance(image_zyx: np.ndarray, coords_zyx: np.ndarray) -> tuple[np.ndarray, np.ndarray]:

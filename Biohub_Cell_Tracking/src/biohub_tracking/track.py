@@ -6,7 +6,7 @@ import numpy as np
 
 from .association import FrameDetections, track_from_detections
 from .config import LinkingConfig, PipelineConfig
-from .detect import detect_cells, detect_cells_with_appearance
+from .detect import detect_volume_with_appearance
 from .division import propose_divisions
 from .graphs import TrackGraph, graph_from_detections
 from .io_zarr import VolumeMeta, iter_timepoints
@@ -45,13 +45,8 @@ def track_volume(
         iter_frames = ((t, np.asarray(array[t])) for t in meta.available_timepoints if t in allowed)
 
     next_id = 1
-    for t, image in iter_frames:
-        if _use_association(config.linking) or config.linking.allow_divisions:
-            coords, intensity, appearance = detect_cells_with_appearance(image, config.detection, config.scale_zyx)
-        else:
-            coords = detect_cells(image, config.detection, config.scale_zyx)
-            intensity = np.zeros(len(coords), dtype=np.float64)
-            appearance = intensity
+    detected = detect_volume_with_appearance(iter_frames, config.detection, config.scale_zyx)
+    for t, coords, intensity, appearance in detected:
         detections.append((int(t), coords))
         per_t_coords[int(t)] = coords
         n = len(coords)

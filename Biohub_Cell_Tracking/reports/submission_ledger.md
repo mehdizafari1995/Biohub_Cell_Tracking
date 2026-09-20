@@ -81,6 +81,19 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **complementary_v1:** combined **0.591384**, recall 0.838, 0/0/5 divisions, 96648 pred nodes. Extra T_pred lowered adj-edge Jaccard. Decision `reject_complementary_v1`. Do not retune.
 - **Kaggle public / private scores:** not returned.
 
+## linkable_v1_family
+
+- **Status:** experiment family on `cursor/linkable-complementary-v1`. Learned UNet estimate written first (`docs/learned_detection_estimate.md`); GPU blocked. CPU fallback locked from 44b6, scored once on frozen 6bba, **rejected**. Do not retune.
+- **Local official tuning:** linkable_v1 **0.633168** vs locked association_v2 **0.632460** on both frozen-tuning sequences. Decision `keep_candidate_linkable_v1`. Hash `fa975421edb6136e`. Not a leaderboard score.
+- **Kaggle public / private scores:** not returned.
+
+## linkable_v1_holdout
+
+- **Status:** local official scorer on both frozen validation sequences after reusing `biohub-holdout-zarr-export` v1. **Not a Kaggle run.**
+- **association_v2:** combined **0.591570**, recall 0.838, 0/0/5 divisions, 96336 pred nodes. Matches the locked 0.591570 figure.
+- **linkable_v1:** combined **0.591458**, recall 0.838, 0/0/5 divisions, 96525 pred nodes. Extra T_pred (+189) lowered adj-edge Jaccard. Decision `reject_linkable_v1`. Do not retune.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
