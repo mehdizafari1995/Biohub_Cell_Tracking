@@ -45,6 +45,10 @@ missed because the predicted graph never produced a parent + orphan pair that
 passed predecessor / no-alternative-parent checks. Widening gates after seeing
 holdout would be leakage and would not fix those three.
 
+## Later confirmation (control-gated one-shot)
+
+On 2026-09-20 the same locked configs were scored again only after `baseline_v1` (0.537134) and `association_v2` (0.591570) reproduced. Unchanged `division_v2` remained **0.591570** (0/0/5). Decision updated to `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`. See `reports/oneshot_frozen_v1_division_v2.md`.
+
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 85 passed.
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 86 passed.

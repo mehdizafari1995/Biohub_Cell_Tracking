@@ -57,8 +57,11 @@ Visual inspection of the three `6bba_05db0fb1` events (t=24, 52, 62): dense MIP,
 
 Locked from all 71 train `44b6` GEFFs (14 typical / 12 atypical). Official
 holdout vs association_v2 on identical detections: **0.591570** both,
-**0 TP / 0 FP / 5 FN**. Keep as a no-op overlay. Do not retune. See
-`reports/division_v2.md` and `reports/holdout_pair_division_v2.md`.
+**0 TP / 0 FP / 5 FN**. Control-gated one-shot reproduced A 0.537134 and B
+0.591570 first, then confirmed D once. Decision:
+`KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`. Do not retune. See
+`reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, and
+`reports/oneshot_frozen_v1_division_v2.md`.
 
 ## Sanity sequence
 

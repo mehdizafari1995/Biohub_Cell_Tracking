@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (official holdout pair for division_v2). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (control-gated one-shot of unchanged division_v2). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -29,11 +29,11 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | A `baseline_v1` | 0.537 | Kaggle kernel v2 ran on public test; not submitted |
 | B `association_v2` | **0.591570** | local official on both frozen sequences; Kaggle kernel v3 independently audited |
 | C `division_v1` | 0.590 | 0 TP / 3 FP / 5 FN; rejected |
-| D `division_v2` | **0.591570** | identical to B; 0 TP / 0 FP / 5 FN; keep as no-op overlay; do not retune |
+| D `division_v2` | **0.591570** | identical to B after control-gated one-shot; 0 TP / 0 FP / 5 FN; `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`; do not retune |
 
 Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336**. That is not a leaderboard score. `6bba_c328f2fd` is not in public test.
 
-See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/zarr_export_v1.md`, `reports/geff_export_v1.md`, `reports/kaggle_association_v2_v3_independent_audit.md`, and `experiments/registry.csv`.
+See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/oneshot_frozen_v1_division_v2.md`, `reports/zarr_export_v1.md`, `reports/geff_export_v1.md`, `reports/kaggle_association_v2_v3_independent_audit.md`, and `experiments/registry.csv`.
 
 ## Kaggle
 
@@ -41,7 +41,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`).
 - Private helper kernel `mahdimzafari/biohub-geff-export` version 1 **COMPLETE** (203.74 s). Zipped 73 train GEFFs. **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-holdout-zarr-export` version 1 **COMPLETE** (13.43 s). Zipped only the two holdout Zarrs (993 MB). **Not a submission.**
-- Competition submit: **not performed**. No public or private leaderboard score.
+- Locked context: competition submission `56399003` remains complete with public API score string `0.553` (exactly one submission). That number is **not** used for tuning. This one-shot run did not resubmit and did not launch a helper kernel.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Complete validation harness
@@ -50,7 +50,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 85 passed (2026-09-20, this branch).
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 86 passed (2026-09-20, this branch).
 
 ## Privacy
 

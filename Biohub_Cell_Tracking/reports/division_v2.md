@@ -78,7 +78,11 @@ Three of five holdout GT events sit inside the locked gates and were still
 missed (predicted topology / detections). The other two exceed 10 µm
 parent–child. See `reports/holdout_pair_division_v2.md`.
 
+## Control-gated one-shot (2026-09-20)
+
+Reproduced frozen controls first (`baseline_v1` 0.537134, `association_v2` 0.591570), then scored this locked config exactly once. Combined official score remained **0.591570** (0/0/5). Predicted forks 3+3 did not change the official combined score. Decision: `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`. See `reports/oneshot_frozen_v1_division_v2.md`. Public `0.553` unused. No submission. No retune.
+
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 85 passed
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 86 passed
 (2026-09-20, this branch).

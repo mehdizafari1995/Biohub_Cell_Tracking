@@ -63,6 +63,14 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **division_v2:** combined 0.591570, 0/0/5 divisions. No regression. No extra false forks. Keep as no-op overlay. Do not retune.
 - **Kaggle public / private scores:** not returned.
 
+## oneshot_frozen_v1_controls_and_division_v2
+
+- **Status:** local official scorer on both frozen validation sequences after both controls reproduced. **Not a Kaggle run.**
+- **Controls:** baseline_v1 0.537134 and locked association_v2 0.591570 matched the published six-decimal frozen scores.
+- **division_v2:** combined 0.591570, official 0/0/5 divisions, six predicted forks that the official matcher did not score as TP or FP. No combined-score regression. Decision: `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`.
+- **Kaggle:** public `0.553` / submission 56399003 unused. This run did not submit. Submission count remains one.
+- **Kaggle public / private scores from this run:** not returned.
+
 ## association_v2_local / division_v1_local
 
 Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.

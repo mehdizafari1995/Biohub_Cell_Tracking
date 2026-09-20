@@ -1,0 +1,61 @@
+{
+  "not_a_kaggle_run": true,
+  "not_a_leaderboard_score": true,
+  "public_0553_unused": true,
+  "retune_after_holdout": false,
+  "no_submission": true,
+  "no_merge": true,
+  "decision": "KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED",
+  "starting_head": "7202736e444ce133a0044972d3df5a38205f1598",
+  "lock_commit": "751587fe81ff4f388d43e572d6aab91c7d77f3fe",
+  "division_v2_config_hash": "0fa756963e5d42d1",
+  "association_kernel_hash": "2c6966b5204ba542",
+  "baseline_v1_yaml_hash": "6bb069d78d0e31c8",
+  "association_v2_yaml_hash": "59503ad9bb8d8c22",
+  "split_v1_sha256": "e839eefb3d94ab7cd2e89132c7022746a1f9e88a6e195e7bd9ac9143f553a886",
+  "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+  "official_metrics_sha256": "cfdd596e3f8909cca14db0682889738b19ff75c3808b3773175aba9367ca7444",
+  "official_src_tree_sha256": "bc0685ada038a6af0ffb9d2628b3de5a628b21f126b4b0bf1f3e02d89dd7f9d8",
+  "tracksdata": "0.1.0rc10",
+  "polars": "1.44.2",
+  "geff": "1.3.1.1.3",
+  "lock_provenance": "empty_diff_after_751587f_for_division_thresholds_and_tracking_code",
+  "match_rule": "round(score, 6) == published frozen score",
+  "controls": {
+    "baseline_v1": {
+      "score": 0.537134309808737,
+      "frozen": 0.537134,
+      "match": true
+    },
+    "association_v2": {
+      "score": 0.5915697467955445,
+      "frozen": 0.59157,
+      "match": true
+    }
+  },
+  "division_v2": {
+    "score": 0.5915697467955445,
+    "edge_jaccard": 0.5888125613346418,
+    "adj_edge_jaccard": 0.5915697467955445,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 5,
+    "node_recall": 0.8382437474025468,
+    "per_sequence": {
+      "6bba_05db0fb1": 0.5643362235389078,
+      "6bba_c328f2fd": 0.6601944625665863
+    },
+    "pred_nodes": [67788, 28548],
+    "pred_edges": [65555, 27441],
+    "pred_divisions": [3, 3]
+  },
+  "holdout_trees": {
+    "6bba_05db0fb1.zarr": {"n_files": 102, "n_bytes": 540242928, "sha256_16": "0aa5728bcf033c86", "n_timepoints": 100},
+    "6bba_c328f2fd.zarr": {"n_files": 102, "n_bytes": 452924734, "sha256_16": "6817a24e212a615d", "n_timepoints": 100},
+    "6bba_05db0fb1.geff": {"n_files": 21, "n_bytes": 15343, "sha256_16": "ad60eaf40c837318", "n_gt_nodes": 1229, "n_gt_edges": 1183, "n_gt_divisions": 3},
+    "6bba_c328f2fd.geff": {"n_files": 21, "n_bytes": 10781, "sha256_16": "7957a395b33df830", "n_gt_nodes": 511, "n_gt_edges": 500, "n_gt_divisions": 2}
+  },
+  "tests": "86 passed",
+  "kaggle_submission_56399003_unused": true
+}

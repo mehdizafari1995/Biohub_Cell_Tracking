@@ -20,3 +20,5 @@ Both holdout GEFFs and Zarrs are present locally (helper kernels; ignored `data/
 | division_v2 | true | 0.591570 | 0/0/5 |
 
 These are local official scores, not leaderboard scores. See `reports/holdout_pair_division_v2.md`.
+
+Control-gated one-shot on the same volumes (2026-09-20, starting HEAD `7202736`): `baseline_v1` 0.537134 and `association_v2` 0.591570 reproduced; unchanged `division_v2` scored 0.591570 (0/0/5). Decision: `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`. See `reports/oneshot_frozen_v1_division_v2.md`.
