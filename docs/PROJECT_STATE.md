@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-19 (association_v2 Kaggle kernel). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (independent association_v2 Kaggle output audit). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -25,21 +25,24 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | candidate | official combined | notes |
 |---|---|---|
 | A `baseline_v1` | 0.537 | Kaggle kernel v2 ran on public test; not submitted |
-| B `association_v2` | **0.592** | local official; Kaggle kernel v3 ran on public test; not submitted |
+| B `association_v2` | **0.592** | local official on both frozen sequences; Kaggle kernel v3 independently audited |
 | C `division_v1` | 0.590 | 0 TP / 3 FP / 5 FN; do not claim generalization |
 
-See `Biohub_Cell_Tracking/reports/abc_comparison.md` and `experiments/registry.csv`.
+Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336** (821/276/362 edges, 0/0/3 divisions, recall 0.829). Delta vs the local 0.564 figure in `abc_comparison.md` is +0.0003. That is not a leaderboard score. `6bba_c328f2fd` is not in public test, so the frozen split is still incomplete from the worker CSV.
+
+See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/kaggle_association_v2_v3_independent_audit.md`, and `experiments/registry.csv`.
 
 ## Kaggle
 
 - Private kernel `mahdimzafari/biohub-baseline-v1` version 2 **COMPLETE** on public `test/` (595 s, 1.49 s/frame, peak RAM 435 MB, `audit_ok`).
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`, 129500 nodes / 124273 edges / 11985 interpolated / 0 divisions). Decoder: `blosc2` (no `zarr` on the image).
+- Independent re-audit of the downloaded worker `submission.csv`: schema/coverage/integrity `audit_ok`; counts match the worker manifest; all edges `dt=1`; 0 predicted divisions; integer voxel centroids inside `(100, 64, 256, 256)`. CSV was not copied into git.
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 39 passed (2026-09-19, this branch).
+`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20, this branch).
 
 ## Privacy
 

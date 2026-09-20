@@ -97,6 +97,68 @@ def iter_competition_files(
             url = None
 
 
+def kernel_status(slug: str) -> dict[str, Any]:
+    """Return private-kernel status. Never prints the token."""
+    user, name = slug.split("/", 1)
+    url = (
+        f"{API_ROOT}/kernels/status?"
+        f"userName={urllib.parse.quote(user)}&kernelSlug={urllib.parse.quote(name)}"
+    )
+    data = _request(url)
+    return data if isinstance(data, dict) else {"raw": data}
+
+
+def kernel_output_list(slug: str) -> list[dict[str, Any]]:
+    """List output files for a private kernel. Never prints the token."""
+    user, name = slug.split("/", 1)
+    url = (
+        f"{API_ROOT}/kernels/output?"
+        f"userName={urllib.parse.quote(user)}&kernelSlug={urllib.parse.quote(name)}"
+    )
+    data = _request(url)
+    if isinstance(data, list):
+        return [item for item in data if isinstance(item, dict)]
+    if isinstance(data, dict):
+        files = data.get("files") or data.get("outputFiles") or data.get("data") or []
+        if isinstance(files, list):
+            return [item for item in files if isinstance(item, dict)]
+    return []
+
+
+def download_kernel_output_zip(
+    slug: str,
+    dest: Path,
+    min_interval_sec: float = 1.5,
+) -> Path:
+    """Download the kernel output archive to an ignored local path.
+
+    Never prints credentials. Callers must keep ``dest`` out of git.
+    """
+    user, name = slug.split("/", 1)
+    url = f"{API_ROOT}/kernels/output/download/{urllib.parse.quote(user)}/{urllib.parse.quote(name)}"
+    dest = Path(dest)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    delay = 5.0
+    for attempt in range(8):
+        req = urllib.request.Request(url)
+        req.add_header("Authorization", f"Bearer {_token()}")
+        req.add_header("User-Agent", "biohub-cell-tracking/0.1")
+        try:
+            with urllib.request.urlopen(req, timeout=180) as resp:
+                dest.write_bytes(resp.read())
+            time.sleep(min_interval_sec + random.uniform(0.0, 0.5))
+            if dest.exists() and dest.stat().st_size > 0:
+                return dest
+        except urllib.error.HTTPError as exc:
+            if exc.code == 429:
+                delay = max(delay, 20.0)
+            if exc.code in {429, 500, 502, 503} and attempt < 7:
+                delay = _sleep_backoff(delay)
+                continue
+            raise
+    raise RuntimeError(f"kernel output download failed for {slug}")
+
+
 def download_file(
     file_name: str,
     dest: Path,

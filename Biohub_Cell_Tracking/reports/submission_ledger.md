@@ -33,6 +33,15 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Competition submit:** not performed. No public or private leaderboard score was returned.
 - **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-association-v2 → version 3 → **Submit to Competition**.
 
+## association_v2_kernel_v3_independent_audit
+
+- **Status:** downloaded worker `submission.csv` independently audited. This is still not a competition submission.
+- **Schema / integrity:** `audit_ok`. 253773 rows, 129500 nodes, 124273 edges, 0 predicted divisions, 0 non-consecutive edges. Integer voxel centroids inside typical `(100, 64, 256, 256)`. Counts match the worker manifest. File was kept under `artifacts/kaggle/` and not committed.
+- **Official scorer on public-test overlap `6bba_05db0fb1`:** combined **0.564336**, edge Jaccard 0.5627, adj 0.5643, divisions 0/0/3, recall 0.829. Delta vs local 0.564 is +0.0003. Official commit `075fc5f5`.
+- **Not holdout:** `44b6_0113de3b` 0.931, `44b6_0b24845f` 0.280, `6bba_05b6850b` 0.476. Do not retune from these. The four-stem aggregate 0.527 is not a frozen-split score.
+- **Still missing:** `6bba_c328f2fd` is not in public test, so the worker CSV cannot complete the frozen split.
+- **Kaggle public / private scores:** not returned.
+
 ## association_v2_local / division_v1_local
 
 Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.
