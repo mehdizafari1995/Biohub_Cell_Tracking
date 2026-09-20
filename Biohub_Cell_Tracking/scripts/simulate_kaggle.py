@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import os
 import runpy
 import socket
@@ -10,7 +11,6 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-NOTEBOOK = ROOT / "notebooks" / "kaggle_inference.py"
 _OrigSocket = socket.socket
 
 
@@ -40,6 +40,16 @@ def _prepare_sim_root() -> Path:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--notebook",
+        default="notebooks/kaggle_inference.py",
+        help="Kernel source to simulate. A local run is not a Kaggle execution.",
+    )
+    args = parser.parse_args()
+    notebook = (ROOT / args.notebook).resolve()
+    if not notebook.exists():
+        raise SystemExit(f"notebook not found: {notebook}")
     sim_root = _prepare_sim_root()
     os.chdir(ROOT)
     os.environ["BIOHUB_DATA_ROOT"] = str(sim_root)
@@ -48,7 +58,8 @@ def main() -> None:
     print("LOCAL SIMULATION of Kaggle inference (outbound TCP blocked in-process).")
     print("This is not an official Kaggle execution and reports no leaderboard score.")
     print(f"sim_root={sim_root}")
-    runpy.run_path(str(NOTEBOOK), run_name="__main__")
+    print(f"notebook={notebook}")
+    runpy.run_path(str(notebook), run_name="__main__")
 
 
 if __name__ == "__main__":

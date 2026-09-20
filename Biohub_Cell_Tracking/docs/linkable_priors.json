@@ -1,0 +1,90 @@
+{
+  "status": "rejected_on_holdout",
+  "hypothesis": "Rejected complementary_v1 added T_pred without recovering annotated cells. Keep the same complementary spatial gates (6.0 µm isolation, 0.45 intensity) but attach a complementary peak only when a primary detection in an adjacent frame sits inside the locked association_v2 12 µm gate. Tune on specimen 44b6 only. Do not use 6bba to choose thresholds. Do not retune complementary_v1 isolation or intensity.",
+  "primary": "baseline_v1 anisotropic DoG + 4 µm NMS",
+  "linking": "association_v2 (copied, not overwritten)",
+  "candidate_operating_point": {
+    "complementary_method": "local_max",
+    "complementary_threshold": 0.04,
+    "complementary_min_sigma": 2.0,
+    "complementary_max_sigma": 5.0,
+    "complementary_min_distance_um": 6.0,
+    "complementary_intensity_ratio": 0.45,
+    "complementary_anisotropic": true,
+    "complementary_require_temporal_link": true,
+    "complementary_link_gate_um": 12.0,
+    "complementary_link_max_dt": 1
+  },
+  "candidate_config_hash": "fa975421edb6136e",
+  "locked_operating_point": {
+    "complementary_method": "local_max",
+    "complementary_threshold": 0.04,
+    "complementary_min_sigma": 2.0,
+    "complementary_max_sigma": 5.0,
+    "complementary_min_distance_um": 6.0,
+    "complementary_intensity_ratio": 0.45,
+    "complementary_anisotropic": true,
+    "complementary_require_temporal_link": true,
+    "complementary_link_gate_um": 12.0,
+    "complementary_link_max_dt": 1
+  },
+  "locked_config_hash": "fa975421edb6136e",
+  "holdout_scored": true,
+  "do_not_score_holdout_until_locked": true,
+  "do_not_retune_after_holdout": true,
+  "tuning_datasets": ["44b6_12dfb391", "44b6_267148e4"],
+  "holdout_datasets": ["6bba_05db0fb1", "6bba_c328f2fd"],
+  "measured_tuning_official": {
+    "association_v2": 0.6324600072329115,
+    "linkable_v1": 0.6331678573621815,
+    "decision": "keep_candidate_linkable_v1",
+    "not_a_kaggle_run": true,
+    "not_a_leaderboard_score": true,
+    "runtime_sec": 279.827,
+    "peak_memory_mb": 1422.1,
+    "code_version_scored": "2b2d2ff",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "pred_nodes_association_v2": 93104,
+    "pred_nodes_linkable_v1": 93133,
+    "per_sequence": {
+      "44b6_12dfb391": {
+        "association_v2": 0.6674004023839094,
+        "linkable_v1": 0.6684039137449649
+      },
+      "44b6_267148e4": {
+        "association_v2": 0.5428905815680516,
+        "linkable_v1": 0.5428405064761572
+      }
+    }
+  },
+  "measured_holdout_official": {
+    "association_v2": 0.5915697467955445,
+    "linkable_v1": 0.5914576909101106,
+    "association_v2_per_sequence": {
+      "6bba_05db0fb1": 0.5643362235389078,
+      "6bba_c328f2fd": 0.6601944625665863
+    },
+    "linkable_v1_per_sequence": {
+      "6bba_05db0fb1": 0.5643144566577178,
+      "6bba_c328f2fd": 0.6598548908656218
+    },
+    "node_recall": 0.8382437474025468,
+    "division_tp_fp_fn": [0, 0, 5],
+    "pred_nodes_association_v2": 96336,
+    "pred_nodes_linkable_v1": 96525,
+    "decision": "reject_linkable_v1",
+    "runtime_sec": 285.647,
+    "peak_memory_mb": 1500.7,
+    "code_version_scored": "2b2d2ff",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "not_a_kaggle_run": true,
+    "not_a_leaderboard_score": true
+  },
+  "notes": [
+    "Learned 3D UNet + transformer is blocked on this worker (no GPU; organizer public split is not specimen-separated). See docs/learned_detection_estimate.md.",
+    "Spatial complementary gates are copied from rejected complementary_v1 and are not a new 44b6 search.",
+    "max_dt=1 uses adjacent frames only. association_v2 gap-close of 2 frames is not used to keep extra peaks.",
+    "Official tuning combined did not regress versus locked association_v2 (0.632460). Gain is +0.000708. Fewer extra predicted nodes than rejected complementary_v1. Locked from that 44b6 result. Holdout was not used to choose thresholds.",
+    "Official holdout scored once. linkable_v1 0.591458 vs association_v2 0.591570. Recall unchanged (0.838). Extra T_pred (+189 nodes) lowered adj-edge Jaccard. Reject. Do not retune the temporal gate after this result."
+  ]
+}

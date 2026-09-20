@@ -1,0 +1,18 @@
+{
+  "id": "mahdimzafari/biohub-geff-export",
+  "title": "Biohub GEFF Export",
+  "code_file": "kaggle_geff_export.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}
