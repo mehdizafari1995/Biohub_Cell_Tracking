@@ -16,7 +16,10 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from biohub_tracking.kaggle_api import API_ROOT, _token  # noqa: E402
 from make_kaggle_kernel import KERNELS  # noqa: E402
 
-FORBIDDEN_SLUGS = {"mahdimzafari/biohub-baseline-v1"}
+FORBIDDEN_SLUGS = {
+    "mahdimzafari/biohub-baseline-v1",
+    "mahdimzafari/biohub-association-v2",
+}
 
 
 def _load_notebook_text(kernel_name: str) -> tuple[str, dict]:

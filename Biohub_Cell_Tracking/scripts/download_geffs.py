@@ -12,6 +12,7 @@ import argparse
 import json
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +26,24 @@ from biohub_tracking.geff_priors import (  # noqa: E402
     inventory_geff_names,
 )
 from biohub_tracking.kaggle_api import download_file  # noqa: E402
+def extract_geff_export_zip(zip_path: Path, dest_root: Path) -> dict:
+    """Extract a private kernel GEFF zip into ignored data/train. Never copies Zarrs."""
+    dest_root = Path(dest_root)
+    dest_root.mkdir(parents=True, exist_ok=True)
+    n_files = 0
+    stores: set[str] = set()
+    with zipfile.ZipFile(zip_path) as zf:
+        for name in zf.namelist():
+            if name.endswith("/") or ".zarr/" in name or name.endswith(".zarr"):
+                continue
+            if not name.startswith("train/") or ".geff/" not in name:
+                continue
+            target = dest_root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(zf.read(name))
+            n_files += 1
+            stores.add(name.split("/")[1])
+    return {"n_files": n_files, "n_stores": len(stores), "stores": sorted(stores)}
 
 
 def geff_files(required_only: bool) -> tuple[str, ...]:
@@ -94,7 +113,17 @@ def main() -> None:
         type=Path,
         default=ROOT / "artifacts" / "tmp" / "geff_download_status.json",
     )
+    parser.add_argument(
+        "--extract-zip",
+        type=Path,
+        default=None,
+        help="Extract a private kernel GEFF zip into --out. Skips Zarr members.",
+    )
     args = parser.parse_args()
+    if args.extract_zip is not None:
+        stats = extract_geff_export_zip(args.extract_zip, args.out)
+        print(json.dumps(stats), flush=True)
+        return
     required_only = not args.full_metadata
     names: list[str] = []
     if args.datasets:

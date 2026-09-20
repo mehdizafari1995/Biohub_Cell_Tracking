@@ -49,6 +49,24 @@ Private CPU kernel for **Biohub - Cell Tracking During Development**.
 - Do **not** submit this version to the competition from this packaging step.
 """,
     },
+    "geff_export": {
+        "source": "notebooks/kaggle_geff_export.py",
+        "notebook": "notebooks/kaggle_geff_export.ipynb",
+        "kernel_dir": "kaggle_kernel/geff_export",
+        "code_file": "kaggle_geff_export.ipynb",
+        "kernel_id": "mahdimzafari/biohub-geff-export",
+        "title": "Biohub GEFF Export",
+        "markdown": """# Biohub GEFF export
+
+Private CPU helper kernel. **Not a competition submission.**
+
+- Zips train `44b6_*.geff` stores plus frozen-holdout `6bba_05db0fb1` and `6bba_c328f2fd`.
+- Does **not** copy image volumes.
+- Attach the competition dataset. **Internet OFF**. Keep private.
+- Do **not** overwrite `mahdimzafari/biohub-baseline-v1` or `mahdimzafari/biohub-association-v2`.
+- Do **not** Submit to Competition.
+""",
+    },
 }
 
 
