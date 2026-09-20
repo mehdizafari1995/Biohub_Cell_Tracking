@@ -3,8 +3,8 @@
 Same experiment family as `learned_unet_v1` (draft PR #7). Do **not** merge.
 Do not overwrite `baseline_v1`, `association_v2`, `division_v2`,
 `complementary_v1`, `linkable_v1`, `learned_unet_division_v1`, or locked
-learned train/infer/holdout/test slugs. Do **not** retune. Frozen `6bba`
-has **not** been scored for this overlay.
+learned train/infer/holdout/test slugs. Do **not** retune. Do **not** score
+frozen `6bba` again for this overlay.
 
 ## Hypothesis
 
@@ -16,26 +16,27 @@ should recover FN edges on frozen-tuning `44b6` without rewriting existing
 dt=1 links or retuning detection. Learned graphs have no intensity, so the
 association intensity term is unused.
 
-## Operating point (locked from 44b6; holdout not run)
+## Operating point (locked; one-shot holdout done)
 
 Config: `configs/learned_unet_gap_v1.yaml`. Hash `f4d888d190c45a4a`.
 Parent infer hash `d7578b5f64ddac08`. Parent holdout hash `d374a21f03dddc04`.
-Training hash `4c38035d6657f2ad`.
+Training hash `4c38035d6657f2ad`. Locked holdout combined
+`LEARNED_GAP_LOCKED_HOLDOUT` = **0.7010255203349978**.
 
-- Source graphs: locked learned infer JSON only
+- Source graphs: locked learned infer / holdout JSON only
 - Existing dt=1 edges kept
 - Gap-close: dt=2 or 3, gate `12 * sqrt(dt)` µm, greedy 1-1
 - Interpolated integer voxels on skipped frames
 - Intensity unused
 - Writes no `submission.csv`
 
-Do **not** retune these gates after the first frozen-validation official score.
+Do **not** retune these gates. Do **not** score frozen `6bba` again.
 
 ## Cost estimate (before score)
 
-- Storage: reuse infer-helper graphs + two 44b6 GEFFs from
+- Storage: reuse holdout-helper graphs + two `6bba` GEFFs from
   `mahdimzafari/biohub-geff-export` v1. No volumes, no weights.
-- CPU: re-link ~117k nodes. Measured **7.2 s / 607 MB**.
+- CPU: re-link ~149k holdout nodes. Measured **9.7 s / 845 MB**.
 - No GPU. No new kernel. Not a Kaggle run.
 
 ## Official frozen-tuning score (not leaderboard)
@@ -61,12 +62,46 @@ Combined wins. The first sequence is mixed (extra `T_pred` lowered adj-edge
 Jaccard). Edge TP rose on both sequences (687→700 and 190→204). Official
 event scorer recovered **0 / 2** annotated forks. Runtime 7.2 s, peak 607 MB.
 
-Decision **`keep_candidate_learned_unet_gap_v1`**. Do **not** look at `6bba`
-yet. Do **not** retune. See `reports/learned_unet_gap_v1_tune.json`.
+Decision **`keep_candidate_learned_unet_gap_v1`**. See
+`reports/learned_unet_gap_v1_tune.json`.
+
+## Official frozen-holdout score (not leaderboard)
+
+Local official scorer `075fc5f5` once on `6bba_05db0fb1` + `6bba_c328f2fd`.
+Graphs from private helper `mahdimzafari/biohub-learned-unet-holdout-v1` v1
+(97062/89394 and 52161/47595). GEFFs from `mahdimzafari/biohub-geff-export`
+v1. **Not a Kaggle run. Not a leaderboard score.** Do **not** score again.
+
+| candidate | combined | edge J | adj edge J | recall | divisions | pred nodes |
+|---|---|---|---|---|---|---|
+| learned_unet_holdout_v1 | **0.693605** | 0.72769 | 0.69360 | 0.95713 | 0/0/5 | 149223 |
+| learned_unet_gap_v1 | **0.701026** | 0.74335 | 0.70103 | 0.97588 | 0/0/5 | 159131 |
+
+Per-sequence overlay:
+
+| sequence | no-gap combined | gap combined | recall no-gap → gap | extra nodes | extra edges |
+|---|---|---|---|---|---|
+| `6bba_05db0fb1` | 0.719310 | 0.718133 | 0.9788 → 0.9870 | 6370 | 10803 |
+| `6bba_c328f2fd` | 0.633142 | 0.661175 | 0.9354 → 0.9648 | 3538 | 6001 |
+
+Combined wins. The first sequence is mixed (edge TP 1030→1051, but extra
+`T_pred` lowered adj-edge Jaccard). The second sequence improved (edge TP
+397→429). Official event scorer recovered **0 / 5** annotated forks. Extra
+edges 16804. Interpolated nodes 9908. Runtime 9.7 s, peak 845 MB. Official
+deps: `tracksdata==0.1.0rc10`, `polars==1.44.2`, `geff==1.3.1.1.3`.
+
+Decision **`keep_candidate_learned_unet_gap_v1`**. Do **not** retune. Do
+**not** score this overlay on `6bba` again. See
+`reports/learned_unet_gap_v1_holdout.json`.
+
+This is a local official score, not a Kaggle leaderboard number.
 
 ## Next
 
-One-shot official holdout on locked `learned_unet_holdout_v1` graphs
-(`6bba_05db0fb1` + `6bba_c328f2fd`) with the same overlay. Reject on
-combined regression versus locked holdout **0.693605**. Do not overwrite
-locked slugs. Do not submit from the CLI.
+Package a **new** internet-off GPU test-time slug that applies the same
+locked gap overlay after locked learned detection. Do **not** overwrite
+`mahdimzafari/biohub-learned-unet-test-v1` v1. Suggested slug
+`mahdimzafari/biohub-learned-unet-gap-test-v1`. Cost: public-test no-gap
+was 306.5 s / 1184 MB; overlay added 9.7 s locally on two holdout graphs.
+Estimate ~320–360 s public test, hidden-test still ~5.1 h plus overlay,
+under the 12 h GPU limit. Do not submit from the CLI.

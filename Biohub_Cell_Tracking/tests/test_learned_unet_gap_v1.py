@@ -12,6 +12,7 @@ from biohub_tracking.graphs import TrackGraph
 from biohub_tracking.learned_gap import (
     HOLDOUT_STEMS,
     INFER_STEMS,
+    LEARNED_GAP_LOCKED_HOLDOUT,
     LEARNED_LOCKED_HOLDOUT,
     LEARNED_LOCKED_TUNE,
     LOCKED_GAP_HASH,
@@ -181,6 +182,8 @@ def test_tuning_and_holdout_decisions():
     assert tuning_decision(LEARNED_LOCKED_TUNE + 0.01, 2) == "keep_candidate_learned_unet_gap_v1"
     assert holdout_decision(LEARNED_LOCKED_HOLDOUT - 0.001) == "reject_learned_unet_gap_v1"
     assert holdout_decision(LEARNED_LOCKED_HOLDOUT) == "keep_candidate_learned_unet_gap_v1"
+    assert LEARNED_GAP_LOCKED_HOLDOUT == 0.7010255203349978
+    assert LEARNED_GAP_LOCKED_HOLDOUT > LEARNED_LOCKED_HOLDOUT
 
 
 def test_holdout_requires_keep_and_refuses_second_score(tmp_path: Path):
@@ -198,6 +201,23 @@ def test_holdout_requires_keep_and_refuses_second_score(tmp_path: Path):
     scored.write_text(json.dumps({"status": "holdout_scored", "learned_gap_combined": 0.7, "decision": "x"}))
     with pytest.raises(SystemExit, match="score frozen holdout twice"):
         refuse_existing_holdout_score(scored)
+
+
+def test_committed_holdout_report_is_keep_and_refuses_rescore():
+    path = ROOT / "reports" / "learned_unet_gap_v1_holdout.json"
+    payload = json.loads(path.read_text())
+    assert payload["status"] == "holdout_scored"
+    assert payload["decision"] == "keep_candidate_learned_unet_gap_v1"
+    assert payload["config_hash"] == LOCKED_GAP_HASH
+    assert payload["learned_gap_combined"] == LEARNED_GAP_LOCKED_HOLDOUT
+    assert payload["n_extra_edges"] == 16804
+    assert payload["official_summary"]["division_tp"] == 0
+    assert payload["official_summary"]["division_fp"] == 0
+    assert payload["official_summary"]["division_fn"] == 5
+    assert payload["is_kaggle_run"] is False
+    assert payload["is_leaderboard_score"] is False
+    with pytest.raises(SystemExit, match="score frozen holdout twice"):
+        refuse_existing_holdout_score(path)
 
 
 def test_run_script_imports_without_kaggle():

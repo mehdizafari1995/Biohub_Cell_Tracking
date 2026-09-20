@@ -75,8 +75,20 @@ Specimen-separated TemporalUNet3D + 12 µm 1-1 linker. Official 44b6 tune
 **0.693605 vs association_v2 0.591570**. Recall 0.957, 0/0/5 divisions,
 149223 pred nodes. Per-sequence mixed (`6bba_05db0fb1` 0.719 vs 0.564;
 `6bba_c328f2fd` 0.633 vs 0.660). Combined keep. Decision
-`keep_candidate_learned_unet_holdout_v1`. Do not retune. Do not score
-`6bba` again. See `reports/learned_unet_holdout_v1.md`.
+`keep_candidate_learned_unet_holdout_v1`. Do not retune. Do not score the
+no-gap holdout candidate again. See `reports/learned_unet_holdout_v1.md`.
+
+## H `learned_unet_gap_v1` (kept on one-shot holdout)
+
+Locked association_v2 gap-close overlay (12 µm, `max_gap_frames=2`,
+interpolate) on leftover unmatched nodes of locked learned graphs. Official
+44b6 tune **0.658452** vs learned infer **0.655751**. Official frozen
+holdout **0.701026 vs no-gap 0.693605**. Recall 0.976, 0/0/5 divisions,
+159131 pred nodes, 16804 extra edges, 9908 interpolated nodes. Per-sequence
+mixed (`6bba_05db0fb1` 0.718 vs 0.719; `6bba_c328f2fd` 0.661 vs 0.633).
+Combined keep. Decision `keep_candidate_learned_unet_gap_v1`. Do not
+retune. Do not score this overlay on `6bba` again. See
+`reports/learned_unet_gap_v1.md`.
 
 ## Sanity sequence
 
@@ -84,4 +96,4 @@ Specimen-separated TemporalUNet3D + 12 µm 1-1 linker. Official 44b6 tune
 
 ## Kaggle
 
-A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only and identical to B on holdout. E is local-only and worse than B on holdout. G has a private GPU holdout helper (`mahdimzafari/biohub-learned-unet-holdout-v1` v1, 184.4 s) that wrote graphs only, not `submission.csv`. A new private GPU test-time notebook (`mahdimzafari/biohub-learned-unet-test-v1` v1, 306.5 s, peak 1184 MB, hash `7a8725b818fc609b`) discovered all four public `test/*.zarr` stems and wrote `submission.csv` (`audit_ok`, 231707 nodes / 208547 edges / 0 divisions). That is not a leaderboard score. No competition submit was performed. No public or private leaderboard score was returned.
+A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only and identical to B on holdout. E is local-only and worse than B on holdout. G has a private GPU holdout helper (`mahdimzafari/biohub-learned-unet-holdout-v1` v1, 184.4 s) that wrote graphs only, not `submission.csv`. A new private GPU test-time notebook (`mahdimzafari/biohub-learned-unet-test-v1` v1, 306.5 s, peak 1184 MB, hash `7a8725b818fc609b`) discovered all four public `test/*.zarr` stems and wrote `submission.csv` (`audit_ok`, 231707 nodes / 208547 edges / 0 divisions). That is the no-gap public-test worker, not a leaderboard score. H (`learned_unet_gap_v1`) is local-official only on locked holdout graphs (9.7 s / 845 MB); it has no test-time slug yet. No competition submit was performed by this worker. No public or private leaderboard score was returned.

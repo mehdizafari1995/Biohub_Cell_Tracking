@@ -141,9 +141,16 @@ Local official scores only. association_v2 later received a private kernel (see 
 
 ## learned_unet_gap_v1_tune
 
-- **Status:** local official scorer on locked learned infer graphs + locked `association_v2` gap-close overlay. **Not a Kaggle run.** No new kernel. Frozen `6bba` was **not** scored.
+- **Status:** local official scorer on locked learned infer graphs + locked `association_v2` gap-close overlay. **Not a Kaggle run.** No new kernel. Frozen `6bba` was **not** scored in this row.
 - **Config hash:** `f4d888d190c45a4a`. Parent infer `d7578b5f64ddac08`. Existing dt=1 links kept. Intensity unused.
-- **Local official tuning:** learned_unet_gap_v1 **0.658452** vs locked learned_unet_infer_v1 **0.655751**. Extra edges 16852. Extra interpolated nodes 9879. Recall 0.97667 vs 0.97004. Divisions 0/0/2. Per-sequence mixed (`12dfb391` 0.745296 vs 0.747072; `267148e4` 0.460171 vs 0.446373). Decision `keep_candidate_learned_unet_gap_v1`. Do not retune. Do not look at holdout yet.
+- **Local official tuning:** learned_unet_gap_v1 **0.658452** vs locked learned_unet_infer_v1 **0.655751**. Extra edges 16852. Extra interpolated nodes 9879. Recall 0.97667 vs 0.97004. Divisions 0/0/2. Per-sequence mixed (`12dfb391` 0.745296 vs 0.747072; `267148e4` 0.460171 vs 0.446373). Decision `keep_candidate_learned_unet_gap_v1`. Do not retune.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_gap_v1_holdout
+
+- **Status:** local official scorer on locked learned holdout graphs + locked `association_v2` gap-close overlay. **Not a Kaggle run.** No new kernel. One-shot only.
+- **Config hash:** `f4d888d190c45a4a`. Parent holdout `d374a21f03dddc04`. Existing dt=1 links kept. Intensity unused.
+- **Local official holdout:** learned_unet_gap_v1 **0.701026** vs locked learned_unet_holdout_v1 **0.693605**. Extra edges 16804. Extra interpolated nodes 9908. Recall 0.97588 vs 0.95713. Divisions 0/0/5. Per-sequence mixed (`6bba_05db0fb1` 0.718133 vs 0.719310; `6bba_c328f2fd` 0.661175 vs 0.633142). Decision `keep_candidate_learned_unet_gap_v1`. Do not retune. Do not score holdout again.
 - **Kaggle public / private scores:** not returned.
 
 ## Policy

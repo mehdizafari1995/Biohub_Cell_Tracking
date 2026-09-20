@@ -2,7 +2,9 @@
 # learned_unet graphs. Gates are locked association_v2 values
 # (12 µm, max_gap_frames=2, interpolate). Detection / consecutive
 # dt=1 links stay at learned_unet_infer_v1 (d7578b5f64ddac08) /
-# holdout (d374a21f03dddc04). Do not retune. Do not overwrite locked
+# holdout (d374a21f03dddc04). Official 44b6 tune 0.658452; official
+# one-shot 6bba holdout 0.701026 vs no-gap 0.693605. Do not retune.
+# Do not score holdout again. Do not overwrite locked
 # train/infer/holdout/test slugs. Learned graphs have no intensity;
 # intensity_weight is unused. Not a competition submission.
 

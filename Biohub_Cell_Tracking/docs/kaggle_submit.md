@@ -19,8 +19,10 @@ Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.
 
 - `mahdimzafari/biohub-geff-export` v1 COMPLETE — 73 train GEFFs, no volumes.
 - `mahdimzafari/biohub-holdout-zarr-export` v1 COMPLETE — only `6bba_05db0fb1.zarr` and `6bba_c328f2fd.zarr` (13.43 s). Do not overwrite the GEFF helper. Do not submit.
-- `mahdimzafari/biohub-learned-unet-v1` v3 **running** — 44b6-only GPU training. No `submission.csv`. Do not overwrite while running. After COMPLETE use `scripts/collect_learned_unet_v1.py` (weights stay under ignored `artifacts/kaggle/`).
-- `mahdimzafari/biohub-learned-unet-infer-v1` packaged, **not pushed** — 44b6-only GPU inference after training COMPLETE. No `submission.csv`.
+- `mahdimzafari/biohub-learned-unet-v1` v3 COMPLETE / trained — 44b6-only GPU training. No `submission.csv`. Do not overwrite.
+- `mahdimzafari/biohub-learned-unet-infer-v1` v3 COMPLETE / inferred — 44b6-only graphs. No `submission.csv`. Do not overwrite.
+- `mahdimzafari/biohub-learned-unet-holdout-v1` v1 COMPLETE / inferred — 6bba graphs. No `submission.csv`. Do not overwrite.
+- `mahdimzafari/biohub-learned-unet-test-v1` v1 COMPLETE / inferred — public-test no-gap worker, `audit_ok`, not submitted. Do not overwrite. A gap test-time slug has not been packaged yet.
 
 ## Previous kernel (baseline_v1)
 
