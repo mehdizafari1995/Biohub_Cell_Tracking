@@ -1,0 +1,314 @@
+{
+  "kernel_slug": "mahdimzafari/biohub-association-v2",
+  "kernel_version": 3,
+  "config_hash": "2c6966b5204ba542",
+  "code_version": "edfde2f",
+  "worker_runtime_sec": 593.528496317,
+  "worker_peak_memory_mb": 421.46484375,
+  "audit_ok": true,
+  "audit_errors": [],
+  "audit_warnings": [],
+  "submission_summary": {
+    "n_rows": 253773,
+    "n_nodes": 129500,
+    "n_edges": 124273,
+    "n_predicted_divisions": 0,
+    "n_gap_edges": 0,
+    "datasets": [
+      "44b6_0113de3b",
+      "44b6_0b24845f",
+      "6bba_05b6850b",
+      "6bba_05db0fb1"
+    ],
+    "per_dataset": [
+      {
+        "dataset": "44b6_0113de3b",
+        "role": "tuning_specimen_public_test_copy",
+        "embryo": "44b6",
+        "n_nodes": 28855,
+        "n_edges": 27804,
+        "n_predicted_divisions": 0,
+        "coord_min_zyx": [
+          0,
+          0,
+          0
+        ],
+        "coord_max_zyx": [
+          63,
+          255,
+          255
+        ],
+        "t_min": 0,
+        "t_max": 99,
+        "n_consecutive_dt1": 27804,
+        "n_gap_dt_gt1": 0,
+        "n_nonpositive_dt": 0,
+        "n_unknown_endpoint": 0
+      },
+      {
+        "dataset": "44b6_0b24845f",
+        "role": "tuning_specimen_public_test_copy",
+        "embryo": "44b6",
+        "n_nodes": 24649,
+        "n_edges": 23153,
+        "n_predicted_divisions": 0,
+        "coord_min_zyx": [
+          0,
+          0,
+          0
+        ],
+        "coord_max_zyx": [
+          63,
+          255,
+          255
+        ],
+        "t_min": 0,
+        "t_max": 99,
+        "n_consecutive_dt1": 23153,
+        "n_gap_dt_gt1": 0,
+        "n_nonpositive_dt": 0,
+        "n_unknown_endpoint": 0
+      },
+      {
+        "dataset": "6bba_05b6850b",
+        "role": "validation_specimen_not_in_locked_split",
+        "embryo": "6bba",
+        "n_nodes": 8208,
+        "n_edges": 7764,
+        "n_predicted_divisions": 0,
+        "coord_min_zyx": [
+          0,
+          0,
+          0
+        ],
+        "coord_max_zyx": [
+          63,
+          255,
+          255
+        ],
+        "t_min": 0,
+        "t_max": 99,
+        "n_consecutive_dt1": 7764,
+        "n_gap_dt_gt1": 0,
+        "n_nonpositive_dt": 0,
+        "n_unknown_endpoint": 0
+      },
+      {
+        "dataset": "6bba_05db0fb1",
+        "role": "frozen_validation_overlap",
+        "embryo": "6bba",
+        "n_nodes": 67788,
+        "n_edges": 65552,
+        "n_predicted_divisions": 0,
+        "coord_min_zyx": [
+          0,
+          0,
+          0
+        ],
+        "coord_max_zyx": [
+          63,
+          255,
+          255
+        ],
+        "t_min": 0,
+        "t_max": 99,
+        "n_consecutive_dt1": 65552,
+        "n_gap_dt_gt1": 0,
+        "n_nonpositive_dt": 0,
+        "n_unknown_endpoint": 0
+      }
+    ]
+  },
+  "official_rows": [
+    {
+      "dataset": "44b6_0113de3b",
+      "role": "tuning_specimen_public_test_copy",
+      "status": "scored",
+      "official": {
+        "dataset": "44b6_0113de3b",
+        "edge_tp": 49,
+        "edge_fp": 2,
+        "edge_fn": 1,
+        "division_tp": 0,
+        "division_fp": 0,
+        "division_fn": 0,
+        "num_pred_nodes": 28855,
+        "node_recall": 1.0,
+        "edge_jaccard": 0.9423076923076923,
+        "adj_edge_jaccard": 0.9309656078730045,
+        "division_jaccard": null,
+        "score": 0.9309656078730045,
+        "total_node_ratio": 0.12036497767423801,
+        "estimated_n_nodes": 25755.0,
+        "scorer": "royerlab/tracking_cellmot.metrics",
+        "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+      },
+      "local_reference": null,
+      "delta_vs_local_reference": null,
+      "note": "Official scorer on Kaggle worker output vs train GEFF. Not a leaderboard score. Do not retune v1 after seeing this."
+    },
+    {
+      "dataset": "44b6_0b24845f",
+      "role": "tuning_specimen_public_test_copy",
+      "status": "scored",
+      "official": {
+        "dataset": "44b6_0b24845f",
+        "edge_tp": 15,
+        "edge_fp": 6,
+        "edge_fn": 34,
+        "division_tp": 0,
+        "division_fp": 0,
+        "division_fn": 0,
+        "num_pred_nodes": 24649,
+        "node_recall": 0.45098039215686275,
+        "edge_jaccard": 0.2727272727272727,
+        "adj_edge_jaccard": 0.2795015869935827,
+        "division_jaccard": null,
+        "score": 0.2795015869935827,
+        "total_node_ratio": -0.24839152309803322,
+        "estimated_n_nodes": 32795.0,
+        "scorer": "royerlab/tracking_cellmot.metrics",
+        "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+      },
+      "local_reference": null,
+      "delta_vs_local_reference": null,
+      "note": "Official scorer on Kaggle worker output vs train GEFF. Not a leaderboard score. Do not retune v1 after seeing this."
+    },
+    {
+      "dataset": "6bba_05b6850b",
+      "role": "validation_specimen_not_in_locked_split",
+      "status": "scored",
+      "official": {
+        "dataset": "6bba_05b6850b",
+        "edge_tp": 595,
+        "edge_fp": 368,
+        "edge_fn": 250,
+        "division_tp": 0,
+        "division_fp": 0,
+        "division_fn": 0,
+        "num_pred_nodes": 8208,
+        "node_recall": 0.9523809523809523,
+        "edge_jaccard": 0.4905193734542457,
+        "adj_edge_jaccard": 0.47628644727699737,
+        "division_jaccard": null,
+        "score": 0.47628644727699737,
+        "total_node_ratio": 0.29016032694121346,
+        "estimated_n_nodes": 6362.0,
+        "scorer": "royerlab/tracking_cellmot.metrics",
+        "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+      },
+      "local_reference": null,
+      "delta_vs_local_reference": null,
+      "note": "Official scorer on Kaggle worker output vs train GEFF. Not a leaderboard score. Do not retune v1 after seeing this."
+    },
+    {
+      "dataset": "6bba_05db0fb1",
+      "role": "frozen_validation_overlap",
+      "status": "scored",
+      "official": {
+        "dataset": "6bba_05db0fb1",
+        "edge_tp": 821,
+        "edge_fp": 276,
+        "edge_fn": 362,
+        "division_tp": 0,
+        "division_fp": 0,
+        "division_fn": 3,
+        "num_pred_nodes": 67788,
+        "node_recall": 0.8291293734743694,
+        "edge_jaccard": 0.5627141877998629,
+        "adj_edge_jaccard": 0.5643362235389078,
+        "division_jaccard": 0.0,
+        "score": 0.5643362235389078,
+        "total_node_ratio": -0.02882521489971347,
+        "estimated_n_nodes": 69800.0,
+        "scorer": "royerlab/tracking_cellmot.metrics",
+        "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+      },
+      "local_reference": {
+        "candidate": "association_v2",
+        "official_combined": 0.564,
+        "source": "reports/abc_comparison.md",
+        "note": "local official on frozen validation; not a leaderboard score"
+      },
+      "delta_vs_local_reference": 0.00033622353890783163,
+      "note": "Official scorer on Kaggle worker output vs train GEFF. Not a leaderboard score. Do not retune v1 after seeing this."
+    }
+  ],
+  "official_summary_all_scored": {
+    "n": 4,
+    "edge_jaccard": 0.532565671104714,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 3,
+    "node_recall": 0.8081226795030462,
+    "adj_edge_jaccard": 0.5271265957482215,
+    "n_adj": 4,
+    "score": 0.5271265957482215,
+    "scorer": "royerlab/tracking_cellmot.metrics",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "source_url": "https://github.com/royerlab/kaggle-cell-tracking-competition"
+  },
+  "frozen_validation_overlap": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "role": "frozen_validation_overlap",
+      "status": "scored",
+      "official": {
+        "dataset": "6bba_05db0fb1",
+        "edge_tp": 821,
+        "edge_fp": 276,
+        "edge_fn": 362,
+        "division_tp": 0,
+        "division_fp": 0,
+        "division_fn": 3,
+        "num_pred_nodes": 67788,
+        "node_recall": 0.8291293734743694,
+        "edge_jaccard": 0.5627141877998629,
+        "adj_edge_jaccard": 0.5643362235389078,
+        "division_jaccard": 0.0,
+        "score": 0.5643362235389078,
+        "total_node_ratio": -0.02882521489971347,
+        "estimated_n_nodes": 69800.0,
+        "scorer": "royerlab/tracking_cellmot.metrics",
+        "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+      },
+      "local_reference": {
+        "candidate": "association_v2",
+        "official_combined": 0.564,
+        "source": "reports/abc_comparison.md",
+        "note": "local official on frozen validation; not a leaderboard score"
+      },
+      "delta_vs_local_reference": 0.00033622353890783163,
+      "note": "Official scorer on Kaggle worker output vs train GEFF. Not a leaderboard score. Do not retune v1 after seeing this."
+    }
+  ],
+  "n_holdout_scored": 1,
+  "public_test_overlap_scored": true,
+  "complete_frozen_split": false,
+  "public_lb_score": null,
+  "private_lb_score": null,
+  "retune_after_holdout": false,
+  "note": "Independent audit of a private internet-off kernel output. Official numbers are local scorer results on the worker CSV. They are not a Kaggle leaderboard score. Competition submit was not performed.",
+  "kernel_status": {},
+  "output_files": [],
+  "official_available": true,
+  "official_versions": {
+    "official_repo": "https://github.com/royerlab/kaggle-cell-tracking-competition",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "tracksdata_repo": "https://github.com/royerlab/tracksdata",
+    "tracksdata_commit": "7523bb39ed9ab1bf88512911fd6c69e46fcad188",
+    "tracksdata": "0.1.0rc10",
+    "polars": "1.44.2",
+    "geff": "1.3.1.1.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  },
+  "geffs_present": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "submission_bytes": 12948601
+}

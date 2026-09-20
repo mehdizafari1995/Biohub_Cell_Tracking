@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 31 passed on `main` + this harness (2026-09-19). The 33-test count included association/kernel tests on the experiment branch.
+`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed on the association branch (2026-09-20). This merge also includes complete-validation harness tests from `main` (PR #3).
 
 ## Official scorer
 
@@ -37,10 +37,11 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `submission.csv`, or local run artifacts.
 
-## 2026-09-19 re-audit (pre-push)
+## 2026-09-20 re-audit (independent kernel output)
 
-- `pytest` 33 passed.
+- `pytest` 48 passed on the association branch.
 - Official scorer pin unchanged: `075fc5f5`.
-- Tracked files: 165 plus coordination docs in this commit; no `data/`, `submission.csv`, credentials, weights, or run artifacts tracked.
+- Worker `submission.csv` was downloaded into ignored `artifacts/kaggle/` only. Sanitized independent numbers: `reports/kaggle_association_v2_v3_independent_audit.json`.
+- Train GEFFs for the four public-test stems were downloaded into ignored `data/train/`. No Zarr volumes were downloaded for this audit.
 - `KAGGLE_API_TOKEN` present in environment (value not printed). `~/.kaggle/kaggle.json` absent.
 - GitHub CLI authenticated as `mehdizafari1995` for the private repo.

@@ -1,0 +1,18 @@
+{
+  "id": "mahdimzafari/biohub-baseline-v1",
+  "title": "Biohub Baseline V1",
+  "code_file": "kaggle_baseline_v1.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}
