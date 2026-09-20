@@ -18,6 +18,7 @@ artifacts/tmp/
 artifacts/kaggle/
 artifacts/cache/
 submission.csv
+run_manifest.json
 *.pth
 *.pt
 weights/

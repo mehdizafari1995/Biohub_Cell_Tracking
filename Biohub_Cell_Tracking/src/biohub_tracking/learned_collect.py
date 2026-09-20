@@ -1,8 +1,10 @@
-"""Collect private learned_unet helper outputs after a COMPLETE Kaggle run.
+"""Collect private learned_unet helper and test-time outputs after COMPLETE.
 
 Downloads stay under ignored ``artifacts/kaggle/``. Weights are never written
-to git. Helper kernels must not produce ``submission.csv``. A local extract is
-not a Kaggle run and not a leaderboard score.
+to git. Train/infer/holdout helpers must not produce ``submission.csv``. The
+test-time kernel is allowed to write ``submission.csv`` only into the ignored
+artifact directory. A local extract is not a Kaggle run and not a leaderboard
+score.
 """
 
 from __future__ import annotations
@@ -26,9 +28,11 @@ from .learned_split import (
 TRAIN_SLUG = TRAIN_KERNEL_SLUG
 INFER_SLUG = "mahdimzafari/biohub-learned-unet-infer-v1"
 HOLDOUT_SLUG = "mahdimzafari/biohub-learned-unet-holdout-v1"
+TEST_SLUG = "mahdimzafari/biohub-learned-unet-test-v1"
 INFER_STEMS = INTERNAL_VAL_STEMS
 HOLDOUT_STEMS = FROZEN_HOLDOUT_STEMS
 HOLDOUT_CONFIG_HASH = "d374a21f03dddc04"
+TEST_CONFIG_HASH = "7a8725b818fc609b"
 BANNED_OUTPUT_NAMES = frozenset({"submission.csv"})
 KAGGLE_NOISE_NAMES = frozenset(
     {
@@ -59,6 +63,12 @@ HOLDOUT_ALLOWED_NAMES = frozenset(
         "infer_manifest.json",
         "6bba_05db0fb1.json",
         "6bba_c328f2fd.json",
+    }
+)
+TEST_ALLOWED_NAMES = frozenset(
+    {
+        "submission.csv",
+        "run_manifest.json",
     }
 )
 
@@ -216,6 +226,37 @@ def _refuse_non_holdout_stems(stems: Iterable[str]) -> None:
         raise HoldoutLeakError(
             "learned_unet_holdout_v1 only collects frozen-holdout stems; got " + ", ".join(extra)
         )
+
+
+def extract_learned_test_output(archive: Path, dest_dir: Path) -> dict[str, Path]:
+    """Extract test-time submission.csv + run_manifest.json into artifacts/kaggle.
+
+    Refuses weights and competition volumes. A local extract is not a
+    competition submission and not a leaderboard score.
+    """
+    dest_dir = Path(dest_dir)
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    names = _zip_files(Path(archive))
+    leaked = [name for name in _basenames(names) if name.endswith((".zarr", ".geff", ".pt", ".pth"))]
+    if leaked:
+        raise ValueError("refusing weights/volume members in test-time zip: " + ", ".join(sorted(leaked)))
+    unexpected = sorted(
+        name for name in _basenames(names) if name not in TEST_ALLOWED_NAMES and not _is_noise(name)
+    )
+    if unexpected:
+        raise ValueError(f"refusing unexpected learned test output files: {unexpected}")
+    written: dict[str, Path] = {}
+    with zipfile.ZipFile(archive) as zf:
+        for info in zf.infolist():
+            if info.is_dir():
+                continue
+            name = Path(info.filename).name
+            if name not in TEST_ALLOWED_NAMES:
+                continue
+            dest = dest_dir / name
+            dest.write_bytes(zf.read(info.filename))
+            written[name] = dest
+    return written
 
 
 def extract_learned_holdout_output(archive: Path, dest_dir: Path) -> dict[str, Path]:

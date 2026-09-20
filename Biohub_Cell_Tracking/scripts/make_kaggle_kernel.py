@@ -165,6 +165,27 @@ Private **GPU** helper kernel. **Not a competition submission.** One-shot only.
 - Do **not** Submit to Competition. Weights stay out of git.
 """,
     },
+    "learned_unet_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_test_v1",
+        "code_file": "kaggle_learned_unet_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-test-v1",
+        "title": "Biohub Learned UNet Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_test_v1
+
+Private **GPU** test-time notebook. Discovers every `test/*.zarr`.
+
+- Loads locked `learned_unet_v1` weights. Operating point is locked `learned_unet_infer_v1` / `learned_unet_holdout_v1`.
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: ~92 s/volume from holdout v1. Hidden test ~199 volumes → ~5.1 h, under the 12 h GPU limit. Peak RAM ~1.2 GB.
+- Do **not** overwrite locked train/infer/holdout slugs. Do **not** retune. Do **not** score 6bba again.
+- Do **not** Submit to Competition from this packaging step. Weights stay out of git.
+""",
+    },
 }
 
 

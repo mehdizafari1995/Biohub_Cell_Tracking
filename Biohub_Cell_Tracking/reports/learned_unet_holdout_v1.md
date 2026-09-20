@@ -60,7 +60,7 @@ This is a local official score, not a Kaggle leaderboard number.
 
 ## Next
 
-Package a **new** private internet-off test-time notebook (new slug; do not
-overwrite train/infer/holdout helpers). Discover every `test/*.zarr` at
-runtime. Write `submission.csv`. Estimate ~5 h for a train-sized hidden
-test at ~90 s/volume. Do **not** submit from the CLI. Do not retune.
+Test-time notebook `learned_unet_test_v1` (hash `7a8725b818fc609b`, slug
+`mahdimzafari/biohub-learned-unet-test-v1`) is packaged. Poll that slug.
+Do **not** overwrite this holdout helper. Do **not** score `6bba` again.
+Do **not** submit from the CLI. Do not retune.

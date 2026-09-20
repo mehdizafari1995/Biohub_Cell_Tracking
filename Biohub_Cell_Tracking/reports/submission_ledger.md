@@ -120,6 +120,18 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official holdout:** learned_unet_holdout_v1 **0.693605** vs locked association_v2 **0.591570**. Decision `keep_candidate_learned_unet_holdout_v1`. Recall 0.957, 0/0/5 divisions. Per-sequence mixed. Not a leaderboard score. Do not retune. Do not score `6bba` again. Do not overwrite this slug.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
+## learned_unet_test_v1_kernel
+
+- **Status:** private GPU test-time kernel `mahdimzafari/biohub-learned-unet-test-v1` version **1 COMPLETE** / `inferred`. Internet off. Environment `kaggle_input`. Writes `submission.csv`. **Not a competition submission.**
+- **Config hash:** `7a8725b818fc609b`. Locked infer `d7578b5f64ddac08` / holdout `d374a21f03dddc04` / train `4c38035d6657f2ad`. Discovers every `test/*.zarr`. Never opens `train/` volumes.
+- **Datasets:** `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, `6bba_05db0fb1` (exact sample_submission stems).
+- **Output:** `/kaggle/working/submission.csv` 23 025 421 bytes, 440 254 rows, 231 707 nodes, 208 547 edges, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Worker:** 306.53 s (0.77 s/frame), peak RAM 1184 MB. Weights `/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+- **Consistency:** `6bba_05db0fb1` 97062/89394 matches the locked holdout helper graphs. Frozen `6bba` was not official-scored again.
+- **Estimate vs measured:** public 4 volumes estimated 368.8 s; measured 306.5 s. Hidden-test estimate remains ~5.1 h.
+- **Kaggle public / private scores:** not returned. Do **not** submit from the CLI.
+- **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-test-v1 → version 1 → **Submit to Competition**.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

@@ -11,11 +11,14 @@ from biohub_tracking.learned_collect import (
     HOLDOUT_CONFIG_HASH,
     HOLDOUT_SLUG,
     INFER_SLUG,
+    TEST_CONFIG_HASH,
+    TEST_SLUG,
     TRAIN_SLUG,
     assert_helper_dest,
     collect_decision,
     extract_learned_holdout_output,
     extract_learned_infer_output,
+    extract_learned_test_output,
     extract_learned_train_output,
     refuse_submission_outputs,
     safe_kernel_status,
@@ -171,6 +174,28 @@ def test_extract_holdout_zip_keeps_6bba_graphs_only(tmp_path: Path):
         extract_learned_holdout_output(banned, dest / "sub")
 
 
+def test_extract_test_zip_keeps_submission_and_refuses_weights(tmp_path: Path):
+    dest = tmp_path / "artifacts" / "kaggle" / "learned_unet_test_v1"
+    dest.mkdir(parents=True)
+    archive = _zip(
+        tmp_path / "test.zip",
+        {
+            "run_manifest.json": json.dumps({"status": "inferred", "config_hash": TEST_CONFIG_HASH}),
+            "submission.csv": "id,dataset,row_type\n0,demo,node\n",
+            "__notebook__.ipynb": "{}",
+        },
+    )
+    written = extract_learned_test_output(archive, dest)
+    assert set(written) == {"run_manifest.json", "submission.csv"}
+    assert (dest / "submission.csv").exists()
+    weights = _zip(tmp_path / "w.zip", {"learned_unet_v1_last.pt": b"nope"})
+    with pytest.raises(ValueError, match="weights/volume"):
+        extract_learned_test_output(weights, dest / "bad")
+    extra = _zip(tmp_path / "extra.zip", {"graphs.json": "{}"})
+    with pytest.raises(ValueError, match="unexpected"):
+        extract_learned_test_output(extra, dest / "extra")
+
+
 def test_assert_helper_dest_stays_under_artifacts_kaggle(tmp_path: Path):
     with pytest.raises(ValueError, match="artifacts/kaggle"):
         assert_helper_dest(tmp_path / "not_ignored")
@@ -186,6 +211,8 @@ def test_collect_modules_stay_stdlib_only():
         "scripts/collect_learned_unet_v1.py",
         "scripts/collect_learned_unet_infer_v1.py",
         "scripts/collect_learned_unet_holdout_v1.py",
+        "scripts/collect_learned_unet_test_v1.py",
+        "src/biohub_tracking/learned_test.py",
     ):
         text = (ROOT / rel).read_text()
         for needle in heavy:
@@ -252,3 +279,14 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert HOLDOUT_SLUG in fetch_mod.ALLOWED_SLUGS
     assert HOLDOUT_SLUG != INFER_SLUG
     assert HOLDOUT_SLUG != KERNEL_SLUG
+    test_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_test_v1",
+        ROOT / "scripts" / "collect_learned_unet_test_v1.py",
+    )
+    assert test_spec and test_spec.loader
+    test_mod = importlib.util.module_from_spec(test_spec)
+    test_spec.loader.exec_module(test_mod)
+    assert test_mod.TEST_SLUG == TEST_SLUG
+    assert test_mod.TEST_CONFIG_HASH == TEST_CONFIG_HASH
+    assert TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert TEST_SLUG != HOLDOUT_SLUG

@@ -1,0 +1,41 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-test-v1",
+  "version": 1,
+  "status": "inferred",
+  "config_hash": "7a8725b818fc609b",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "holdout_config_hash": "d374a21f03dddc04",
+  "checkpoint_hash": "4c38035d6657f2ad",
+  "environment": "kaggle_input",
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "public_lb_score": null,
+  "private_lb_score": null,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "n_nodes": 231707,
+  "n_edges": 208547,
+  "n_predicted_divisions": 0,
+  "rows": 440254,
+  "submission_bytes": 23025421,
+  "runtime_sec": 306.5267593860626,
+  "sec_per_frame": 0.7663168984651566,
+  "peak_memory_mb": 1184.421875,
+  "audit_ok": true,
+  "independent_audit_ok": true,
+  "weights_path": "/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt",
+  "per_dataset": [
+    {"stem": "44b6_0113de3b", "n_nodes": 43366, "n_edges": 39302, "runtime_sec": 69.08505249023438},
+    {"stem": "44b6_0b24845f", "n_nodes": 75975, "n_edges": 66486, "runtime_sec": 79.78564238548279},
+    {"stem": "6bba_05b6850b", "n_nodes": 15304, "n_edges": 13365, "runtime_sec": 64.61188387870789},
+    {"stem": "6bba_05db0fb1", "n_nodes": 97062, "n_edges": 89394, "runtime_sec": 87.84042811393738}
+  ],
+  "holdout_graph_count_match_6bba_05db0fb1": true,
+  "note": "Private GPU test-time kernel v1 COMPLETE on public test. Independent schema audit_ok. 6bba_05db0fb1 node/edge counts match holdout helper graphs. Frozen 6bba was not official-scored again. Not a competition submission. Not a leaderboard score."
+}
