@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed on the association branch (2026-09-20). This merge also includes complete-validation harness tests from `main` (PR #3).
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 69 passed (2026-09-20, division_v2). Includes complete-validation harness tests from `main` (PR #3) and association/kernel tests from PR #2.
 
 ## Official scorer
 

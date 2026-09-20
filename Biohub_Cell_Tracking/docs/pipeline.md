@@ -30,6 +30,8 @@ Default baseline (`configs/baseline.yaml`):
 
 Locked `association_v2` (`configs/association_v2.yaml` and `notebooks/kaggle_association_v2.py`) keeps the same detections as `baseline_v1` and replaces consecutive greedy linking with a 12 µm gated look-back (up to 2 skipped frames), interpolated consecutive nodes, and an intensity cost. `max_children=1`. Do not overwrite `baseline_v1` or retune after holdout. Independently audit a downloaded worker CSV with `scripts/audit_kaggle_output.py`; that official score is not a leaderboard number.
 
+`configs/division_v2.yaml` runs the locked association_v2 linker, then proposes at most one extra child when conservative geometry and topology checks pass. Thresholds are locked from tuning-specimen (`44b6`) GEFFs only. `division_v1` is rejected (0/3/5 on frozen val).
+
 Validation splits are by embryo ID (`44b6` vs `6bba`). Neighboring frames from one specimen are never randomly split. Complete holdout scoring (both frozen validation sequences plus each annotated-division event) is `scripts/run_complete_validation.py`.
 
 Local diagnostic scores use `biohub_tracking.evaluate`. Reported competition scores use the vendored official `tracking_cellmot.metrics` implementation. See `docs/coordinate_audit.md` and `third_party/THIRD_PARTY.md`.

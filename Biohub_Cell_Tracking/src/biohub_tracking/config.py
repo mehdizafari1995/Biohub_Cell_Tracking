@@ -40,8 +40,14 @@ class LinkingConfig:
     interpolate_gaps: bool = True
     min_child_separation_um: float = 2.0
     max_parent_child_um: float | None = None
+    min_parent_child_um: float = 0.0
     intensity_sum_tolerance: float = 0.6
     max_children: int = 1
+    require_parent_predecessor: bool = False
+    require_no_alternative_parent: bool = False
+    alternative_parent_gate_um: float | None = None
+    max_sibling_alignment: float | None = None
+    min_displacement_um: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -85,8 +91,14 @@ class PipelineConfig:
                 "interpolate_gaps": self.linking.interpolate_gaps,
                 "min_child_separation_um": self.linking.min_child_separation_um,
                 "max_parent_child_um": self.linking.max_parent_child_um,
+                "min_parent_child_um": self.linking.min_parent_child_um,
                 "intensity_sum_tolerance": self.linking.intensity_sum_tolerance,
                 "max_children": self.linking.max_children,
+                "require_parent_predecessor": self.linking.require_parent_predecessor,
+                "require_no_alternative_parent": self.linking.require_no_alternative_parent,
+                "alternative_parent_gate_um": self.linking.alternative_parent_gate_um,
+                "max_sibling_alignment": self.linking.max_sibling_alignment,
+                "min_displacement_um": self.linking.min_displacement_um,
             },
         }
 
@@ -139,8 +151,20 @@ def load_config(path: str | Path | None = None, overrides: dict[str, Any] | None
             max_parent_child_um=(
                 None if link.get("max_parent_child_um") is None else float(link.get("max_parent_child_um"))
             ),
+            min_parent_child_um=float(link.get("min_parent_child_um", 0.0)),
             intensity_sum_tolerance=float(link.get("intensity_sum_tolerance", 0.6)),
             max_children=int(link.get("max_children", 1)),
+            require_parent_predecessor=bool(link.get("require_parent_predecessor", False)),
+            require_no_alternative_parent=bool(link.get("require_no_alternative_parent", False)),
+            alternative_parent_gate_um=(
+                None
+                if link.get("alternative_parent_gate_um") is None
+                else float(link.get("alternative_parent_gate_um"))
+            ),
+            max_sibling_alignment=(
+                None if link.get("max_sibling_alignment") is None else float(link.get("max_sibling_alignment"))
+            ),
+            min_displacement_um=float(link.get("min_displacement_um", 1.0)),
         ),
     )
 

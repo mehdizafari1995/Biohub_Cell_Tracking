@@ -4,18 +4,18 @@ Locked detection for all three: anisotropic DoG + 4 µm NMS (`baseline_v1`). Off
 
 Scores are **local official combined scores**, not Kaggle leaderboard numbers.
 
-| | A baseline_v1 | B association_v2 | C division_v1 |
-|---|---|---|---|
-| Linking | greedy 15 µm | greedy 12 µm gate + 2-frame gap close + intensity 0.5 | B + conservative two-child proposals |
-| Tuning official score | 0.585 | **0.632** | 0.630 |
-| Tuning raw / adj edge J | 0.590 / 0.585 | 0.645 / 0.632 | 0.643 / 0.630 |
-| Tuning ID switches / fragments | 169 / 274 | 150 / 181 | (same detections) |
-| Frozen val official score | 0.537 | **0.592** | 0.590 |
-| Val raw / adj edge J | 0.530 / 0.537 | 0.589 / 0.592 | 0.587 / 0.590 |
-| Val node recall | 0.804 | 0.838 | 0.838 |
-| Val ID switches / fragments | 150 / 603 | 135 / 483 | — |
-| Val divisions TP/FP/FN | 0/0/5 | 0/0/5 | 0/3/5 |
-| Val division Jaccard | 0.0 | 0.0 | 0.0 |
+| | A baseline_v1 | B association_v2 | C division_v1 | D division_v2 |
+|---|---|---|---|---|
+| Linking | greedy 15 µm | greedy 12 µm gate + 2-frame gap close + intensity 0.5 | B + conservative two-child proposals | B + predecessor / anti-align / no-steal forks |
+| Tuning official score | 0.585 | **0.632** | 0.630 | not scored |
+| Tuning raw / adj edge J | 0.590 / 0.585 | 0.645 / 0.632 | 0.643 / 0.630 | not scored |
+| Tuning ID switches / fragments | 169 / 274 | 150 / 181 | (same detections) | not scored |
+| Frozen val official score | 0.537 | **0.592** | 0.590 | not scored |
+| Val raw / adj edge J | 0.530 / 0.537 | 0.589 / 0.592 | 0.587 / 0.590 | not scored |
+| Val node recall | 0.804 | 0.838 | 0.838 | not scored |
+| Val ID switches / fragments | 150 / 603 | 135 / 483 | — | not scored |
+| Val divisions TP/FP/FN | 0/0/5 | 0/0/5 | 0/3/5 | not scored |
+| Val division Jaccard | 0.0 | 0.0 | 0.0 | not scored |
 
 Per-sequence frozen validation (official combined):
 
@@ -53,10 +53,14 @@ On frozen validation, division_v1 scored **0 TP / 3 FP / 5 FN**. Combined score 
 
 Visual inspection of the three `6bba_05db0fb1` events (t=24, 52, 62): dense MIP, sparse GT circles, predictions nearby. Two `6bba_c328f2fd` daughters sit 12–13 µm from the parent, outside the 9 µm tuning prior. Raising that gate after seeing validation would be leakage.
 
+## D `division_v2` (this family)
+
+Locked from 17 complete `44b6` GEFFs (4 events) only. See `reports/division_v2.md`. Official holdout has not been run because the two validation Zarr volumes are not on this machine. Do not invent a score.
+
 ## Sanity sequence
 
 `docs/splits/v2.json` adds `44b6_2a2eff9f` (100 frames, 1 GT division). Same specimen prefix as tuning. Locked association_v2 official score 0.801, recall 0.995, 16 switches. This is **not** a third-embryo holdout; the downloaded GEFF inventory only has prefixes `44b6` and `6bba`.
 
 ## Kaggle
 
-A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. No competition submit was performed. No public or private leaderboard score was returned.
+A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only so far. No competition submit was performed. No public or private leaderboard score was returned.

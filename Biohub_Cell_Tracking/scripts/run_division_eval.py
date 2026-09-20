@@ -28,11 +28,13 @@ from run_association_ablation import load_or_detect  # noqa: E402
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=Path, default=ROOT / "configs" / "division_v1.yaml")
+    parser.add_argument("--config", type=Path, default=ROOT / "configs" / "division_v2.yaml")
     parser.add_argument("--role", choices=["tuning", "validation"], default="tuning")
     parser.add_argument("--datasets", nargs="*", default=None)
-    parser.add_argument("--name", default="division_v1")
+    parser.add_argument("--name", default=None)
     args = parser.parse_args()
+    if args.name is None:
+        args.name = Path(args.config).stem
     pipe = load_config(args.config)
     split = load_split_manifest(ROOT / "docs" / "splits" / "v1.json")
     names = args.datasets or list(split[args.role])
@@ -124,7 +126,7 @@ def main() -> None:
             "division_fn": summary.get("division_fn"),
             "runtime_sec": round(runtime, 3),
             "peak_memory_mb": round(memory, 1) if memory == memory else "",
-            "notes": "division_v1; n_val_divisions=3; do not claim generalization",
+            "notes": f"{args.config.stem}; n_val_divisions=5; do not claim generalization; do not retune after holdout",
         },
     )
     print(json.dumps({"experiment_id": experiment_id, "summary": summary, "runtime_sec": runtime, "peak_memory_mb": memory, "run_dir": str(run_dir)}, indent=2, default=str))

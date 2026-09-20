@@ -4,10 +4,11 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Now
 
-1. Keep draft PR `cursor/kaggle-baseline-association-0b83` open. Do not merge. Do not mark ready. Do not overwrite locked `association_v2`.
-2. `association_v2` private internet-off kernel `mahdimzafari/biohub-association-v2` version 3 is **COMPLETE** and independently audited. Worker CSV official-scored 0.564336 on public-test overlap `6bba_05db0fb1` (matches local 0.564). Do **not** submit it from the CLI.
-3. The frozen split is still incomplete from the worker CSV because `6bba_c328f2fd` is not in public test. The complete-validation harness is on `main` (PR #3). Do not retune `v1` after seeing holdout.
-4. `division_v1` already failed frozen validation (0/3/5). Do not relaunch it on PR #2. The next experiment family is a **new** conservative-division PR with priors chosen only on tuning GEFFs.
+1. Keep draft PR #2 (`cursor/kaggle-baseline-association-0b83`) open. Do not merge. Do not overwrite locked `association_v2`.
+2. Continue the **division_v2** draft PR on `cursor/competition-operational-strategy-3381`. Do not relaunch rejected `division_v1`.
+3. Finish remaining train `44b6` GEFF downloads (71 total; 17 complete when the lock was written) and regenerate `docs/division_priors.json`. If new tuning events fall outside the locked gates, update `division_v2.yaml` **before** the first frozen-validation official score.
+4. Download only the two frozen-validation volumes (`6bba_05db0fb1`, `6bba_c328f2fd`; ≈1.0 GB) and official-score `association_v2` vs `division_v2` once. Reject `division_v2` on any combined-score regression or extra false forks. Do not retune after seeing holdout.
+5. Do **not** submit association_v2 or division_v2 from the CLI.
 
 ## HUMAN_ACTION_REQUIRED
 
@@ -16,9 +17,9 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Later (blocked or expensive)
 
-- Learned 3D detection / embedding (organizer UNet + transformer is GPU/Kaggle, not the CPU slice). Public-test copy `44b6_0b24845f` scored 0.280 with recall 0.45; that is a same-specimen copy, not holdout, and is not a reason to retune association_v2.
+- Learned 3D detection / embedding (organizer UNet + transformer is GPU/Kaggle, not the CPU slice).
 - Ensembles or complementary candidates, compared on the frozen split against preserved baseline_v1 and association_v2.
-- Harden the final internet-off notebook and runtime for hidden test. Worker measurement: 1.48 s/frame, 421 MB. Train-size hidden (~16 sequences) ≈ 40 min; a 200-sequence hypothesis at 2× margin can exceed 12 h.
+- Harden the final internet-off notebook and runtime for hidden test. Worker measurement: 1.48 s/frame, 421 MB.
 - Final Kaggle submission: `HUMAN_ACTION_REQUIRED` — Mahdi must submit version output from the Kaggle UI.
 
 ## Never from automation

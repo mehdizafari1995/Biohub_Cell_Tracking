@@ -16,7 +16,19 @@ from biohub_tracking.geff_priors import write_priors  # noqa: E402
 def main() -> None:
     dest = ROOT / "docs" / "division_priors.json"
     payload = write_priors(ROOT / "data" / "train", dest)
-    print(json.dumps({"dest": str(dest), "all_five": payload["all_five"], "tuning_three": payload["tuning_three"]}, indent=2))
+    print(
+        json.dumps(
+            {
+                "dest": str(dest),
+                "n_tuning_geffs_scanned": payload["n_tuning_geffs_scanned"],
+                "tuning_specimen_summary": payload["tuning_specimen_summary"],
+                "locked_operating_point": payload["locked_operating_point"],
+                "tuning_three": payload["tuning_three"],
+                "validation_excluded": payload["validation_specimen_excluded"],
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":
