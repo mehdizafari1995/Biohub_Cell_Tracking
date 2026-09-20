@@ -115,6 +115,40 @@ def test_peak_extraction_and_greedy_gate(tmp_path: Path):
         pass
 
 
+def test_open_volume_prefers_custom_reader_when_zarr_probe_fails(tmp_path: Path, monkeypatch):
+    from kaggle_learned_unet_infer_v1 import ZarrV3FrameArray, open_volume_array
+
+    zarr_dir = tmp_path / "44b6_12dfb391.zarr" / "0"
+    zarr_dir.mkdir(parents=True)
+    (zarr_dir / "zarr.json").write_text(
+        json.dumps(
+            {
+                "shape": [1, 1, 1, 1],
+                "data_type": "uint16",
+                "chunk_grid": {"configuration": {"chunk_shape": [1, 1, 1, 1]}},
+                "codecs": [],
+                "chunk_key_encoding": {"configuration": {"separator": "/"}},
+            }
+        )
+    )
+    (zarr_dir / "c" / "0" / "0" / "0" / "0").parent.mkdir(parents=True)
+    (zarr_dir / "c" / "0" / "0" / "0" / "0").write_bytes(np.array([7], dtype=np.uint16).tobytes())
+
+    class _Boom:
+        def __getitem__(self, _t):
+            raise ValueError("unsupported zarr codec 'zstd'")
+
+    class _FakeZarr:
+        @staticmethod
+        def open_group(_path, mode="r"):
+            return {"0": _Boom()}
+
+    monkeypatch.setitem(__import__("sys").modules, "zarr", _FakeZarr)
+    volume = open_volume_array(zarr_dir.parent)
+    assert isinstance(volume, ZarrV3FrameArray)
+    assert int(volume[0].reshape(-1)[0]) == 7
+
+
 def test_find_weights_and_train_manifest_guard(tmp_path: Path):
     dest = tmp_path / "weights"
     dest.mkdir()

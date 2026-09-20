@@ -21,7 +21,8 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-geff-export" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-holdout-zarr-export" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-tuning-zarr-export" in mod.FORBIDDEN_SLUGS
-    assert "mahdimzafari/biohub-learned-unet-v1" not in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-v1" in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-infer-v1" not in mod.FORBIDDEN_SLUGS
 
 
 def test_fetch_kernel_output_allows_helper_slugs_only():

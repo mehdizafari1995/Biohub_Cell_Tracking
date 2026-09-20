@@ -32,9 +32,11 @@ Do not overwrite `biohub-baseline-v1`, `biohub-association-v2`, or the export he
 |---|---|---|
 | 1 | error | GPU T4 x2 available. 44b6 split written (69 train / 2 internal val, no 6bba). Uncaught crash. |
 | 2 | error | `train_error` `ValueError: unsupported zarr codec 'zstd'` while reading train volumes. Split still 44b6-only. |
-| 3 | **running** at this poll | zstd decoder added. Still running. Not complete. Not a leaderboard score. |
+| 3 | **running** at this poll | zstd decoder added. Still running at 2026-09-20 10:35 UTC (`lastRunTime` 08:44:11Z). Output list empty. Not complete. Not a leaderboard score. |
 
 This worker has no local GPU. A local simulation is not a Kaggle run. No leaderboard score. Weights stay out of git. The training slug is locked against overwrite while v3 runs.
+
+COMPLETE handoff is `scripts/collect_learned_unet_v1.py`. It polls without downloading while the helper is running. After **complete** it extracts only `train_manifest.json` / split JSON / `learned_unet_v1_{best,last}.pt` into ignored `artifacts/kaggle/learned_unet_v1`. It refuses `submission.csv`, Zarr/GEFF members, and holdout stems. Do not use `extract_kernel_output` (that path only allows a prediction `submission.csv`).
 
 ## Inference kernel (packaged, not pushed)
 

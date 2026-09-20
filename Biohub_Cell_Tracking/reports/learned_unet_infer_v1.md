@@ -35,6 +35,8 @@ COMPLETE. Internet off. **Not a submission.**
 |---|---|---|
 | — | not pushed | Waiting on training kernel v3. Do not attach incomplete weights. |
 
+Volume I/O now probe-reads native `zarr` and falls back to the custom zstd decoder (the v2 training failure mode) so the first infer push does not die on `unsupported zarr codec 'zstd'`.
+
 Estimate (2 tuning volumes, T4, 4 TTA): tens of minutes, well under 12 h.
 This CPU worker cannot run the model. A local simulation is not a Kaggle run.
 

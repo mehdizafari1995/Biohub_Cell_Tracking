@@ -263,12 +263,17 @@ class ZarrV3FrameArray:
 
 def open_volume_array(zarr_path: str | Path):
     path = Path(zarr_path)
+    custom = ZarrV3FrameArray(path / "0") if (path / "0" / "zarr.json").exists() else None
     try:
         import zarr
 
-        return zarr.open_group(path, mode="r")["0"]
+        arr = zarr.open_group(path, mode="r")["0"]
+        _ = arr[0]
+        return arr
     except Exception:
-        return ZarrV3FrameArray(path / "0")
+        if custom is not None:
+            return custom
+        raise
 
 
 def downsample_frame(frame: np.ndarray, downsample: Sequence[int]) -> np.ndarray:
