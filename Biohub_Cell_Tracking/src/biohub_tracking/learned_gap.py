@@ -135,6 +135,35 @@ def _physical(z: float, y: float, x: float) -> np.ndarray:
     return np.asarray([z, y, x], dtype=np.float64) * np.asarray(SCALE_ZYX, dtype=np.float64)
 
 
+def apply_locked_overlay_arrays(
+    coords: np.ndarray,
+    edges: Sequence[Sequence[int]],
+    dataset: str = "overlay",
+) -> tuple[np.ndarray, list[tuple[int, int]], dict[str, int]]:
+    """Apply the locked overlay to 1-indexed coords/edges without retuning."""
+    coords = np.asarray(coords, dtype=np.int64).reshape(-1, 4)
+    graph = TrackGraph(
+        dataset=dataset,
+        node_id=np.arange(1, len(coords) + 1, dtype=np.int64),
+        t=coords[:, 0] if len(coords) else np.zeros((0,), dtype=np.int64),
+        z=coords[:, 1] if len(coords) else np.zeros((0,), dtype=np.int64),
+        y=coords[:, 2] if len(coords) else np.zeros((0,), dtype=np.int64),
+        x=coords[:, 3] if len(coords) else np.zeros((0,), dtype=np.int64),
+        edges=np.asarray(edges, dtype=np.int64).reshape(-1, 2) if edges else np.zeros((0, 2), dtype=np.int64),
+    )
+    out = apply_locked_overlay(graph)
+    out_coords = (
+        np.stack([out.t, out.z, out.y, out.x], axis=1).astype(np.int64)
+        if out.n_nodes
+        else np.empty((0, 4), dtype=np.int64)
+    )
+    out_edges = [(int(src), int(dst)) for src, dst in out.edges.tolist()] if out.n_edges else []
+    return out_coords, out_edges, {
+        "n_gap_links": int(out.metadata.get("n_gap_links") or 0),
+        "n_interpolated": int(out.metadata.get("n_interpolated") or 0),
+    }
+
+
 def apply_locked_overlay(graph: TrackGraph) -> TrackGraph:
     """Add interpolated gap-close links for unmatched nodes only.
 

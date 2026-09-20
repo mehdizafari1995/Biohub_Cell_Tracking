@@ -22,7 +22,8 @@ Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.
 - `mahdimzafari/biohub-learned-unet-v1` v3 COMPLETE / trained — 44b6-only GPU training. No `submission.csv`. Do not overwrite.
 - `mahdimzafari/biohub-learned-unet-infer-v1` v3 COMPLETE / inferred — 44b6-only graphs. No `submission.csv`. Do not overwrite.
 - `mahdimzafari/biohub-learned-unet-holdout-v1` v1 COMPLETE / inferred — 6bba graphs. No `submission.csv`. Do not overwrite.
-- `mahdimzafari/biohub-learned-unet-test-v1` v1 COMPLETE / inferred — public-test no-gap worker, `audit_ok`, not submitted. Do not overwrite. A gap test-time slug has not been packaged yet.
+- `mahdimzafari/biohub-learned-unet-test-v1` v1 COMPLETE / inferred — public-test no-gap worker, `audit_ok`, not submitted. Do not overwrite.
+- `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 COMPLETE / inferred — public-test gap overlay worker, 330.0 s, `audit_ok`, not submitted. Preferred learned submit from the Kaggle UI. Do not overwrite.
 
 ## Previous kernel (baseline_v1)
 

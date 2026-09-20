@@ -8,6 +8,8 @@ from pathlib import Path
 import pytest
 
 from biohub_tracking.learned_collect import (
+    GAP_TEST_CONFIG_HASH,
+    GAP_TEST_SLUG,
     HOLDOUT_CONFIG_HASH,
     HOLDOUT_SLUG,
     INFER_SLUG,
@@ -212,6 +214,7 @@ def test_collect_modules_stay_stdlib_only():
         "scripts/collect_learned_unet_infer_v1.py",
         "scripts/collect_learned_unet_holdout_v1.py",
         "scripts/collect_learned_unet_test_v1.py",
+        "scripts/collect_learned_unet_gap_test_v1.py",
         "src/biohub_tracking/learned_test.py",
     ):
         text = (ROOT / rel).read_text()
@@ -290,3 +293,14 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert test_mod.TEST_CONFIG_HASH == TEST_CONFIG_HASH
     assert TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert TEST_SLUG != HOLDOUT_SLUG
+    gap_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_gap_test_v1",
+        ROOT / "scripts" / "collect_learned_unet_gap_test_v1.py",
+    )
+    assert gap_spec and gap_spec.loader
+    gap_mod = importlib.util.module_from_spec(gap_spec)
+    gap_spec.loader.exec_module(gap_mod)
+    assert gap_mod.GAP_TEST_SLUG == GAP_TEST_SLUG
+    assert gap_mod.GAP_TEST_CONFIG_HASH == GAP_TEST_CONFIG_HASH
+    assert GAP_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert GAP_TEST_SLUG != TEST_SLUG

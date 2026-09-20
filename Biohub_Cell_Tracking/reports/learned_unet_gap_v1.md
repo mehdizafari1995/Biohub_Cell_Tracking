@@ -98,10 +98,8 @@ This is a local official score, not a Kaggle leaderboard number.
 
 ## Next
 
-Package a **new** internet-off GPU test-time slug that applies the same
-locked gap overlay after locked learned detection. Do **not** overwrite
-`mahdimzafari/biohub-learned-unet-test-v1` v1. Suggested slug
-`mahdimzafari/biohub-learned-unet-gap-test-v1`. Cost: public-test no-gap
-was 306.5 s / 1184 MB; overlay added 9.7 s locally on two holdout graphs.
-Estimate ~320–360 s public test, hidden-test still ~5.1 h plus overlay,
-under the 12 h GPU limit. Do not submit from the CLI.
+Gap test-time slug `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 is
+**COMPLETE / inferred** (330.0 s, `audit_ok`, hash `85379c198ebc7241`).
+Do **not** overwrite it or `mahdimzafari/biohub-learned-unet-test-v1` v1.
+Do **not** retune. Do **not** score frozen `6bba` again. Do not submit
+from the CLI.

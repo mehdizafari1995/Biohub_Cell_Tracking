@@ -1,0 +1,37 @@
+{
+  "label": "learned_unet_gap_test_v1",
+  "config_hash": "85379c198ebc7241",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "holdout_config_hash": "d374a21f03dddc04",
+  "gap_config_hash": "f4d888d190c45a4a",
+  "test_parent_hash": "7a8725b818fc609b",
+  "sec_per_volume": 97.04350000000001,
+  "source": "learned_unet_holdout_v1 v1 184.4s / 2 volumes + learned_unet_gap_v1 overlay 9.687s / 2 holdout graphs",
+  "peak_memory_mb_observed": 1177.0,
+  "public_test": {
+    "n_volumes": 4,
+    "sec_per_volume": 97.04350000000001,
+    "nogap_sec_per_volume": 92.2,
+    "overlay_sec_per_volume": 4.8435,
+    "estimate_sec": 388.17400000000004,
+    "estimate_hours": 0.10782611111111112,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_observed": 1177.0
+  },
+  "hidden_test_train_sized": {
+    "n_volumes": 199,
+    "sec_per_volume": 97.04350000000001,
+    "nogap_sec_per_volume": 92.2,
+    "overlay_sec_per_volume": 4.8435,
+    "estimate_sec": 19311.6565,
+    "estimate_hours": 5.364349027777778,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_observed": 1177.0
+  },
+  "kaggle_gpu_limit_hours": 12.0,
+  "is_leaderboard_score": false,
+  "note": "Estimate only. Not a Kaggle run and not a leaderboard score. Do not overwrite mahdimzafari/biohub-learned-unet-test-v1."
+}

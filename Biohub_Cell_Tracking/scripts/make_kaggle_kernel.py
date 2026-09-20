@@ -186,6 +186,28 @@ Private **GPU** test-time notebook. Discovers every `test/*.zarr`.
 - Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_gap_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_gap_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_gap_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_gap_test_v1",
+        "code_file": "kaggle_learned_unet_gap_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-gap-test-v1",
+        "title": "Biohub Learned UNet Gap Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_gap_test_v1
+
+Private **GPU** test-time notebook with locked gap overlay. Discovers every `test/*.zarr`.
+
+- Loads locked `learned_unet_v1` weights. Detection/consecutive links are locked `learned_unet_infer_v1` / `learned_unet_holdout_v1`.
+- Applies locked `learned_unet_gap_v1` overlay (12 µm, max_gap=2, interpolate) to leftover unmatched nodes.
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: ~97 s/volume (92.2 s infer + 4.8 s overlay). Hidden test ~199 volumes → ~5.4 h, under the 12 h GPU limit.
+- Do **not** overwrite locked train/infer/holdout/test slugs, especially `mahdimzafari/biohub-learned-unet-test-v1`.
+- Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step.
+""",
+    },
 }
 
 

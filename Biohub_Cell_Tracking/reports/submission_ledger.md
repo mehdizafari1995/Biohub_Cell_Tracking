@@ -130,7 +130,20 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Consistency:** `6bba_05db0fb1` 97062/89394 matches the locked holdout helper graphs. Frozen `6bba` was not official-scored again.
 - **Estimate vs measured:** public 4 volumes estimated 368.8 s; measured 306.5 s. Hidden-test estimate remains ~5.1 h.
 - **Kaggle public / private scores:** not returned. Do **not** submit from the CLI.
-- **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-test-v1 → version 1 → **Submit to Competition**.
+- **Manual submit:** Prefer the gap slug after it completes. If submitting the no-gap kernel: https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-test-v1 → version 1 → **Submit to Competition**.
+
+## learned_unet_gap_test_v1_kernel
+
+- **Status:** private GPU test-time kernel `mahdimzafari/biohub-learned-unet-gap-test-v1` version **1 COMPLETE** / `inferred`. Internet off. Environment `kaggle_input`. Writes `submission.csv`. **Not a competition submission.**
+- **Config hash:** `85379c198ebc7241`. Locked infer `d7578b5f64ddac08` / holdout `d374a21f03dddc04` / gap overlay `f4d888d190c45a4a` / no-gap test parent `7a8725b818fc609b` / train `4c38035d6657f2ad`. Discovers every `test/*.zarr`. Never opens `train/` volumes.
+- **Datasets:** `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, `6bba_05db0fb1` (exact sample_submission stems).
+- **Output:** `/kaggle/working/submission.csv` 25 891 562 bytes, 494 072 rows, 251 660 nodes, 242 412 edges, 13 912 gap links, 19 953 interpolated nodes, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Worker:** 330.02 s (0.83 s/frame), peak RAM 1184 MB. Weights `/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+- **Consistency:** `6bba_05db0fb1` 103432/100197 matches the locked holdout gap overlay (97062+6370 / 89394+10803). Frozen `6bba` was not official-scored again.
+- **Estimate vs measured:** public 4 volumes estimated 388 s; measured 330.0 s. Hidden-test estimate remains ~5.4 h.
+- **Do not overwrite:** this slug or `mahdimzafari/biohub-learned-unet-test-v1` v1.
+- **Kaggle public / private scores:** not returned. Do **not** submit from the CLI.
+- **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-gap-test-v1 → version 1 → **Submit to Competition**.
 
 ## learned_unet_division_v1_tune
 
