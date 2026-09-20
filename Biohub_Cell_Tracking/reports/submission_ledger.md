@@ -94,6 +94,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **linkable_v1:** combined **0.591458**, recall 0.838, 0/0/5 divisions, 96525 pred nodes. Extra T_pred (+189) lowered adj-edge Jaccard. Decision `reject_linkable_v1`. Do not retune.
 - **Kaggle public / private scores:** not returned.
 
+## learned_unet_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-v1`. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Version 1:** error after writing a 44b6-only split (69 train / 2 frozen-tuning internal val, no 6bba). GPU T4 x2 and torch 2.10+cu128 were present.
+- **Version 2:** `train_error` `ValueError: unsupported zarr codec 'zstd'` on train volumes. Split unchanged.
+- **Version 3:** zstd decoder added; **running** at last poll (not complete). Not a leaderboard score. Weights must stay out of git.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

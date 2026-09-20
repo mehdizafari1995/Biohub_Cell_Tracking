@@ -21,6 +21,7 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-association-v2",
     "mahdimzafari/biohub-geff-export",
     "mahdimzafari/biohub-holdout-zarr-export",
+    "mahdimzafari/biohub-tuning-zarr-export",
 }
 
 
@@ -55,7 +56,7 @@ def push_kernel(kernel_name: str) -> dict:
         "language": "python",
         "kernelType": "notebook",
         "isPrivate": True,
-        "enableGpu": False,
+        "enableGpu": bool(meta.get("enable_gpu", False)),
         "enableTpu": False,
         "enableInternet": False,
         "competitionDataSources": ["biohub-cell-tracking-during-development"],

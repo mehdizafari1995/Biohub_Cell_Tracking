@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-KERNELS: dict[str, dict[str, str]] = {
+KERNELS: dict[str, dict] = {
     "baseline_v1": {
         "source": "notebooks/kaggle_baseline_v1.py",
         "notebook": "notebooks/kaggle_baseline_v1.ipynb",
@@ -103,17 +103,40 @@ Private CPU helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition.
 """,
     },
+    "learned_unet_v1": {
+        "source": "notebooks/kaggle_learned_unet_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_v1",
+        "code_file": "kaggle_learned_unet_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-v1",
+        "title": "Biohub Learned UNet V1",
+        "enable_gpu": True,
+        "markdown": """# Biohub learned_unet_v1
+
+Private **GPU** helper kernel. **Not a competition submission.**
+
+- Trains organizer `TemporalUNet3D` + `SimpleNodeTransformer` on frozen-tuning specimen `44b6` only.
+- Internal val: `44b6_12dfb391`, `44b6_267148e4`. Never opens `6bba` volumes.
+- Attach the competition dataset. **Internet OFF**. **GPU ON**. Keep private.
+- Writes weights + `train_manifest.json`. Does **not** write `submission.csv`.
+- Do **not** overwrite `mahdimzafari/biohub-baseline-v1`, `mahdimzafari/biohub-association-v2`, or the helper export kernels.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
 }
 
 
-def build_notebook(source_text: str, markdown: str) -> dict:
+def build_notebook(source_text: str, markdown: str, enable_gpu: bool = False) -> dict:
     return {
         "nbformat": 4,
         "nbformat_minor": 5,
         "metadata": {
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
             "language_info": {"name": "python", "pygments_lexer": "ipython3"},
-            "kaggle": {"accelerator": "none", "isInternetEnabled": False},
+            "kaggle": {
+                "accelerator": "gpu" if enable_gpu else "none",
+                "isInternetEnabled": False,
+            },
         },
         "cells": [
             {
@@ -135,7 +158,7 @@ def build_notebook(source_text: str, markdown: str) -> dict:
     }
 
 
-def metadata_payload(spec: dict[str, str]) -> dict:
+def metadata_payload(spec: dict) -> dict:
     return {
         "id": spec["kernel_id"],
         "title": spec["title"],
@@ -143,7 +166,7 @@ def metadata_payload(spec: dict[str, str]) -> dict:
         "language": "python",
         "kernel_type": "notebook",
         "is_private": True,
-        "enable_gpu": False,
+        "enable_gpu": bool(spec.get("enable_gpu", False)),
         "enable_tpu": False,
         "enable_internet": False,
         "keywords": [],
@@ -163,7 +186,7 @@ def build_kernel(name: str) -> list[Path]:
     kernel_dir = ROOT / spec["kernel_dir"]
     metadata = kernel_dir / "kernel-metadata.json"
     source_text = source.read_text()
-    nb = build_notebook(source_text, spec["markdown"])
+    nb = build_notebook(source_text, spec["markdown"], enable_gpu=bool(spec.get("enable_gpu", False)))
     notebook.write_text(json.dumps(nb, indent=1) + "\n")
     kernel_dir.mkdir(parents=True, exist_ok=True)
     kernel_nb = kernel_dir / spec["code_file"]

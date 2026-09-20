@@ -82,3 +82,7 @@ Next learned attempt (later run, expensive): private GPU kernel that trains on f
 ## Fallback chosen here
 
 `linkable_v1`: same complementary spatial gates as rejected `complementary_v1`, plus a sequence filter that drops extras without a primary neighbor inside 12 µm at `t±1`. Tune on `44b6` only. CPU, official scorer, no kernel push this run.
+
+## Follow-up (2026-09-20, learned_unet_v1 family)
+
+`linkable_v1` was rejected on holdout. This family packages a private GPU helper `mahdimzafari/biohub-learned-unet-v1` (internet off, no `submission.csv`) that trains on `44b6` only with internal val = frozen-tuning pair. Config hash `4c38035d6657f2ad`. This CPU worker still has no GPU; a Kaggle GPU run is required before any official score. Weights stay out of git. Do not use public organizer weights on frozen `6bba`.

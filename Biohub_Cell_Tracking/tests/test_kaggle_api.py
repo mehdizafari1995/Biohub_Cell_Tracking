@@ -20,7 +20,8 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-association-v2" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-geff-export" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-holdout-zarr-export" in mod.FORBIDDEN_SLUGS
-    assert "mahdimzafari/biohub-tuning-zarr-export" not in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-tuning-zarr-export" in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-v1" not in mod.FORBIDDEN_SLUGS
 
 
 def test_fetch_kernel_output_allows_helper_slugs_only():
@@ -37,6 +38,7 @@ def test_fetch_kernel_output_allows_helper_slugs_only():
     assert "mahdimzafari/biohub-holdout-zarr-export" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-geff-export" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-tuning-zarr-export" in mod.ALLOWED_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-v1" in mod.ALLOWED_SLUGS
 
 
 def test_rate_limit_cooldown_is_bounded_and_silent_of_secrets():

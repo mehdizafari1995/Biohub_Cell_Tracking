@@ -1,0 +1,18 @@
+{
+  "id": "mahdimzafari/biohub-learned-unet-v1",
+  "title": "Biohub Learned UNet V1",
+  "code_file": "kaggle_learned_unet_v1.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}

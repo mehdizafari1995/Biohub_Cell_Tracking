@@ -18,6 +18,9 @@ artifacts/tmp/
 artifacts/kaggle/
 artifacts/cache/
 submission.csv
+*.pth
+*.pt
+weights/
 *.log
 kaggle_kernel/**/wheels/*.whl
 .DS_Store

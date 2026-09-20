@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (linkable_v1 rejected on holdout). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (learned_unet_v1 GPU training family packaged). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -10,6 +10,7 @@ Last updated: 2026-09-20 (linkable_v1 rejected on holdout). Authoritative implem
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
+- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1`. New family after linkable_v1. GPU training kernel packaged; not scored.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
@@ -27,6 +28,10 @@ Last updated: 2026-09-20 (linkable_v1 rejected on holdout). Authoritative implem
 - `configs/complementary_v1.yaml`: locked baseline_v1 primary DoG + complementary local-max (6.0 µm isolation, 0.45 intensity ratio) + locked association_v2 linker. Hash `2c4866928d7262b6`. Tuning 0.633135 vs association_v2 0.632460; holdout **0.591384 vs 0.591570**. Status `rejected_on_holdout`. See `docs/complementary_priors.json`.
 - `configs/linkable_v1.yaml`: complementary_v1 spatial gates plus temporal link filter (primary neighbor within 12 µm at t±1). Hash `fa975421edb6136e`. Tuning 0.633168 vs association_v2 0.632460; holdout **0.591458 vs 0.591570**. Status `rejected_on_holdout`. See `docs/linkable_priors.json`.
 
+## In progress (not locked, not scored)
+
+- `configs/learned_unet_v1.yaml`: organizer `TemporalUNet3D` + `SimpleNodeTransformer`, 44b6-only split, internal val = frozen-tuning pair. Hash `4c38035d6657f2ad`. Private GPU helper kernel `mahdimzafari/biohub-learned-unet-v1`. Does not write `submission.csv`. Official 44b6 / 6bba scores are **not** available until a GPU worker finishes. association_v2 remains the candidate.
+
 ## Measured results (local official scorer, not leaderboard)
 
 On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
@@ -39,10 +44,11 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | D `division_v2` | **0.591570** | identical to B; 0 TP / 0 FP / 5 FN; keep as no-op overlay; do not retune |
 | E `complementary_v1` | 0.591384 | rejected; recall unchanged; extra T_pred +312; do not retune |
 | F `linkable_v1` | 0.591458 | rejected; recall unchanged; extra T_pred +189; do not retune |
+| G `learned_unet_v1` | not scored | GPU training kernel packaged; this CPU worker has no GPU |
 
 Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336**. That is not a leaderboard score. `6bba_c328f2fd` is not in public test.
 
-See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/linkable_v1.md`, `docs/learned_detection_estimate.md`, and `experiments/registry.csv`.
+See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/linkable_v1.md`, `reports/learned_unet_v1.md`, `docs/learned_detection_estimate.md`, and `experiments/registry.csv`.
 
 ## Kaggle
 
@@ -51,17 +57,18 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 - Private helper kernel `mahdimzafari/biohub-geff-export` version 1 **COMPLETE** (203.74 s). Zipped 73 train GEFFs. **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-holdout-zarr-export` version 1 **COMPLETE** (13.43 s). Zipped only the two holdout Zarrs (993 MB). **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-tuning-zarr-export` version 1 **COMPLETE**. Zipped only the two frozen-tuning Zarrs (919 MB). **Not a submission.** Do not overwrite the five kernels above.
+- Private helper kernel `mahdimzafari/biohub-learned-unet-v1` version **3** was **running** at the last poll (GPU T4 x2, torch 2.10+cu128, internet off). Versions 1–2 errored (`zstd` volume codec). **Not a submission.** No `submission.csv`. Do not overwrite locked slugs.
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Complete validation harness
 
-`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Complementary scoring is `scripts/run_complementary_detection.py` (one-shot holdout after lock; a second holdout score is refused). Linkable scoring is `scripts/run_linkable_detection.py` (same one-shot protocol).
+`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Complementary scoring is `scripts/run_complementary_detection.py` (one-shot holdout after lock; a second holdout score is refused). Linkable scoring is `scripts/run_linkable_detection.py` (same one-shot protocol). Learned training is `notebooks/kaggle_learned_unet_v1.py` (44b6-only; holdout refused).
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 109 passed (2026-09-20, this branch).
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 115 passed (2026-09-20, this branch).
 
 ## Privacy
 
-Tracked tree has no competition volumes, credentials, weights, submissions, or run artifacts. Ignore rules cover `data/`, `submission.csv`, `artifacts/{runs,tmp,kaggle,cache}`, `.venv/`, `kaggle.json`, `.env*`.
+Tracked tree has no competition volumes, credentials, weights, submissions, or run artifacts. Ignore rules cover `data/`, `submission.csv`, `*.pt` / `*.pth`, `weights/`, `artifacts/{runs,tmp,kaggle,cache}`, `.venv/`, `kaggle.json`, `.env*`.
