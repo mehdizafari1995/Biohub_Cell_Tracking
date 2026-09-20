@@ -8,10 +8,13 @@ from pathlib import Path
 import pytest
 
 from biohub_tracking.learned_collect import (
+    HOLDOUT_CONFIG_HASH,
+    HOLDOUT_SLUG,
     INFER_SLUG,
     TRAIN_SLUG,
     assert_helper_dest,
     collect_decision,
+    extract_learned_holdout_output,
     extract_learned_infer_output,
     extract_learned_train_output,
     refuse_submission_outputs,
@@ -139,6 +142,35 @@ def test_extract_infer_zip_keeps_tuning_graphs_only(tmp_path: Path):
         extract_learned_infer_output(holdout, dest / "bad")
 
 
+def test_extract_holdout_zip_keeps_6bba_graphs_only(tmp_path: Path):
+    dest = tmp_path / "artifacts" / "kaggle" / "learned_unet_holdout_v1"
+    dest.mkdir(parents=True)
+    archive = _zip(
+        tmp_path / "holdout.zip",
+        {
+            "infer_manifest.json": json.dumps({"status": "inferred"}),
+            "graphs/6bba_05db0fb1.json": json.dumps({"dataset": "6bba_05db0fb1"}),
+            "graphs/6bba_c328f2fd.json": json.dumps({"dataset": "6bba_c328f2fd"}),
+        },
+    )
+    written = extract_learned_holdout_output(archive, dest)
+    assert (dest / "graphs" / "6bba_05db0fb1.json").exists()
+    assert set(written) == {
+        "infer_manifest.json",
+        "6bba_05db0fb1.json",
+        "6bba_c328f2fd.json",
+    }
+    tuning = _zip(
+        tmp_path / "tuning.zip",
+        {"graphs/44b6_12dfb391.json": json.dumps({"dataset": "44b6_12dfb391"})},
+    )
+    with pytest.raises(HoldoutLeakError):
+        extract_learned_holdout_output(tuning, dest / "bad")
+    banned = _zip(tmp_path / "sub.zip", {"submission.csv": "id,dataset\n"})
+    with pytest.raises(ValueError, match="submission.csv"):
+        extract_learned_holdout_output(banned, dest / "sub")
+
+
 def test_assert_helper_dest_stays_under_artifacts_kaggle(tmp_path: Path):
     with pytest.raises(ValueError, match="artifacts/kaggle"):
         assert_helper_dest(tmp_path / "not_ignored")
@@ -153,6 +185,7 @@ def test_collect_modules_stay_stdlib_only():
         "src/biohub_tracking/experiments.py",
         "scripts/collect_learned_unet_v1.py",
         "scripts/collect_learned_unet_infer_v1.py",
+        "scripts/collect_learned_unet_holdout_v1.py",
     ):
         text = (ROOT / rel).read_text()
         for needle in heavy:
@@ -207,3 +240,15 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     fetch.loader.exec_module(fetch_mod)
     assert KERNEL_SLUG in fetch_mod.ALLOWED_SLUGS
     assert INFER_SLUG in fetch_mod.ALLOWED_SLUGS
+    holdout_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_holdout_v1",
+        ROOT / "scripts" / "collect_learned_unet_holdout_v1.py",
+    )
+    assert holdout_spec and holdout_spec.loader
+    holdout_mod = importlib.util.module_from_spec(holdout_spec)
+    holdout_spec.loader.exec_module(holdout_mod)
+    assert holdout_mod.HOLDOUT_SLUG == HOLDOUT_SLUG
+    assert holdout_mod.HOLDOUT_CONFIG_HASH == HOLDOUT_CONFIG_HASH
+    assert HOLDOUT_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert HOLDOUT_SLUG != INFER_SLUG
+    assert HOLDOUT_SLUG != KERNEL_SLUG

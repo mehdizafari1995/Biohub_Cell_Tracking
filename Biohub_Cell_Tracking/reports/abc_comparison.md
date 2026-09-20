@@ -68,12 +68,15 @@ association_v2 linker. Official tuning combined **0.633135** vs association_v2
 extra T_pred (+312 nodes). Rejected. Do not retune. See
 `reports/complementary_v1.md` and `reports/complementary_v1_holdout.json`.
 
-## G `learned_unet_infer_v1` (locked from 44b6; holdout pending)
+## G `learned_unet_holdout_v1` (locked; one-shot holdout done)
 
 Specimen-separated TemporalUNet3D + 12 µm 1-1 linker. Official 44b6 tune
-**0.655751** vs association_v2 **0.632460**. Recall 0.970, extra T_pred
-(117692 vs 93104). Decision `keep_candidate_learned_unet_infer_v1`. Frozen
-`6bba` not scored. Do not retune. See `reports/learned_unet_infer_v1.md`.
+**0.655751** vs association_v2 **0.632460**. Official frozen holdout
+**0.693605 vs association_v2 0.591570**. Recall 0.957, 0/0/5 divisions,
+149223 pred nodes. Per-sequence mixed (`6bba_05db0fb1` 0.719 vs 0.564;
+`6bba_c328f2fd` 0.633 vs 0.660). Combined keep. Decision
+`keep_candidate_learned_unet_holdout_v1`. Do not retune. Do not score
+`6bba` again. See `reports/learned_unet_holdout_v1.md`.
 
 ## Sanity sequence
 
@@ -81,4 +84,4 @@ Specimen-separated TemporalUNet3D + 12 µm 1-1 linker. Official 44b6 tune
 
 ## Kaggle
 
-A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only and identical to B on holdout. E is local-only and worse than B on holdout. No competition submit was performed. No public or private leaderboard score was returned.
+A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only and identical to B on holdout. E is local-only and worse than B on holdout. G has a private GPU holdout helper (`mahdimzafari/biohub-learned-unet-holdout-v1` v1, 184.4 s) that wrote graphs only, not `submission.csv`. No competition submit was performed. No public or private leaderboard score was returned.

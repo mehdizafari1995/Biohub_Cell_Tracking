@@ -52,4 +52,7 @@ Per-sequence learned: `44b6_12dfb391` 0.747072 (recall 0.994), `44b6_267148e4` 0
 
 ## Next
 
-One-shot official holdout on frozen `6bba` under a **new** helper slug (do not overwrite this 44b6 infer). Reject on combined-score regression. Do not retune.
+One-shot official holdout is packaged as **new** helper
+`mahdimzafari/biohub-learned-unet-holdout-v1` (hash `d374a21f03dddc04`).
+Do not overwrite this 44b6 infer slug. Reject on combined-score
+regression. Do not retune. See `reports/learned_unet_holdout_v1.md`.

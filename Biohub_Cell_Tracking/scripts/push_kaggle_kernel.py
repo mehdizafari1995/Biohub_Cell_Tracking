@@ -26,6 +26,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-v1",
     # Infer v3 COMPLETE / inferred 2026-09-20. 44b6 graphs locked. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-infer-v1",
+    # Holdout v1 COMPLETE / inferred 2026-09-20. One-shot 6bba graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-holdout-v1",
 }
 
 

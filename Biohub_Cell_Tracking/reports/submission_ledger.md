@@ -112,6 +112,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_infer_v1 **0.655751** vs locked association_v2 **0.632460**. Decision `keep_candidate_learned_unet_infer_v1`. Recall 0.970, edge Jaccard 0.690, 0/0/2 divisions. Not a leaderboard score. Do not look at `6bba` yet. Do not overwrite this slug.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
+## learned_unet_holdout_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-holdout-v1` version **1 COMPLETE** / `inferred`. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `d374a21f03dddc04`. Locked infer operating point `d7578b5f64ddac08` on frozen-holdout `6bba` only. `44b6` volumes refused.
+- **Worker:** 184.4 s, peak RAM 1177 MB, T4 x2. Graphs: `6bba_05db0fb1` 97062 nodes / 89394 edges; `6bba_c328f2fd` 52161 / 47595. Weights path `/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+- **Local official holdout:** learned_unet_holdout_v1 **0.693605** vs locked association_v2 **0.591570**. Decision `keep_candidate_learned_unet_holdout_v1`. Recall 0.957, 0/0/5 divisions. Per-sequence mixed. Not a leaderboard score. Do not retune. Do not score `6bba` again. Do not overwrite this slug.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

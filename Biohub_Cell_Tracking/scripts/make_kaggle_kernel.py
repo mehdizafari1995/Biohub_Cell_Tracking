@@ -144,6 +144,27 @@ Private **GPU** helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition. Weights stay out of git.
 """,
     },
+    "learned_unet_holdout_v1": {
+        "source": "notebooks/kaggle_learned_unet_holdout_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_holdout_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_holdout_v1",
+        "code_file": "kaggle_learned_unet_holdout_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-holdout-v1",
+        "title": "Biohub Learned UNet Holdout V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_holdout_v1
+
+Private **GPU** helper kernel. **Not a competition submission.** One-shot only.
+
+- Loads locked `learned_unet_v1` weights. Operating point is locked `learned_unet_infer_v1`.
+- Infers only frozen-holdout `6bba_05db0fb1` and `6bba_c328f2fd`. Never opens `44b6`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** overwrite locked train/infer slugs. Do **not** retune.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
 }
 
 

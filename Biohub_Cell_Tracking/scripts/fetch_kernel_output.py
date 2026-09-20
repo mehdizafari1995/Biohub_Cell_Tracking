@@ -28,6 +28,7 @@ ALLOWED_SLUGS = {
     "mahdimzafari/biohub-baseline-v1",
     "mahdimzafari/biohub-learned-unet-v1",
     "mahdimzafari/biohub-learned-unet-infer-v1",
+    "mahdimzafari/biohub-learned-unet-holdout-v1",
 }
 
 

@@ -13,17 +13,22 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from .learned_split import (
+    FROZEN_HOLDOUT_STEMS,
     INTERNAL_VAL_STEMS,
     KERNEL_SLUG as TRAIN_KERNEL_SLUG,
     HoldoutLeakError,
     find_weights,
     refuse_holdout_stems,
+    specimen_of,
     verify_train_manifest,
 )
 
 TRAIN_SLUG = TRAIN_KERNEL_SLUG
 INFER_SLUG = "mahdimzafari/biohub-learned-unet-infer-v1"
+HOLDOUT_SLUG = "mahdimzafari/biohub-learned-unet-holdout-v1"
 INFER_STEMS = INTERNAL_VAL_STEMS
+HOLDOUT_STEMS = FROZEN_HOLDOUT_STEMS
+HOLDOUT_CONFIG_HASH = "d374a21f03dddc04"
 BANNED_OUTPUT_NAMES = frozenset({"submission.csv"})
 KAGGLE_NOISE_NAMES = frozenset(
     {
@@ -47,6 +52,13 @@ INFER_ALLOWED_NAMES = frozenset(
         "infer_manifest.json",
         "44b6_12dfb391.json",
         "44b6_267148e4.json",
+    }
+)
+HOLDOUT_ALLOWED_NAMES = frozenset(
+    {
+        "infer_manifest.json",
+        "6bba_05db0fb1.json",
+        "6bba_c328f2fd.json",
     }
 )
 
@@ -93,6 +105,7 @@ def _extract_allowed(
     allowed: set[str],
     *,
     keep_graphs_subdir: bool = False,
+    graph_guard: str = "infer",
 ) -> dict[str, Path]:
     dest_dir = Path(dest_dir)
     dest_dir.mkdir(parents=True, exist_ok=True)
@@ -111,7 +124,10 @@ def _extract_allowed(
             if name not in allowed:
                 continue
             if keep_graphs_subdir and name.endswith(".json") and name != "infer_manifest.json":
-                _refuse_non_infer_stems([name])
+                if graph_guard == "holdout":
+                    _refuse_non_holdout_stems([name])
+                else:
+                    _refuse_non_infer_stems([name])
                 dest = dest_dir / "graphs" / name
             else:
                 dest = dest_dir / name
@@ -168,6 +184,7 @@ def extract_learned_infer_output(archive: Path, dest_dir: Path) -> dict[str, Pat
         Path(dest_dir),
         set(INFER_ALLOWED_NAMES),
         keep_graphs_subdir=True,
+        graph_guard="infer",
     )
     graph_names = [name for name in written if name.endswith(".json") and name != "infer_manifest.json"]
     if graph_names:
@@ -176,6 +193,48 @@ def extract_learned_infer_output(archive: Path, dest_dir: Path) -> dict[str, Pat
     if missing and written and "infer_manifest.json" in written:
         # Graphs may be absent on a blocked/dry run; do not invent them.
         pass
+    return written
+
+
+def _refuse_non_holdout_stems(stems: Iterable[str]) -> None:
+    """Allow only the two frozen-holdout sequences. Tuning graphs are refused."""
+    cleaned: list[str] = []
+    for raw in stems:
+        stem = Path(raw).name
+        for suffix in (".zarr", ".geff", ".json"):
+            if stem.endswith(suffix):
+                stem = stem[: -len(suffix)]
+        if stem not in cleaned:
+            cleaned.append(stem)
+    leaked = [s for s in cleaned if s in INFER_STEMS or specimen_of(s) == "44b6"]
+    if leaked:
+        raise HoldoutLeakError(
+            "learned_unet_holdout_v1 refuses 44b6 tuning graphs: " + ", ".join(leaked)
+        )
+    extra = [s for s in cleaned if s not in HOLDOUT_STEMS]
+    if extra:
+        raise HoldoutLeakError(
+            "learned_unet_holdout_v1 only collects frozen-holdout stems; got " + ", ".join(extra)
+        )
+
+
+def extract_learned_holdout_output(archive: Path, dest_dir: Path) -> dict[str, Path]:
+    """Extract 6bba-only holdout graphs. Refuses 44b6 graphs and submission.csv."""
+    _refuse_non_holdout_stems(
+        name
+        for name in _basenames(_zip_files(Path(archive)))
+        if name.endswith(".json") and name != "infer_manifest.json"
+    )
+    written = _extract_allowed(
+        Path(archive),
+        Path(dest_dir),
+        set(HOLDOUT_ALLOWED_NAMES),
+        keep_graphs_subdir=True,
+        graph_guard="holdout",
+    )
+    graph_names = [name for name in written if name.endswith(".json") and name != "infer_manifest.json"]
+    if graph_names:
+        _refuse_non_holdout_stems(graph_names)
     return written
 
 
