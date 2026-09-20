@@ -9,7 +9,7 @@ Last updated: 2026-09-20 (linkable_v1 rejected on holdout). Authoritative implem
 - Association experiment (keep open, do not merge): `cursor/kaggle-baseline-association-0b83` (PR #2)
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
-- Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1`. Locked from 44b6, scored once on 6bba, **rejected**.
+- Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
