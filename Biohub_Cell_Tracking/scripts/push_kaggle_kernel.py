@@ -22,6 +22,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-geff-export",
     "mahdimzafari/biohub-holdout-zarr-export",
     "mahdimzafari/biohub-tuning-zarr-export",
+    # v3 is running. Do not overwrite unless a later run records train_error.
+    "mahdimzafari/biohub-learned-unet-v1",
 }
 
 
@@ -61,7 +63,7 @@ def push_kernel(kernel_name: str) -> dict:
         "enableInternet": False,
         "competitionDataSources": ["biohub-cell-tracking-during-development"],
         "datasetDataSources": [],
-        "kernelDataSources": [],
+        "kernelDataSources": list(meta.get("kernel_sources") or []),
         "modelDataSources": [],
     }
     body = json.dumps(payload).encode()

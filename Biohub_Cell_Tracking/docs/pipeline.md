@@ -32,7 +32,9 @@ Locked `association_v2` (`configs/association_v2.yaml` and `notebooks/kaggle_ass
 
 `configs/division_v2.yaml` runs the locked association_v2 linker, then proposes at most one extra child when conservative geometry and topology checks pass. Thresholds are locked from tuning-specimen (`44b6`) GEFFs only. Official holdout is identical to association_v2 (0.591570, 0/0/5). Keep as a no-op overlay. Do not retune. `division_v1` is rejected (0/3/5 on frozen val).
 
-`configs/complementary_v1.yaml` keeps locked baseline_v1 primary detections and the association_v2 linker, then adds isolated complementary local-max peaks (≥ 6.0 µm from any primary, ≥ 0.45 × primary median intensity). Candidate only; tune on `44b6`. Official holdout is refused until `docs/complementary_priors.json` records a lock. Do not overwrite `baseline_v1` or `association_v2`.
+`configs/complementary_v1.yaml` keeps locked baseline_v1 primary detections and the association_v2 linker, then adds isolated complementary local-max peaks (≥ 6.0 µm from any primary, ≥ 0.45 × primary median intensity). Locked from 44b6, scored once on frozen 6bba, **rejected**. Do not retune.
+
+`configs/learned_unet_infer_v1.yaml` loads specimen-separated `learned_unet_v1` weights and infers only the frozen-tuning pair. Detection is UNet local-max; linking is the locked 12 µm 1-1 gate. Holdout `6bba` is refused. Does not write `submission.csv`. Official 44b6 score waits on training kernel v3.
 
 Validation splits are by embryo ID (`44b6` vs `6bba`). Neighboring frames from one specimen are never randomly split. Complete holdout scoring (both frozen validation sequences plus each annotated-division event) is `scripts/run_complete_validation.py`.
 

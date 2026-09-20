@@ -123,6 +123,27 @@ Private **GPU** helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition. Weights stay out of git.
 """,
     },
+    "learned_unet_infer_v1": {
+        "source": "notebooks/kaggle_learned_unet_infer_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_infer_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_infer_v1",
+        "code_file": "kaggle_learned_unet_infer_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-infer-v1",
+        "title": "Biohub Learned UNet Infer V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_infer_v1
+
+Private **GPU** helper kernel. **Not a competition submission.**
+
+- Loads specimen-separated `learned_unet_v1` weights after that helper is COMPLETE.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** overwrite locked prediction/helper slugs or the training kernel.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
 }
 
 
@@ -171,7 +192,7 @@ def metadata_payload(spec: dict) -> dict:
         "enable_internet": False,
         "keywords": [],
         "dataset_sources": [],
-        "kernel_sources": [],
+        "kernel_sources": list(spec.get("kernel_sources") or []),
         "competition_sources": ["biohub-cell-tracking-during-development"],
         "model_sources": [],
     }

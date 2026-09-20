@@ -182,7 +182,7 @@ def test_push_script_allows_learned_kernel_and_locks_export_helpers():
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    assert KERNEL_SLUG not in mod.FORBIDDEN_SLUGS
+    assert KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-tuning-zarr-export" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-association-v2" in mod.FORBIDDEN_SLUGS
     fetch = importlib.util.spec_from_file_location(

@@ -99,7 +99,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-v1`. Internet off. **Not a competition submission.** No `submission.csv`.
 - **Version 1:** error after writing a 44b6-only split (69 train / 2 frozen-tuning internal val, no 6bba). GPU T4 x2 and torch 2.10+cu128 were present.
 - **Version 2:** `train_error` `ValueError: unsupported zarr codec 'zstd'` on train volumes. Split unchanged.
-- **Version 3:** zstd decoder added; **running** at last poll (not complete). Not a leaderboard score. Weights must stay out of git.
+- **Version 3:** zstd decoder added; still **running** at this poll (not complete). Training slug locked against overwrite. Not a leaderboard score. Weights must stay out of git.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
+## learned_unet_infer_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` packaged on PR #7. **Not pushed.** Waiting on training v3 COMPLETE.
+- **Config hash:** `d7578b5f64ddac08`. UNet local-max + 12 µm greedy 1-1 on frozen-tuning `44b6` only. Holdout refused. No `submission.csv`.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
 ## Policy

@@ -32,10 +32,14 @@ Do not overwrite `biohub-baseline-v1`, `biohub-association-v2`, or the export he
 |---|---|---|
 | 1 | error | GPU T4 x2 available. 44b6 split written (69 train / 2 internal val, no 6bba). Uncaught crash. |
 | 2 | error | `train_error` `ValueError: unsupported zarr codec 'zstd'` while reading train volumes. Split still 44b6-only. |
-| 3 | **running** at last poll | zstd decoder added. Not complete. Not a leaderboard score. |
+| 3 | **running** at this poll | zstd decoder added. Still running. Not complete. Not a leaderboard score. |
 
-This worker has no local GPU. A local simulation is not a Kaggle run. No leaderboard score. Weights stay out of git.
+This worker has no local GPU. A local simulation is not a Kaggle run. No leaderboard score. Weights stay out of git. The training slug is locked against overwrite while v3 runs.
+
+## Inference kernel (packaged, not pushed)
+
+`learned_unet_infer_v1` (`configs/learned_unet_infer_v1.yaml`, hash `d7578b5f64ddac08`) is a private GPU helper that will attach this training output after COMPLETE, infer only `44b6_12dfb391` + `44b6_267148e4`, and write JSON graphs. It does **not** write `submission.csv`. Do not push it until v3 finishes. See `reports/learned_unet_infer_v1.md`.
 
 ## Decision
 
-Pending GPU worker. association_v2 remains the scoring candidate until a one-shot frozen holdout is scored after a 44b6-only lock.
+Pending GPU worker. association_v2 remains the scoring candidate until a 44b6-only lock and one-shot frozen holdout.

@@ -19,6 +19,8 @@ Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.
 
 - `mahdimzafari/biohub-geff-export` v1 COMPLETE — 73 train GEFFs, no volumes.
 - `mahdimzafari/biohub-holdout-zarr-export` v1 COMPLETE — only `6bba_05db0fb1.zarr` and `6bba_c328f2fd.zarr` (13.43 s). Do not overwrite the GEFF helper. Do not submit.
+- `mahdimzafari/biohub-learned-unet-v1` v3 **running** — 44b6-only GPU training. No `submission.csv`. Do not overwrite while running.
+- `mahdimzafari/biohub-learned-unet-infer-v1` packaged, **not pushed** — 44b6-only GPU inference after training COMPLETE. No `submission.csv`.
 
 ## Previous kernel (baseline_v1)
 
