@@ -174,6 +174,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Official 44b6 score:** **0.0** vs locked `learned_unet_infer_v1` **0.655751**. Decision `reject_learned_unet_link_v1`. Softmax+0.5 wrote 0 edges. Frozen `6bba` not opened. Not a leaderboard score.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
+## learned_unet_link_v2_packaged
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-link-v2` version **1 running**. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `1d4015dc499bd604`. Locked learned detections + transformer greedy 1-1 on descending softmax with no 0.5 cutoff and the locked 12 µm gate. 44b6 only. Holdout refused.
+- **Estimate:** ~5.1 min / 2 volumes; ~8.5 h if later promoted to ~199 hidden volumes. Peak RAM budget 2.5 GB. Under the 12 h GPU limit.
+- **Official 44b6 score:** not recorded yet. Compare later to locked `learned_unet_infer_v1` **0.655751**. Frozen `6bba` not opened. Not a leaderboard score.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

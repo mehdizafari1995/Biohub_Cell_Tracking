@@ -1,0 +1,30 @@
+{
+  "label": "learned_unet_link_v2",
+  "config_hash": "1d4015dc499bd604",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "rejected_link_v1_hash": "3a7423c6858ace41",
+  "kernel_slug": "mahdimzafari/biohub-learned-unet-link-v2",
+  "hypothesis": "Locked TemporalUNet3D detections plus trained SimpleNodeTransformer pairwise scores, assigned greedy 1-1 on descending softmax with no 0.5 cutoff and the locked association_v2 12 µm spatial gate, raise official 44b6 score versus locked greedy learned_unet_infer_v1 0.655751. Frozen 6bba is refused until a documented 44b6 lock.",
+  "decision": "helper_v1_running",
+  "official_combined": null,
+  "tuning_only": true,
+  "opens_holdout": false,
+  "writes_submission_csv": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "frozen_tuning": {
+    "n_volumes": 2,
+    "estimate_sec": 308.55,
+    "estimate_hours": 0.0857,
+    "under_limit": true
+  },
+  "hidden_test_if_promoted": {
+    "n_volumes": 199,
+    "estimate_sec": 30700.725,
+    "estimate_hours": 8.528,
+    "under_limit": true
+  },
+  "peak_memory_mb_budget": 2500.0,
+  "source": "learned_unet_infer_v1 v3 187.0s / 2 volumes * 1.65 transformer pair-score + 12 µm gate overhead; pair MLP row-chunked"
+}

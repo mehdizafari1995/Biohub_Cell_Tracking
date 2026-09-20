@@ -115,3 +115,5 @@ New runs; previous tables above are unchanged.
 
 `learned_unet_link_v1` (hash `3a7423c6858ace41`) completed on 44b6 only. Official combined **0.0 vs learned_unet_infer_v1 0.655751**. Detections matched infer (80741/36951) but softmax+0.5 wrote 0 edges. Decision `reject_learned_unet_link_v1`. Frozen `6bba` was not opened. This is not a Kaggle submission and not a leaderboard score.
 
+`learned_unet_link_v2` (hash `1d4015dc499bd604`) is packaged as a new helper slug. Same locked detections; greedy 1-1 on descending softmax with no 0.5 cutoff plus the locked 12 µm gate. Official 44b6 score is not recorded yet. Frozen `6bba` is not opened. Not a competition submission and not a leaderboard score.
+

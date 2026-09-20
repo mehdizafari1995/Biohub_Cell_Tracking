@@ -1,0 +1,27 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-link-v2",
+  "polled_utc": "2026-09-20T21:49:40Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-link-v2",
+    "status": "running",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": false,
+    "is_error": false,
+    "is_running": true,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [],
+  "decision": "status_only",
+  "config_hash": "1d4015dc499bd604",
+  "code_version": "df1450f",
+  "downloaded": false,
+  "extracted": {},
+  "is_kaggle_run": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "Private GPU transformer-linker v2 poll. Not a competition submission. Graphs stay under ignored artifacts/kaggle/. Not a leaderboard score. Do not score frozen 6bba until a documented 44b6 lock. Do not overwrite rejected link_v1."
+}

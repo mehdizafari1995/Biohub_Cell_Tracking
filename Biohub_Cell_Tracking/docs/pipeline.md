@@ -38,6 +38,8 @@ Locked `association_v2` (`configs/association_v2.yaml` and `notebooks/kaggle_ass
 
 `configs/learned_unet_link_v1.yaml` keeps those locked detections and replaces the greedy gate with trained `SimpleNodeTransformer` pairwise scores (softmax, threshold 0.5, 1-1). Official 44b6 **0.0 vs infer 0.655751**. **Rejected.** Hash `3a7423c6858ace41`. Softmax+0.5 wrote 0 edges on dense detections. Frozen `6bba` not scored. Do not retune. Does not write `submission.csv`.
 
+`configs/learned_unet_link_v2.yaml` is a **new** slug that keeps the same locked detections and transformer scores. Assignment is greedy 1-1 on descending softmax with **no 0.5 cutoff**, plus the locked association_v2 12 µm spatial gate. Hash `1d4015dc499bd604`. Official 44b6 score is not recorded until the helper completes. Frozen `6bba` is refused until a 44b6 keep. Do not overwrite rejected v1. Does not write `submission.csv`.
+
 Validation splits are by embryo ID (`44b6` vs `6bba`). Neighboring frames from one specimen are never randomly split. Complete holdout scoring (both frozen validation sequences plus each annotated-division event) is `scripts/run_complete_validation.py`.
 
 Local diagnostic scores use `biohub_tracking.evaluate`. Reported competition scores use the vendored official `tracking_cellmot.metrics` implementation. See `docs/coordinate_audit.md` and `third_party/THIRD_PARTY.md`.

@@ -31,11 +31,13 @@ HOLDOUT_SLUG = "mahdimzafari/biohub-learned-unet-holdout-v1"
 TEST_SLUG = "mahdimzafari/biohub-learned-unet-test-v1"
 GAP_TEST_SLUG = "mahdimzafari/biohub-learned-unet-gap-test-v1"
 LINK_SLUG = "mahdimzafari/biohub-learned-unet-link-v1"
+LINK_V2_SLUG = "mahdimzafari/biohub-learned-unet-link-v2"
 INFER_STEMS = INTERNAL_VAL_STEMS
 HOLDOUT_STEMS = FROZEN_HOLDOUT_STEMS
 HOLDOUT_CONFIG_HASH = "d374a21f03dddc04"
 TEST_CONFIG_HASH = "7a8725b818fc609b"
 GAP_TEST_CONFIG_HASH = "85379c198ebc7241"
+LINK_V2_CONFIG_HASH = "1d4015dc499bd604"
 BANNED_OUTPUT_NAMES = frozenset({"submission.csv"})
 KAGGLE_NOISE_NAMES = frozenset(
     {

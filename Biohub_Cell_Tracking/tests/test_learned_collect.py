@@ -14,6 +14,8 @@ from biohub_tracking.learned_collect import (
     HOLDOUT_SLUG,
     INFER_SLUG,
     LINK_SLUG,
+    LINK_V2_CONFIG_HASH,
+    LINK_V2_SLUG,
     TEST_CONFIG_HASH,
     TEST_SLUG,
     TRAIN_SLUG,
@@ -217,6 +219,7 @@ def test_collect_modules_stay_stdlib_only():
         "scripts/collect_learned_unet_test_v1.py",
         "scripts/collect_learned_unet_gap_test_v1.py",
         "scripts/collect_learned_unet_link_v1.py",
+        "scripts/collect_learned_unet_link_v2.py",
         "src/biohub_tracking/learned_test.py",
     ):
         text = (ROOT / rel).read_text()
@@ -317,3 +320,15 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert LINK_SLUG in fetch_mod.ALLOWED_SLUGS
     assert LINK_SLUG != INFER_SLUG
     assert LINK_SLUG != GAP_TEST_SLUG
+    link_v2_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_link_v2",
+        ROOT / "scripts" / "collect_learned_unet_link_v2.py",
+    )
+    assert link_v2_spec and link_v2_spec.loader
+    link_v2_mod = importlib.util.module_from_spec(link_v2_spec)
+    link_v2_spec.loader.exec_module(link_v2_mod)
+    assert link_v2_mod.LINK_V2_SLUG == LINK_V2_SLUG
+    assert LINK_V2_CONFIG_HASH == "1d4015dc499bd604"
+    assert LINK_V2_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert LINK_V2_SLUG != LINK_SLUG
+    assert LINK_V2_SLUG != INFER_SLUG
