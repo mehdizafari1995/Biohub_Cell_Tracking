@@ -2,7 +2,7 @@
   "kernel_slug": "mahdimzafari/biohub-association-v2",
   "kernel_version": 3,
   "config_hash": "2c6966b5204ba542",
-  "code_version": "edfde2f",
+  "code_version": "16601cc",
   "worker_runtime_sec": 593.528496317,
   "worker_peak_memory_mb": 421.46484375,
   "audit_ok": true,
@@ -290,8 +290,23 @@
   "private_lb_score": null,
   "retune_after_holdout": false,
   "note": "Independent audit of a private internet-off kernel output. Official numbers are local scorer results on the worker CSV. They are not a Kaggle leaderboard score. Competition submit was not performed.",
-  "kernel_status": {},
-  "output_files": [],
+  "kernel_status": {
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false
+  },
+  "output_files": [
+    {
+      "fileName": "run_manifest.json",
+      "totalBytes": null
+    },
+    {
+      "fileName": "submission.csv",
+      "totalBytes": null
+    }
+  ],
+  "reaudit_utc": "2026-09-20T15:00:41Z",
+  "kernel_re_pushed": false,
   "official_available": true,
   "official_versions": {
     "official_repo": "https://github.com/royerlab/kaggle-cell-tracking-competition",

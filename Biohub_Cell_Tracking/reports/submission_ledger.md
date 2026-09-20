@@ -42,6 +42,15 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Still missing:** `6bba_c328f2fd` is not in public test, so the worker CSV cannot complete the frozen split.
 - **Kaggle public / private scores:** not returned.
 
+## association_v2_kernel_v3_independent_reaudit_20260920
+
+- **Status:** this worker re-queried live kernel status (`complete`) and re-downloaded version 3 output. Not a new kernel version. Not a competition submission.
+- **Live outputs:** `submission.csv`, `run_manifest.json`. Zip 3 658 915 bytes. CSV 12 948 601 bytes.
+- **Schema / integrity:** stdlib + library `audit_ok`. 253773 rows, 129500 nodes, 124273 edges, 0 predicted divisions, 0 non-consecutive edges. Counts match the worker manifest. File stayed under `artifacts/kaggle/` and was not committed.
+- **Official scorer on public-test overlap `6bba_05db0fb1`:** combined **0.564336**, same as the first independent audit. Official commit `075fc5f5`. Not a leaderboard score.
+- **Tests:** `pytest Biohub_Cell_Tracking/tests` — 48 passed.
+- **Kaggle public / private scores:** not returned. Kernel was not re-pushed.
+
 ## association_v2_local / division_v1_local
 
 Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.

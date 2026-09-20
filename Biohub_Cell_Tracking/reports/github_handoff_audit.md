@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20, independent Kaggle output audit).
+`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20T15:00Z, association_v2 kernel v3 re-verification).
 
 ## Official scorer
 
@@ -45,3 +45,11 @@ Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `subm
 - Train GEFFs for the four public-test stems were downloaded into ignored `data/train/`. No Zarr volumes were downloaded for this audit.
 - `KAGGLE_API_TOKEN` present in environment (value not printed). `~/.kaggle/kaggle.json` absent.
 - GitHub CLI authenticated as `mehdizafari1995` for the private repo.
+
+## 2026-09-20T15:00Z START-trigger re-verification
+
+- Live `kernels/status` for `mahdimzafari/biohub-association-v2`: `complete`, `hasFailureMessage=false`.
+- Re-downloaded version-3 archive (3 658 915 bytes) into ignored `artifacts/kaggle/association_v2_v3/`. CSV 12 948 601 bytes. Not committed.
+- Stdlib + official re-audit both `audit_ok`. Overlap score 0.564336 unchanged. Kernel not re-pushed. Competition submit not performed.
+- `pytest` 48 passed with official scorer available.
+- Issue #1 still 403 (`issues:read` missing).

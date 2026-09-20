@@ -11,6 +11,7 @@ Private kernel, internet off, CPU, competition dataset attached. This is the nex
 - Push folder: `kaggle_kernel/association_v2/` (`is_private: true`, `enable_internet: false`)
 - Push helper: `scripts/push_kaggle_kernel.py` (never calls `competitions submit`; refuses to overwrite `biohub-baseline-v1`)
 - Version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`). **Not submitted.**
+- 2026-09-20T15:00Z worker re-query: live status still `complete`; output re-downloaded and re-audited. Kernel was not re-pushed.
 - Independent download+audit: `scripts/audit_kaggle_output.py`. Official score 0.564336 on `6bba_05db0fb1` vs train GEFF. Not a leaderboard score.
 
 Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.

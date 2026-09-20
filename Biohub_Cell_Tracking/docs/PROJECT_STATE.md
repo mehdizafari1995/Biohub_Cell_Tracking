@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (independent association_v2 Kaggle output audit). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (association_v2 kernel v3 live re-verification). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -8,6 +8,7 @@ Last updated: 2026-09-20 (independent association_v2 Kaggle output audit). Autho
 - Base branch: `main` (baseline + official scorer + privacy audit + coordination docs)
 - Active experiment branch: `cursor/kaggle-baseline-association-0b83` (association_v2 / baseline_v1 Kaggle kernel family)
 - Command channel: issue #1 (this worker still gets 403 on issues)
+- Complete-validation harness from PR #3 is merged to `main` (2026-09-19). This experiment branch stays draft and unmerged.
 
 ## What is locked
 
@@ -37,12 +38,13 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/kaggle_associatio
 - Private kernel `mahdimzafari/biohub-baseline-v1` version 2 **COMPLETE** on public `test/` (595 s, 1.49 s/frame, peak RAM 435 MB, `audit_ok`).
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`, 129500 nodes / 124273 edges / 11985 interpolated / 0 divisions). Decoder: `blosc2` (no `zarr` on the image).
 - Independent re-audit of the downloaded worker `submission.csv`: schema/coverage/integrity `audit_ok`; counts match the worker manifest; all edges `dt=1`; 0 predicted divisions; integer voxel centroids inside `(100, 64, 256, 256)`. CSV was not copied into git.
+- 2026-09-20T15:00Z worker re-verification: live `kernels/status` = `complete` (no failure); outputs `submission.csv` + `run_manifest.json`; re-downloaded zip 3 658 915 bytes; CSV 12 948 601 bytes. Stdlib + official re-audit both `audit_ok` and match the earlier 0.564336 overlap figure. Kernel was **not** re-pushed (no version 4). Competition submit was **not** performed.
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20, this branch).
+`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20T15:00Z, this branch, official scorer available).
 
 ## Privacy
 

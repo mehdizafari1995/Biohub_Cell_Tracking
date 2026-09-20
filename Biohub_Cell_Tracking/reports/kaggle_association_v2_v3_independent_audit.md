@@ -5,11 +5,13 @@ It is **not** a competition submission and reports **no** leaderboard score.
 
 - Kernel: `mahdimzafari/biohub-association-v2` version 3
 - Config hash: `2c6966b5204ba542`
-- Code: `edfde2f`
+- Code: `16601cc`
+- Live Kaggle status (2026-09-20T15:00Z re-query): `complete`, no failure message. Outputs: `submission.csv`, `run_manifest.json`.
 - Worker runtime / peak RAM (from worker manifest, if present): 593.528496317 s / 421.46484375 MB
 - Independent audit_ok: `True`
 - Public / private LB: `None` / `None`
 - Retune after holdout: `False`
+- Kernel re-pushed this cycle: `False` (no version 4)
 
 ## Frozen validation overlap
 
@@ -32,3 +34,7 @@ Do not retune locked association_v2 from those extra stems.
 - warnings: []
 
 Independent audit of a private internet-off kernel output. Official numbers are local scorer results on the worker CSV. They are not a Kaggle leaderboard score. Competition submit was not performed.
+
+## 2026-09-20T15:00Z worker re-verification
+
+This START-trigger cycle re-queried live kernel status, re-downloaded the version-3 archive into ignored `artifacts/kaggle/`, and re-ran stdlib schema/integrity plus official scoring. Counts, `audit_ok`, and the 0.564336 overlap score are unchanged. CSV was not copied into git.
