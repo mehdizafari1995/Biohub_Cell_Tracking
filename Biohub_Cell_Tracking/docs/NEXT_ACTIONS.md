@@ -8,7 +8,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 2. Keep draft PR #4 (`cursor/competition-operational-strategy-3381`) open. Official holdout is done: combined **0.591570** identical to association_v2, **0 TP / 0 FP / 5 FN**. Keep the overlay; do **not** retune gates. Do not relaunch rejected `division_v1`.
 3. Keep draft PR #5 (`cursor/complementary-detection-v1`) open. complementary_v1 was locked from 44b6 then scored **once** on frozen `6bba`: **0.591384 vs association_v2 0.591570**. Decision **`reject_complementary_v1`**. Do **not** retune isolation/intensity gates.
 4. Keep draft PR #6 (`cursor/linkable-complementary-v1`) open. linkable_v1 was locked from 44b6 then scored **once** on frozen `6bba`: **0.591458 vs association_v2 0.591570**. Decision **`reject_linkable_v1`**. Recall unchanged; extra T_pred +189. Do **not** retune the 12 µm / max_dt=1 temporal gate. association_v2 remains the scoring candidate.
-5. Continue draft PR for `cursor/learned-unet-v1`. Config hash `4c38035d6657f2ad`. Do **not** overwrite locked prediction/helper slugs. Do **not** write `submission.csv`. Do **not** score frozen `6bba` until 44b6 training is locked.
+5. Continue draft PR #7 (`cursor/learned-unet-v1`). Config hash `4c38035d6657f2ad`. Do **not** overwrite locked prediction/helper slugs. Do **not** write `submission.csv`. Do **not** score frozen `6bba` until 44b6 training is locked.
 6. Do **not** submit association_v2, division_v2, complementary_v1, linkable_v1, or learned_unet_v1 from the CLI.
 
 ## Next (this family)

@@ -10,7 +10,7 @@ Last updated: 2026-09-20 (learned_unet_v1 GPU training family packaged). Authori
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
-- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1`. New family after linkable_v1. GPU training kernel packaged; not scored.
+- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). New family after linkable_v1. GPU training kernel v3 running at last poll; not scored.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
