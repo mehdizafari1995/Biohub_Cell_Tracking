@@ -49,6 +49,20 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Output:** 73 GEFF stores, 1533 files, no image volumes. Zip kept under ignored `artifacts/kaggle/`.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
+## zarr_export_kernel_v1
+
+- **Status:** private helper kernel `mahdimzafari/biohub-holdout-zarr-export` version **1** **COMPLETE**. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Purpose:** zip only frozen-holdout `6bba_05db0fb1.zarr` and `6bba_c328f2fd.zarr` after per-file downloads 429'd.
+- **Output:** 2 Zarr stores, 204 files, 993 198 228 byte inner zip, 13.43 s worker. Zip kept under ignored `artifacts/kaggle/`.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
+## holdout_pair_association_v2_vs_division_v2
+
+- **Status:** local official scorer on both frozen validation sequences after the helper kernel. **Not a Kaggle run.**
+- **association_v2:** combined 0.591570, 0/0/5 divisions. Matches the locked 0.592 figure.
+- **division_v2:** combined 0.591570, 0/0/5 divisions. No regression. No extra false forks. Keep as no-op overlay. Do not retune.
+- **Kaggle public / private scores:** not returned.
+
 ## association_v2_local / division_v1_local
 
 Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.

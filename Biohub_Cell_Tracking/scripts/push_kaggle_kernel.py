@@ -19,6 +19,7 @@ from make_kaggle_kernel import KERNELS  # noqa: E402
 FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-baseline-v1",
     "mahdimzafari/biohub-association-v2",
+    "mahdimzafari/biohub-geff-export",
 }
 
 

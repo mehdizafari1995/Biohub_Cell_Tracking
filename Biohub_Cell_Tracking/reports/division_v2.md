@@ -58,12 +58,27 @@ Do not retune these gates after the first frozen-validation official score.
 
 ## Official score
 
-Not run this cycle. Train **Zarr** volumes for `6bba_05db0fb1` and
-`6bba_c328f2fd` are not on this machine (~1.0 GB). Holdout GEFFs are present
-and unused for locking. A local simulation is not a Kaggle run. Do not invent
-a leaderboard number.
+Run once on the frozen split after a private helper kernel zipped only the two
+holdout Zarrs (`mahdimzafari/biohub-holdout-zarr-export` v1). Shared
+`baseline_v1` detections. Official scorer `075fc5f5`.
+
+| candidate | official combined | TP / FP / FN |
+|---|---|---|
+| association_v2 | **0.591570** | 0 / 0 / 5 |
+| division_v2 | **0.591570** | 0 / 0 / 5 |
+
+Per-sequence combined: `6bba_05db0fb1` 0.564336, `6bba_c328f2fd` 0.660194
+(identical on both candidates). Runtime 139.4 s, peak RAM 761 MB.
+
+**Decision:** keep division_v2 as a no-op overlay. No combined-score regression
+and no extra false forks. `TP > 0` did not happen. Do not retune gates.
+This is not a Kaggle run and not a leaderboard number.
+
+Three of five holdout GT events sit inside the locked gates and were still
+missed (predicted topology / detections). The other two exceed 10 µm
+parent–child. See `reports/holdout_pair_division_v2.md`.
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 78 passed
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 85 passed
 (2026-09-20, this branch).

@@ -15,6 +15,11 @@ Private kernel, internet off, CPU, competition dataset attached. This is the nex
 
 Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.
 
+## Helper kernels (not submissions)
+
+- `mahdimzafari/biohub-geff-export` v1 COMPLETE — 73 train GEFFs, no volumes.
+- `mahdimzafari/biohub-holdout-zarr-export` v1 COMPLETE — only `6bba_05db0fb1.zarr` and `6bba_c328f2fd.zarr` (13.43 s). Do not overwrite the GEFF helper. Do not submit.
+
 ## Previous kernel (baseline_v1)
 
 Private kernel, internet off, CPU, competition dataset attached:

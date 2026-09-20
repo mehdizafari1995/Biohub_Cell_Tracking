@@ -26,6 +26,11 @@ from biohub_tracking.geff_priors import (  # noqa: E402
     inventory_geff_names,
 )
 from biohub_tracking.kaggle_api import download_file  # noqa: E402
+
+HOLDOUT_ZARRS = ("6bba_05db0fb1", "6bba_c328f2fd")
+HOLDOUT_ZARR_INNER_ZIP = "holdout_zarrs_6bba.zip"
+
+
 def extract_geff_export_zip(zip_path: Path, dest_root: Path) -> dict:
     """Extract a private kernel GEFF zip into ignored data/train. Never copies Zarrs."""
     dest_root = Path(dest_root)
@@ -44,6 +49,56 @@ def extract_geff_export_zip(zip_path: Path, dest_root: Path) -> dict:
             n_files += 1
             stores.add(name.split("/")[1])
     return {"n_files": n_files, "n_stores": len(stores), "stores": sorted(stores)}
+
+
+def _zarr_member_store(name: str) -> str | None:
+    """Return the holdout store directory name, or None if the member is refused."""
+    if name.endswith("/") or ".geff/" in name or name.endswith(".geff"):
+        return None
+    if not name.startswith("train/") or ".zarr/" not in name:
+        return None
+    store = name.split("/", 1)[1].split("/", 1)[0]
+    stem = store[: -len(".zarr")] if store.endswith(".zarr") else store
+    if stem not in HOLDOUT_ZARRS:
+        return None
+    return store
+
+
+def _extract_zarr_members(zf: zipfile.ZipFile, dest_root: Path) -> dict:
+    dest_root = Path(dest_root)
+    dest_root.mkdir(parents=True, exist_ok=True)
+    n_files = 0
+    stores: set[str] = set()
+    for name in zf.namelist():
+        store = _zarr_member_store(name)
+        if store is None:
+            continue
+        target = dest_root / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(zf.read(name))
+        n_files += 1
+        stores.add(store)
+    return {"n_files": n_files, "n_stores": len(stores), "stores": sorted(stores)}
+
+
+def extract_holdout_zarr_zip(zip_path: Path, dest_root: Path) -> dict:
+    """Extract only the two frozen-validation Zarrs. Never copies other volumes or GEFFs.
+
+    Accepts either the inner helper zip or a Kaggle worker archive that wraps it.
+    """
+    dest_root = Path(dest_root)
+    with zipfile.ZipFile(zip_path) as zf:
+        names = zf.namelist()
+        if HOLDOUT_ZARR_INNER_ZIP in names or any(n.endswith("/" + HOLDOUT_ZARR_INNER_ZIP) for n in names):
+            inner_name = HOLDOUT_ZARR_INNER_ZIP if HOLDOUT_ZARR_INNER_ZIP in names else next(
+                n for n in names if n.endswith("/" + HOLDOUT_ZARR_INNER_ZIP) or n.endswith(HOLDOUT_ZARR_INNER_ZIP)
+            )
+            inner_bytes = zf.read(inner_name)
+            from io import BytesIO
+
+            with zipfile.ZipFile(BytesIO(inner_bytes)) as inner:
+                return _extract_zarr_members(inner, dest_root)
+        return _extract_zarr_members(zf, dest_root)
 
 
 def geff_files(required_only: bool) -> tuple[str, ...]:
@@ -119,9 +174,19 @@ def main() -> None:
         default=None,
         help="Extract a private kernel GEFF zip into --out. Skips Zarr members.",
     )
+    parser.add_argument(
+        "--extract-zarr-zip",
+        type=Path,
+        default=None,
+        help="Extract only the two frozen-validation Zarrs into --out. Skips other volumes and GEFFs.",
+    )
     args = parser.parse_args()
     if args.extract_zip is not None:
         stats = extract_geff_export_zip(args.extract_zip, args.out)
+        print(json.dumps(stats), flush=True)
+        return
+    if args.extract_zarr_zip is not None:
+        stats = extract_holdout_zarr_zip(args.extract_zarr_zip, args.out)
         print(json.dumps(stats), flush=True)
         return
     required_only = not args.full_metadata

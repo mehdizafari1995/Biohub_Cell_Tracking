@@ -5,9 +5,8 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 ## Now
 
 1. Keep draft PR #2 (`cursor/kaggle-baseline-association-0b83`) open. Do not merge. Do not overwrite locked `association_v2`.
-2. Continue the **division_v2** draft PR #4 on `cursor/competition-operational-strategy-3381`. Do not relaunch rejected `division_v1`. Gates are locked from all 71 `44b6` GEFFs: 10.0 / 8.3 / 0.05. Do not retune after holdout.
-3. Download only the two frozen-validation **Zarr** volumes (`6bba_05db0fb1`, `6bba_c328f2fd`; ≈1.0 GB) and official-score `association_v2` vs `division_v2` once. Reject `division_v2` on any combined-score regression or extra false forks.
-   - Per-file Kaggle downloads 429 at ~90 s/file. Prefer a private internet-off helper kernel that zips **only those two Zarrs** (same path as `mahdimzafari/biohub-geff-export` v1). Do not copy other volumes. Do not submit.
+2. Keep the **division_v2** draft PR #4 on `cursor/competition-operational-strategy-3381`. Official holdout is done: combined **0.591570** identical to association_v2, **0 TP / 0 FP / 5 FN**. Keep the overlay; do **not** retune gates. Do not relaunch rejected `division_v1`.
+3. Next run: open a **new** experiment family for complementary 3D detection (tuning specimen only). Three of five holdout GT forks sit inside locked division gates and were still missed — the bottleneck is predicted topology / detections, not the 10.0 / 8.3 / 0.05 lock. Do not widen those gates.
 4. Do **not** submit association_v2 or division_v2 from the CLI.
 
 ## HUMAN_ACTION_REQUIRED
@@ -19,6 +18,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 - Learned 3D detection / embedding (organizer UNet + transformer is GPU/Kaggle, not the CPU slice).
 - Ensembles or complementary candidates, compared on the frozen split against preserved baseline_v1 and association_v2.
+- Optional private kernel of association_v2 + division_v2 overlay under a **new** slug. Do not overwrite `biohub-association-v2`. Overlay was a no-op on holdout.
 - Harden the final internet-off notebook and runtime for hidden test. Worker measurement: 1.48 s/frame, 421 MB.
 - Final Kaggle submission: `HUMAN_ACTION_REQUIRED` — Mahdi must submit version output from the Kaggle UI.
 

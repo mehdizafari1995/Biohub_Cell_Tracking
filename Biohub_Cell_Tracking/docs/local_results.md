@@ -32,7 +32,7 @@ Frozen before tuning in `docs/splits/v1.json` (specimen prefix `44b6` vs `6bba`;
 | tuning | `44b6_12dfb391` | 788 | 773 | 1 | 58672 | 42 / 100 frames (429) |
 | tuning | `44b6_267148e4` | 280 | 277 | 1 | 19130 | 0 / 100 |
 | validation | `6bba_05db0fb1` | 1229 | 1183 | 3 | 69800 | **100 / 100** |
-| validation | `6bba_c328f2fd` | 511 | 500 | 2 | 31228 | partial (~69 / 100) |
+| validation | `6bba_c328f2fd` | 511 | 500 | 2 | 31228 | **100 / 100** |
 
 Complete-sequence official numbers below are **one validation video** (`6bba_05db0fb1`), not the full split and not the hidden test.
 

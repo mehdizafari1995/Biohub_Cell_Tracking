@@ -144,8 +144,14 @@ def download_kernel_output_zip(
         req.add_header("Authorization", f"Bearer {_token()}")
         req.add_header("User-Agent", "biohub-cell-tracking/0.1")
         try:
-            with urllib.request.urlopen(req, timeout=180) as resp:
-                dest.write_bytes(resp.read())
+            tmp = dest.with_suffix(dest.suffix + ".part")
+            with urllib.request.urlopen(req, timeout=600) as resp, tmp.open("wb") as fh:
+                while True:
+                    chunk = resp.read(1024 * 1024)
+                    if not chunk:
+                        break
+                    fh.write(chunk)
+            tmp.replace(dest)
             time.sleep(min_interval_sec + random.uniform(0.0, 0.5))
             if dest.exists() and dest.stat().st_size > 0:
                 return dest
