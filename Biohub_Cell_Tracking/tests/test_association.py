@@ -135,3 +135,27 @@ def test_division_adds_second_child_and_not_a_third():
     for parent, ch in out3.out_edges().items():
         claimed.extend(ch)
     assert len(claimed) == len(set(claimed))
+
+
+def test_oracle_gt_centroids_accept_association_v2():
+    from biohub_tracking.config import load_config
+    from biohub_tracking.graphs import TrackGraph
+    from biohub_tracking.oracle import link_gt_centroids
+    from pathlib import Path
+
+    gt = TrackGraph(
+        dataset="oracle_gap",
+        node_id=[1, 2],
+        t=[0, 2],
+        z=[8, 8],
+        y=[10, 14],
+        x=[20, 20],
+        edges=[(1, 2)],
+    )
+    cfg = load_config(Path(__file__).resolve().parents[1] / "configs" / "association_v2.yaml")
+    oracle = link_gt_centroids(gt, cfg.linking, SCALE)
+    assert oracle.n_nodes >= 2
+    assert oracle.metadata.get("oracle") is True
+    times = sorted(int(t) for t in oracle.t)
+    assert 0 in times and 2 in times
+

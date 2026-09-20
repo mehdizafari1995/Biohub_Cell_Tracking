@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20T17:25Z (read-only status of association_v2 competition submit). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20T23:27Z (public LB 0.553 recorded; complete frozen val re-score reproduced locked 0.537 / 0.592). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -29,7 +29,9 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | B `association_v2` | **0.592** | local official on both frozen sequences; Kaggle kernel v3 independently audited |
 | C `division_v1` | 0.590 | 0 TP / 3 FP / 5 FN; do not claim generalization |
 
-Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336** (821/276/362 edges, 0/0/3 divisions, recall 0.829). Delta vs the local 0.564 figure in `abc_comparison.md` is +0.0003. That is not a leaderboard score. `6bba_c328f2fd` is not in public test, so the frozen split is still incomplete from the worker CSV.
+Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336** (821/276/362 edges, 0/0/3 divisions, recall 0.829). That is not a leaderboard score.
+
+2026-09-20 complete-volume re-score (100/100 frames, both frozen sequences) reproduced A **0.537134** and B **0.591570**. Error analysis: B reduces missed annotated cells (366→288), switches (150→135), and broken links (603→483) via gap-close interpolation; 0/5 annotated divisions recovered. See `reports/frozen_validation_complete_20260920.md`. Do not retune.
 
 See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/kaggle_association_v2_v3_independent_audit.md`, and `experiments/registry.csv`.
 
@@ -39,12 +41,12 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/kaggle_associatio
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`, 129500 nodes / 124273 edges / 11985 interpolated / 0 divisions). Decoder: `blosc2` (no `zarr` on the image).
 - Independent re-audit of the downloaded worker `submission.csv`: schema/coverage/integrity `audit_ok`; counts match the worker manifest; all edges `dt=1`; 0 predicted divisions; integer voxel centroids inside `(100, 64, 256, 256)`. CSV was not copied into git.
 - 2026-09-20T15:00Z worker re-verification: live `kernels/status` = `complete` (no failure); outputs `submission.csv` + `run_manifest.json`; re-downloaded zip 3 658 915 bytes; CSV 12 948 601 bytes. Stdlib + official re-audit both `audit_ok` and match the earlier 0.564336 overlap figure. Kernel was **not** re-pushed (no version 4). Competition submit was **not** performed.
-- Competition submit: Mahdi submitted `mahdimzafari/biohub-association-v2` `scriptVersionId=351174414` (version 3) from the Kaggle UI. Submission **56399003** dated `2026-09-20T15:12:52.307Z`, status **pending** at `2026-09-20T17:25:30Z` (elapsed 2.21 h, ~9.79 h left of 12 h CPU). No public or private score yet. No errorDescription. Second submission unused. See `reports/kaggle_association_v2_submission_56399003_status.md`.
+- Competition submit: Mahdi submitted `mahdimzafari/biohub-association-v2` `scriptVersionId=351174414` (version 3) from the Kaggle UI. Submission **56399003** dated `2026-09-20T15:12:52.307Z` is **complete**. Read-only API at `2026-09-20T23:08:00Z`: public score **`0.553`** (API string; no extra digits). Private score **not returned** (`hasPrivateScore=false`). `errorDescription` empty. Hidden-test output `totalBytes=209728379`. Scoring-rerun wall-clock was not returned by the API (pending at 17:25:30Z; complete by 23:08:00Z). This **0.553** is the first real Kaggle public score and is distinct from local official 0.592 and public-overlap official 0.564336. Do not retune or resubmit this locked candidate. Kaggle UI `0/2` is final-selection slots, not a two-submit cap; do not select finals yet. See `reports/kaggle_association_v2_submission_56399003_status.md`.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20T15:00Z, this branch, official scorer available).
+`python -m pytest Biohub_Cell_Tracking/tests` — 49 passed (2026-09-20T23:27Z, this branch, official scorer available).
 
 ## Privacy
 

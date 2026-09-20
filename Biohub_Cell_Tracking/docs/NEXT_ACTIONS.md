@@ -5,21 +5,20 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 ## Now
 
 1. Keep draft PR `cursor/kaggle-baseline-association-0b83` (PR #2) open. Do not merge. Do not mark ready. Do not overwrite locked `association_v2`.
-2. Competition submission **56399003** (`mahdimzafari/biohub-association-v2` version 3 / `scriptVersionId=351174414`) is **pending** as of `2026-09-20T17:25:30Z`. Elapsed 2.21 h; ~9.79 h remain of the 12 h CPU limit. No error. **Continue monitoring.** Do not cancel, retry, push a new kernel, or use the second submission.
-3. The 593.53 s figure was the public-test v3 worker. Hidden-test scoring is a different session and is expected to take longer.
-4. Do not start another experiment cycle while this scoring rerun is active.
+2. Submission **56399003** (`mahdimzafari/biohub-association-v2` v3, config hash `2c6966b5204ba542`) is **complete**. Public LB **`0.553`** (API string). Private score was not returned. Do **not** resubmit this candidate. Do **not** retune from 0.553. That number is distinct from local official 0.592 and public-overlap official 0.564336.
+3. Kaggle UI `0/2` is **final-submission selection**, not a two-submit cap. Do not select finals yet. Stronger candidates are still expected. Kaggle will auto-select best scoring entries if fewer than two are chosen.
+4. Complete frozen-validation re-score is **done** and matches the locked 0.537 / 0.592 figures. See `reports/frozen_validation_complete_20260920.md`. The next experiment family belongs on a **new** draft PR. Do not absorb it here. Do not resubmit 56399003.
 
 ## HUMAN_ACTION_REQUIRED
 
-None while 56399003 is pending and inside the 12 h window. After `2026-09-21T03:12:52Z`, or if Kaggle reports failed/timeout, identify the exact error before any retry. Keep the second submission unused.
+None for this candidate. Do not click Submit again. Do not choose final submissions.
 
 ## Later (blocked or expensive)
 
-- If 56399003 completes: record the returned public score in the submission ledger. Do not retune `association_v2` from that number alone.
-- Complete frozen validation on `6bba_c328f2fd` (separate from this status check).
-- Learned 3D detection / embedding. Public-test copy `44b6_0b24845f` scored 0.280 with recall 0.45; that is a same-specimen copy, not holdout.
-- Final second submission: unused. Do not spend it on a retry of this pending run.
+- New experiment families (detection / division / learned models) on their own draft PRs. Compare them on the frozen split against preserved baseline_v1 and association_v2.
+- Hidden-test runtime was not returned by the API. Public-test worker was 593.53 s / 421 MB; hidden output was 209728379 bytes (~16× public CSV).
+- Grant this worker `issues:read` so cron runs can read issue #1.
 
 ## Never from automation
 
-Merge, make the repo public, spend money, accept competition terms, expose secrets, upload data/weights/submissions, cancel or re-submit this pending run, or invent a leaderboard score.
+Merge, make the repo public, spend money, accept competition terms, expose secrets, upload data/weights/submissions, resubmit this locked candidate, select finals, or invent a private/leaderboard score.

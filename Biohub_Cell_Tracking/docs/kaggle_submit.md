@@ -12,7 +12,7 @@ Private kernel, internet off, CPU, competition dataset attached. This is the nex
 - Push helper: `scripts/push_kaggle_kernel.py` (never calls `competitions submit`; refuses to overwrite `biohub-baseline-v1`)
 - Version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`).
 - 2026-09-20T15:00Z worker re-query: live status still `complete`; output re-downloaded and re-audited. Kernel was not re-pushed.
-- 2026-09-20T15:12:52Z Mahdi submitted version 3 from the UI. Submission **56399003** was **pending** at 17:25:30Z. No leaderboard score yet. Do not start a second submit.
+- 2026-09-20T15:12:52Z Mahdi submitted version 3 from the UI. Submission **56399003** is **complete**. Public score **0.553** (API string). Private score not returned. Do not resubmit. Do not select finals (`0/2` is selection, not a submit cap).
 - Independent download+audit: `scripts/audit_kaggle_output.py`. Official score 0.564336 on `6bba_05db0fb1` vs train GEFF. Not a leaderboard score.
 
 Do **not** overwrite `mahdimzafari/biohub-baseline-v1`.

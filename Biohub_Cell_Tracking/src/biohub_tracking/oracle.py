@@ -1,14 +1,50 @@
 from __future__ import annotations
 
+import numpy as np
+
+from .association import FrameDetections, track_from_detections
 from .config import LinkingConfig
 from .graphs import TrackGraph
 from .link import link_frames
+from .track import _use_association
 
 
 def link_gt_centroids(gt: TrackGraph, linking: LinkingConfig, scale_zyx: tuple[float, float, float]) -> TrackGraph:
     """Oracle diagnostic: treat GT centroids as detections and run the linker."""
     times = sorted({int(t) for t in gt.t})
     coords = {t: gt.coords_zyx()[gt.t == t] for t in times}
+    if _use_association(linking):
+        frames: list[FrameDetections] = []
+        next_id = 1
+        for t in times:
+            xyz = np.asarray(coords[t], dtype=np.float64)
+            n = len(xyz)
+            node_ids = np.arange(next_id, next_id + n, dtype=np.int64)
+            zeros = np.zeros(n, dtype=np.float64)
+            frames.append(
+                FrameDetections(
+                    t=int(t),
+                    coords=xyz,
+                    intensity=zeros,
+                    appearance=zeros,
+                    node_ids=node_ids,
+                )
+            )
+            next_id += n
+        graph = track_from_detections(
+            gt.dataset + "_gt_detections",
+            frames,
+            linking,
+            scale_zyx,
+            estimated_n_nodes=gt.estimated_n_nodes,
+        )
+        graph.metadata = {
+            **(graph.metadata or {}),
+            "oracle": True,
+            "note": "GT centroids linked with association; not a detection result",
+        }
+        return graph
+
     next_id = 1
     ids: dict[int, list[int]] = {}
     for t in times:

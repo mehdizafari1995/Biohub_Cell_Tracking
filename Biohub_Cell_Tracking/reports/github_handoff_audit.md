@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`python -m pytest Biohub_Cell_Tracking/tests` — 48 passed (2026-09-20T15:00Z, association_v2 kernel v3 re-verification).
+`python -m pytest Biohub_Cell_Tracking/tests` — 49 passed (2026-09-20T23:27Z, public LB recorded + frozen val re-score).
 
 ## Official scorer
 
@@ -59,3 +59,10 @@ Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `subm
 - Submission `56399003` pending since `2026-09-20T15:12:52.307Z`. No scores, no error. Second slot unused.
 - No kernel push, cancel, data download, or `competitions submit` from this worker.
 - Sanitized report: `reports/kaggle_association_v2_submission_56399003_status.md`.
+
+## 2026-09-20T23:27Z public score + frozen val
+
+- API `publicScore` string **0.553**. Private score not returned. Not invented.
+- Complete frozen volumes downloaded into ignored `data/train/` only (100/100). Not committed.
+- Re-score reproduced locked A 0.537 / B 0.592. `pytest` 49 passed.
+- Oracle helper now routes `association_v2` through the association linker (eval-only; locked YAML unchanged).
