@@ -231,6 +231,29 @@ Private **GPU** helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition. Weights stay out of git.
 """,
     },
+    "learned_unet_motion_v1": {
+        "source": "notebooks/kaggle_learned_unet_motion_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_motion_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_motion_v1",
+        "code_file": "kaggle_learned_unet_motion_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-motion-v1",
+        "title": "Biohub Learned UNet Motion V1",
+        "enable_gpu": False,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-infer-v1"],
+        "markdown": """# Biohub learned_unet_motion_v1
+
+Private **CPU** helper kernel. **Not a competition submission.**
+
+- New slug. Do **not** overwrite rejected `mahdimzafari/biohub-learned-unet-link-v1` or `link-v2`.
+- Loads locked `learned_unet_infer_v1` JSON graphs. Detection is not retuned.
+- Replaces consecutive edges with constant-velocity greedy 1-1 plus the locked association_v2 12 µm gate.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-infer-v1`. **Internet OFF**. **GPU OFF**.
+- Do **not** overwrite locked train/infer/holdout/test/gap-test/link slugs.
+- Do **not** Submit to Competition.
+""",
+    },
     "learned_unet_gap_test_v1": {
         "source": "notebooks/kaggle_learned_unet_gap_test_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_gap_test_v1.ipynb",

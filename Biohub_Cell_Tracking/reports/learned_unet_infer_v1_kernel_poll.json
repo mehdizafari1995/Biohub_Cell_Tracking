@@ -1,6 +1,6 @@
 {
   "slug": "mahdimzafari/biohub-learned-unet-infer-v1",
-  "polled_utc": "2026-09-20T15:42:23Z",
+  "polled_utc": "2026-09-20T23:50:04Z",
   "kernel": {
     "slug": "mahdimzafari/biohub-learned-unet-infer-v1",
     "status": "complete",
@@ -30,7 +30,7 @@
   ],
   "decision": "download_complete_helper",
   "train_config_hash": "4c38035d6657f2ad",
-  "code_version": "d9a3484",
+  "code_version": "ec3bede",
   "downloaded": true,
   "extracted": {
     "44b6_12dfb391.json": "44b6_12dfb391.json",

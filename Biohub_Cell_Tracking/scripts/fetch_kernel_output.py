@@ -33,6 +33,7 @@ ALLOWED_SLUGS = {
     "mahdimzafari/biohub-learned-unet-gap-test-v1",
     "mahdimzafari/biohub-learned-unet-link-v1",
     "mahdimzafari/biohub-learned-unet-link-v2",
+    "mahdimzafari/biohub-learned-unet-motion-v1",
 }
 
 

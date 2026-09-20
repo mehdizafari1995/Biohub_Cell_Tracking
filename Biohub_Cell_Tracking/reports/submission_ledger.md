@@ -189,6 +189,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Official 44b6 score:** **0.224746** vs locked `learned_unet_infer_v1` **0.655751**. Decision `reject_learned_unet_link_v2`. Transformer ranking among 12 µm candidates lost official TPs (475 vs 877) and added conflicting FPs (962 vs 221). Frozen `6bba` not opened. Not a leaderboard score.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
+## learned_unet_motion_v1_tune
+
+- **Status:** local official scorer on locked learned infer graphs + constant-velocity 1-1 inside the locked last-position 12 µm gate. **Not a Kaggle run.** Helper packaged, not pushed. Frozen `6bba` was **not** scored.
+- **Config hash:** `66853b6f1445c18b`. Parent infer `d7578b5f64ddac08`. Intensity unused. Transformer unused.
+- **Local official tuning:** learned_unet_motion_v1 **0.583722** vs locked learned_unet_infer_v1 **0.655751**. Detection counts match (80741 / 36951). Official TP/FP/FN 828/300/222 vs infer 877/221/173. Divisions 0/0/2. Recall unchanged 0.970. Decision `reject_learned_unet_motion_v1`. Do not retune. Do not score holdout.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
