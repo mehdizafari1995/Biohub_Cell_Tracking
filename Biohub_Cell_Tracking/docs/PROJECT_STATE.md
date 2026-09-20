@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (packaged learned_unet_link_v1 44b6 transformer linker; hash 3a7423c6858ace41). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (rejected learned_unet_link_v1 after official 44b6 0.0 vs infer 0.655751). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -10,7 +10,7 @@ Last updated: 2026-09-20 (packaged learned_unet_link_v1 44b6 transformer linker;
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
-- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). Training v3 COMPLETE / `trained`. Infer v3 COMPLETE / `inferred` (44b6 tune 0.655751). Holdout v1 COMPLETE / `inferred`. Official frozen `6bba` no-gap **0.693605 vs association_v2 0.591570** (`keep_candidate_learned_unet_holdout_v1`). Test-time slug `mahdimzafari/biohub-learned-unet-test-v1` v1 **COMPLETE / inferred** on public `test/` (306.5 s, 1184 MB, `audit_ok`, hash `7a8725b818fc609b`). `learned_unet_division_v1` overlay **rejected** on 44b6 (**0.655235 vs 0.655751**, 0/1/2, 282 extra edges). `learned_unet_gap_v1` overlay **kept** after one-shot official holdout (**0.701026 vs no-gap 0.693605**, hash `f4d888d190c45a4a`, 16804 extra edges, 0/0/5). Gap test-time slug `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 **COMPLETE / inferred** on public `test/` (330.0 s, 1184 MB, `audit_ok`, hash `85379c198ebc7241`, 251660 nodes / 242412 edges / 13912 gap links / 0 divisions). Transformer-linker helper `mahdimzafari/biohub-learned-unet-link-v1` is packaged (hash `3a7423c6858ace41`, 44b6 only, holdout refused). Official 44b6 score is **not** run until that helper finishes. Do not retune locked gates. Do not score the no-gap holdout twice. Do not score the gap holdout twice. Do not overwrite train/infer/holdout/test/gap-test slugs.
+- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). Training v3 COMPLETE / `trained`. Infer v3 COMPLETE / `inferred` (44b6 tune 0.655751). Holdout v1 COMPLETE / `inferred`. Official frozen `6bba` no-gap **0.693605 vs association_v2 0.591570** (`keep_candidate_learned_unet_holdout_v1`). Test-time slug `mahdimzafari/biohub-learned-unet-test-v1` v1 **COMPLETE / inferred** on public `test/` (306.5 s, 1184 MB, `audit_ok`, hash `7a8725b818fc609b`). `learned_unet_division_v1` overlay **rejected** on 44b6 (**0.655235 vs 0.655751**, 0/1/2, 282 extra edges). `learned_unet_gap_v1` overlay **kept** after one-shot official holdout (**0.701026 vs no-gap 0.693605**, hash `f4d888d190c45a4a`, 16804 extra edges, 0/0/5). Gap test-time slug `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 **COMPLETE / inferred** on public `test/` (330.0 s, 1184 MB, `audit_ok`, hash `85379c198ebc7241`, 251660 nodes / 242412 edges / 13912 gap links / 0 divisions). Transformer-linker helper `mahdimzafari/biohub-learned-unet-link-v1` v1 **COMPLETE / inferred** (hash `3a7423c6858ace41`, 162.1 s, 1210 MB). Official 44b6 **0.0 vs infer 0.655751** because detections matched infer (80741/36951) but the softmax+0.5 gate wrote **0 edges**. Decision **`reject_learned_unet_link_v1`**. Frozen `6bba` was not opened. Do not retune. Do not overwrite the completed link slug. Do not retune locked gates. Do not score the no-gap holdout twice. Do not score the gap holdout twice. Do not overwrite train/infer/holdout/test/gap-test slugs.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
@@ -27,17 +27,18 @@ Last updated: 2026-09-20 (packaged learned_unet_link_v1 44b6 transformer linker;
 - Locked learned test-time (discover `test/*.zarr`): `configs/learned_unet_test_v1.yaml`. Hash `7a8725b818fc609b`. Same operating point as infer/holdout (no gap-close). Kernel v1 COMPLETE. Do not retune. Do not overwrite.
 - Locked learned gap overlay: `configs/learned_unet_gap_v1.yaml`. Hash `f4d888d190c45a4a`. Official tune **0.658452** vs learned infer **0.655751**. Official holdout **0.701026** vs no-gap **0.693605**. Do not retune. Do not score holdout again.
 - Locked learned gap test-time (discover `test/*.zarr` + locked overlay): `configs/learned_unet_gap_test_v1.yaml`. Hash `85379c198ebc7241`. Kernel v1 COMPLETE. Do not retune. Do not overwrite.
-- Packaged learned transformer linker (44b6 only): `configs/learned_unet_link_v1.yaml`. Hash `3a7423c6858ace41`. Same detections as infer_v1; softmax 1-1 transformer scores. Holdout refused until a documented 44b6 lock. Do not overwrite locked slugs.
+- Rejected learned transformer linker (44b6 only): `configs/learned_unet_link_v1.yaml`. Hash `3a7423c6858ace41`. Official tune **0.0 vs learned_unet_infer_v1 0.655751**. Softmax+0.5 wrote 0 edges. Status `rejected_on_tuning`. Frozen `6bba` not scored. Do not retune. Do not overwrite the completed slug.
 
 ## Rejected (do not retune)
 
 - `configs/complementary_v1.yaml`: locked baseline_v1 primary DoG + complementary local-max (6.0 µm isolation, 0.45 intensity ratio) + locked association_v2 linker. Hash `2c4866928d7262b6`. Tuning 0.633135 vs association_v2 0.632460; holdout **0.591384 vs 0.591570**. Status `rejected_on_holdout`. See `docs/complementary_priors.json`.
 - `configs/linkable_v1.yaml`: complementary_v1 spatial gates plus temporal link filter (primary neighbor within 12 µm at t±1). Hash `fa975421edb6136e`. Tuning 0.633168 vs association_v2 0.632460; holdout **0.591458 vs 0.591570**. Status `rejected_on_holdout`. See `docs/linkable_priors.json`.
 - `configs/learned_unet_division_v1.yaml`: locked `division_v2` gates on locked learned infer graphs. Hash `8761fb66cc2254f3`. Tuning **0.655235 vs learned_unet_infer_v1 0.655751**. Status `rejected_on_tuning`. Frozen `6bba` not scored. See `reports/learned_unet_division_v1.md`.
+- `configs/learned_unet_link_v1.yaml`: locked detections plus transformer softmax 1-1, threshold 0.5. Hash `3a7423c6858ace41`. Tuning **0.0 vs learned_unet_infer_v1 0.655751**. Status `rejected_on_tuning`. Frozen `6bba` not scored. See `reports/learned_unet_link_v1.md`.
 
 ## Current scoring candidate
 
-- `configs/learned_unet_gap_v1.yaml` is the holdout champion on the official local scorer (**0.701026**). `learned_unet_gap_test_v1` v1 is the latest **public-test** worker CSV (`audit_ok`, locked gap overlay, not submitted). `learned_unet_test_v1` v1 remains the locked no-gap public-test worker. association_v2 v3 remains a previous public-test worker. `learned_unet_link_v1` is a 44b6-only transformer-linker helper and is **not** a scoring candidate until official tuning finishes. No leaderboard score exists.
+- `configs/learned_unet_gap_v1.yaml` is the holdout champion on the official local scorer (**0.701026**). `learned_unet_gap_test_v1` v1 is the latest **public-test** worker CSV (`audit_ok`, locked gap overlay, not submitted). `learned_unet_test_v1` v1 remains the locked no-gap public-test worker. association_v2 v3 remains a previous public-test worker. `learned_unet_link_v1` is **rejected** on 44b6. No leaderboard score exists.
 
 ## Measured results (local official scorer, not leaderboard)
 
@@ -70,7 +71,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 - Private helper kernel `mahdimzafari/biohub-learned-unet-holdout-v1` version **1 COMPLETE** / `inferred`. 184.4 s, peak 1177 MB. 6bba graphs only. **Not a submission.** No `submission.csv`. Do not overwrite.
 - Private GPU test-time kernel `mahdimzafari/biohub-learned-unet-test-v1` version **1 COMPLETE** / `inferred`. 306.5 s, peak 1184 MB, T4. Public test four stems, 231707 nodes / 208547 edges / 0 divisions, `audit_ok`. **Not submitted.** Do not overwrite.
 - Private GPU test-time kernel `mahdimzafari/biohub-learned-unet-gap-test-v1` version **1 COMPLETE** / `inferred`. 330.0 s, peak 1184 MB, T4. Public test four stems, 251660 nodes / 242412 edges / 13912 gap links / 19953 interpolated / 0 divisions, `audit_ok`. Independent stream audit `audit_ok`. `6bba_05db0fb1` 103432/100197 matches locked holdout gap overlay. **Not submitted.** Do not overwrite.
-- Private GPU helper kernel `mahdimzafari/biohub-learned-unet-link-v1` version **1 running**. Hash `3a7423c6858ace41`. 44b6 transformer linker. **Not a submission.** No `submission.csv`. Do not overwrite locked train/infer/holdout/test/gap-test slugs.
+- Private GPU helper kernel `mahdimzafari/biohub-learned-unet-link-v1` version **1 COMPLETE / inferred**. Hash `3a7423c6858ace41`. 162.1 s, peak 1210 MB, T4 x2. 44b6 graphs 80741/0 and 36951/0. Official tune **0.0**. **Not a submission.** No `submission.csv`. Do not overwrite this slug or locked train/infer/holdout/test/gap-test slugs.
 - Competition submit: **not performed by this worker**. No public or private leaderboard score is recorded here.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
@@ -80,7 +81,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest tests/test_learned_unet_link_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` on this run. Train, infer, holdout, no-gap test, and completed gap-test slugs stay in `FORBIDDEN_SLUGS`. The new link slug is allowed to push once. Do not retune rejected `learned_unet_division_v1`. Do not retune or rescore `learned_unet_gap_v1` after the holdout lock.
+`PYTHONPATH=src python -m pytest tests/test_learned_unet_link_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` on this run. Train, infer, holdout, no-gap test, gap-test, and completed link slugs stay in `FORBIDDEN_SLUGS`. Do not retune rejected `learned_unet_division_v1` or `learned_unet_link_v1`. Do not retune or rescore `learned_unet_gap_v1` after the holdout lock.
 
 ## Privacy
 

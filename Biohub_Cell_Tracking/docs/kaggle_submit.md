@@ -35,7 +35,7 @@ Do **not** overwrite `mahdimzafari/biohub-baseline-v1` or `mahdimzafari/biohub-a
 - `mahdimzafari/biohub-learned-unet-holdout-v1` v1 COMPLETE / inferred — 6bba graphs. No `submission.csv`. Do not overwrite.
 - `mahdimzafari/biohub-learned-unet-test-v1` v1 COMPLETE / inferred — public-test no-gap worker, `audit_ok`, not submitted. Do not overwrite.
 - `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 COMPLETE / inferred — public-test gap overlay worker, 330.0 s, `audit_ok`, not submitted. Preferred learned submit from the Kaggle UI. Do not overwrite.
-- `mahdimzafari/biohub-learned-unet-link-v1` — packaged 44b6-only transformer-linker helper. No `submission.csv`. Not a submit candidate. Do not overwrite locked slugs.
+- `mahdimzafari/biohub-learned-unet-link-v1` v1 COMPLETE / inferred — 44b6 transformer linker. Official tune 0.0. Rejected. No `submission.csv`. Not a submit candidate. Do not overwrite.
 
 ## Previous kernel (baseline_v1)
 

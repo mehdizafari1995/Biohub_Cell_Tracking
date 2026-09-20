@@ -36,7 +36,7 @@ Locked `association_v2` (`configs/association_v2.yaml` and `notebooks/kaggle_ass
 
 `configs/learned_unet_infer_v1.yaml` loads specimen-separated `learned_unet_v1` weights and infers only the frozen-tuning pair. Detection is UNet local-max; linking is the locked 12 µm 1-1 gate. Holdout `6bba` is refused. Does not write `submission.csv`. Official 44b6 tune **0.655751 vs association_v2 0.632460**. Do not retune.
 
-`configs/learned_unet_link_v1.yaml` keeps those locked detections and replaces the greedy gate with trained `SimpleNodeTransformer` pairwise scores (softmax, threshold 0.5, 1-1). 44b6 only. Holdout refused until a documented keep. Hash `3a7423c6858ace41`. Does not write `submission.csv`.
+`configs/learned_unet_link_v1.yaml` keeps those locked detections and replaces the greedy gate with trained `SimpleNodeTransformer` pairwise scores (softmax, threshold 0.5, 1-1). Official 44b6 **0.0 vs infer 0.655751**. **Rejected.** Hash `3a7423c6858ace41`. Softmax+0.5 wrote 0 edges on dense detections. Frozen `6bba` not scored. Do not retune. Does not write `submission.csv`.
 
 Validation splits are by embryo ID (`44b6` vs `6bba`). Neighboring frames from one specimen are never randomly split. Complete holdout scoring (both frozen validation sequences plus each annotated-division event) is `scripts/run_complete_validation.py`.
 

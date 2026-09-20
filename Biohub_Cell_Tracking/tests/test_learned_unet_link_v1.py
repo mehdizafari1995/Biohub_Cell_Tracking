@@ -122,6 +122,38 @@ def test_transformer_assignment_is_greedy_one_to_one(tmp_path: Path):
         pass
 
 
+def test_softmax_threshold_half_is_incompatible_with_dense_sources():
+    """Document the v1 failure: softmax over hundreds of sources rarely exceeds 0.5."""
+    n_src, n_tgt = 400, 80
+    logits = np.zeros((n_src, n_tgt), dtype=np.float64)
+    logits[0] = 3.0
+    shifted = logits - logits.max(axis=0, keepdims=True)
+    exp = np.exp(np.clip(shifted, -40.0, 40.0))
+    probs = exp / np.clip(exp.sum(axis=0, keepdims=True), 1e-8, None)
+    assert float(probs.max()) < 0.5
+    assert assign_transformer_links(probs, threshold=0.5) == []
+    winners = assign_transformer_links(probs, threshold=0.0)
+    assert winners
+    assert winners[0][0] == 0
+    assert len({j for _i, j, _p in winners}) == len(winners)
+
+
+def test_rejected_link_tune_report_stays_44b6_and_zero_edges():
+    report = json.loads((ROOT / "reports" / "learned_unet_link_v1_tune.json").read_text())
+    assert report["decision"] == "reject_learned_unet_link_v1"
+    assert report["config_hash"] == LOCKED_LINK_HASH
+    assert report["learned_combined"] == 0.0
+    assert report["is_leaderboard_score"] is False
+    stems = [row["dataset"] for row in report["per_sequence"]]
+    assert stems == list(INFER_STEMS)
+    assert all(row["score"] == 0.0 for row in report["per_sequence"])
+    assert all(row["num_pred_nodes"] > 0 for row in report["per_sequence"])
+    error = json.loads((ROOT / "reports" / "learned_unet_link_v1_error.json").read_text())
+    assert error["n_edges"] == [0, 0]
+    assert error["detection_counts_match_infer"] is True
+    assert error["opened_holdout"] is False
+
+
 def test_runtime_estimate_tuning_and_hidden_under_12h():
     tune = runtime_estimate(2)
     assert tune["under_limit"] is True
@@ -196,7 +228,7 @@ def test_push_forbids_locked_allows_link_and_fetch_allows_link():
     assert TRAIN_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     assert INFER_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-gap-test-v1" in mod.FORBIDDEN_SLUGS
-    assert LINK_KERNEL_SLUG not in mod.FORBIDDEN_SLUGS
+    assert LINK_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     fetch = importlib.util.spec_from_file_location(
         "fetch_kernel_output",
         ROOT / "scripts" / "fetch_kernel_output.py",

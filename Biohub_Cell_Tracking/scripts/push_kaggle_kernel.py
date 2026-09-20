@@ -32,6 +32,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-test-v1",
     # Gap test-time v1 COMPLETE / inferred 2026-09-20. Public-test CSV locked. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-gap-test-v1",
+    # Linker v1 COMPLETE / inferred 2026-09-20. Official 44b6 0.0 vs infer 0.655751. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-link-v1",
 }
 
 

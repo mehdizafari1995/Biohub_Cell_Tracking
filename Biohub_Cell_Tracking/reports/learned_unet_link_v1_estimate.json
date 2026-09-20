@@ -5,6 +5,8 @@
   "infer_config_hash": "d7578b5f64ddac08",
   "kernel_slug": "mahdimzafari/biohub-learned-unet-link-v1",
   "hypothesis": "Locked TemporalUNet3D detections plus trained SimpleNodeTransformer pairwise scores (softmax, threshold 0.5, 1-1) raise official 44b6 score versus locked greedy learned_unet_infer_v1 0.655751. Frozen 6bba is refused until a documented 44b6 lock.",
+  "decision": "reject_learned_unet_link_v1",
+  "official_combined": 0.0,
   "tuning_only": true,
   "opens_holdout": false,
   "writes_submission_csv": false,

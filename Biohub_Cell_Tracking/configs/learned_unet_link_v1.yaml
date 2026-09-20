@@ -1,5 +1,6 @@
 # learned_unet_link_v1 — 44b6-only transformer linker on locked learned detections.
-# Do not open 6bba. Do not write submission.csv. Do not overwrite locked slugs.
+# Official 44b6 tune 0.0 vs infer 0.655751. Rejected. Do not retune this hash.
+# Do not open 6bba. Do not write submission.csv. Do not overwrite this slug.
 # Weights stay out of git. Not a competition submission.
 
 label: learned_unet_link_v1
