@@ -12,18 +12,18 @@ import zipfile
 from pathlib import Path
 from typing import Any, Iterable
 
-from .learned_infer import (
-    INFER_KERNEL_SLUG,
-    INFER_STEMS,
-    TRAIN_KERNEL_SLUG,
+from .learned_split import (
+    INTERNAL_VAL_STEMS,
+    KERNEL_SLUG as TRAIN_KERNEL_SLUG,
+    HoldoutLeakError,
     find_weights,
-    refuse_non_infer_stems,
+    refuse_holdout_stems,
     verify_train_manifest,
 )
-from .learned_split import HoldoutLeakError, refuse_holdout_stems
 
 TRAIN_SLUG = TRAIN_KERNEL_SLUG
-INFER_SLUG = INFER_KERNEL_SLUG
+INFER_SLUG = "mahdimzafari/biohub-learned-unet-infer-v1"
+INFER_STEMS = INTERNAL_VAL_STEMS
 BANNED_OUTPUT_NAMES = frozenset({"submission.csv"})
 KAGGLE_NOISE_NAMES = frozenset(
     {
@@ -111,7 +111,7 @@ def _extract_allowed(
             if name not in allowed:
                 continue
             if keep_graphs_subdir and name.endswith(".json") and name != "infer_manifest.json":
-                refuse_non_infer_stems([name])
+                _refuse_non_infer_stems([name])
                 dest = dest_dir / "graphs" / name
             else:
                 dest = dest_dir / name
@@ -138,9 +138,27 @@ def extract_learned_train_output(archive: Path, dest_dir: Path) -> dict[str, Pat
     return written
 
 
+def _refuse_non_infer_stems(stems: Iterable[str]) -> None:
+    """Allow only the two frozen-tuning sequences. Holdout is always refused."""
+    cleaned: list[str] = []
+    for raw in stems:
+        stem = Path(raw).name
+        for suffix in (".zarr", ".geff", ".json"):
+            if stem.endswith(suffix):
+                stem = stem[: -len(suffix)]
+        if stem not in cleaned:
+            cleaned.append(stem)
+    refuse_holdout_stems(cleaned)
+    extra = [s for s in cleaned if s not in INFER_STEMS]
+    if extra:
+        raise HoldoutLeakError(
+            "learned_unet_infer_v1 only opens frozen-tuning stems; got " + ", ".join(extra)
+        )
+
+
 def extract_learned_infer_output(archive: Path, dest_dir: Path) -> dict[str, Path]:
     """Extract 44b6-only infer graphs. Refuses holdout stems and submission.csv."""
-    refuse_non_infer_stems(
+    _refuse_non_infer_stems(
         name
         for name in _basenames(_zip_files(Path(archive)))
         if name.endswith(".json") and name != "infer_manifest.json"
@@ -153,7 +171,7 @@ def extract_learned_infer_output(archive: Path, dest_dir: Path) -> dict[str, Pat
     )
     graph_names = [name for name in written if name.endswith(".json") and name != "infer_manifest.json"]
     if graph_names:
-        refuse_non_infer_stems(graph_names)
+        _refuse_non_infer_stems(graph_names)
     missing = [stem for stem in INFER_STEMS if f"{stem}.json" not in written]
     if missing and written and "infer_manifest.json" in written:
         # Graphs may be absent on a blocked/dry run; do not invent them.
@@ -164,12 +182,14 @@ def extract_learned_infer_output(archive: Path, dest_dir: Path) -> dict[str, Pat
 def safe_kernel_status(raw: dict[str, Any], slug: str) -> dict[str, Any]:
     """Return non-secret kernel status fields only."""
     status = str(raw.get("status") or "")
+    last_run = raw.get("lastRunTime") or raw.get("lastRun") or raw.get("startedOn")
     return {
         "slug": slug,
         "status": status,
         "failureMessage": raw.get("failureMessage") if raw.get("hasFailureMessage") else None,
         "hasFailureMessage": bool(raw.get("hasFailureMessage")),
         "versionNumber": raw.get("versionNumber") or raw.get("currentVersionNumber"),
+        "lastRunTime": last_run,
         "is_complete": status.lower() == "complete",
         "is_error": status.lower() in {"error", "failed"} or bool(raw.get("hasFailureMessage")),
         "is_running": status.lower() in {"running", "queued", "pending", "canceling"},

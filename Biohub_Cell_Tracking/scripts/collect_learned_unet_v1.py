@@ -109,6 +109,7 @@ def main() -> None:
                 "n_output_files": len(files),
                 "downloaded": report["downloaded"],
                 "collected_status": (report["collected"] or {}).get("status"),
+                "lastRunTime": status.get("lastRunTime"),
                 "is_leaderboard_score": False,
             },
             indent=2,

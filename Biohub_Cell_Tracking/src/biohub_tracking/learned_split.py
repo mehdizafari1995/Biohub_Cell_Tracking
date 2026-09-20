@@ -17,6 +17,9 @@ HOLDOUT_SPECIMENS = ("6bba",)
 INTERNAL_VAL_STEMS = ("44b6_12dfb391", "44b6_267148e4")
 FROZEN_HOLDOUT_STEMS = ("6bba_05db0fb1", "6bba_c328f2fd")
 KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-v1"
+TRAIN_CONFIG_HASH = "4c38035d6657f2ad"
+WEIGHTS_NAME = "learned_unet_v1_best.pt"
+FALLBACK_WEIGHTS_NAME = "learned_unet_v1_last.pt"
 
 
 class HoldoutLeakError(ValueError):
@@ -150,3 +153,50 @@ def list_tuning_pairs(train_dir: str | Path) -> list[dict[str, str]]:
         )
     refuse_holdout_stems(p["stem"] for p in pairs)
     return pairs
+
+
+def find_weights(search_roots: Sequence[str | Path] | None = None) -> Path | None:
+    """Locate training-kernel weights. Never searches holdout volumes."""
+    roots: list[Path] = []
+    if search_roots:
+        roots.extend(Path(p) for p in search_roots if p)
+    else:
+        roots.extend(
+            [
+                Path("/kaggle/input/biohub-learned-unet-v1"),
+                Path("/kaggle/input/biohub-learned-unet-v1/biohub-learned-unet-v1"),
+                Path("artifacts/kaggle/learned_unet_v1"),
+                Path("artifacts/kaggle"),
+                Path("."),
+            ]
+        )
+    names = (WEIGHTS_NAME, FALLBACK_WEIGHTS_NAME)
+    for root in roots:
+        if not root.exists():
+            continue
+        for name in names:
+            direct = root / name
+            if direct.is_file():
+                return direct
+        for name in names:
+            matches = sorted(root.rglob(name))
+            if matches:
+                return matches[0]
+    return None
+
+
+def verify_train_manifest(path: str | Path) -> dict[str, Any]:
+    """Confirm the training helper stayed 44b6-only. Does not open volumes."""
+    payload = json.loads(Path(path).read_text())
+    cfg = payload.get("config") or {}
+    if payload.get("config_hash") not in {None, TRAIN_CONFIG_HASH} and cfg:
+        if config_hash(cfg) != TRAIN_CONFIG_HASH:
+            raise HoldoutLeakError("training config hash does not match locked learned_unet_v1")
+    splits = payload.get("splits") or {}
+    stems = list(splits.get("train") or []) + list(splits.get("test") or [])
+    if stems:
+        refuse_holdout_stems(stems)
+        other = [s for s in stems if specimen_of(s) != TUNING_SPECIMEN]
+        if other:
+            raise HoldoutLeakError("training manifest is not 44b6-only: " + ", ".join(other))
+    return payload

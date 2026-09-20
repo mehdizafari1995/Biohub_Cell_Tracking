@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from biohub_tracking.learned_collect import (
+    INFER_SLUG,
     TRAIN_SLUG,
     assert_helper_dest,
     collect_decision,
@@ -17,8 +18,11 @@ from biohub_tracking.learned_collect import (
     safe_kernel_status,
     summarize_collected_train,
 )
-from biohub_tracking.learned_infer import INFER_KERNEL_SLUG, TRAIN_CONFIG_HASH
-from biohub_tracking.learned_split import HoldoutLeakError, KERNEL_SLUG
+from biohub_tracking.learned_split import (
+    TRAIN_CONFIG_HASH,
+    HoldoutLeakError,
+    KERNEL_SLUG,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -32,10 +36,18 @@ def _zip(path: Path, members: dict[str, bytes | str]) -> Path:
 
 
 def test_collect_decision_and_safe_status():
-    running = safe_kernel_status({"status": "running", "hasFailureMessage": False}, TRAIN_SLUG)
+    running = safe_kernel_status(
+        {
+            "status": "running",
+            "hasFailureMessage": False,
+            "lastRunTime": "2026-09-20T08:44:11Z",
+        },
+        TRAIN_SLUG,
+    )
     assert running["is_running"] is True
     assert running["is_complete"] is False
     assert running["is_competition_submission"] is False
+    assert running["lastRunTime"] == "2026-09-20T08:44:11Z"
     assert collect_decision(running) == "wait_running"
     complete = safe_kernel_status({"status": "complete", "hasFailureMessage": False}, TRAIN_SLUG)
     assert collect_decision(complete) == "download_complete_helper"
@@ -132,6 +144,41 @@ def test_assert_helper_dest_stays_under_artifacts_kaggle(tmp_path: Path):
         assert_helper_dest(tmp_path / "not_ignored")
 
 
+def test_collect_modules_stay_stdlib_only():
+    heavy = ("import numpy", "import scipy", "import torch", "from numpy", "from scipy")
+    for rel in (
+        "src/biohub_tracking/learned_collect.py",
+        "src/biohub_tracking/learned_split.py",
+        "src/biohub_tracking/kaggle_api.py",
+        "src/biohub_tracking/experiments.py",
+        "scripts/collect_learned_unet_v1.py",
+        "scripts/collect_learned_unet_infer_v1.py",
+    ):
+        text = (ROOT / rel).read_text()
+        for needle in heavy:
+            assert needle not in text, f"{rel} must not {needle}"
+
+
+def test_package_import_is_lazy():
+    code = (
+        "import biohub_tracking, sys\n"
+        "assert 'biohub_tracking.track' not in sys.modules\n"
+        "assert 'scipy' not in sys.modules\n"
+        "from biohub_tracking.kaggle_api import kernel_status\n"
+        "from biohub_tracking.learned_collect import collect_decision\n"
+        "assert 'scipy' not in sys.modules\n"
+        "assert 'numpy' not in sys.modules\n"
+    )
+    proc = __import__("subprocess").run(
+        [__import__("sys").executable, "-c", code],
+        cwd=str(ROOT),
+        env={**__import__("os").environ, "PYTHONPATH": str(ROOT / "src")},
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+
+
 def test_collect_script_locks_train_slug_and_allows_status_only():
     spec = importlib.util.spec_from_file_location(
         "collect_learned_unet_v1",
@@ -141,7 +188,16 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     assert mod.TRAIN_SLUG == KERNEL_SLUG
-    assert INFER_KERNEL_SLUG != mod.TRAIN_SLUG
+    assert INFER_SLUG != mod.TRAIN_SLUG
+    infer_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_infer_v1",
+        ROOT / "scripts" / "collect_learned_unet_infer_v1.py",
+    )
+    assert infer_spec and infer_spec.loader
+    infer_mod = importlib.util.module_from_spec(infer_spec)
+    infer_spec.loader.exec_module(infer_mod)
+    assert infer_mod.INFER_SLUG == INFER_SLUG
+    assert infer_mod.TRAIN_SLUG == KERNEL_SLUG
     fetch = importlib.util.spec_from_file_location(
         "fetch_kernel_output",
         ROOT / "scripts" / "fetch_kernel_output.py",
@@ -150,4 +206,4 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     fetch_mod = importlib.util.module_from_spec(fetch)
     fetch.loader.exec_module(fetch_mod)
     assert KERNEL_SLUG in fetch_mod.ALLOWED_SLUGS
-    assert INFER_KERNEL_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert INFER_SLUG in fetch_mod.ALLOWED_SLUGS

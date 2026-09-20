@@ -33,7 +33,7 @@ COMPLETE. Internet off. **Not a submission.**
 
 | version | status | notes |
 |---|---|---|
-| — | not pushed | Waiting on training kernel v3. Do not attach incomplete weights. |
+| — | not pushed | Waiting on training kernel v3. Do not attach incomplete weights. Collector `scripts/collect_learned_unet_infer_v1.py` is packaged and will poll this slug only. |
 
 Volume I/O now probe-reads native `zarr` and falls back to the custom zstd decoder (the v2 training failure mode) so the first infer push does not die on `unsupported zarr codec 'zstd'`.
 

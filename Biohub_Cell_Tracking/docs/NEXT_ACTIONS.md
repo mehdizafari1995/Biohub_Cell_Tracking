@@ -13,10 +13,10 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Next (this family)
 
-1. Run `scripts/collect_learned_unet_v1.py` (or `--status-only`). Confirm private GPU kernel `mahdimzafari/biohub-learned-unet-v1` **version 3** is **COMPLETE** (or record a new `train_error`). Do not overwrite locked slugs. Do not push a new training version unless v3 failed. The 10:35 UTC poll was still **running** with an empty output list (`lastRunTime` 2026-09-20T08:44:11Z).
+1. Run `scripts/collect_learned_unet_v1.py` again. Confirm private GPU kernel `mahdimzafari/biohub-learned-unet-v1` **version 3** is **COMPLETE** (or record a new `train_error`). Do not overwrite locked slugs. Do not push a new training version unless v3 failed. The 11:37 UTC poll was still **running** with an empty output list. Prior `lastRunTime` 2026-09-20T08:44:11Z; `max_hours=11.0` so COMPLETE is not expected before ~19:44 UTC.
 2. If COMPLETE: the collector downloads into ignored `artifacts/kaggle/learned_unet_v1` and extracts weights + manifests only. It refuses `submission.csv`, volumes, and holdout stems. Do not commit `.pt` / `.pth`.
 3. Then push private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` (already packaged; attaches the training kernel). Internet off. No `submission.csv`. Only `44b6_12dfb391` + `44b6_267148e4`.
-4. Official-score once on those frozen-tuning stems against association_v2 (locked tune 0.632460). Keep or drop the candidate on that score. Do **not** look at `6bba` yet.
+4. After infer COMPLETE, run `scripts/collect_learned_unet_infer_v1.py` (stdlib poll; extracts 44b6 graphs only). Then official-score once on those frozen-tuning stems against association_v2 (locked tune 0.632460). Keep or drop the candidate on that score. Do **not** look at `6bba` yet.
 5. Only after a documented 44b6 lock: one-shot official holdout on frozen `6bba`. Reject on combined-score regression. Do not retune.
 
 ## HUMAN_ACTION_REQUIRED
