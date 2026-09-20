@@ -1,0 +1,31 @@
+# learned_unet_gap_v1 — conservative gap-close overlay on locked
+# learned_unet graphs. Gates are locked association_v2 values
+# (12 µm, max_gap_frames=2, interpolate). Detection / consecutive
+# dt=1 links stay at learned_unet_infer_v1 (d7578b5f64ddac08) /
+# holdout (d374a21f03dddc04). Do not retune. Do not overwrite locked
+# train/infer/holdout/test slugs. Learned graphs have no intensity;
+# intensity_weight is unused. Not a competition submission.
+
+label: learned_unet_gap_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+holdout_label: learned_unet_holdout_v1
+association_label: association_v2
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+holdout_config_hash: d374a21f03dddc04
+source_graphs: locked_learned_unet_graphs
+retunes_detection: false
+retunes_consecutive_links: false
+uses_intensity: false
+linker: association_v2_gap_overlay
+gate_um: 12.0
+max_gap_frames: 2
+gap_scale: sqrt_dt
+assignment: greedy
+interpolate_gaps: true
+max_parents_per_node: 1
+max_children_per_node: 1
+intensity_weight: 0.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false

@@ -139,6 +139,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_division_v1 **0.655235** vs locked learned_unet_infer_v1 **0.655751**. Extra edges 282. Divisions 0/1/2 vs 0/0/2. Recall unchanged. Decision `reject_learned_unet_division_v1`. Do not retune. Do not score holdout.
 - **Kaggle public / private scores:** not returned.
 
+## learned_unet_gap_v1_tune
+
+- **Status:** local official scorer on locked learned infer graphs + locked `association_v2` gap-close overlay. **Not a Kaggle run.** No new kernel. Frozen `6bba` was **not** scored.
+- **Config hash:** `f4d888d190c45a4a`. Parent infer `d7578b5f64ddac08`. Existing dt=1 links kept. Intensity unused.
+- **Local official tuning:** learned_unet_gap_v1 **0.658452** vs locked learned_unet_infer_v1 **0.655751**. Extra edges 16852. Extra interpolated nodes 9879. Recall 0.97667 vs 0.97004. Divisions 0/0/2. Per-sequence mixed (`12dfb391` 0.745296 vs 0.747072; `267148e4` 0.460171 vs 0.446373). Decision `keep_candidate_learned_unet_gap_v1`. Do not retune. Do not look at holdout yet.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
