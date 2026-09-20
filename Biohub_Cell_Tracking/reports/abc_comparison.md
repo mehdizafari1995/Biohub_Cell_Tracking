@@ -7,7 +7,7 @@ Scores are **local official combined scores**, not Kaggle leaderboard numbers.
 | | A baseline_v1 | B association_v2 | C division_v1 | D division_v2 |
 |---|---|---|---|---|
 | Linking | greedy 15 µm | greedy 12 µm gate + 2-frame gap close + intensity 0.5 | B + conservative two-child proposals | B + predecessor / anti-align / no-steal forks |
-| Tuning official score | 0.585 | **0.632** | 0.630 | not scored |
+| Tuning official score | 0.585 | **0.632** | 0.630 | priors only (71 GEFFs) |
 | Tuning raw / adj edge J | 0.590 / 0.585 | 0.645 / 0.632 | 0.643 / 0.630 | not scored |
 | Tuning ID switches / fragments | 169 / 274 | 150 / 181 | (same detections) | not scored |
 | Frozen val official score | 0.537 | **0.592** | 0.590 | not scored |

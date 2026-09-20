@@ -30,8 +30,8 @@ linking:
   boundary_margin_um: 0.0
   interpolate_gaps: true
   # Conservative gates locked from 44b6 GEFF geometry only. See docs/division_priors.json.
-  min_child_separation_um: 8.7
-  max_parent_child_um: 8.5
+  min_child_separation_um: 8.3
+  max_parent_child_um: 10.0
   min_parent_child_um: 0.0
   intensity_sum_tolerance: 0.45
   max_children: 2

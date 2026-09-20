@@ -54,7 +54,7 @@ def test_v2_config_loads_conservative_flags():
     assert link.require_parent_predecessor is True
     assert link.require_no_alternative_parent is True
     assert link.max_sibling_alignment == 0.05
-    assert link.min_child_separation_um == 8.7
+    assert 8.2 <= float(link.min_child_separation_um) <= 8.7
     assert 8.5 <= float(link.max_parent_child_um) <= 10.0
     assert link.method == "association_v2"
     dumped = pipe.to_dict()["linking"]

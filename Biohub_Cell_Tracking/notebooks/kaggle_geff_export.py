@@ -35,12 +35,21 @@ def wanted_geff(path: Path) -> bool:
 
 
 def iter_geff_stores(root: Path) -> list[Path]:
+    """Find wanted GEFF directories without walking image-volume chunks."""
     if not root.exists():
         return []
+    patterns = (
+        "*.geff",
+        "train/*.geff",
+        "*/train/*.geff",
+        "competitions/*/train/*.geff",
+        "competitions/*/*.geff",
+    )
     found: dict[str, Path] = {}
-    for path in root.rglob("*"):
-        if path.is_dir() and path.name.endswith(".geff") and wanted_geff(path):
-            found[stem_of(path)] = path
+    for pattern in patterns:
+        for path in root.glob(pattern):
+            if path.is_dir() and path.name.endswith(".geff") and wanted_geff(path):
+                found[stem_of(path)] = path
     return [found[key] for key in sorted(found)]
 
 

@@ -1,8 +1,8 @@
 {
-  "note": "Priors use GEFF node/edge coordinates only. Validation image outcomes were not inspected while estimating these numbers. Thresholds are locked on the tuning specimen (44b6) only, then scored once on frozen validation.",
+  "note": "Priors use GEFF node/edge coordinates only. Validation image outcomes were not inspected while estimating these numbers. Thresholds are locked on typical tuning-specimen (44b6) forks only, then scored once on frozen validation. Close twins and near-coincident daughters are inventoried as atypical and must not lower min_child_separation_um.",
   "tuning_specimen": "44b6",
   "validation_specimen_excluded": "6bba",
-  "n_tuning_geffs_scanned": 17,
+  "n_tuning_geffs_scanned": 71,
   "tuning_geffs_scanned": [
     "44b6_0113de3b",
     "44b6_0b24845f",
@@ -20,9 +20,94 @@
     "44b6_33b596bf",
     "44b6_341df25f",
     "44b6_3a861e03",
-    "44b6_3bb3690f"
+    "44b6_3bb3690f",
+    "44b6_40c45f5a",
+    "44b6_415c0a3a",
+    "44b6_53f95252",
+    "44b6_551a5dba",
+    "44b6_5740d24b",
+    "44b6_587a1e22",
+    "44b6_5f15d135",
+    "44b6_668e0cc7",
+    "44b6_66f9292d",
+    "44b6_706092f0",
+    "44b6_71a4179f",
+    "44b6_74d0c52e",
+    "44b6_7a302da0",
+    "44b6_7e557709",
+    "44b6_808952d6",
+    "44b6_81c256f0",
+    "44b6_87bba6c4",
+    "44b6_8cc6506c",
+    "44b6_8f5ab931",
+    "44b6_8f9ecab4",
+    "44b6_90724892",
+    "44b6_949adeb1",
+    "44b6_95029e92",
+    "44b6_97725144",
+    "44b6_996155de",
+    "44b6_9be80b04",
+    "44b6_9bfa6a0a",
+    "44b6_a21120c2",
+    "44b6_a2bb48bb",
+    "44b6_aaf8b0ea",
+    "44b6_abf82518",
+    "44b6_b2c44266",
+    "44b6_c15fded2",
+    "44b6_c50204e0",
+    "44b6_c771cb04",
+    "44b6_c8e2a523",
+    "44b6_c96cfa10",
+    "44b6_cf2536e8",
+    "44b6_cf8fed6b",
+    "44b6_d29c9ab2",
+    "44b6_d2f34f90",
+    "44b6_d5e7d891",
+    "44b6_d754aa59",
+    "44b6_d78e09d9",
+    "44b6_db3c847b",
+    "44b6_ddf577ad",
+    "44b6_deabac95",
+    "44b6_e28840c6",
+    "44b6_e29f0176",
+    "44b6_e31261b4",
+    "44b6_e35b117d",
+    "44b6_e57ff5c6",
+    "44b6_eb2880fc",
+    "44b6_f28707c6"
   ],
-  "n_validation_geffs_present_unused": 0,
+  "n_validation_geffs_present_unused": 2,
+  "n_typical_events": 14,
+  "n_atypical_events": 12,
+  "typical_event_datasets": [
+    "44b6_12dfb391",
+    "44b6_267148e4",
+    "44b6_341df25f",
+    "44b6_587a1e22",
+    "44b6_5f15d135",
+    "44b6_7a302da0",
+    "44b6_996155de",
+    "44b6_9be80b04",
+    "44b6_a21120c2",
+    "44b6_c50204e0",
+    "44b6_d2f34f90",
+    "44b6_d5e7d891",
+    "44b6_d754aa59",
+    "44b6_deabac95"
+  ],
+  "atypical_event_datasets": [
+    "44b6_2a2eff9f",
+    "44b6_706092f0",
+    "44b6_74d0c52e",
+    "44b6_a21120c2",
+    "44b6_aaf8b0ea",
+    "44b6_c50204e0",
+    "44b6_c8e2a523",
+    "44b6_d2f34f90",
+    "44b6_d5e7d891",
+    "44b6_e28840c6",
+    "44b6_eb2880fc"
+  ],
   "datasets": {
     "44b6_12dfb391": {
       "n_events": 1,
@@ -120,6 +205,7 @@
       "events": [
         {
           "dataset": "6bba_05db0fb1",
+          "specimen": "6bba",
           "parent_id": 25000381,
           "parent_t": 24,
           "parent_coord_zyx": [
@@ -138,10 +224,14 @@
           ],
           "sibling_um": [
             12.48847124601326
+          ],
+          "sibling_alignment": [
+            -0.9335973947923911
           ]
         },
         {
           "dataset": "6bba_05db0fb1",
+          "specimen": "6bba",
           "parent_id": 53001011,
           "parent_t": 52,
           "parent_coord_zyx": [
@@ -160,10 +250,14 @@
           ],
           "sibling_um": [
             8.52157189138248
+          ],
+          "sibling_alignment": [
+            -0.7682733253465359
           ]
         },
         {
           "dataset": "6bba_05db0fb1",
+          "specimen": "6bba",
           "parent_id": 63001217,
           "parent_t": 62,
           "parent_coord_zyx": [
@@ -182,16 +276,19 @@
           ],
           "sibling_um": [
             9.352577351992338
+          ],
+          "sibling_alignment": [
+            -0.9703194096991494
           ]
         }
-      ],
-      "source": "historical_inventory_not_used_for_lock"
+      ]
     },
     "6bba_c328f2fd": {
       "n_events": 2,
       "events": [
         {
           "dataset": "6bba_c328f2fd",
+          "specimen": "6bba",
           "parent_id": 67000304,
           "parent_t": 66,
           "parent_coord_zyx": [
@@ -210,10 +307,14 @@
           ],
           "sibling_um": [
             17.125256613040868
+          ],
+          "sibling_alignment": [
+            -0.8639722998712328
           ]
         },
         {
           "dataset": "6bba_c328f2fd",
+          "specimen": "6bba",
           "parent_id": 29000074,
           "parent_t": 28,
           "parent_coord_zyx": [
@@ -232,10 +333,12 @@
           ],
           "sibling_um": [
             14.921048733668153
+          ],
+          "sibling_alignment": [
+            0.19839094494009224
           ]
         }
-      ],
-      "source": "historical_inventory_not_used_for_lock"
+      ]
     },
     "44b6_0113de3b": {
       "n_events": 0,
@@ -319,6 +422,805 @@
     "44b6_3bb3690f": {
       "n_events": 0,
       "events": []
+    },
+    "44b6_40c45f5a": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_415c0a3a": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_53f95252": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_551a5dba": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_5740d24b": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_587a1e22": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_587a1e22",
+          "specimen": "44b6",
+          "parent_id": 21000000052,
+          "parent_t": 19,
+          "parent_coord_zyx": [
+            4.0,
+            123.0,
+            84.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            9.917826437783633,
+            6.2541392543258905
+          ],
+          "sibling_um": [
+            14.65318464745804
+          ],
+          "sibling_alignment": [
+            -0.6226135306347242
+          ]
+        }
+      ]
+    },
+    "44b6_5f15d135": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_5f15d135",
+          "specimen": "44b6",
+          "parent_id": 125000000011,
+          "parent_t": 36,
+          "parent_coord_zyx": [
+            44.0,
+            108.0,
+            138.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            5.525597394173774,
+            5.540511314400504
+          ],
+          "sibling_um": [
+            10.570309612896871
+          ],
+          "sibling_alignment": [
+            -0.8248008398745212
+          ]
+        }
+      ]
+    },
+    "44b6_668e0cc7": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_66f9292d": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_706092f0": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_706092f0",
+          "specimen": "44b6",
+          "parent_id": 446000000015,
+          "parent_t": 49,
+          "parent_coord_zyx": [
+            32.0,
+            129.0,
+            128.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            0.40625,
+            4.394265616971737
+          ],
+          "sibling_um": [
+            4.667457150312148
+          ],
+          "sibling_alignment": []
+        }
+      ]
+    },
+    "44b6_71a4179f": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_74d0c52e": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_74d0c52e",
+          "specimen": "44b6",
+          "parent_id": 296000000021,
+          "parent_t": 58,
+          "parent_coord_zyx": [
+            32.0,
+            137.0,
+            121.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            0.9084026158592896,
+            12.335558991184794
+          ],
+          "sibling_um": [
+            11.583469161373893
+          ],
+          "sibling_alignment": []
+        }
+      ]
+    },
+    "44b6_7a302da0": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_7a302da0",
+          "specimen": "44b6",
+          "parent_id": 263000000019,
+          "parent_t": 90,
+          "parent_coord_zyx": [
+            24.0,
+            24.0,
+            213.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            6.20113711850496,
+            3.832554834897995
+          ],
+          "sibling_um": [
+            9.766912415139188
+          ],
+          "sibling_alignment": [
+            -0.8888674561935771
+          ]
+        }
+      ]
+    },
+    "44b6_7e557709": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_808952d6": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_81c256f0": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_87bba6c4": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_8cc6506c": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_8f5ab931": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_8f9ecab4": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_90724892": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_949adeb1": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_95029e92": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_97725144": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_996155de": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_996155de",
+          "specimen": "44b6",
+          "parent_id": 438000000002,
+          "parent_t": 19,
+          "parent_coord_zyx": [
+            33.0,
+            182.0,
+            140.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.631962664465248,
+            4.5420130792964475
+          ],
+          "sibling_um": [
+            8.946728190377755
+          ],
+          "sibling_alignment": [
+            -0.9021342216356467
+          ]
+        }
+      ]
+    },
+    "44b6_9be80b04": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_9be80b04",
+          "specimen": "44b6",
+          "parent_id": 476000000008,
+          "parent_t": 77,
+          "parent_coord_zyx": [
+            32.0,
+            128.0,
+            142.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.0827619710803615,
+            4.908737426772795
+          ],
+          "sibling_um": [
+            8.375058302035873
+          ],
+          "sibling_alignment": [
+            -0.7329137878165659
+          ]
+        }
+      ]
+    },
+    "44b6_9bfa6a0a": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_a21120c2": {
+      "n_events": 2,
+      "events": [
+        {
+          "dataset": "44b6_a21120c2",
+          "specimen": "44b6",
+          "parent_id": 68000000011,
+          "parent_t": 52,
+          "parent_coord_zyx": [
+            34.0,
+            128.0,
+            137.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            2.9575446425202108,
+            4.182599744775969
+          ],
+          "sibling_um": [
+            6.613270867165506
+          ],
+          "sibling_alignment": [
+            -0.7071067811865476
+          ]
+        },
+        {
+          "dataset": "44b6_a21120c2",
+          "specimen": "44b6",
+          "parent_id": 76000000019,
+          "parent_t": 60,
+          "parent_coord_zyx": [
+            58.0,
+            240.0,
+            88.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.162823748671087,
+            6.749131888620936
+          ],
+          "sibling_um": [
+            9.020213845164648
+          ],
+          "sibling_alignment": [
+            -0.3289567758634459
+          ]
+        }
+      ]
+    },
+    "44b6_a2bb48bb": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_aaf8b0ea": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_aaf8b0ea",
+          "specimen": "44b6",
+          "parent_id": 390000000000,
+          "parent_t": 61,
+          "parent_coord_zyx": [
+            28.0,
+            130.0,
+            130.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            3.8540258983302125,
+            1.8168052317185792
+          ],
+          "sibling_um": [
+            2.8726212985703494
+          ],
+          "sibling_alignment": [
+            0.7071067811865475
+          ]
+        }
+      ]
+    },
+    "44b6_abf82518": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_b2c44266": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_c15fded2": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_c50204e0": {
+      "n_events": 2,
+      "events": [
+        {
+          "dataset": "44b6_c50204e0",
+          "specimen": "44b6",
+          "parent_id": 171000000043,
+          "parent_t": 28,
+          "parent_coord_zyx": [
+            25.0,
+            129.0,
+            71.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.0010984819796676,
+            5.87308811976289
+          ],
+          "sibling_um": [
+            9.834271229989541
+          ],
+          "sibling_alignment": [
+            -0.9832614795554266
+          ]
+        },
+        {
+          "dataset": "44b6_c50204e0",
+          "specimen": "44b6",
+          "parent_id": 208000000033,
+          "parent_t": 65,
+          "parent_coord_zyx": [
+            53.0,
+            150.0,
+            44.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.0010984819796676,
+            2.632800908728193
+          ],
+          "sibling_um": [
+            6.2541392543258905
+          ],
+          "sibling_alignment": [
+            -0.7676894417912759
+          ]
+        }
+      ]
+    },
+    "44b6_c771cb04": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_c8e2a523": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_c8e2a523",
+          "specimen": "44b6",
+          "parent_id": 128000000004,
+          "parent_t": 72,
+          "parent_coord_zyx": [
+            51.0,
+            128.0,
+            229.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            2.6012692214570947,
+            5.465534769123694
+          ],
+          "sibling_um": [
+            4.487177913232324
+          ],
+          "sibling_alignment": [
+            0.5804152150459985
+          ]
+        }
+      ]
+    },
+    "44b6_c96cfa10": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_cf2536e8": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_cf8fed6b": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_d29c9ab2": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_d2f34f90": {
+      "n_events": 2,
+      "events": [
+        {
+          "dataset": "44b6_d2f34f90",
+          "specimen": "44b6",
+          "parent_id": 275000000002,
+          "parent_t": 51,
+          "parent_coord_zyx": [
+            15.0,
+            156.0,
+            92.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            6.214430032191206,
+            2.368824207280903
+          ],
+          "sibling_um": [
+            8.482749038489821
+          ],
+          "sibling_alignment": [
+            -0.9417419115948376
+          ]
+        },
+        {
+          "dataset": "44b6_d2f34f90",
+          "specimen": "44b6",
+          "parent_id": 286000000004,
+          "parent_t": 62,
+          "parent_coord_zyx": [
+            26.0,
+            142.0,
+            125.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            1.8168052317185792,
+            6.147678042358757
+          ],
+          "sibling_um": [
+            7.187296192762616
+          ],
+          "sibling_alignment": [
+            -0.4728432996524333
+          ]
+        }
+      ]
+    },
+    "44b6_d5e7d891": {
+      "n_events": 2,
+      "events": [
+        {
+          "dataset": "44b6_d5e7d891",
+          "specimen": "44b6",
+          "parent_id": 173000000010,
+          "parent_t": 12,
+          "parent_coord_zyx": [
+            8.0,
+            132.0,
+            193.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            8.492471390149042,
+            2.2980970388562794
+          ],
+          "sibling_um": [
+            10.123697832931404
+          ],
+          "sibling_alignment": [
+            -0.6426845869171515
+          ]
+        },
+        {
+          "dataset": "44b6_d5e7d891",
+          "specimen": "44b6",
+          "parent_id": 208000000033,
+          "parent_t": 47,
+          "parent_coord_zyx": [
+            10.0,
+            99.0,
+            242.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.0010984819796676,
+            2.632800908728193
+          ],
+          "sibling_um": [
+            6.2541392543258905
+          ],
+          "sibling_alignment": [
+            -0.7676894417912759
+          ]
+        }
+      ]
+    },
+    "44b6_d754aa59": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_d754aa59",
+          "specimen": "44b6",
+          "parent_id": 69000000054,
+          "parent_t": 63,
+          "parent_coord_zyx": [
+            32.0,
+            229.0,
+            109.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            6.319766856854769,
+            5.816614806956019
+          ],
+          "sibling_um": [
+            12.112791856648904
+          ],
+          "sibling_alignment": [
+            -0.9922192766343604
+          ]
+        }
+      ]
+    },
+    "44b6_d78e09d9": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_db3c847b": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_ddf577ad": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_deabac95": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_deabac95",
+          "specimen": "44b6",
+          "parent_id": 120000000018,
+          "parent_t": 28,
+          "parent_coord_zyx": [
+            28.0,
+            126.0,
+            198.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            6.345827861674157,
+            6.761347521944128
+          ],
+          "sibling_um": [
+            12.140011647955697
+          ],
+          "sibling_alignment": [
+            -0.7154481195153541
+          ]
+        }
+      ]
+    },
+    "44b6_e28840c6": {
+      "n_events": 2,
+      "events": [
+        {
+          "dataset": "44b6_e28840c6",
+          "specimen": "44b6",
+          "parent_id": 381000000009,
+          "parent_t": 23,
+          "parent_coord_zyx": [
+            49.0,
+            109.0,
+            169.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            4.596194077712559,
+            2.8726212985703494
+          ],
+          "sibling_um": [
+            7.289895618251334
+          ],
+          "sibling_alignment": [
+            -0.9
+          ]
+        },
+        {
+          "dataset": "44b6_e28840c6",
+          "specimen": "44b6",
+          "parent_id": 419000000009,
+          "parent_t": 61,
+          "parent_coord_zyx": [
+            31.0,
+            139.0,
+            128.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            1.625,
+            6.214430032191206
+          ],
+          "sibling_um": [
+            7.198768340834423
+          ],
+          "sibling_alignment": [
+            -0.5229763603684908
+          ]
+        }
+      ]
+    },
+    "44b6_e29f0176": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_e31261b4": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_e35b117d": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_e57ff5c6": {
+      "n_events": 0,
+      "events": []
+    },
+    "44b6_eb2880fc": {
+      "n_events": 1,
+      "events": [
+        {
+          "dataset": "44b6_eb2880fc",
+          "specimen": "44b6",
+          "parent_id": 160000000048,
+          "parent_t": 72,
+          "parent_coord_zyx": [
+            13.0,
+            148.0,
+            163.0
+          ],
+          "n_children": 2,
+          "dt": [
+            1,
+            1
+          ],
+          "parent_child_um": [
+            0.5745242597140698,
+            9.699085813879574
+          ],
+          "sibling_um": [
+            10.017172754824587
+          ],
+          "sibling_alignment": []
+        }
+      ]
+    },
+    "44b6_f28707c6": {
+      "n_events": 0,
+      "events": []
     }
   },
   "all_five": {
@@ -356,19 +1258,18 @@
       "max": 1.0
     },
     "sibling_alignment": {
-      "n": 2,
-      "min": -0.9397934234884371,
-      "p10": -0.9114873773435552,
-      "p25": -0.8690283081262324,
-      "median": -0.7982631927640278,
-      "p75": -0.7274980774018232,
-      "p90": -0.6850390081845004,
-      "max": -0.6567329620396185
+      "n": 7,
+      "min": -0.9703194096991494,
+      "p10": -0.952003817972722,
+      "p25": -0.936695409140414,
+      "median": -0.8639722998712328,
+      "p75": -0.7125031436930772,
+      "p90": -0.3146833992477339,
+      "max": 0.19839094494009224
     },
     "suggested_max_parent_child_um": 11.764538951846209,
     "suggested_min_child_separation_um": 8.682096535530244,
-    "suggested_max_sibling_alignment": 0.05,
-    "note": "Inventory only. Includes held-out 6bba events. Not used to lock division_v2."
+    "suggested_max_sibling_alignment": 0.19839094494009224
   },
   "tuning_three": {
     "label": "tuning_44b6_division_geffs",
@@ -420,30 +1321,30 @@
   },
   "tuning_specimen_summary": {
     "label": "tuning_44b6_specimen_geffs",
-    "n_events": 4,
-    "n_datasets": 4,
+    "n_events": 26,
+    "n_datasets": 21,
     "parent_child_um": {
-      "n": 8,
-      "min": 0.5745242597140698,
-      "p10": 3.3517664334217345,
-      "p25": 4.701779023871498,
-      "median": 5.200298697086887,
-      "p75": 7.106444253691848,
-      "p90": 7.514327971327917,
-      "max": 8.384905522723557
+      "n": 52,
+      "min": 0.40625,
+      "p10": 1.8168052317185792,
+      "p25": 2.9363138065327457,
+      "median": 4.614078371088903,
+      "p75": 6.214430032191206,
+      "p90": 7.136586099410442,
+      "max": 12.335558991184794
     },
     "sibling_um": {
-      "n": 4,
-      "min": 8.75089281159357,
-      "p10": 8.970825491035631,
-      "p25": 9.300724510198727,
-      "median": 10.494420539051738,
-      "p75": 11.533388023136277,
-      "p90": 11.584775661716117,
-      "max": 11.619034087436011
+      "n": 26,
+      "min": 2.8726212985703494,
+      "p10": 5.460798202319019,
+      "p25": 7.190164229780568,
+      "median": 8.983471017771201,
+      "p75": 10.458656667905505,
+      "p90": 11.865912972042459,
+      "max": 14.65318464745804
     },
     "dt_frames": {
-      "n": 8,
+      "n": 52,
       "min": 1.0,
       "p10": 1.0,
       "p25": 1.0,
@@ -453,25 +1354,421 @@
       "max": 1.0
     },
     "sibling_alignment": {
-      "n": 3,
-      "min": -0.976937954524386,
-      "p10": -0.9695090483171962,
-      "p25": -0.9583656890064116,
-      "median": -0.9397934234884371,
-      "p75": -0.7982631927640278,
-      "p90": -0.7133450543293822,
-      "max": -0.6567329620396185
+      "n": 22,
+      "min": -0.9922192766343604,
+      "p10": -0.9734183502314312,
+      "p25": -0.9016006662267351,
+      "median": -0.7503016148039209,
+      "p75": -0.6276312947053311,
+      "p90": -0.3433454282423443,
+      "max": 0.7071067811865475
     },
-    "suggested_max_parent_child_um": 7.514327971327917,
-    "suggested_min_child_separation_um": 8.970825491035631,
+    "suggested_max_parent_child_um": 7.136586099410442,
+    "suggested_min_child_separation_um": 5.460798202319019,
+    "suggested_max_sibling_alignment": 0.25
+  },
+  "typical_tuning_summary": {
+    "label": "typical_44b6_specimen_geffs",
+    "n_events": 14,
+    "n_datasets": 14,
+    "parent_child_um": {
+      "n": 28,
+      "min": 2.2980970388562794,
+      "p10": 3.9505353878551657,
+      "p25": 4.5420130792964475,
+      "median": 5.533054354287139,
+      "p75": 6.326282108059615,
+      "p90": 7.108762857208663,
+      "max": 9.917826437783633
+    },
+    "sibling_um": {
+      "n": 14,
+      "min": 8.375058302035873,
+      "p10": 8.621942784056202,
+      "p25": 9.136160819640263,
+      "median": 9.978984531460473,
+      "p75": 11.5904853993361,
+      "p90": 12.13184571056366,
+      "max": 14.65318464745804
+    },
+    "dt_frames": {
+      "n": 28,
+      "min": 1.0,
+      "p10": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "p75": 1.0,
+      "p90": 1.0,
+      "max": 1.0
+    },
+    "sibling_alignment": {
+      "n": 14,
+      "min": -0.9922192766343604,
+      "p10": -0.9813644220461144,
+      "p25": -0.9412547895682375,
+      "median": -0.8568341480340491,
+      "p75": -0.6714117514085525,
+      "p90": -0.6286348475194524,
+      "max": -0.3289567758634459
+    },
+    "suggested_max_parent_child_um": 7.108762857208663,
+    "suggested_min_child_separation_um": 8.621942784056202,
     "suggested_max_sibling_alignment": 0.05
   },
+  "atypical_tuning_events": [
+    {
+      "dataset": "44b6_2a2eff9f",
+      "specimen": "44b6",
+      "parent_id": 160000000048,
+      "parent_t": 11,
+      "parent_coord_zyx": [
+        63.0,
+        151.0,
+        61.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        0.5745242597140698,
+        8.384905522723557
+      ],
+      "sibling_um": [
+        8.75089281159357
+      ],
+      "sibling_alignment": [],
+      "atypical_reasons": [
+        "near_coincident_daughter",
+        "alignment_undefined"
+      ]
+    },
+    {
+      "dataset": "44b6_706092f0",
+      "specimen": "44b6",
+      "parent_id": 446000000015,
+      "parent_t": 49,
+      "parent_coord_zyx": [
+        32.0,
+        129.0,
+        128.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        0.40625,
+        4.394265616971737
+      ],
+      "sibling_um": [
+        4.667457150312148
+      ],
+      "sibling_alignment": [],
+      "atypical_reasons": [
+        "near_coincident_daughter",
+        "close_twin",
+        "alignment_undefined"
+      ]
+    },
+    {
+      "dataset": "44b6_74d0c52e",
+      "specimen": "44b6",
+      "parent_id": 296000000021,
+      "parent_t": 58,
+      "parent_coord_zyx": [
+        32.0,
+        137.0,
+        121.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        0.9084026158592896,
+        12.335558991184794
+      ],
+      "sibling_um": [
+        11.583469161373893
+      ],
+      "sibling_alignment": [],
+      "atypical_reasons": [
+        "near_coincident_daughter",
+        "parent_child_above_cap",
+        "alignment_undefined"
+      ]
+    },
+    {
+      "dataset": "44b6_a21120c2",
+      "specimen": "44b6",
+      "parent_id": 68000000011,
+      "parent_t": 52,
+      "parent_coord_zyx": [
+        34.0,
+        128.0,
+        137.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        2.9575446425202108,
+        4.182599744775969
+      ],
+      "sibling_um": [
+        6.613270867165506
+      ],
+      "sibling_alignment": [
+        -0.7071067811865476
+      ],
+      "atypical_reasons": [
+        "close_twin"
+      ]
+    },
+    {
+      "dataset": "44b6_aaf8b0ea",
+      "specimen": "44b6",
+      "parent_id": 390000000000,
+      "parent_t": 61,
+      "parent_coord_zyx": [
+        28.0,
+        130.0,
+        130.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        3.8540258983302125,
+        1.8168052317185792
+      ],
+      "sibling_um": [
+        2.8726212985703494
+      ],
+      "sibling_alignment": [
+        0.7071067811865475
+      ],
+      "atypical_reasons": [
+        "close_twin",
+        "same_direction"
+      ]
+    },
+    {
+      "dataset": "44b6_c50204e0",
+      "specimen": "44b6",
+      "parent_id": 208000000033,
+      "parent_t": 65,
+      "parent_coord_zyx": [
+        53.0,
+        150.0,
+        44.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        4.0010984819796676,
+        2.632800908728193
+      ],
+      "sibling_um": [
+        6.2541392543258905
+      ],
+      "sibling_alignment": [
+        -0.7676894417912759
+      ],
+      "atypical_reasons": [
+        "close_twin"
+      ]
+    },
+    {
+      "dataset": "44b6_c8e2a523",
+      "specimen": "44b6",
+      "parent_id": 128000000004,
+      "parent_t": 72,
+      "parent_coord_zyx": [
+        51.0,
+        128.0,
+        229.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        2.6012692214570947,
+        5.465534769123694
+      ],
+      "sibling_um": [
+        4.487177913232324
+      ],
+      "sibling_alignment": [
+        0.5804152150459985
+      ],
+      "atypical_reasons": [
+        "close_twin",
+        "same_direction"
+      ]
+    },
+    {
+      "dataset": "44b6_d2f34f90",
+      "specimen": "44b6",
+      "parent_id": 286000000004,
+      "parent_t": 62,
+      "parent_coord_zyx": [
+        26.0,
+        142.0,
+        125.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        1.8168052317185792,
+        6.147678042358757
+      ],
+      "sibling_um": [
+        7.187296192762616
+      ],
+      "sibling_alignment": [
+        -0.4728432996524333
+      ],
+      "atypical_reasons": [
+        "close_twin"
+      ]
+    },
+    {
+      "dataset": "44b6_d5e7d891",
+      "specimen": "44b6",
+      "parent_id": 208000000033,
+      "parent_t": 47,
+      "parent_coord_zyx": [
+        10.0,
+        99.0,
+        242.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        4.0010984819796676,
+        2.632800908728193
+      ],
+      "sibling_um": [
+        6.2541392543258905
+      ],
+      "sibling_alignment": [
+        -0.7676894417912759
+      ],
+      "atypical_reasons": [
+        "close_twin"
+      ]
+    },
+    {
+      "dataset": "44b6_e28840c6",
+      "specimen": "44b6",
+      "parent_id": 381000000009,
+      "parent_t": 23,
+      "parent_coord_zyx": [
+        49.0,
+        109.0,
+        169.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        4.596194077712559,
+        2.8726212985703494
+      ],
+      "sibling_um": [
+        7.289895618251334
+      ],
+      "sibling_alignment": [
+        -0.9
+      ],
+      "atypical_reasons": [
+        "close_twin"
+      ]
+    },
+    {
+      "dataset": "44b6_e28840c6",
+      "specimen": "44b6",
+      "parent_id": 419000000009,
+      "parent_t": 61,
+      "parent_coord_zyx": [
+        31.0,
+        139.0,
+        128.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        1.625,
+        6.214430032191206
+      ],
+      "sibling_um": [
+        7.198768340834423
+      ],
+      "sibling_alignment": [
+        -0.5229763603684908
+      ],
+      "atypical_reasons": [
+        "close_twin"
+      ]
+    },
+    {
+      "dataset": "44b6_eb2880fc",
+      "specimen": "44b6",
+      "parent_id": 160000000048,
+      "parent_t": 72,
+      "parent_coord_zyx": [
+        13.0,
+        148.0,
+        163.0
+      ],
+      "n_children": 2,
+      "dt": [
+        1,
+        1
+      ],
+      "parent_child_um": [
+        0.5745242597140698,
+        9.699085813879574
+      ],
+      "sibling_um": [
+        10.017172754824587
+      ],
+      "sibling_alignment": [],
+      "atypical_reasons": [
+        "near_coincident_daughter",
+        "alignment_undefined"
+      ]
+    }
+  ],
   "locked_operating_point": {
     "source": "tuning_44b6_specimen_geffs",
-    "n_events": 4,
-    "n_datasets": 4,
-    "max_parent_child_um": 8.5,
-    "min_child_separation_um": 8.7,
+    "max_parent_child_um": 10.0,
+    "min_child_separation_um": 8.3,
     "min_parent_child_um": 0.0,
     "max_sibling_alignment": 0.05,
     "require_parent_predecessor": true,
@@ -479,6 +1776,31 @@
     "alternative_parent_gate_um": 12.0,
     "intensity_sum_tolerance": 0.45,
     "max_children": 2,
-    "note": "Locked from tuning-specimen (44b6) GEFF geometry only. parent_child max=8.384905522723557 p90=7.514327971327917 sibling min=8.75089281159357 p10=8.970825491035631 alignment_max=-0.6567329620396185. Validation 6bba events were not used."
+    "n_typical_events": 14,
+    "n_typical_datasets": 14,
+    "typical_parent_child_max_um": 9.917826437783633,
+    "typical_sibling_min_um": 8.375058302035873,
+    "action": "retain",
+    "update_reasons": [],
+    "note": "Locked from typical tuning-specimen (44b6) GEFF geometry only. Atypical forks (close twins, near-coincident daughters, parent\u2013child above 10.0 \u00b5m) were inventoried and not used to pull min_child_separation_um to the 8.0 unfiltered floor or to raise max_sibling_alignment. Validation 6bba events were not used.",
+    "n_events": 14,
+    "n_datasets": 14
+  },
+  "unfiltered_lock_rejected": {
+    "source": "tuning_44b6_specimen_geffs",
+    "n_events": 26,
+    "n_datasets": 21,
+    "max_parent_child_um": 10.0,
+    "min_child_separation_um": 8.0,
+    "min_parent_child_um": 0.0,
+    "max_sibling_alignment": 0.25,
+    "require_parent_predecessor": true,
+    "require_no_alternative_parent": true,
+    "alternative_parent_gate_um": 12.0,
+    "intensity_sum_tolerance": 0.45,
+    "max_children": 2,
+    "note": "Locked from tuning-specimen (44b6) GEFF geometry only. parent_child max=12.335558991184794 p90=7.136586099410442 sibling min=2.8726212985703494 p10=5.460798202319019 alignment_max=0.7071067811865475. Validation 6bba events were not used.",
+    "do_not_use": true,
+    "reason": "Unfiltered lock_operating_point on every 44b6 fork, including close twins. Kept for audit only. division_v2 uses locked_operating_point from typical forks."
   }
 }

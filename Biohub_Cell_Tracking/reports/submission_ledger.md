@@ -42,6 +42,13 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Still missing:** `6bba_c328f2fd` is not in public test, so the worker CSV cannot complete the frozen split.
 - **Kaggle public / private scores:** not returned.
 
+## geff_export_kernel_v1
+
+- **Status:** private helper kernel `mahdimzafari/biohub-geff-export` version **1** **COMPLETE**. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Purpose:** zip train `44b6` GEFFs plus two frozen-holdout GEFFs after per-file downloads 429'd.
+- **Output:** 73 GEFF stores, 1533 files, no image volumes. Zip kept under ignored `artifacts/kaggle/`.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
 ## association_v2_local / division_v1_local
 
 Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.

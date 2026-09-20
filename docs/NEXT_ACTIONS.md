@@ -5,10 +5,10 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 ## Now
 
 1. Keep draft PR #2 (`cursor/kaggle-baseline-association-0b83`) open. Do not merge. Do not overwrite locked `association_v2`.
-2. Continue the **division_v2** draft PR on `cursor/competition-operational-strategy-3381`. Do not relaunch rejected `division_v1`.
-3. Finish remaining train `44b6` GEFF downloads (71 total; 17 complete when the lock was written) and regenerate `docs/division_priors.json`. If new tuning events fall outside the locked gates, update `division_v2.yaml` **before** the first frozen-validation official score.
-4. Download only the two frozen-validation volumes (`6bba_05db0fb1`, `6bba_c328f2fd`; ≈1.0 GB) and official-score `association_v2` vs `division_v2` once. Reject `division_v2` on any combined-score regression or extra false forks. Do not retune after seeing holdout.
-5. Do **not** submit association_v2 or division_v2 from the CLI.
+2. Continue the **division_v2** draft PR #4 on `cursor/competition-operational-strategy-3381`. Do not relaunch rejected `division_v1`. Gates are locked from all 71 `44b6` GEFFs: 10.0 / 8.3 / 0.05. Do not retune after holdout.
+3. Download only the two frozen-validation **Zarr** volumes (`6bba_05db0fb1`, `6bba_c328f2fd`; ≈1.0 GB) and official-score `association_v2` vs `division_v2` once. Reject `division_v2` on any combined-score regression or extra false forks.
+   - Per-file Kaggle downloads 429 at ~90 s/file. Prefer a private internet-off helper kernel that zips **only those two Zarrs** (same path as `mahdimzafari/biohub-geff-export` v1). Do not copy other volumes. Do not submit.
+4. Do **not** submit association_v2 or division_v2 from the CLI.
 
 ## HUMAN_ACTION_REQUIRED
 

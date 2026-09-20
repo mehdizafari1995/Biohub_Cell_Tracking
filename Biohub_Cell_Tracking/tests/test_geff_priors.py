@@ -123,6 +123,11 @@ def test_typical_fork_excludes_close_twin_and_near_coincident():
 
 
 def test_retain_or_update_lock_widens_parent_child_only():
+    previous = {
+        **CURRENT_LOCKED_OPERATING_POINT,
+        "max_parent_child_um": 8.5,
+        "min_child_separation_um": 8.7,
+    }
     typical_wide = {
         "dataset": "44b6_587a1e22",
         "n_children": 2,
@@ -139,19 +144,30 @@ def test_retain_or_update_lock_widens_parent_child_only():
         "sibling_um": [4.67],
         "sibling_alignment": [-0.9],
     }
-    updated = retain_or_update_lock(CURRENT_LOCKED_OPERATING_POINT, [typical_wide])
+    updated = retain_or_update_lock(previous, [typical_wide])
     assert updated["action"] == "update_typical"
     assert updated["max_parent_child_um"] == 10.0
     assert updated["min_child_separation_um"] == 8.7
     assert updated["max_sibling_alignment"] == 0.05
-    retained = retain_or_update_lock(CURRENT_LOCKED_OPERATING_POINT, [])
+    retained = retain_or_update_lock(previous, [])
     assert retained["action"] == "retain"
     assert retained["max_parent_child_um"] == 8.5
     unfiltered = lock_operating_point(
         summarise_priors([typical_wide, close], "unfiltered")
     )
     assert unfiltered["min_child_separation_um"] == 8.0
-    assert retain_or_update_lock(CURRENT_LOCKED_OPERATING_POINT, [typical_wide])["min_child_separation_um"] == 8.7
+    typical_tight_sib = {
+        "dataset": "44b6_sib",
+        "n_children": 2,
+        "dt": [1, 1],
+        "parent_child_um": [4.8, 5.1],
+        "sibling_um": [8.375],
+        "sibling_alignment": [-0.8],
+    }
+    sib_update = retain_or_update_lock(previous, [typical_tight_sib])
+    assert sib_update["min_child_separation_um"] == 8.3
+    assert sib_update["min_child_separation_um"] >= 8.2
+    assert sib_update["max_sibling_alignment"] == 0.05
 
 
 def test_apply_operating_point_keeps_yaml_comments(tmp_path: Path):
@@ -191,8 +207,8 @@ def test_inventory_geff_names_and_required_files(tmp_path: Path):
 def test_collect_uses_typical_lock_not_unfiltered(tmp_path: Path):
     payload = collect_geff_division_priors(tmp_path)
     lock = payload["locked_operating_point"]
-    assert lock["max_parent_child_um"] == 8.5
-    assert lock["min_child_separation_um"] == 8.7
+    assert lock["max_parent_child_um"] == CURRENT_LOCKED_OPERATING_POINT["max_parent_child_um"]
+    assert lock["min_child_separation_um"] == CURRENT_LOCKED_OPERATING_POINT["min_child_separation_um"]
     assert lock["action"] == "retain"
     assert payload["n_typical_events"] == 0
     assert payload["unfiltered_lock_rejected"]["do_not_use"] is True

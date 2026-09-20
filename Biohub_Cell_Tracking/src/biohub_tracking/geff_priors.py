@@ -77,8 +77,8 @@ OPTIONAL_GEFF_METADATA_FILES = (
 # min_child_separation_um or raise max_sibling_alignment.
 CURRENT_LOCKED_OPERATING_POINT = {
     "source": "tuning_44b6_specimen_geffs",
-    "max_parent_child_um": 8.5,
-    "min_child_separation_um": 8.7,
+    "max_parent_child_um": 10.0,
+    "min_child_separation_um": 8.3,
     "min_parent_child_um": 0.0,
     "max_sibling_alignment": 0.05,
     "require_parent_predecessor": True,
@@ -92,6 +92,9 @@ TYPICAL_MIN_DISPLACEMENT_UM = 1.0
 TYPICAL_MIN_SIBLING_UM = 8.0
 TYPICAL_MAX_PARENT_CHILD_UM = 10.0
 TYPICAL_MAX_ALIGNMENT = 0.05
+# Floor when covering a typical sibling that sits below the previous 8.7 lock.
+# Close twins (~4.7 µm) stay atypical and must not pull this down to 8.0.
+TYPICAL_MIN_SEP_FLOOR_UM = 8.2
 
 
 def all_geff_files() -> tuple[str, ...]:
@@ -307,8 +310,10 @@ def retain_or_update_lock(
 ) -> dict:
     """Keep the locked gates unless a typical 44b6 event needs a wider parent–child.
 
-    Never lower ``min_child_separation_um`` (close twins are atypical).
-    Never raise ``max_sibling_alignment``. Cap ``max_parent_child_um`` at 10.0.
+    Never lower ``min_child_separation_um`` for close twins (those are atypical).
+    A typical sibling below the previous 8.7 lock may lower the gate down to
+    ``TYPICAL_MIN_SEP_FLOOR_UM`` (8.2). Never raise ``max_sibling_alignment``.
+    Cap ``max_parent_child_um`` at 10.0.
     """
     locked = dict(current or CURRENT_LOCKED_OPERATING_POINT)
     for key, value in CURRENT_LOCKED_OPERATING_POINT.items():
@@ -316,8 +321,10 @@ def retain_or_update_lock(
     action = "retain"
     reasons: list[str] = []
     pc_max = None
+    sib_min = None
     if typical_events:
         pc_max = max(float(d) for event in typical_events for d in event.get("parent_child_um") or [0.0])
+        sib_min = min(float(d) for event in typical_events for d in event.get("sibling_um") or [1e9])
         current_pc = float(locked["max_parent_child_um"])
         if pc_max > current_pc:
             new_pc = float(min(round(pc_max + 0.1, 1), TYPICAL_MAX_PARENT_CHILD_UM))
@@ -328,21 +335,31 @@ def retain_or_update_lock(
                     f"typical parent_child max {pc_max:.3f} µm exceeds locked {current_pc}; "
                     f"widen to {new_pc} (cap {TYPICAL_MAX_PARENT_CHILD_UM})"
                 )
-    locked["min_child_separation_um"] = float(CURRENT_LOCKED_OPERATING_POINT["min_child_separation_um"])
+        current_sep = float(locked["min_child_separation_um"])
+        if sib_min < current_sep:
+            new_sep = float(max(round(sib_min - 0.1, 1), TYPICAL_MIN_SEP_FLOOR_UM))
+            if new_sep < current_sep:
+                locked["min_child_separation_um"] = new_sep
+                action = "update_typical"
+                reasons.append(
+                    f"typical sibling min {sib_min:.3f} µm is below locked {current_sep}; "
+                    f"lower to {new_sep} (floor {TYPICAL_MIN_SEP_FLOOR_UM})"
+                )
     locked["max_sibling_alignment"] = float(CURRENT_LOCKED_OPERATING_POINT["max_sibling_alignment"])
     locked["require_parent_predecessor"] = True
     locked["require_no_alternative_parent"] = True
     locked["n_typical_events"] = len(typical_events)
     locked["n_typical_datasets"] = len({e.get("dataset") for e in typical_events})
     locked["typical_parent_child_max_um"] = pc_max
+    locked["typical_sibling_min_um"] = sib_min
     locked["action"] = action
     locked["update_reasons"] = reasons
     locked["note"] = (
         "Locked from typical tuning-specimen (44b6) GEFF geometry only. "
         "Atypical forks (close twins, near-coincident daughters, parent–child "
         f"above {TYPICAL_MAX_PARENT_CHILD_UM} µm) were inventoried and not used "
-        "to relax min_child_separation_um or max_sibling_alignment. "
-        "Validation 6bba events were not used."
+        "to pull min_child_separation_um to the 8.0 unfiltered floor or to raise "
+        "max_sibling_alignment. Validation 6bba events were not used."
     )
     return locked
 
