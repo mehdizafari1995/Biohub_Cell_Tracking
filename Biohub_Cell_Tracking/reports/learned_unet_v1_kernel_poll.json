@@ -69,5 +69,22 @@
   "is_kaggle_run": true,
   "is_competition_submission": false,
   "is_leaderboard_score": false,
-  "notes": "Private GPU helper poll. Not a competition submission. Weights stay under ignored artifacts/kaggle/. Not a leaderboard score."
+  "reconfirmed_utc": "2026-09-20T23:52:33Z",
+  "reconfirmed_code_version": "ec3bede",
+  "reconfirmed_decision": "status_only",
+  "reconfirmed_kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "reconfirmed_downloaded": false,
+  "notes": "Private GPU helper poll. Not a competition submission. Weights stay under ignored artifacts/kaggle/. Not a leaderboard score. 2026-09-20T23:52:33Z status-only reconfirm: still complete / trained; five outputs unchanged (splits, config, manifest, best/last weights). Did not re-download or overwrite the completed helper."
 }

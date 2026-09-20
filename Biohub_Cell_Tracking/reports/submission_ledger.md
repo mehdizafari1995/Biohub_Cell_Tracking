@@ -100,6 +100,7 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Version 1:** error after writing a 44b6-only split (69 train / 2 frozen-tuning internal val, no 6bba). GPU T4 x2 and torch 2.10+cu128 were present.
 - **Version 2:** `train_error` `ValueError: unsupported zarr codec 'zstd'` on train volumes. Split unchanged.
 - **Version 3:** **COMPLETE / trained**. Collector downloaded into ignored `artifacts/kaggle/learned_unet_v1`. 3 epochs, 6117 windows, best train loss 0.3604, 2.08M params, 11732 s, peak 1793 MB, T4 x2, torch 2.10+cu128. Split 69/2 `44b6` only. Hash `4c38035d6657f2ad`. No `submission.csv`. Weights stay out of git. Not a leaderboard score.
+- **2026-09-20T23:52:33Z status-only reconfirm:** still **COMPLETE / trained**. Five outputs unchanged (`dataset_splits.json`, `learned_unet_v1_config.json`, `train_manifest.json`, best/last weights). Did not re-download. Did not push a replacement. Not a submission.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
 ## learned_unet_infer_v1_kernel

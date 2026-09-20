@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (rejected learned_unet_motion_v1 after official 44b6 scoring). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (reconfirmed learned_unet_v1 train helper v3 COMPLETE; motion_v1 already rejected on 44b6). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
