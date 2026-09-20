@@ -1,0 +1,35 @@
+# learned_unet_division_v1 — conservative division overlay on locked
+# learned_unet graphs. Gates are locked division_v2 values from 44b6 GEFF
+# geometry (hash 0fa756963e5d42d1). Detection / linking stay at
+# learned_unet_infer_v1 (d7578b5f64ddac08) / holdout (d374a21f03dddc04).
+# Do not retune. Do not overwrite locked train/infer/holdout/test slugs.
+# Learned graphs have no intensity; intensity_sum_tolerance is unused.
+# Not a competition submission.
+
+label: learned_unet_division_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+holdout_label: learned_unet_holdout_v1
+division_label: division_v2
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+holdout_config_hash: d374a21f03dddc04
+division_config_hash: 0fa756963e5d42d1
+source_graphs: locked_learned_unet_graphs
+retunes_detection: false
+retunes_division_gates: false
+uses_intensity: false
+allow_divisions: true
+max_parent_child_um: 10.0
+min_parent_child_um: 0.0
+min_child_separation_um: 8.3
+max_sibling_alignment: 0.05
+require_parent_predecessor: true
+require_no_alternative_parent: true
+alternative_parent_gate_um: 12.0
+min_displacement_um: 1.0
+max_children: 2
+intensity_sum_tolerance: 0.45
+gate_um: 12.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false

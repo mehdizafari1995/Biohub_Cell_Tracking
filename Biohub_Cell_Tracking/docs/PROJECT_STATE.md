@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (learned_unet_test_v1 v1 COMPLETE on public test; 306.5 s; audit_ok). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (learned_unet_division_v1 rejected on 44b6; 0.655235 vs 0.655751). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -10,7 +10,7 @@ Last updated: 2026-09-20 (learned_unet_test_v1 v1 COMPLETE on public test; 306.5
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
-- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). Training v3 COMPLETE / `trained`. Infer v3 COMPLETE / `inferred` (44b6 tune 0.655751). Holdout v1 COMPLETE / `inferred`. Official frozen `6bba` **0.693605 vs association_v2 0.591570** (`keep_candidate_learned_unet_holdout_v1`). Test-time slug `mahdimzafari/biohub-learned-unet-test-v1` v1 **COMPLETE / inferred** on public `test/` (306.5 s, 1184 MB, `audit_ok`, hash `7a8725b818fc609b`). Do not retune. Do not score 6bba again. Do not overwrite train/infer/holdout/test slugs.
+- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). Training v3 COMPLETE / `trained`. Infer v3 COMPLETE / `inferred` (44b6 tune 0.655751). Holdout v1 COMPLETE / `inferred`. Official frozen `6bba` **0.693605 vs association_v2 0.591570** (`keep_candidate_learned_unet_holdout_v1`). Test-time slug `mahdimzafari/biohub-learned-unet-test-v1` v1 **COMPLETE / inferred** on public `test/` (306.5 s, 1184 MB, `audit_ok`, hash `7a8725b818fc609b`). `learned_unet_division_v1` overlay **rejected** on 44b6 (**0.655235 vs 0.655751**, 0/1/2, 282 extra edges). Frozen `6bba` was not scored for that overlay. Do not retune. Do not score 6bba again. Do not overwrite train/infer/holdout/test slugs.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
@@ -30,6 +30,7 @@ Last updated: 2026-09-20 (learned_unet_test_v1 v1 COMPLETE on public test; 306.5
 
 - `configs/complementary_v1.yaml`: locked baseline_v1 primary DoG + complementary local-max (6.0 µm isolation, 0.45 intensity ratio) + locked association_v2 linker. Hash `2c4866928d7262b6`. Tuning 0.633135 vs association_v2 0.632460; holdout **0.591384 vs 0.591570**. Status `rejected_on_holdout`. See `docs/complementary_priors.json`.
 - `configs/linkable_v1.yaml`: complementary_v1 spatial gates plus temporal link filter (primary neighbor within 12 µm at t±1). Hash `fa975421edb6136e`. Tuning 0.633168 vs association_v2 0.632460; holdout **0.591458 vs 0.591570**. Status `rejected_on_holdout`. See `docs/linkable_priors.json`.
+- `configs/learned_unet_division_v1.yaml`: locked `division_v2` gates on locked learned infer graphs. Hash `8761fb66cc2254f3`. Tuning **0.655235 vs learned_unet_infer_v1 0.655751**. Status `rejected_on_tuning`. Frozen `6bba` not scored. See `reports/learned_unet_division_v1.md`.
 
 ## Current scoring candidate
 
@@ -51,7 +52,7 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 
 Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336**. That is not a leaderboard score. `6bba_c328f2fd` is not in public test.
 
-See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/linkable_v1.md`, `reports/learned_unet_v1.md`, `reports/learned_unet_infer_v1.md`, `reports/learned_unet_holdout_v1.md`, `docs/learned_detection_estimate.md`, and `experiments/registry.csv`.
+See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/linkable_v1.md`, `reports/learned_unet_v1.md`, `reports/learned_unet_infer_v1.md`, `reports/learned_unet_holdout_v1.md`, `reports/learned_unet_division_v1.md`, `docs/learned_detection_estimate.md`, and `experiments/registry.csv`.
 
 ## Kaggle
 
@@ -69,11 +70,11 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 
 ## Complete validation harness
 
-`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Learned training is `notebooks/kaggle_learned_unet_v1.py` (44b6-only; holdout refused). Learned 44b6 inference is `notebooks/kaggle_learned_unet_infer_v1.py`. One-shot holdout inference is `notebooks/kaggle_learned_unet_holdout_v1.py` and `scripts/run_learned_unet_holdout.py` (6bba only; 44b6 refused; refuses a second score). Test-time inference is `notebooks/kaggle_learned_unet_test_v1.py` (discovers `test/*.zarr`; writes `submission.csv`). COMPLETE handoff is `scripts/collect_learned_unet_v1.py`, `scripts/collect_learned_unet_infer_v1.py`, `scripts/collect_learned_unet_holdout_v1.py`, and `scripts/collect_learned_unet_test_v1.py`.
+`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Learned training is `notebooks/kaggle_learned_unet_v1.py` (44b6-only; holdout refused). Learned 44b6 inference is `notebooks/kaggle_learned_unet_infer_v1.py`. One-shot holdout inference is `notebooks/kaggle_learned_unet_holdout_v1.py` and `scripts/run_learned_unet_holdout.py` (6bba only; 44b6 refused; refuses a second score). Test-time inference is `notebooks/kaggle_learned_unet_test_v1.py` (discovers `test/*.zarr`; writes `submission.csv`). Conservative overlay scoring is `scripts/run_learned_unet_division.py` (44b6 first; holdout refused unless tuning keeps). COMPLETE handoff is `scripts/collect_learned_unet_v1.py`, `scripts/collect_learned_unet_infer_v1.py`, `scripts/collect_learned_unet_holdout_v1.py`, and `scripts/collect_learned_unet_test_v1.py`.
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest tests/test_learned_unet_v1.py tests/test_learned_unet_infer_v1.py tests/test_learned_unet_holdout_v1.py tests/test_learned_unet_test_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` — 35 passed (2026-09-20, this run). Train, infer, holdout, and completed test slugs stay in `FORBIDDEN_SLUGS`. Collector scripts import without scipy.
+`PYTHONPATH=src python -m pytest tests/test_learned_unet_v1.py tests/test_learned_unet_infer_v1.py tests/test_learned_unet_holdout_v1.py tests/test_learned_unet_test_v1.py tests/test_learned_unet_division_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py tests/test_division_v2.py` — 59 passed (2026-09-20, this run). Train, infer, holdout, and completed test slugs stay in `FORBIDDEN_SLUGS`. Collector scripts import without scipy. Do not retune rejected `learned_unet_division_v1`.
 
 ## Privacy
 

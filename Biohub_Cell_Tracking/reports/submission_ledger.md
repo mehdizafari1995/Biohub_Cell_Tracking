@@ -132,6 +132,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Kaggle public / private scores:** not returned. Do **not** submit from the CLI.
 - **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-test-v1 → version 1 → **Submit to Competition**.
 
+## learned_unet_division_v1_tune
+
+- **Status:** local official scorer on locked learned infer graphs + locked `division_v2` gates. **Not a Kaggle run.** No new kernel. Frozen `6bba` was **not** scored.
+- **Config hash:** `8761fb66cc2254f3`. Parent infer `d7578b5f64ddac08`. Division gates `0fa756963e5d42d1`. Intensity unused.
+- **Local official tuning:** learned_unet_division_v1 **0.655235** vs locked learned_unet_infer_v1 **0.655751**. Extra edges 282. Divisions 0/1/2 vs 0/0/2. Recall unchanged. Decision `reject_learned_unet_division_v1`. Do not retune. Do not score holdout.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
