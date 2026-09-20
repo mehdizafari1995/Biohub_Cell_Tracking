@@ -1,0 +1,78 @@
+{
+  "label": "learned_unet_link_v2",
+  "decision": "reject_learned_unet_link_v2",
+  "config_hash": "1d4015dc499bd604",
+  "rejected_link_v1_hash": "3a7423c6858ace41",
+  "kernel_slug": "mahdimzafari/biohub-learned-unet-link-v2",
+  "kernel_version": 1,
+  "kernel_status": "complete",
+  "runtime_sec": 135.0694694519043,
+  "peak_memory_mb": 1251.05078125,
+  "stems": ["44b6_12dfb391", "44b6_267148e4"],
+  "n_nodes": [80741, 36951],
+  "n_edges": [72532, 31819],
+  "infer_n_nodes": [80741, 36951],
+  "infer_n_edges": [74147, 32238],
+  "detection_counts_match_infer": true,
+  "official_combined": 0.2247464798178218,
+  "learned_unet_infer_v1_locked_tune": 0.6557507105877639,
+  "official_node_recall": 0.9700416968817984,
+  "official_edge_tp_fp_fn": [475, 962, 575],
+  "infer_official_edge_tp_fp_fn": [877, 221, 173],
+  "per_sequence_official": [
+    {
+      "dataset": "44b6_12dfb391",
+      "score": 0.2561937386569873,
+      "infer_score": 0.74707237130985,
+      "edge_tp": 386,
+      "edge_fp": 677,
+      "edge_fn": 387,
+      "infer_edge_tp": 687,
+      "infer_edge_fp": 112,
+      "infer_edge_fn": 86
+    },
+    {
+      "dataset": "44b6_267148e4",
+      "score": 0.1436103137737116,
+      "infer_score": 0.44637332784412076,
+      "edge_tp": 89,
+      "edge_fp": 285,
+      "edge_fn": 188,
+      "infer_edge_tp": 190,
+      "infer_edge_fp": 109,
+      "infer_edge_fn": 87
+    }
+  ],
+  "graph_geometry": [
+    {
+      "dataset": "44b6_12dfb391",
+      "dt_unique": [1],
+      "max_out_degree": 1,
+      "max_in_degree": 1,
+      "n_div_pred": 0,
+      "edge_um_mean": 4.902348311576478,
+      "edge_um_median": 3.25,
+      "edge_um_p95": 11.490485194281398,
+      "edge_um_max": 11.941262496067994,
+      "n_over_12um": 0
+    },
+    {
+      "dataset": "44b6_267148e4",
+      "dt_unique": [1],
+      "max_out_degree": 1,
+      "max_in_degree": 1,
+      "n_div_pred": 0,
+      "edge_um_mean": 5.770376738094541,
+      "edge_um_median": 5.138701197773616,
+      "edge_um_p95": 11.604821196382131,
+      "edge_um_max": 11.941262496067994,
+      "n_over_12um": 0
+    }
+  ],
+  "failure_mode": "transformer_ranking_worse_than_greedy_spatial",
+  "failure_detail": "Removing the 0.5 softmax cutoff wrote 1-1 dt=1 edges inside the locked 12 µm gate (72532/31819). Detection counts match locked infer_v1. Official 44b6 combined 0.224746 vs infer 0.655751 because transformer ranking among gated candidates yields fewer matched-edge TPs (475 vs 877) and more conflicting FPs (962 vs 221) than greedy nearest-neighbor.",
+  "opened_holdout": false,
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false
+}

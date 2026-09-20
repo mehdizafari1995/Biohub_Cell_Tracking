@@ -1,7 +1,7 @@
 # learned_unet_link_v2 — 44b6-only transformer linker on locked learned detections.
-# New slug. Do not overwrite rejected learned_unet_link_v1 (hash 3a7423c6858ace41).
-# No probability cutoff. Greedy 1-1 on descending softmax scores + locked 12 µm gate.
-# Do not open 6bba until a documented 44b6 keep. Do not write submission.csv.
+# Official 44b6 tune 0.224746 vs infer 0.655751. Rejected. Do not retune this hash.
+# Do not overwrite rejected learned_unet_link_v1 (hash 3a7423c6858ace41).
+# Do not open 6bba. Do not write submission.csv. Do not overwrite this slug.
 # Weights stay out of git. Not a competition submission.
 
 label: learned_unet_link_v2

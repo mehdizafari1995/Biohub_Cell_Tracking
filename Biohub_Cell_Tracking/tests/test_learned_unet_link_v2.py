@@ -237,7 +237,23 @@ def test_blocked_no_weights_records_search_and_writes_no_submission(tmp_path: Pa
     assert_no_submission_csv(tmp_path)
 
 
-def test_push_forbids_locked_allows_link_v2_and_fetch_allows_link_v2():
+def test_rejected_link_v2_tune_report_stays_44b6_and_below_infer():
+    report = json.loads((ROOT / "reports" / "learned_unet_link_v2_tune.json").read_text())
+    assert report["decision"] == "reject_learned_unet_link_v2"
+    assert report["config_hash"] == LOCKED_LINK_V2_HASH
+    assert report["learned_combined"] < INFER_LOCKED_TUNE
+    assert report["is_leaderboard_score"] is False
+    stems = [row["dataset"] for row in report["per_sequence"]]
+    assert stems == list(INFER_STEMS)
+    assert all(row["num_pred_nodes"] > 0 for row in report["per_sequence"])
+    error = json.loads((ROOT / "reports" / "learned_unet_link_v2_error.json").read_text())
+    assert error["n_edges"] == [72532, 31819]
+    assert error["detection_counts_match_infer"] is True
+    assert error["opened_holdout"] is False
+    assert error["failure_mode"] == "transformer_ranking_worse_than_greedy_spatial"
+
+
+def test_push_forbids_locked_link_v2_and_fetch_allows_link_v2():
     spec = importlib.util.spec_from_file_location(
         "push_kaggle_kernel",
         ROOT / "scripts" / "push_kaggle_kernel.py",
@@ -249,7 +265,7 @@ def test_push_forbids_locked_allows_link_v2_and_fetch_allows_link_v2():
     assert INFER_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-gap-test-v1" in mod.FORBIDDEN_SLUGS
     assert REJECTED_LINK_V1_SLUG in mod.FORBIDDEN_SLUGS
-    assert LINK_KERNEL_SLUG not in mod.FORBIDDEN_SLUGS
+    assert LINK_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     fetch = importlib.util.spec_from_file_location(
         "fetch_kernel_output",
         ROOT / "scripts" / "fetch_kernel_output.py",

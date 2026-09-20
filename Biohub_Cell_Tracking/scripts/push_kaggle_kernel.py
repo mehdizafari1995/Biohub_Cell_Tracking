@@ -34,6 +34,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-gap-test-v1",
     # Linker v1 COMPLETE / inferred 2026-09-20. Official 44b6 0.0 vs infer 0.655751. Rejected. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-link-v1",
+    # Linker v2 COMPLETE / inferred 2026-09-20. Official 44b6 0.224746 vs infer 0.655751. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-link-v2",
 }
 
 

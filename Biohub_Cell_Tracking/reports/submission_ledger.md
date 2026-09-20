@@ -176,10 +176,17 @@ Local official scores only. association_v2 later received a private kernel (see 
 
 ## learned_unet_link_v2_packaged
 
-- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-link-v2` version **1 running**. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-link-v2` version **1 running** at package time. Later completed; see `learned_unet_link_v2_tune`. Internet off. **Not a competition submission.** No `submission.csv`.
 - **Config hash:** `1d4015dc499bd604`. Locked learned detections + transformer greedy 1-1 on descending softmax with no 0.5 cutoff and the locked 12 µm gate. 44b6 only. Holdout refused.
 - **Estimate:** ~5.1 min / 2 volumes; ~8.5 h if later promoted to ~199 hidden volumes. Peak RAM budget 2.5 GB. Under the 12 h GPU limit.
-- **Official 44b6 score:** not recorded yet. Compare later to locked `learned_unet_infer_v1` **0.655751**. Frozen `6bba` not opened. Not a leaderboard score.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
+## learned_unet_link_v2_tune
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-link-v2` version **1 COMPLETE / inferred**. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `1d4015dc499bd604`. Locked learned detections + transformer greedy 1-1 on descending softmax with no 0.5 cutoff and the locked 12 µm gate. 44b6 only. Holdout refused.
+- **Worker:** 135.1 s, peak RAM 1251 MB, T4 x2. Graphs `44b6_12dfb391` 80741/72532 and `44b6_267148e4` 36951/31819. Detection counts match locked infer.
+- **Official 44b6 score:** **0.224746** vs locked `learned_unet_infer_v1` **0.655751**. Decision `reject_learned_unet_link_v2`. Transformer ranking among 12 µm candidates lost official TPs (475 vs 877) and added conflicting FPs (962 vs 221). Frozen `6bba` not opened. Not a leaderboard score.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
 ## Policy

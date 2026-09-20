@@ -3,9 +3,10 @@
 Keeps locked ``learned_unet_infer_v1`` detections and the trained
 ``SimpleNodeTransformer`` scores from ``learned_unet_v1``. Replaces the
 rejected v1 ``prob > 0.5`` gate with greedy 1-1 assignment on descending
-scores and the locked association_v2 12 µm spatial gate. Never opens
-``6bba``. Does not write ``submission.csv``. Not a competition submission.
-Do not overwrite rejected ``learned_unet_link_v1``.
+scores and the locked association_v2 12 µm spatial gate. Official 44b6
+tune **0.224746 vs infer 0.655751**. Rejected. Never opens ``6bba``.
+Does not write ``submission.csv``. Not a competition submission.
+Do not overwrite rejected ``learned_unet_link_v1`` or this completed slug.
 """
 
 from __future__ import annotations
