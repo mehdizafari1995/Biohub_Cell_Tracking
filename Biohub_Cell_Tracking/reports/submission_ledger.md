@@ -166,6 +166,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official holdout:** learned_unet_gap_v1 **0.701026** vs locked learned_unet_holdout_v1 **0.693605**. Extra edges 16804. Extra interpolated nodes 9908. Recall 0.97588 vs 0.95713. Divisions 0/0/5. Per-sequence mixed (`6bba_05db0fb1` 0.718133 vs 0.719310; `6bba_c328f2fd` 0.661175 vs 0.633142). Decision `keep_candidate_learned_unet_gap_v1`. Do not retune. Do not score holdout again.
 - **Kaggle public / private scores:** not returned.
 
+## learned_unet_link_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-link-v1` version **1 running**. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `3a7423c6858ace41`. Locked learned detections + trained transformer softmax 1-1 on frozen-tuning `44b6` only. Holdout refused.
+- **Estimate:** ~5.0 min / 2 volumes, peak RAM budget 2500 MB, under the 12 h GPU limit. Hidden-test if later promoted ~8.3 h.
+- **Official 44b6 score:** not run until the helper finishes and graphs are downloaded into ignored `artifacts/kaggle/`.
+- **Kaggle public / private scores:** not applicable; not submitted.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

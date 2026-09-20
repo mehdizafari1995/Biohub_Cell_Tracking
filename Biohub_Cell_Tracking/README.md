@@ -51,7 +51,7 @@ Official scores need `requirements-official.txt`. Without that extra, `run_eval.
 
 See `docs/kaggle_submit.md`. Internet off. Discover `test/*.zarr` at runtime. A local `scripts\simulate_kaggle.py` run is **not** a Kaggle submission.
 
-Private kernel `mahdimzafari/biohub-baseline-v1` version 2 completed on public test (595 s, audit_ok). Private kernel `mahdimzafari/biohub-association-v2` version 3 completed on public test (594 s, audit_ok) and its downloaded CSV was independently official-scored on the public-test overlap. Neither has been submitted to the competition. No leaderboard score from this repo.
+Private kernel `mahdimzafari/biohub-learned-unet-gap-test-v1` version 1 completed on public test (330 s, audit_ok) and is the preferred unsubmitted worker. Older `biohub-baseline-v1` v2 and `biohub-association-v2` v3 also completed. None has been submitted to the competition. No leaderboard score from this repo.
 
 Keep `configs\baseline.yaml` as the frozen original greedy baseline. `configs\baseline_v1.yaml` is anisotropic DoG + 4 µm NMS. Association/division experiments use `configs\association_v2.yaml` and `configs\division_v2.yaml` without overwriting baseline_v1 or association_v2. Frozen official holdout: association_v2 and division_v2 both 0.591570 (0/0/5). Not a leaderboard score.
 

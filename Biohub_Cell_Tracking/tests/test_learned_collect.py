@@ -13,6 +13,7 @@ from biohub_tracking.learned_collect import (
     HOLDOUT_CONFIG_HASH,
     HOLDOUT_SLUG,
     INFER_SLUG,
+    LINK_SLUG,
     TEST_CONFIG_HASH,
     TEST_SLUG,
     TRAIN_SLUG,
@@ -215,6 +216,7 @@ def test_collect_modules_stay_stdlib_only():
         "scripts/collect_learned_unet_holdout_v1.py",
         "scripts/collect_learned_unet_test_v1.py",
         "scripts/collect_learned_unet_gap_test_v1.py",
+        "scripts/collect_learned_unet_link_v1.py",
         "src/biohub_tracking/learned_test.py",
     ):
         text = (ROOT / rel).read_text()
@@ -304,3 +306,14 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert gap_mod.GAP_TEST_CONFIG_HASH == GAP_TEST_CONFIG_HASH
     assert GAP_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert GAP_TEST_SLUG != TEST_SLUG
+    link_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_link_v1",
+        ROOT / "scripts" / "collect_learned_unet_link_v1.py",
+    )
+    assert link_spec and link_spec.loader
+    link_mod = importlib.util.module_from_spec(link_spec)
+    link_spec.loader.exec_module(link_mod)
+    assert link_mod.LINK_SLUG == LINK_SLUG
+    assert LINK_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert LINK_SLUG != INFER_SLUG
+    assert LINK_SLUG != GAP_TEST_SLUG

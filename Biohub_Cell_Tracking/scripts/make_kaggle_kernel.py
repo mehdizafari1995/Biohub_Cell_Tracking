@@ -186,6 +186,28 @@ Private **GPU** test-time notebook. Discovers every `test/*.zarr`.
 - Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_link_v1": {
+        "source": "notebooks/kaggle_learned_unet_link_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_link_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_link_v1",
+        "code_file": "kaggle_learned_unet_link_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-link-v1",
+        "title": "Biohub Learned UNet Link V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_link_v1
+
+Private **GPU** helper kernel. **Not a competition submission.**
+
+- Loads specimen-separated `learned_unet_v1` weights after that helper is COMPLETE.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Uses trained `SimpleNodeTransformer` pairwise scores (softmax, threshold 0.5, 1-1) instead of the greedy 12 µm gate.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** overwrite locked train/infer/holdout/test/gap-test slugs.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
     "learned_unet_gap_test_v1": {
         "source": "notebooks/kaggle_learned_unet_gap_test_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_gap_test_v1.ipynb",

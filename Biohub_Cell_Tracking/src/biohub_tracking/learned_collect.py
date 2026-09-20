@@ -30,6 +30,7 @@ INFER_SLUG = "mahdimzafari/biohub-learned-unet-infer-v1"
 HOLDOUT_SLUG = "mahdimzafari/biohub-learned-unet-holdout-v1"
 TEST_SLUG = "mahdimzafari/biohub-learned-unet-test-v1"
 GAP_TEST_SLUG = "mahdimzafari/biohub-learned-unet-gap-test-v1"
+LINK_SLUG = "mahdimzafari/biohub-learned-unet-link-v1"
 INFER_STEMS = INTERNAL_VAL_STEMS
 HOLDOUT_STEMS = FROZEN_HOLDOUT_STEMS
 HOLDOUT_CONFIG_HASH = "d374a21f03dddc04"
@@ -182,6 +183,11 @@ def _refuse_non_infer_stems(stems: Iterable[str]) -> None:
         raise HoldoutLeakError(
             "learned_unet_infer_v1 only opens frozen-tuning stems; got " + ", ".join(extra)
         )
+
+
+def extract_learned_link_output(archive: Path, dest_dir: Path) -> dict[str, Path]:
+    """Extract 44b6-only transformer-linker graphs. Same files as infer."""
+    return extract_learned_infer_output(archive, dest_dir)
 
 
 def extract_learned_infer_output(archive: Path, dest_dir: Path) -> dict[str, Path]:

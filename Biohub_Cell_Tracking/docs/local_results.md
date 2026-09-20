@@ -111,3 +111,7 @@ New runs; previous tables above are unchanged.
 
 `6bba_05db0fb1` A is 0.498, matching `20260918T053718Z_val_aniso`. Comparison write-up: `reports/abc_comparison.md`.
 
+## Later update (2026-09-20, learned transformer linker)
+
+`learned_unet_link_v1` (hash `3a7423c6858ace41`) packages a 44b6-only GPU helper that keeps locked UNet detections and replaces the greedy 12 µm gate with trained transformer pairwise scores. Official 44b6 score is not claimed until that helper completes. Frozen `6bba` is not opened. This is not a Kaggle submission and not a leaderboard score.
+
