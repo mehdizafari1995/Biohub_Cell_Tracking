@@ -68,6 +68,13 @@ association_v2 linker. Official tuning combined **0.633135** vs association_v2
 extra T_pred (+312 nodes). Rejected. Do not retune. See
 `reports/complementary_v1.md` and `reports/complementary_v1_holdout.json`.
 
+## G `learned_unet_infer_v1` (locked from 44b6; holdout pending)
+
+Specimen-separated TemporalUNet3D + 12 µm 1-1 linker. Official 44b6 tune
+**0.655751** vs association_v2 **0.632460**. Recall 0.970, extra T_pred
+(117692 vs 93104). Decision `keep_candidate_learned_unet_infer_v1`. Frozen
+`6bba` not scored. Do not retune. See `reports/learned_unet_infer_v1.md`.
+
 ## Sanity sequence
 
 `docs/splits/v2.json` adds `44b6_2a2eff9f` (100 frames, 1 GT division). Same specimen prefix as tuning. Locked association_v2 official score 0.801, recall 0.995, 16 switches. This is **not** a third-embryo holdout; the downloaded GEFF inventory only has prefixes `44b6` and `6bba`.

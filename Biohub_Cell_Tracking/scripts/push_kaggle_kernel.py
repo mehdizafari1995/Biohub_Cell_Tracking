@@ -22,8 +22,10 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-geff-export",
     "mahdimzafari/biohub-holdout-zarr-export",
     "mahdimzafari/biohub-tuning-zarr-export",
-    # v3 is running. Do not overwrite unless a later run records train_error.
+    # v3 COMPLETE 2026-09-20 (trained, hash 4c38035d6657f2ad). Do not overwrite.
     "mahdimzafari/biohub-learned-unet-v1",
+    # Infer v3 COMPLETE / inferred 2026-09-20. 44b6 graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-infer-v1",
 }
 
 
@@ -111,11 +113,16 @@ def main() -> None:
         "ref": result.get("ref") or result.get("slug") or slug,
         "versionNumber": result.get("versionNumber") or result.get("currentVersionNumber"),
         "error": result.get("error") or result.get("message"),
-        "invalidTags": result.get("invalidTags"),
+        "invalidTags": result.get("invalidTags") or [],
+        "invalidKernelSources": result.get("invalidKernelSources") or [],
+        "invalidCompetitionSources": result.get("invalidCompetitionSources") or [],
+        "invalidDatasetSources": result.get("invalidDatasetSources") or [],
         "keys": sorted(result.keys()),
     }
     print(json.dumps(safe, indent=2, default=str))
     print("NOTE: this is a private kernel push, not a competition submission.")
+    if safe["invalidKernelSources"] or safe["invalidCompetitionSources"] or safe["invalidDatasetSources"]:
+        raise SystemExit("Kaggle rejected one or more attached sources; not a submission")
 
 
 if __name__ == "__main__":

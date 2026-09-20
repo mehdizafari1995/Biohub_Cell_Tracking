@@ -7,17 +7,16 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 1. Keep draft PR #2 (`cursor/kaggle-baseline-association-0b83`) open. Do not merge. Do not overwrite locked `association_v2`.
 2. Keep draft PR #4 (`cursor/competition-operational-strategy-3381`) open. Official holdout is done: combined **0.591570** identical to association_v2, **0 TP / 0 FP / 5 FN**. Keep the overlay; do **not** retune gates. Do not relaunch rejected `division_v1`.
 3. Keep draft PR #5 (`cursor/complementary-detection-v1`) open. complementary_v1 was locked from 44b6 then scored **once** on frozen `6bba`: **0.591384 vs association_v2 0.591570**. Decision **`reject_complementary_v1`**. Do **not** retune isolation/intensity gates.
-4. Keep draft PR #6 (`cursor/linkable-complementary-v1`) open. linkable_v1 was locked from 44b6 then scored **once** on frozen `6bba`: **0.591458 vs association_v2 0.591570**. Decision **`reject_linkable_v1`**. Recall unchanged; extra T_pred +189. Do **not** retune the 12 µm / max_dt=1 temporal gate. association_v2 remains the scoring candidate.
-5. Continue draft PR #7 (`cursor/learned-unet-v1`). Training hash `4c38035d6657f2ad`. Infer hash `d7578b5f64ddac08`. Do **not** overwrite locked prediction/helper slugs or the running training kernel. Do **not** write `submission.csv`. Do **not** score frozen `6bba` until 44b6 training is locked.
+4. Keep draft PR #6 (`cursor/linkable-complementary-v1`) open. linkable_v1 was locked from 44b6 then scored **once** on frozen `6bba`: **0.591458 vs association_v2 0.591570**. Decision **`reject_linkable_v1`**. Recall unchanged; extra T_pred +189. Do **not** retune the 12 µm / max_dt=1 temporal gate. association_v2 remains the scoring candidate until holdout of learned_unet_infer_v1.
+5. Continue draft PR #7 (`cursor/learned-unet-v1`). Training hash `4c38035d6657f2ad` (v3 COMPLETE / `trained`). Infer hash `d7578b5f64ddac08` locked from 44b6: official tune **0.655751 vs association_v2 0.632460**, decision **`keep_candidate_learned_unet_infer_v1`**. Do **not** overwrite the completed train/infer slugs. Do **not** write `submission.csv`. Do **not** retune after seeing holdout.
 6. Do **not** submit association_v2, division_v2, complementary_v1, linkable_v1, learned_unet_v1, or learned_unet_infer_v1 from the CLI.
 
 ## Next (this family)
 
-1. Run `scripts/collect_learned_unet_v1.py` again. Confirm private GPU kernel `mahdimzafari/biohub-learned-unet-v1` **version 3** is **COMPLETE** (or record a new `train_error`). Do not overwrite locked slugs. Do not push a new training version unless v3 failed. The 11:37 UTC poll was still **running** with an empty output list. Prior `lastRunTime` 2026-09-20T08:44:11Z; `max_hours=11.0` so COMPLETE is not expected before ~19:44 UTC.
-2. If COMPLETE: the collector downloads into ignored `artifacts/kaggle/learned_unet_v1` and extracts weights + manifests only. It refuses `submission.csv`, volumes, and holdout stems. Do not commit `.pt` / `.pth`.
-3. Then push private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` (already packaged; attaches the training kernel). Internet off. No `submission.csv`. Only `44b6_12dfb391` + `44b6_267148e4`.
-4. After infer COMPLETE, run `scripts/collect_learned_unet_infer_v1.py` (stdlib poll; extracts 44b6 graphs only). Then official-score once on those frozen-tuning stems against association_v2 (locked tune 0.632460). Keep or drop the candidate on that score. Do **not** look at `6bba` yet.
-5. Only after a documented 44b6 lock: one-shot official holdout on frozen `6bba`. Reject on combined-score regression. Do not retune.
+1. Package and push a **new** private GPU holdout-infer helper (new slug; do not overwrite `mahdimzafari/biohub-learned-unet-infer-v1`). Attach the trained weights. Infer only frozen `6bba_05db0fb1` + `6bba_c328f2fd`. Internet off. No `submission.csv`. One-shot only.
+2. Collect graphs with a holdout-aware collector that still refuses `submission.csv` and does not write volumes into git.
+3. Official-score once on those two holdout GEFFs vs locked association_v2 **0.591570**. Reject on combined-score regression. Do not retune.
+4. Do **not** open 44b6 volumes in the holdout kernel. Do not score holdout twice.
 
 ## HUMAN_ACTION_REQUIRED
 

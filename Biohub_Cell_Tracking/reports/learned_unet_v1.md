@@ -21,7 +21,7 @@ Config: `configs/learned_unet_v1.yaml`. Hash `4c38035d6657f2ad`.
 - Edge supervision: index UNet features at **sparse GT nodes** (not detect-and-match). Documented as `gt_node_index`
 - Kernel writes weights + `train_manifest.json`. It does **not** write `submission.csv`
 
-This operating point is **not locked**. Official 44b6 tuning score and one-shot `6bba` holdout are **not run** until a GPU worker finishes and weights exist locally under ignored `artifacts/kaggle/`.
+Sanitized train record: `reports/learned_unet_v1_train.json`. Weights stay out of git.
 
 ## Kaggle helper
 
@@ -32,16 +32,16 @@ Do not overwrite `biohub-baseline-v1`, `biohub-association-v2`, or the export he
 |---|---|---|
 | 1 | error | GPU T4 x2 available. 44b6 split written (69 train / 2 internal val, no 6bba). Uncaught crash. |
 | 2 | error | `train_error` `ValueError: unsupported zarr codec 'zstd'` while reading train volumes. Split still 44b6-only. |
-| 3 | **running** at this poll | zstd decoder added. Still running at 2026-09-20 11:37 UTC (empty outputs; status API omitted `lastRunTime`). Prior `lastRunTime` 08:44:11Z. `max_hours=11.0`. Not complete. Not a leaderboard score. |
+| 3 | **COMPLETE / trained** | 3 epochs, 6117 windows, best train loss 0.3604, 2.08M params, 11732 s, peak 1793 MB, T4 x2, torch 2.10+cu128. Collector extracted weights + manifests into ignored `artifacts/kaggle/learned_unet_v1`. No `submission.csv`. Not a leaderboard score. |
 
-This worker has no local GPU. A local simulation is not a Kaggle run. No leaderboard score. Weights stay out of git. The training slug is locked against overwrite while v3 runs.
+This worker has no local GPU. A local simulation is not a Kaggle run. No leaderboard score. Weights stay out of git. The training slug is locked against overwrite.
 
-COMPLETE handoff is `scripts/collect_learned_unet_v1.py`. It polls without downloading while the helper is running and imports on a stdlib-only interpreter. After **complete** it extracts only `train_manifest.json` / split JSON / `learned_unet_v1_{best,last}.pt` into ignored `artifacts/kaggle/learned_unet_v1`. It refuses `submission.csv`, Zarr/GEFF members, and holdout stems. Do not use `extract_kernel_output` (that path only allows a prediction `submission.csv`). Infer sibling: `scripts/collect_learned_unet_infer_v1.py`.
+COMPLETE handoff is `scripts/collect_learned_unet_v1.py`. After **complete** it extracts only `train_manifest.json` / split JSON / `learned_unet_v1_{best,last}.pt` into ignored `artifacts/kaggle/learned_unet_v1`. It refuses `submission.csv`, Zarr/GEFF members, and holdout stems. Infer sibling: `scripts/collect_learned_unet_infer_v1.py`.
 
-## Inference kernel (packaged, not pushed)
+## Inference kernel
 
-`learned_unet_infer_v1` (`configs/learned_unet_infer_v1.yaml`, hash `d7578b5f64ddac08`) is a private GPU helper that will attach this training output after COMPLETE, infer only `44b6_12dfb391` + `44b6_267148e4`, and write JSON graphs. It does **not** write `submission.csv`. Do not push it until v3 finishes. See `reports/learned_unet_infer_v1.md`.
+`learned_unet_infer_v1` (`configs/learned_unet_infer_v1.yaml`, hash `d7578b5f64ddac08`) attaches this training output and infers only `44b6_12dfb391` + `44b6_267148e4`. It does **not** write `submission.csv`. See `reports/learned_unet_infer_v1.md`.
 
 ## Decision
 
-Pending GPU worker. association_v2 remains the scoring candidate until a 44b6-only lock and one-shot frozen holdout.
+Training COMPLETE. Infer v3 COMPLETE. Official 44b6 tune **0.655751 vs association_v2 0.632460** (`keep_candidate_learned_unet_infer_v1`). Do not retune. One-shot frozen `6bba` holdout is next, under a new infer slug.

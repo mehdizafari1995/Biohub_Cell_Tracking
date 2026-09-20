@@ -1,0 +1,20 @@
+{
+  "status": "blocked_no_weights",
+  "slug": "mahdimzafari/biohub-learned-unet-infer-v1",
+  "version": 2,
+  "config_hash": "d7578b5f64ddac08",
+  "train_config_hash": "4c38035d6657f2ad",
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "runtime_sec": 3.735610246658325,
+  "weight_search": {
+    "kaggle_input": [
+      {"name": "competitions", "is_dir": true},
+      {"name": "notebooks", "is_dir": true, "files": []}
+    ],
+    "note": "Training helper output is not at /kaggle/input/biohub-learned-unet-v1. v3 searches /kaggle/input/notebooks depth<=5."
+  },
+  "has_submission_csv": false,
+  "notes": "Sanitized infer v2 manifest. No graphs. Not a competition submission. Not a leaderboard score."
+}

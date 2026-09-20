@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (learned_unet_v1 v3 still running at 11:37 UTC; stdlib poll/collect path). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (learned_unet_infer_v1 locked from 44b6: 0.655751 vs association_v2 0.632460). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -10,7 +10,7 @@ Last updated: 2026-09-20 (learned_unet_v1 v3 still running at 11:37 UTC; stdlib 
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
-- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). GPU training kernel v3 still running (previous `lastRunTime` 2026-09-20T08:44:11Z; 11:37 UTC poll still `running`, empty outputs). 44b6-only inference helper packaged, not pushed, not scored. Train + infer COMPLETE collectors are packaged and import without scipy.
+- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). Training v3 COMPLETE / `trained`. Infer v3 COMPLETE / `inferred`. Official 44b6 tune **0.655751 vs association_v2 0.632460** (`keep_candidate_learned_unet_infer_v1`). Frozen `6bba` not scored. Do not retune.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
@@ -22,17 +22,17 @@ Last updated: 2026-09-20 (learned_unet_v1 v3 still running at 11:37 UTC; stdlib 
 - Kaggle kernel config (anisotropic DoG + 4 µm NMS + greedy 15 µm): `configs/baseline_v1.yaml`
 - Locked association: `configs/association_v2.yaml` (12 µm gate + 2-frame gap close + intensity 0.5, greedy). Kernel config hash `2c6966b5204ba542`. Do not overwrite after holdout.
 - Locked conservative division: `configs/division_v2.yaml` (association_v2 + predecessor / no-alternative-parent / anti-alignment). Gates from **all 71 train `44b6` GEFFs**: `max_parent_child_um=10.0`, `min_child_separation_um=8.3`, `max_sibling_alignment=0.05`. Config hash `0fa756963e5d42d1`. Do not retune after holdout.
+- Locked learned infer (44b6 only, holdout pending): `configs/learned_unet_infer_v1.yaml`. Hash `d7578b5f64ddac08`. Official tune **0.655751**. Do not retune after the one-shot `6bba` score.
 
 ## Rejected (do not retune)
 
 - `configs/complementary_v1.yaml`: locked baseline_v1 primary DoG + complementary local-max (6.0 µm isolation, 0.45 intensity ratio) + locked association_v2 linker. Hash `2c4866928d7262b6`. Tuning 0.633135 vs association_v2 0.632460; holdout **0.591384 vs 0.591570**. Status `rejected_on_holdout`. See `docs/complementary_priors.json`.
 - `configs/linkable_v1.yaml`: complementary_v1 spatial gates plus temporal link filter (primary neighbor within 12 µm at t±1). Hash `fa975421edb6136e`. Tuning 0.633168 vs association_v2 0.632460; holdout **0.591458 vs 0.591570**. Status `rejected_on_holdout`. See `docs/linkable_priors.json`.
 
-## In progress (not locked, not scored)
+## In progress (locked from 44b6, holdout not scored)
 
-- `configs/learned_unet_v1.yaml`: organizer `TemporalUNet3D` + `SimpleNodeTransformer`, 44b6-only split, internal val = frozen-tuning pair. Hash `4c38035d6657f2ad`. Private GPU helper kernel `mahdimzafari/biohub-learned-unet-v1` v3 still **running**. Does not write `submission.csv`. Do not overwrite while running.
-- `configs/learned_unet_infer_v1.yaml`: 44b6-only inference on those weights. Hash `d7578b5f64ddac08`. UNet local-max + 12 µm greedy 1-1. Private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` packaged, **not pushed**. Does not write `submission.csv`. Official 44b6 / 6bba scores are **not** available. association_v2 remains the candidate.
-- COMPLETE handoff: `scripts/collect_learned_unet_v1.py` polls the training helper and, only after **complete**, extracts weights + manifests into ignored `artifacts/kaggle/learned_unet_v1`. Infer sibling: `scripts/collect_learned_unet_infer_v1.py`. Both import on a stdlib-only interpreter (lazy package init; collect modules do not import numpy/scipy). Refuses `submission.csv`, volumes, and holdout stems. A local extract is not a leaderboard score.
+- `configs/learned_unet_v1.yaml`: organizer `TemporalUNet3D` + `SimpleNodeTransformer`, 44b6-only split. Hash `4c38035d6657f2ad`. Private GPU helper `mahdimzafari/biohub-learned-unet-v1` v3 **COMPLETE** / `trained`. 3 epochs, 6117 windows, best train loss 0.3604, 11732 s, peak 1793 MB. No `submission.csv`. Do not overwrite.
+- `configs/learned_unet_infer_v1.yaml`: 44b6-only UNet local-max + 12 µm greedy 1-1. Hash `d7578b5f64ddac08`. Helper `mahdimzafari/biohub-learned-unet-infer-v1` v3 **COMPLETE** / `inferred` (187 s, 1136 MB). Official 44b6 **0.655751 vs 0.632460**. Decision `keep_candidate`. Frozen `6bba` not opened. association_v2 remains the holdout champion until the one-shot 6bba score.
 
 ## Measured results (local official scorer, not leaderboard)
 
@@ -46,11 +46,11 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | D `division_v2` | **0.591570** | identical to B; 0 TP / 0 FP / 5 FN; keep as no-op overlay; do not retune |
 | E `complementary_v1` | 0.591384 | rejected; recall unchanged; extra T_pred +312; do not retune |
 | F `linkable_v1` | 0.591458 | rejected; recall unchanged; extra T_pred +189; do not retune |
-| G `learned_unet_v1` | not scored | GPU training kernel v3 still running at 11:37 UTC; infer helper packaged, not pushed; train+infer collectors ready |
+| G `learned_unet_infer_v1` | not scored on 6bba | 44b6 tune **0.655751** vs 0.632460; keep_candidate; holdout pending |
 
 Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336**. That is not a leaderboard score. `6bba_c328f2fd` is not in public test.
 
-See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/linkable_v1.md`, `reports/learned_unet_v1.md`, `docs/learned_detection_estimate.md`, and `experiments/registry.csv`.
+See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/linkable_v1.md`, `reports/learned_unet_v1.md`, `reports/learned_unet_infer_v1.md`, `docs/learned_detection_estimate.md`, and `experiments/registry.csv`.
 
 ## Kaggle
 
@@ -59,18 +59,18 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 - Private helper kernel `mahdimzafari/biohub-geff-export` version 1 **COMPLETE** (203.74 s). Zipped 73 train GEFFs. **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-holdout-zarr-export` version 1 **COMPLETE** (13.43 s). Zipped only the two holdout Zarrs (993 MB). **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-tuning-zarr-export` version 1 **COMPLETE**. Zipped only the two frozen-tuning Zarrs (919 MB). **Not a submission.** Do not overwrite the five kernels above.
-- Private helper kernel `mahdimzafari/biohub-learned-unet-v1` version **3** is still **running** (GPU T4 x2, torch 2.10+cu128, internet off). 11:37 UTC collector poll: `status=running`, empty output list, `lastRunTime` not returned by the status API. Prior poll recorded `lastRunTime` 2026-09-20T08:44:11Z. `max_hours=11.0` so the worker may run until ~19:44 UTC. Versions 1–2 errored (`zstd` volume codec). **Not a submission.** No `submission.csv`. Do not overwrite this slug while it runs.
-- Private helper kernel `mahdimzafari/biohub-learned-unet-infer-v1` is packaged and **not pushed**. Waiting on training COMPLETE. Infer collector is packaged. Infer volume reader now falls back to the custom zstd decoder if native `zarr` probe-fails. **Not a submission.** No `submission.csv`.
+- Private helper kernel `mahdimzafari/biohub-learned-unet-v1` version **3 COMPLETE** / `trained`. GPU T4 x2, 11732 s, peak 1793 MB. **Not a submission.** No `submission.csv`. Do not overwrite.
+- Private helper kernel `mahdimzafari/biohub-learned-unet-infer-v1` version **3 COMPLETE** / `inferred`. 187.0 s, peak 1136 MB. 44b6 graphs only. **Not a submission.** No `submission.csv`. Do not overwrite; holdout infer needs a **new** slug.
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Complete validation harness
 
-`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Complementary scoring is `scripts/run_complementary_detection.py` (one-shot holdout after lock; a second holdout score is refused). Linkable scoring is `scripts/run_linkable_detection.py` (same one-shot protocol). Learned training is `notebooks/kaggle_learned_unet_v1.py` (44b6-only; holdout refused). Learned inference is `notebooks/kaggle_learned_unet_infer_v1.py` and `scripts/run_learned_unet_infer.py` (44b6-only; holdout refused). COMPLETE handoff is `scripts/collect_learned_unet_v1.py` and `scripts/collect_learned_unet_infer_v1.py` (download only after complete; weights/graphs stay ignored).
+`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Learned training is `notebooks/kaggle_learned_unet_v1.py` (44b6-only; holdout refused). Learned inference is `notebooks/kaggle_learned_unet_infer_v1.py` and `scripts/run_learned_unet_infer.py` (44b6-only; holdout refused). COMPLETE handoff is `scripts/collect_learned_unet_v1.py` and `scripts/collect_learned_unet_infer_v1.py`.
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest tests/test_learned_unet_v1.py tests/test_learned_unet_infer_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` — 24 passed (2026-09-20, this run). Training slug stays in `FORBIDDEN_SLUGS` while v3 runs. Collector scripts import without scipy.
+`PYTHONPATH=src python -m pytest tests/test_learned_unet_v1.py tests/test_learned_unet_infer_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` — 25 passed (2026-09-20, this run). Training and infer slugs stay in `FORBIDDEN_SLUGS`. Collector scripts import without scipy.
 
 ## Privacy
 

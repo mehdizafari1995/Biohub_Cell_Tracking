@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (learned_unet_v1 v3 still running at 11:37 UTC; stdlib poll/collect path). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (learned_unet_v1 v3 COMPLETE/trained; infer v3 running after v1/v2 blocked_no_weights). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -10,7 +10,7 @@ Last updated: 2026-09-20 (learned_unet_v1 v3 still running at 11:37 UTC; stdlib 
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
 - Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Linkable experiment (keep open, do not merge): `cursor/linkable-complementary-v1` (PR #6). Locked from 44b6, scored once on 6bba, **rejected**.
-- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). GPU training kernel v3 still running (previous `lastRunTime` 2026-09-20T08:44:11Z; 11:37 UTC poll still `running`, empty outputs). 44b6-only inference helper packaged, not pushed, not scored. Train + infer COMPLETE collectors are packaged and import without scipy.
+- Learned UNet experiment (keep open, do not merge): `cursor/learned-unet-v1` (PR #7). Training helper v3 **COMPLETE** (`trained`, 69/2 `44b6`, hash `4c38035d6657f2ad`, 11732 s, 1793 MB). Weights extracted to ignored `artifacts/kaggle/learned_unet_v1`. Infer helper `mahdimzafari/biohub-learned-unet-infer-v1` v1/v2 `blocked_no_weights`; v3 pushed and **running** after a `/kaggle/input/notebooks` weight search. Official 44b6 score not run. association_v2 remains the candidate.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
@@ -30,9 +30,9 @@ Last updated: 2026-09-20 (learned_unet_v1 v3 still running at 11:37 UTC; stdlib 
 
 ## In progress (not locked, not scored)
 
-- `configs/learned_unet_v1.yaml`: organizer `TemporalUNet3D` + `SimpleNodeTransformer`, 44b6-only split, internal val = frozen-tuning pair. Hash `4c38035d6657f2ad`. Private GPU helper kernel `mahdimzafari/biohub-learned-unet-v1` v3 still **running**. Does not write `submission.csv`. Do not overwrite while running.
-- `configs/learned_unet_infer_v1.yaml`: 44b6-only inference on those weights. Hash `d7578b5f64ddac08`. UNet local-max + 12 µm greedy 1-1. Private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` packaged, **not pushed**. Does not write `submission.csv`. Official 44b6 / 6bba scores are **not** available. association_v2 remains the candidate.
-- COMPLETE handoff: `scripts/collect_learned_unet_v1.py` polls the training helper and, only after **complete**, extracts weights + manifests into ignored `artifacts/kaggle/learned_unet_v1`. Infer sibling: `scripts/collect_learned_unet_infer_v1.py`. Both import on a stdlib-only interpreter (lazy package init; collect modules do not import numpy/scipy). Refuses `submission.csv`, volumes, and holdout stems. A local extract is not a leaderboard score.
+- `configs/learned_unet_v1.yaml`: organizer `TemporalUNet3D` + `SimpleNodeTransformer`, 44b6-only split, internal val = frozen-tuning pair. Hash `4c38035d6657f2ad`. Private GPU helper `mahdimzafari/biohub-learned-unet-v1` v3 **COMPLETE** / `trained`. 3 epochs, 6117 windows, best train loss 0.3604, 2.08M params, 11732 s, peak 1793 MB, T4 x2, torch 2.10+cu128. Split 69 train / 2 internal val, no `6bba`. No `submission.csv`. Weights stay under ignored `artifacts/kaggle/`. Do not overwrite this slug.
+- `configs/learned_unet_infer_v1.yaml`: 44b6-only inference on those weights. Hash `d7578b5f64ddac08`. UNet local-max + 12 µm greedy 1-1. Private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` v1/v2 **COMPLETE** with `blocked_no_weights` (training output mounts under `/kaggle/input/notebooks`, not `/kaggle/input/biohub-learned-unet-v1`). v3 searches that tree (depth ≤5, skips Zarr/GEFF) and is **running**. No `submission.csv`. Official 44b6 / 6bba scores are **not** available. association_v2 remains the candidate.
+- COMPLETE handoff: `scripts/collect_learned_unet_v1.py` and `scripts/collect_learned_unet_infer_v1.py`. Both import on a stdlib-only interpreter. Refuse `submission.csv`, volumes, and holdout stems. A local extract is not a leaderboard score.
 
 ## Measured results (local official scorer, not leaderboard)
 
@@ -46,7 +46,7 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | D `division_v2` | **0.591570** | identical to B; 0 TP / 0 FP / 5 FN; keep as no-op overlay; do not retune |
 | E `complementary_v1` | 0.591384 | rejected; recall unchanged; extra T_pred +312; do not retune |
 | F `linkable_v1` | 0.591458 | rejected; recall unchanged; extra T_pred +189; do not retune |
-| G `learned_unet_v1` | not scored | GPU training kernel v3 still running at 11:37 UTC; infer helper packaged, not pushed; train+infer collectors ready |
+| G `learned_unet_v1` | not scored | train v3 COMPLETE; infer v3 running; do not look at 6bba yet |
 
 Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336**. That is not a leaderboard score. `6bba_c328f2fd` is not in public test.
 
@@ -59,8 +59,8 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 - Private helper kernel `mahdimzafari/biohub-geff-export` version 1 **COMPLETE** (203.74 s). Zipped 73 train GEFFs. **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-holdout-zarr-export` version 1 **COMPLETE** (13.43 s). Zipped only the two holdout Zarrs (993 MB). **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-tuning-zarr-export` version 1 **COMPLETE**. Zipped only the two frozen-tuning Zarrs (919 MB). **Not a submission.** Do not overwrite the five kernels above.
-- Private helper kernel `mahdimzafari/biohub-learned-unet-v1` version **3** is still **running** (GPU T4 x2, torch 2.10+cu128, internet off). 11:37 UTC collector poll: `status=running`, empty output list, `lastRunTime` not returned by the status API. Prior poll recorded `lastRunTime` 2026-09-20T08:44:11Z. `max_hours=11.0` so the worker may run until ~19:44 UTC. Versions 1–2 errored (`zstd` volume codec). **Not a submission.** No `submission.csv`. Do not overwrite this slug while it runs.
-- Private helper kernel `mahdimzafari/biohub-learned-unet-infer-v1` is packaged and **not pushed**. Waiting on training COMPLETE. Infer collector is packaged. Infer volume reader now falls back to the custom zstd decoder if native `zarr` probe-fails. **Not a submission.** No `submission.csv`.
+- Private helper kernel `mahdimzafari/biohub-learned-unet-v1` version **3 COMPLETE** / `trained`. GPU T4 x2, torch 2.10+cu128, internet off. 11732 s, peak 1793 MB. Versions 1–2 errored (`zstd` volume codec). **Not a submission.** No `submission.csv`. Do not overwrite this slug.
+- Private helper kernel `mahdimzafari/biohub-learned-unet-infer-v1` version **3 running**. v1/v2 `blocked_no_weights` in 4–5 s; v2 diagnostics showed `/kaggle/input/{competitions,notebooks}`. v3 searches `/kaggle/input/notebooks` (depth ≤5). Internet off. **Not a submission.** No `submission.csv`. Do not overwrite while v3 runs.
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
@@ -70,7 +70,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest tests/test_learned_unet_v1.py tests/test_learned_unet_infer_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` — 24 passed (2026-09-20, this run). Training slug stays in `FORBIDDEN_SLUGS` while v3 runs. Collector scripts import without scipy.
+`PYTHONPATH=src python -m pytest tests/test_learned_unet_v1.py tests/test_learned_unet_infer_v1.py tests/test_learned_collect.py tests/test_kaggle_api.py` — 25 passed (2026-09-20, this run). Training and infer slugs stay in `FORBIDDEN_SLUGS` while infer v3 runs. Collector scripts import without scipy.
 
 ## Privacy
 

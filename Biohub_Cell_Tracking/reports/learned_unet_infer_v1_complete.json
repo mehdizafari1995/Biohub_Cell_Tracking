@@ -1,0 +1,22 @@
+{
+  "status": "inferred",
+  "slug": "mahdimzafari/biohub-learned-unet-infer-v1",
+  "version": 3,
+  "config_hash": "d7578b5f64ddac08",
+  "train_config_hash": "4c38035d6657f2ad",
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "weights_path": "/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt",
+  "runtime_sec": 187.00057411193848,
+  "peak_memory_mb": 1136.3515625,
+  "graphs": [
+    {"stem": "44b6_12dfb391", "status": "predicted", "n_nodes": 80741, "n_edges": 74147},
+    {"stem": "44b6_267148e4", "status": "predicted", "n_nodes": 36951, "n_edges": 32238}
+  ],
+  "official_tune_combined": 0.6557507105877639,
+  "association_v2_locked_tune": 0.6324600072329115,
+  "decision": "keep_candidate_learned_unet_infer_v1",
+  "has_submission_csv": false,
+  "notes": "Sanitized infer v3 record. Graphs stay under ignored artifacts/kaggle/. Not a competition submission. Not a leaderboard score. Frozen 6bba not scored."
+}

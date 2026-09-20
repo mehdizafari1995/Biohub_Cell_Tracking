@@ -372,35 +372,105 @@ def write_manifest(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, indent=2, default=str))
 
 
-def find_weights(search_roots: Sequence[str | Path] | None = None) -> Path | None:
+KAGGLE_INPUT = Path("/kaggle/input")
+SKIP_INPUT_DIRS = frozenset(
+    {
+        "biohub-cell-tracking-during-development",
+        "competitions",
+    }
+)
+
+
+def _looks_like_volume(path: Path) -> bool:
+    if path.suffix in {".zarr", ".geff"}:
+        return True
+    return (path / "zarr.json").exists() or (path / "0" / "zarr.json").exists()
+
+
+def default_weight_roots() -> list[Path]:
     roots: list[Path] = []
-    if search_roots:
-        roots.extend(Path(p) for p in search_roots if p)
-    else:
-        extra = os.environ.get("BIOHUB_LEARNED_WEIGHTS_DIR")
-        if extra:
-            roots.append(Path(extra))
-        roots.extend(
-            [
-                Path("/kaggle/input/biohub-learned-unet-v1"),
-                Path("/kaggle/input/biohub-learned-unet-v1/biohub-learned-unet-v1"),
-                Path("artifacts/kaggle/learned_unet_v1"),
-                Path("artifacts/kaggle"),
-                Path("."),
-            ]
-        )
+    extra = os.environ.get("BIOHUB_LEARNED_WEIGHTS_DIR")
+    if extra:
+        roots.append(Path(extra))
+    roots.extend(
+        [
+            Path("/kaggle/input/biohub-learned-unet-v1"),
+            Path("/kaggle/input/biohub-learned-unet-v1/biohub-learned-unet-v1"),
+            Path("/kaggle/input/mahdimzafari-biohub-learned-unet-v1"),
+            Path("/kaggle/input/mahdimzafari/biohub-learned-unet-v1"),
+            Path("/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1"),
+            Path("/kaggle/input/notebooks/biohub-learned-unet-v1"),
+            Path("/kaggle/input/notebooks/mahdimzafari-biohub-learned-unet-v1"),
+            Path("/kaggle/input/notebooks"),
+            Path("artifacts/kaggle/learned_unet_v1"),
+            Path("artifacts/kaggle"),
+            Path("."),
+        ]
+    )
+    if KAGGLE_INPUT.is_dir():
+        for child in sorted(KAGGLE_INPUT.iterdir()):
+            if child.name in SKIP_INPUT_DIRS or _looks_like_volume(child):
+                continue
+            roots.append(child)
+    seen: set[str] = set()
+    unique: list[Path] = []
+    for root in roots:
+        key = str(root)
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(root)
+    return unique
+
+
+def describe_weight_search(roots: Sequence[Path] | None = None) -> dict[str, Any]:
+    roots = list(roots) if roots is not None else default_weight_roots()
+    listing: list[dict[str, Any]] = []
+    if KAGGLE_INPUT.is_dir():
+        for child in sorted(KAGGLE_INPUT.iterdir()):
+            entry: dict[str, Any] = {"name": child.name, "is_dir": child.is_dir()}
+            if child.is_dir() and child.name not in SKIP_INPUT_DIRS and not _looks_like_volume(child):
+                try:
+                    kids = list(child.iterdir())
+                    entry["files"] = sorted(p.name for p in kids if p.is_file())[:20]
+                    entry["dirs"] = sorted(p.name for p in kids if p.is_dir())[:20]
+                except OSError:
+                    entry["files"] = []
+                    entry["dirs"] = []
+            listing.append(entry)
+    return {"roots": [str(path) for path in roots], "kaggle_input": listing}
+
+
+def find_weights(search_roots: Sequence[str | Path] | None = None) -> Path | None:
+    roots = [Path(p) for p in search_roots if p] if search_roots else default_weight_roots()
     names = (WEIGHTS_NAME, FALLBACK_WEIGHTS_NAME)
     for root in roots:
-        if not root.exists():
+        found = _first_weight(root, names)
+        if found is not None:
+            return found
+    return None
+
+
+def _first_weight(root: Path, names: tuple[str, ...], max_depth: int = 5) -> Path | None:
+    if not root.exists() or _looks_like_volume(root):
+        return None
+    stack = [(root, 0)]
+    while stack:
+        current, depth = stack.pop()
+        if depth > max_depth or _looks_like_volume(current):
             continue
-        for name in names:
-            direct = root / name
-            if direct.is_file():
-                return direct
-        for name in names:
-            matches = sorted(p for p in root.rglob(name) if p.is_file())
-            if matches:
-                return matches[0]
+        try:
+            children = list(current.iterdir())
+        except OSError:
+            continue
+        for child in children:
+            if child.is_file() and child.name in names:
+                return child
+        if depth == max_depth:
+            continue
+        for child in children:
+            if child.is_dir() and not _looks_like_volume(child) and child.name not in SKIP_INPUT_DIRS:
+                stack.append((child, depth + 1))
     return None
 
 
@@ -736,7 +806,13 @@ def main() -> dict[str, Any]:
         return manifest
     weights = find_weights()
     if weights is None:
-        manifest.update({"status": "blocked_no_weights", "runtime_sec": time.time() - started})
+        manifest.update(
+            {
+                "status": "blocked_no_weights",
+                "weight_search": describe_weight_search(),
+                "runtime_sec": time.time() - started,
+            }
+        )
         write_manifest(working / "infer_manifest.json", manifest)
         assert_no_submission_csv(working)
         return manifest

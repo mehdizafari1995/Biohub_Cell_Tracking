@@ -33,10 +33,15 @@ from biohub_tracking.learned_infer import (  # noqa: E402
     write_graph_json,
     assert_tuning_only,
 )
-from biohub_tracking.learned_split import HoldoutLeakError, config_hash  # noqa: E402
+from biohub_tracking.learned_split import (  # noqa: E402
+    HoldoutLeakError,
+    config_hash,
+    default_weight_roots,
+)
 from kaggle_learned_unet_infer_v1 import (  # noqa: E402
     CONFIG_LABEL,
     assert_no_submission_csv,
+    describe_weight_search,
     infer_config_hash as nb_hash,
     infer_config_payload as nb_payload,
     main as infer_main,
@@ -155,6 +160,21 @@ def test_find_weights_and_train_manifest_guard(tmp_path: Path):
     (dest / "learned_unet_v1_best.pt").write_bytes(b"not-a-real-checkpoint")
     found = find_weights([dest])
     assert found is not None and found.name == "learned_unet_v1_best.pt"
+    notebooks = tmp_path / "notebooks" / "mahdimzafari" / "biohub-learned-unet-v1"
+    notebooks.mkdir(parents=True)
+    (notebooks / "learned_unet_v1_last.pt").write_bytes(b"fallback-weights")
+    assert find_weights([tmp_path / "notebooks"]).name == "learned_unet_v1_last.pt"
+    assert any("notebooks/mahdimzafari/biohub-learned-unet-v1" in str(p) for p in default_weight_roots())
+    volume = tmp_path / "biohub-cell-tracking-during-development"
+    decoy = volume / "train" / "44b6_12dfb391.zarr"
+    decoy.mkdir(parents=True)
+    (decoy / "zarr.json").write_text("{}")
+    (decoy / "learned_unet_v1_best.pt").write_bytes(b"do-not-use")
+    assert find_weights([volume]) is None
+    assert any("mahdimzafari-biohub-learned-unet-v1" in str(p) for p in default_weight_roots())
+    search = describe_weight_search([])
+    assert "kaggle_input" in search
+    assert "roots" in search
     (dest / "train_manifest.json").write_text(
         json.dumps(
             {
@@ -180,6 +200,9 @@ def test_kernel_is_helper_not_submission_and_packages_gpu(tmp_path: Path, monkey
     assert "to_csv(" not in source
     assert "graphs_to_submission" not in source
     assert "writes_submission_csv" in source
+    assert "mahdimzafari-biohub-learned-unet-v1" in source
+    assert "weight_search" in source
+    assert "invalidKernelSources" in (ROOT / "scripts" / "push_kaggle_kernel.py").read_text()
     spec = _make_mod.KERNELS["learned_unet_infer_v1"]
     assert spec["kernel_id"] == INFER_KERNEL_SLUG
     assert spec.get("enable_gpu") is True
@@ -209,6 +232,24 @@ def test_kernel_is_helper_not_submission_and_packages_gpu(tmp_path: Path, monkey
     assert_no_submission_csv(tmp_path)
 
 
+def test_blocked_no_weights_records_search_and_writes_no_submission(tmp_path: Path, monkeypatch):
+    train = tmp_path / "data" / "train"
+    train.mkdir(parents=True)
+    for name in INFER_STEMS:
+        (train / f"{name}.zarr").mkdir()
+    monkeypatch.setenv("BIOHUB_DATA_ROOT", str(tmp_path / "data"))
+    monkeypatch.delenv("BIOHUB_LEARNED_DRY_RUN", raising=False)
+    monkeypatch.delenv("BIOHUB_LEARNED_WEIGHTS_DIR", raising=False)
+    monkeypatch.chdir(tmp_path)
+    result = infer_main()
+    assert result["status"] == "blocked_no_weights"
+    assert result["config_hash"] == LOCKED_INFER_HASH
+    assert "weight_search" in result
+    assert result["is_competition_submission"] is False
+    assert not (tmp_path / "submission.csv").exists()
+    assert_no_submission_csv(tmp_path)
+
+
 def test_push_and_fetch_lock_training_allow_infer():
     spec = importlib.util.spec_from_file_location(
         "push_kaggle_kernel",
@@ -218,7 +259,7 @@ def test_push_and_fetch_lock_training_allow_infer():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     assert TRAIN_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
-    assert INFER_KERNEL_SLUG not in mod.FORBIDDEN_SLUGS
+    assert INFER_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     fetch = importlib.util.spec_from_file_location(
         "fetch_kernel_output",
         ROOT / "scripts" / "fetch_kernel_output.py",

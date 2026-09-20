@@ -155,33 +155,83 @@ def list_tuning_pairs(train_dir: str | Path) -> list[dict[str, str]]:
     return pairs
 
 
+KAGGLE_INPUT = Path("/kaggle/input")
+SKIP_INPUT_DIRS = frozenset(
+    {
+        "biohub-cell-tracking-during-development",
+        "competitions",
+    }
+)
+
+
+def _looks_like_volume(path: Path) -> bool:
+    if path.suffix in {".zarr", ".geff"}:
+        return True
+    return (path / "zarr.json").exists() or (path / "0" / "zarr.json").exists()
+
+
+def default_weight_roots() -> list[Path]:
+    """Candidate weight mounts. Never walks competition Zarr/GEFF trees."""
+    roots = [
+        Path("/kaggle/input/biohub-learned-unet-v1"),
+        Path("/kaggle/input/biohub-learned-unet-v1/biohub-learned-unet-v1"),
+        Path("/kaggle/input/mahdimzafari-biohub-learned-unet-v1"),
+        Path("/kaggle/input/mahdimzafari/biohub-learned-unet-v1"),
+        Path("/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1"),
+        Path("/kaggle/input/notebooks/biohub-learned-unet-v1"),
+        Path("/kaggle/input/notebooks/mahdimzafari-biohub-learned-unet-v1"),
+        Path("/kaggle/input/notebooks"),
+        Path("artifacts/kaggle/learned_unet_v1"),
+        Path("artifacts/kaggle"),
+        Path("."),
+    ]
+    if KAGGLE_INPUT.is_dir():
+        for child in sorted(KAGGLE_INPUT.iterdir()):
+            if child.name in SKIP_INPUT_DIRS or _looks_like_volume(child):
+                continue
+            roots.append(child)
+    seen: set[str] = set()
+    unique: list[Path] = []
+    for root in roots:
+        key = str(root)
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(root)
+    return unique
+
+
 def find_weights(search_roots: Sequence[str | Path] | None = None) -> Path | None:
     """Locate training-kernel weights. Never searches holdout volumes."""
-    roots: list[Path] = []
-    if search_roots:
-        roots.extend(Path(p) for p in search_roots if p)
-    else:
-        roots.extend(
-            [
-                Path("/kaggle/input/biohub-learned-unet-v1"),
-                Path("/kaggle/input/biohub-learned-unet-v1/biohub-learned-unet-v1"),
-                Path("artifacts/kaggle/learned_unet_v1"),
-                Path("artifacts/kaggle"),
-                Path("."),
-            ]
-        )
+    roots = [Path(p) for p in search_roots if p] if search_roots else default_weight_roots()
     names = (WEIGHTS_NAME, FALLBACK_WEIGHTS_NAME)
     for root in roots:
-        if not root.exists():
+        found = _first_weight(root, names)
+        if found is not None:
+            return found
+    return None
+
+
+def _first_weight(root: Path, names: tuple[str, ...], max_depth: int = 5) -> Path | None:
+    if not root.exists() or _looks_like_volume(root):
+        return None
+    stack = [(root, 0)]
+    while stack:
+        current, depth = stack.pop()
+        if depth > max_depth or _looks_like_volume(current):
             continue
-        for name in names:
-            direct = root / name
-            if direct.is_file():
-                return direct
-        for name in names:
-            matches = sorted(root.rglob(name))
-            if matches:
-                return matches[0]
+        try:
+            children = list(current.iterdir())
+        except OSError:
+            continue
+        for child in children:
+            if child.is_file() and child.name in names:
+                return child
+        if depth == max_depth:
+            continue
+        for child in children:
+            if child.is_dir() and not _looks_like_volume(child) and child.name not in SKIP_INPUT_DIRS:
+                stack.append((child, depth + 1))
     return None
 
 

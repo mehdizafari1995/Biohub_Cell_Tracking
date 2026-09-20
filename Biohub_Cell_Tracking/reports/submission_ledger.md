@@ -99,13 +99,17 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-v1`. Internet off. **Not a competition submission.** No `submission.csv`.
 - **Version 1:** error after writing a 44b6-only split (69 train / 2 frozen-tuning internal val, no 6bba). GPU T4 x2 and torch 2.10+cu128 were present.
 - **Version 2:** `train_error` `ValueError: unsupported zarr codec 'zstd'` on train volumes. Split unchanged.
-- **Version 3:** zstd decoder added; still **running** at the 2026-09-20 11:37 UTC poll (empty outputs; status API omitted `lastRunTime`). Prior `lastRunTime` 08:44:11Z. `max_hours=11.0`. Training slug locked against overwrite. Collector `scripts/collect_learned_unet_v1.py` is stdlib-importable and will download only after COMPLETE. Not a leaderboard score. Weights must stay out of git.
+- **Version 3:** **COMPLETE / trained**. Collector downloaded into ignored `artifacts/kaggle/learned_unet_v1`. 3 epochs, 6117 windows, best train loss 0.3604, 2.08M params, 11732 s, peak 1793 MB, T4 x2, torch 2.10+cu128. Split 69/2 `44b6` only. Hash `4c38035d6657f2ad`. No `submission.csv`. Weights stay out of git. Not a leaderboard score.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
 ## learned_unet_infer_v1_kernel
 
-- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1` packaged on PR #7. **Not pushed.** Waiting on training v3 COMPLETE. Infer collector `scripts/collect_learned_unet_infer_v1.py` packaged. Infer zarr reader probe-falls back to the custom zstd decoder.
-- **Config hash:** `d7578b5f64ddac08`. UNet local-max + 12 µm greedy 1-1 on frozen-tuning `44b6` only. Holdout refused. No `submission.csv`.
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-infer-v1`. Internet off. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `d7578b5f64ddac08`. UNet local-max + 12 µm greedy 1-1 on frozen-tuning `44b6` only. Holdout refused.
+- **Version 1:** COMPLETE / `blocked_no_weights` (5.08 s). Hard-coded training mount missed.
+- **Version 2:** COMPLETE / `blocked_no_weights` (3.74 s). `/kaggle/input` is `{competitions, notebooks}`. Push `invalidKernelSources` empty.
+- **Version 3:** **COMPLETE / inferred**. 187.0 s, peak 1136 MB, T4 x2. Graphs for `44b6_12dfb391` (80741 nodes) and `44b6_267148e4` (36951 nodes). Weights path `/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+- **Local official tuning:** learned_unet_infer_v1 **0.655751** vs locked association_v2 **0.632460**. Decision `keep_candidate_learned_unet_infer_v1`. Recall 0.970, edge Jaccard 0.690, 0/0/2 divisions. Not a leaderboard score. Do not look at `6bba` yet. Do not overwrite this slug.
 - **Kaggle public / private scores:** not applicable; not submitted.
 
 ## Policy
