@@ -66,3 +66,8 @@ Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `subm
 - Complete frozen volumes downloaded into ignored `data/train/` only (100/100). Not committed.
 - Re-score reproduced locked A 0.537 / B 0.592. `pytest` 49 passed.
 - Oracle helper now routes `association_v2` through the association linker (eval-only; locked YAML unchanged).
+
+## 2026-09-20T23:28Z CONTINUE completion
+
+- Read-only API re-check: kernel `complete`; exactly one competition submission `56399003` still `complete`; publicScore string `0.553`; private not returned.
+- No new kernel, no second submit, no data commit. Next family is existing draft PR #4 `division_v2`.

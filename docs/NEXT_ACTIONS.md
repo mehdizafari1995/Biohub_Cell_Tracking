@@ -7,7 +7,8 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 1. Keep draft PR `cursor/kaggle-baseline-association-0b83` (PR #2) open. Do not merge. Do not mark ready. Do not overwrite locked `association_v2`.
 2. Submission **56399003** (`mahdimzafari/biohub-association-v2` v3, config hash `2c6966b5204ba542`) is **complete**. Public LB **`0.553`** (API string). Private score was not returned. Do **not** resubmit this candidate. Do **not** retune from 0.553. That number is distinct from local official 0.592 and public-overlap official 0.564336.
 3. Kaggle UI `0/2` is **final-submission selection**, not a two-submit cap. Do not select finals yet. Stronger candidates are still expected. Kaggle will auto-select best scoring entries if fewer than two are chosen.
-4. Complete frozen-validation re-score is **done** and matches the locked 0.537 / 0.592 figures. See `Biohub_Cell_Tracking/reports/frozen_validation_complete_20260920.md`. The next experiment family belongs on a **new** draft PR. Do not absorb it here. Do not resubmit 56399003.
+4. Complete frozen-validation re-score is **done** and matches the locked 0.537 / 0.592 figures. See `Biohub_Cell_Tracking/reports/frozen_validation_complete_20260920.md`.
+5. **Exact next experiment:** continue existing draft PR #4 (`cursor/competition-operational-strategy-3381`) — score unchanged conservative `division_v2` once on complete frozen v1 validation against preserved `baseline_v1` and locked `association_v2`. Tune only on `44b6`. Do not absorb that family into PR #2. Do not resubmit 56399003. Do not retune from public 0.553.
 
 ## HUMAN_ACTION_REQUIRED
 

@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20T23:27Z (public LB 0.553 recorded; complete frozen val re-score reproduced locked 0.537 / 0.592). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20T23:28Z (CONTINUE cycle: API re-check still `complete` / public `0.553`; frozen-val evidence already on this branch). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -41,7 +41,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/kaggle_associatio
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`, 129500 nodes / 124273 edges / 11985 interpolated / 0 divisions). Decoder: `blosc2` (no `zarr` on the image).
 - Independent re-audit of the downloaded worker `submission.csv`: schema/coverage/integrity `audit_ok`; counts match the worker manifest; all edges `dt=1`; 0 predicted divisions; integer voxel centroids inside `(100, 64, 256, 256)`. CSV was not copied into git.
 - 2026-09-20T15:00Z worker re-verification: live `kernels/status` = `complete` (no failure); outputs `submission.csv` + `run_manifest.json`; re-downloaded zip 3 658 915 bytes; CSV 12 948 601 bytes. Stdlib + official re-audit both `audit_ok` and match the earlier 0.564336 overlap figure. Kernel was **not** re-pushed (no version 4). Competition submit was **not** performed.
-- Competition submit: Mahdi submitted `mahdimzafari/biohub-association-v2` `scriptVersionId=351174414` (version 3) from the Kaggle UI. Submission **56399003** dated `2026-09-20T15:12:52.307Z` is **complete**. Read-only API at `2026-09-20T23:08:00Z`: public score **`0.553`** (API string; no extra digits). Private score **not returned** (`hasPrivateScore=false`). `errorDescription` empty. Hidden-test output `totalBytes=209728379`. Scoring-rerun wall-clock was not returned by the API (pending at 17:25:30Z; complete by 23:08:00Z). This **0.553** is the first real Kaggle public score and is distinct from local official 0.592 and public-overlap official 0.564336. Do not retune or resubmit this locked candidate. Kaggle UI `0/2` is final-selection slots, not a two-submit cap; do not select finals yet. See `reports/kaggle_association_v2_submission_56399003_status.md`.
+- Competition submit: Mahdi submitted `mahdimzafari/biohub-association-v2` `scriptVersionId=351174414` (version 3) from the Kaggle UI. Submission **56399003** dated `2026-09-20T15:12:52.307Z` is **complete**. Read-only API at `2026-09-20T23:08:00Z` and re-checked `2026-09-20T23:28:19Z`: public score **`0.553`** (API string; no extra digits). Private score **not returned** (`hasPrivateScore=false`). `errorDescription` empty. Exactly one competition submission. Hidden-test output `totalBytes=209728379`. Scoring-rerun wall-clock was not returned by the API (pending at 17:25:30Z; complete by 23:08:00Z). This **0.553** is the first real Kaggle public score and is distinct from local official 0.592 and public-overlap official 0.564336. Do not retune or resubmit this locked candidate. Kaggle UI `0/2` is final-selection slots, not a two-submit cap; do not select finals yet. See `reports/kaggle_association_v2_submission_56399003_status.md`.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Tests

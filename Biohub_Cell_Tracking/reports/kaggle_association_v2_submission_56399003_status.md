@@ -2,7 +2,7 @@
 
 Read-only Kaggle API. No kernel push, cancel, data commit, or second submit. Signed URLs and credentials are not recorded.
 
-## Result (verified 2026-09-20T23:08:00Z)
+## Result (verified 2026-09-20T23:08:00Z; re-checked 2026-09-20T23:28:19Z)
 
 | field | value |
 |---|---|

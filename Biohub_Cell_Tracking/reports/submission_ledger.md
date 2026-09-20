@@ -53,7 +53,7 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 
 ## association_v2_competition_submit_56399003
 
-- **Status:** competition submission **complete**. First real Kaggle public score. Read-only API at `2026-09-20T23:08:00Z`.
+- **Status:** competition submission **complete**. First real Kaggle public score. Read-only API at `2026-09-20T23:08:00Z`; re-checked `2026-09-20T23:28:19Z` (still `complete`, publicScore string `0.553`, exactly one submission).
 - **ref:** `56399003`. **date:** `2026-09-20T15:12:52.307Z`. Kernel `mahdimzafari/biohub-association-v2` version **3** / `scriptVersionId=351174414`. Config hash `2c6966b5204ba542`.
 - **publicScore:** **`0.553`** (API full-precision string; no extra digits). **privateScore:** not returned. `errorDescription` empty. Hidden-test `totalBytes` 209728379.
 - **Runtime:** public-test worker 593.53 s / 421 MB. Scoring-rerun wall-clock was **not** returned by the API.
