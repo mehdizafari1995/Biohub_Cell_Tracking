@@ -33,6 +33,7 @@ def specimen_of(dataset: str) -> str:
     return str(dataset).split("_", 1)[0]
 
 
+# Directory markers used by older completeness checks. Prefer REQUIRED_GEFF_FILES.
 REQUIRED_GEFF_ARRAYS = (
     "nodes/ids",
     "nodes/props/t/values",
@@ -42,12 +43,112 @@ REQUIRED_GEFF_ARRAYS = (
     "edges/ids",
 )
 
+# Arrays actually opened by io_geff.load_geff. Skip optional group metadata.
+REQUIRED_GEFF_FILES = (
+    "zarr.json",
+    "nodes/ids/zarr.json",
+    "nodes/ids/c/0",
+    "edges/ids/zarr.json",
+    "edges/ids/c/0/0",
+    "nodes/props/t/values/zarr.json",
+    "nodes/props/t/values/c/0",
+    "nodes/props/z/values/zarr.json",
+    "nodes/props/z/values/c/0",
+    "nodes/props/y/values/zarr.json",
+    "nodes/props/y/values/c/0",
+    "nodes/props/x/values/zarr.json",
+    "nodes/props/x/values/c/0",
+)
+
+OPTIONAL_GEFF_METADATA_FILES = (
+    "nodes/zarr.json",
+    "nodes/props/zarr.json",
+    "nodes/ids/zarr.json",
+    "edges/zarr.json",
+    "edges/props/zarr.json",
+    "nodes/props/t/zarr.json",
+    "nodes/props/z/zarr.json",
+    "nodes/props/y/zarr.json",
+    "nodes/props/x/zarr.json",
+)
+
+# Conservative lock currently in configs/division_v2.yaml. New typical 44b6
+# events may widen max_parent_child_um up to 10.0; they must not lower
+# min_child_separation_um or raise max_sibling_alignment.
+CURRENT_LOCKED_OPERATING_POINT = {
+    "source": "tuning_44b6_specimen_geffs",
+    "max_parent_child_um": 8.5,
+    "min_child_separation_um": 8.7,
+    "min_parent_child_um": 0.0,
+    "max_sibling_alignment": 0.05,
+    "require_parent_predecessor": True,
+    "require_no_alternative_parent": True,
+    "alternative_parent_gate_um": 12.0,
+    "intensity_sum_tolerance": 0.45,
+    "max_children": 2,
+}
+
+TYPICAL_MIN_DISPLACEMENT_UM = 1.0
+TYPICAL_MIN_SIBLING_UM = 8.0
+TYPICAL_MAX_PARENT_CHILD_UM = 10.0
+TYPICAL_MAX_ALIGNMENT = 0.05
+
+
+def all_geff_files() -> tuple[str, ...]:
+    """Full 21-file GEFF layout. Prefer REQUIRED_GEFF_FILES for downloads."""
+    files = [
+        "zarr.json",
+        "nodes/zarr.json",
+        "nodes/props/zarr.json",
+        "nodes/ids/zarr.json",
+        "nodes/ids/c/0",
+        "edges/zarr.json",
+        "edges/ids/zarr.json",
+        "edges/ids/c/0/0",
+        "edges/props/zarr.json",
+    ]
+    for prop in ("t", "z", "y", "x"):
+        files.extend(
+            [
+                f"nodes/props/{prop}/zarr.json",
+                f"nodes/props/{prop}/values/zarr.json",
+                f"nodes/props/{prop}/values/c/0",
+            ]
+        )
+    return tuple(files)
+
 
 def geff_store_complete(path: Path) -> bool:
-    """True when the GEFF directory has the node/edge arrays we read."""
+    """True when required node/edge arrays (and chunks) are present and non-empty."""
     if not path.is_dir():
         return False
-    return all((path / rel).exists() for rel in REQUIRED_GEFF_ARRAYS)
+    for rel in REQUIRED_GEFF_FILES:
+        dest = path / rel
+        if not dest.exists() or dest.stat().st_size <= 0:
+            return False
+    return True
+
+
+def inventory_geff_names(
+    inventory_path: str | Path,
+    specimen: str | None = None,
+    split: str = "train",
+) -> list[str]:
+    """Return unique GEFF dataset stems from docs/dataset_inventory.json."""
+    payload = json.loads(Path(inventory_path).read_text())
+    names: list[str] = []
+    seen: set[str] = set()
+    for row in payload.get("datasets") or []:
+        if row.get("kind") != "geff" or row.get("split") != split:
+            continue
+        name = str(row.get("dataset") or "")
+        if not name or name in seen:
+            continue
+        if specimen is not None and str(row.get("embryo") or specimen_of(name)) != specimen:
+            continue
+        seen.add(name)
+        names.append(name)
+    return names
 
 
 def iter_specimen_geffs(data_dir: str | Path, specimen: str = TUNING_SPECIMEN) -> list[Path]:
@@ -164,8 +265,113 @@ def summarise_priors(events: list[dict], label: str) -> dict:
     }
 
 
+def atypical_reasons(event: dict) -> list[str]:
+    """Why a GEFF fork is excluded from typical-mitosis lock updates.
+
+    Typical 44b6 mitoses used for locking are bipolar, dt=1, both daughters
+    displaced, sibling separation at or above the 8.0 µm floor, parent–child
+    at or below the 10.0 µm cap, and anti-aligned when the angle is defined.
+    Close twins, long-range attachments, and near-coincident daughters stay
+    inventoried but must not relax the conservative gates.
+    """
+    reasons: list[str] = []
+    n_children = int(event.get("n_children") or len(event.get("parent_child_um") or []))
+    if n_children != 2:
+        reasons.append("n_children")
+    dts = [int(dt) for dt in (event.get("dt") or [])]
+    if not dts or any(dt != 1 for dt in dts):
+        reasons.append("dt")
+    pcs = [float(d) for d in (event.get("parent_child_um") or [])]
+    sibs = [float(d) for d in (event.get("sibling_um") or [])]
+    aligns = [float(d) for d in (event.get("sibling_alignment") or [])]
+    if not pcs or min(pcs) < TYPICAL_MIN_DISPLACEMENT_UM:
+        reasons.append("near_coincident_daughter")
+    if pcs and max(pcs) > TYPICAL_MAX_PARENT_CHILD_UM:
+        reasons.append("parent_child_above_cap")
+    if not sibs or min(sibs) < TYPICAL_MIN_SIBLING_UM:
+        reasons.append("close_twin")
+    if not aligns:
+        reasons.append("alignment_undefined")
+    elif max(aligns) > TYPICAL_MAX_ALIGNMENT:
+        reasons.append("same_direction")
+    return reasons
+
+
+def is_typical_fork(event: dict) -> bool:
+    return not atypical_reasons(event)
+
+
+def retain_or_update_lock(
+    current: dict | None,
+    typical_events: list[dict],
+) -> dict:
+    """Keep the locked gates unless a typical 44b6 event needs a wider parent–child.
+
+    Never lower ``min_child_separation_um`` (close twins are atypical).
+    Never raise ``max_sibling_alignment``. Cap ``max_parent_child_um`` at 10.0.
+    """
+    locked = dict(current or CURRENT_LOCKED_OPERATING_POINT)
+    for key, value in CURRENT_LOCKED_OPERATING_POINT.items():
+        locked.setdefault(key, value)
+    action = "retain"
+    reasons: list[str] = []
+    pc_max = None
+    if typical_events:
+        pc_max = max(float(d) for event in typical_events for d in event.get("parent_child_um") or [0.0])
+        current_pc = float(locked["max_parent_child_um"])
+        if pc_max > current_pc:
+            new_pc = float(min(round(pc_max + 0.1, 1), TYPICAL_MAX_PARENT_CHILD_UM))
+            if new_pc > current_pc:
+                locked["max_parent_child_um"] = new_pc
+                action = "update_typical"
+                reasons.append(
+                    f"typical parent_child max {pc_max:.3f} µm exceeds locked {current_pc}; "
+                    f"widen to {new_pc} (cap {TYPICAL_MAX_PARENT_CHILD_UM})"
+                )
+    locked["min_child_separation_um"] = float(CURRENT_LOCKED_OPERATING_POINT["min_child_separation_um"])
+    locked["max_sibling_alignment"] = float(CURRENT_LOCKED_OPERATING_POINT["max_sibling_alignment"])
+    locked["require_parent_predecessor"] = True
+    locked["require_no_alternative_parent"] = True
+    locked["n_typical_events"] = len(typical_events)
+    locked["n_typical_datasets"] = len({e.get("dataset") for e in typical_events})
+    locked["typical_parent_child_max_um"] = pc_max
+    locked["action"] = action
+    locked["update_reasons"] = reasons
+    locked["note"] = (
+        "Locked from typical tuning-specimen (44b6) GEFF geometry only. "
+        "Atypical forks (close twins, near-coincident daughters, parent–child "
+        f"above {TYPICAL_MAX_PARENT_CHILD_UM} µm) were inventoried and not used "
+        "to relax min_child_separation_um or max_sibling_alignment. "
+        "Validation 6bba events were not used."
+    )
+    return locked
+
+
+def apply_operating_point_to_yaml(path: str | Path, lock: dict) -> None:
+    """Patch gate scalars in division_v2.yaml without dropping comments."""
+    import re
+
+    text = Path(path).read_text()
+    for key in ("max_parent_child_um", "min_child_separation_um", "max_sibling_alignment"):
+        text, n = re.subn(
+            rf"^(\s*{key}:\s*)[-0-9.]+",
+            rf"\g<1>{lock[key]}",
+            text,
+            count=1,
+            flags=re.M,
+        )
+        if n != 1:
+            raise ValueError(f"failed to patch {key} in {path}")
+    Path(path).write_text(text)
+
+
 def lock_operating_point(tuning_summary: dict) -> dict:
-    """Round conservative gates from tuning-specimen GEFF stats only."""
+    """Round conservative gates from tuning-specimen GEFF stats only.
+
+    Do not use this on the unfiltered event list: a close-twin sibling can
+    pull ``min_child_separation_um`` down to the 8.0 floor. Prefer
+    ``retain_or_update_lock`` on ``is_typical_fork`` events.
+    """
     pc = tuning_summary.get("parent_child_um") or {}
     sib = tuning_summary.get("sibling_um") or {}
     align = tuning_summary.get("sibling_alignment") or {}
@@ -245,23 +451,48 @@ def collect_geff_division_priors(data_dir: str | Path) -> dict:
         specimen_events.extend(events)
 
     val_scanned = [p.name.removesuffix(".geff") for p in iter_specimen_geffs(data_dir, VALIDATION_SPECIMEN)]
+    typical_events = [event for event in specimen_events if is_typical_fork(event)]
+    atypical_events = []
+    for event in specimen_events:
+        reasons = atypical_reasons(event)
+        if reasons:
+            atypical_events.append({**event, "atypical_reasons": reasons})
+    typical_summary = summarise_priors(typical_events, "typical_44b6_specimen_geffs")
     tuning_summary = summarise_priors(specimen_events, "tuning_44b6_specimen_geffs")
+    proposed = retain_or_update_lock(CURRENT_LOCKED_OPERATING_POINT, typical_events)
+    proposed["n_events"] = len(typical_events)
+    proposed["n_datasets"] = proposed.get("n_typical_datasets")
+    unfiltered = lock_operating_point(tuning_summary)
+    unfiltered["do_not_use"] = True
+    unfiltered["reason"] = (
+        "Unfiltered lock_operating_point on every 44b6 fork, including close twins. "
+        "Kept for audit only. division_v2 uses locked_operating_point from typical forks."
+    )
     return {
         "note": (
             "Priors use GEFF node/edge coordinates only. Validation image outcomes "
             "were not inspected while estimating these numbers. Thresholds are "
-            "locked on the tuning specimen (44b6) only, then scored once on frozen validation."
+            "locked on typical tuning-specimen (44b6) forks only, then scored once "
+            "on frozen validation. Close twins and near-coincident daughters are "
+            "inventoried as atypical and must not lower min_child_separation_um."
         ),
         "tuning_specimen": TUNING_SPECIMEN,
         "validation_specimen_excluded": VALIDATION_SPECIMEN,
         "n_tuning_geffs_scanned": len(scanned),
         "tuning_geffs_scanned": scanned,
         "n_validation_geffs_present_unused": len(val_scanned),
+        "n_typical_events": len(typical_events),
+        "n_atypical_events": len(atypical_events),
+        "typical_event_datasets": sorted({e.get("dataset") for e in typical_events if e.get("dataset")}),
+        "atypical_event_datasets": sorted({e.get("dataset") for e in atypical_events if e.get("dataset")}),
         "datasets": by_dataset,
         "all_five": summarise_priors(historical_all, "all_five_division_geffs"),
         "tuning_three": summarise_priors(historical_tune, "tuning_44b6_division_geffs"),
         "tuning_specimen_summary": tuning_summary,
-        "locked_operating_point": lock_operating_point(tuning_summary),
+        "typical_tuning_summary": typical_summary,
+        "atypical_tuning_events": atypical_events,
+        "locked_operating_point": proposed,
+        "unfiltered_lock_rejected": unfiltered,
     }
 
 
