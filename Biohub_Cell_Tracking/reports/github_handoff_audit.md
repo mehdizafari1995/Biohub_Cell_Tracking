@@ -24,7 +24,7 @@ Confirmed ignored: local `data/` (OME-Zarr + GEFF), root `submission.csv`, Kaggl
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 85 passed (2026-09-20, holdout pair). Includes zarr-export helper tests. Worker Zarr/GEFF zips stay under ignored `artifacts/kaggle/` and `data/`.
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 101 passed (2026-09-20, complementary_v1 holdout). Includes zarr-export helper tests. Worker Zarr/GEFF zips stay under ignored `artifacts/kaggle/` and `data/`.
 
 ## Official scorer
 

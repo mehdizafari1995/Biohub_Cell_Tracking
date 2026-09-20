@@ -1,5 +1,5 @@
 {
-  "status": "candidate_not_locked",
+  "status": "rejected_on_holdout",
   "hypothesis": "Locked baseline_v1 DoG misses isolated lower-contrast cells. A complementary local-max pass that keeps only peaks at least 6.0 µm from any primary detection and at least 0.45 times the primary median intensity can recover those cells without crowding T_pred. Tune on specimen 44b6 only. Do not widen locked association_v2 or division_v2 gates.",
   "primary": "baseline_v1 anisotropic DoG + 4 µm NMS",
   "linking": "association_v2 (copied, not overwritten)",
@@ -13,10 +13,21 @@
     "complementary_anisotropic": true
   },
   "candidate_config_hash": "2c4866928d7262b6",
-  "locked_operating_point": null,
-  "holdout_scored": false,
-  "do_not_score_holdout_until_locked": true,
+  "locked_operating_point": {
+    "complementary_method": "local_max",
+    "complementary_threshold": 0.04,
+    "complementary_min_sigma": 2.0,
+    "complementary_max_sigma": 5.0,
+    "complementary_min_distance_um": 6.0,
+    "complementary_intensity_ratio": 0.45,
+    "complementary_anisotropic": true
+  },
+  "locked_config_hash": "2c4866928d7262b6",
+  "holdout_scored": true,
+  "do_not_score_holdout_until_locked": false,
+  "do_not_retune_after_holdout": true,
   "tuning_datasets": ["44b6_12dfb391", "44b6_267148e4"],
+  "holdout_datasets": ["6bba_05db0fb1", "6bba_c328f2fd"],
   "measured_tuning_official": {
     "association_v2": 0.6324600072329115,
     "complementary_v1": 0.6331347790946568,
@@ -24,9 +35,32 @@
     "not_a_kaggle_run": true,
     "not_a_leaderboard_score": true
   },
+  "measured_holdout_official": {
+    "association_v2": 0.5915697467955445,
+    "complementary_v1": 0.5913844796149841,
+    "association_v2_per_sequence": {
+      "6bba_05db0fb1": 0.5643362235389078,
+      "6bba_c328f2fd": 0.6601944625665863
+    },
+    "complementary_v1_per_sequence": {
+      "6bba_05db0fb1": 0.5643128442961481,
+      "6bba_c328f2fd": 0.6596012601507039
+    },
+    "node_recall": 0.8382437474025468,
+    "division_tp_fp_fn": [0, 0, 5],
+    "pred_nodes_association_v2": 96336,
+    "pred_nodes_complementary_v1": 96648,
+    "decision": "reject_complementary_v1",
+    "runtime_sec": 275.066,
+    "peak_memory_mb": 757.9,
+    "code_version_scored": "d735680",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "not_a_kaggle_run": true,
+    "not_a_leaderboard_score": true
+  },
   "notes": [
     "Three of five frozen-holdout GT forks sit inside locked division_v2 gates and were still missed. That observation was not used to choose complementary thresholds.",
-    "Official tuning combined did not regress versus locked association_v2 (0.632460). Gain is +0.000675. Per-sequence mixed: 44b6_12dfb391 improved, 44b6_267148e4 lost a little adj-edge from extra T_pred. Not locked yet.",
-    "Do not score frozen 6bba until locked_operating_point is recorded."
+    "Official tuning combined did not regress versus locked association_v2 (0.632460). Gain is +0.000675. Per-sequence mixed: 44b6_12dfb391 improved, 44b6_267148e4 lost a little adj-edge from extra T_pred. Locked from that 44b6 result.",
+    "Official holdout scored once. complementary_v1 0.591384 vs association_v2 0.591570. Recall unchanged (0.838). Extra T_pred (+312 nodes) lowered adj-edge Jaccard. Reject. Do not retune."
   ]
 }

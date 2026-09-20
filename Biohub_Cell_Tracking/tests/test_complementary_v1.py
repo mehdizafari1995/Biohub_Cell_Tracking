@@ -42,10 +42,19 @@ def test_complementary_config_copies_locked_association_and_keeps_primary():
     assert assoc.detection.complementary_method == "none"
     assert base.detection.complementary_method == "none"
     assert pipeline_config_hash(cand) != pipeline_config_hash(assoc)
+    assert pipeline_config_hash(cand) == "2c4866928d7262b6"
     priors = json.loads((ROOT / "docs" / "complementary_priors.json").read_text())
-    assert priors["locked_operating_point"] is None
-    assert priors["holdout_scored"] is False
-    assert priors["status"] == "candidate_not_locked"
+    locked = priors["locked_operating_point"]
+    assert locked is not None
+    assert priors["status"] == "rejected_on_holdout"
+    assert priors["locked_config_hash"] == "2c4866928d7262b6"
+    assert locked["complementary_method"] == "local_max"
+    assert locked["complementary_min_distance_um"] == 6.0
+    assert locked["complementary_intensity_ratio"] == 0.45
+    assert locked["complementary_threshold"] == 0.04
+    assert priors["do_not_retune_after_holdout"] is True
+    assert tuple(priors["holdout_datasets"]) == LOCKED_V1_VALIDATION
+    assert tuple(priors["tuning_datasets"]) == LOCKED_V1_TUNING
 
 
 def test_runner_refuses_holdout_until_lock_file_records_operating_point(tmp_path: Path):
@@ -61,6 +70,41 @@ def test_runner_refuses_holdout_until_lock_file_records_operating_point(tmp_path
     locked = tmp_path / "locked.json"
     locked.write_text(json.dumps({"locked_operating_point": {"complementary_method": "local_max"}}))
     _run_mod.assert_tuning_only("validation", locked)
+    scored = tmp_path / "scored.json"
+    scored.write_text(
+        json.dumps(
+            {
+                "locked_operating_point": {"complementary_method": "local_max"},
+                "holdout_scored": True,
+            }
+        )
+    )
+    try:
+        _run_mod.assert_tuning_only("validation", scored)
+    except SystemExit as exc:
+        assert "re-score" in str(exc)
+    else:
+        raise AssertionError("expected SystemExit")
     assert LOCKED_V1_TUNING == ("44b6_12dfb391", "44b6_267148e4")
     assert LOCKED_V1_VALIDATION == ("6bba_05db0fb1", "6bba_c328f2fd")
     assert _run_mod.TUNING_DATASETS == LOCKED_V1_TUNING
+    assert _run_mod.VALIDATION_DATASETS == LOCKED_V1_VALIDATION
+
+
+def test_priors_holdout_is_one_shot_and_not_retuned():
+    priors = json.loads((ROOT / "docs" / "complementary_priors.json").read_text())
+    assert priors["status"] == "rejected_on_holdout"
+    assert priors["holdout_scored"] is True
+    assert priors["do_not_retune_after_holdout"] is True
+    measured = priors.get("measured_holdout_official") or {}
+    assert measured.get("not_a_leaderboard_score") is True
+    assert measured.get("decision") == "reject_complementary_v1"
+    assert measured.get("association_v2") == 0.5915697467955445
+    assert measured.get("complementary_v1") == 0.5913844796149841
+    assert measured["complementary_v1"] < measured["association_v2"]
+    try:
+        _run_mod.assert_tuning_only("validation", ROOT / "docs" / "complementary_priors.json")
+    except SystemExit as exc:
+        assert "re-score" in str(exc)
+    else:
+        raise AssertionError("expected SystemExit")

@@ -4,7 +4,9 @@ max_timepoints: null
 timepoint_start: 0
 label: complementary_v1
 
-# Candidate only. Tune on 44b6. Do not overwrite baseline_v1 or association_v2.
+# Locked from 44b6 tuning (official 0.633135 vs association_v2 0.632460).
+# Rejected on frozen 6bba holdout (0.591384 vs association_v2 0.591570).
+# Do not retune. Do not overwrite baseline_v1 or association_v2.
 # Primary detections stay locked anisotropic DoG + 4 µm NMS.
 detection:
   method: blob_dog

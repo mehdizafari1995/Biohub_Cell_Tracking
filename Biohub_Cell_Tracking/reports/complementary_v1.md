@@ -20,10 +20,11 @@ pass may add a peak only when:
 2. Its intensity is at least **0.45 ×** the primary median intensity.
 3. Remaining complementary peaks are self-NMS'd at 4 µm.
 
-## Candidate (not locked)
+## Operating point
 
 `configs/complementary_v1.yaml`, pipeline hash `2c4866928d7262b6`.
-`docs/complementary_priors.json` still has `locked_operating_point: null`.
+Locked from frozen **tuning** (`44b6` only), then scored **once** on frozen
+`6bba`. Status: **rejected_on_holdout**. Do not retune.
 
 ## Official tuning score
 
@@ -43,19 +44,47 @@ Per-sequence official combined:
 | `44b6_12dfb391` | 0.667400 | **0.668400** | 66980 → 66995 |
 | `44b6_267148e4` | **0.542891** | 0.542732 | 26124 → 26178 |
 
-Decision: `keep_candidate_complementary_v1`. Aggregate did not regress
-(+0.000675). The first sequence recovered one extra annotated node and one
-edge; the second added 54 nodes with unchanged recall and a small adj-edge
-penalty. Do **not** lock yet. Do **not** score `6bba` until a lock is recorded.
+Tuning decision was `keep_candidate_complementary_v1` (+0.000675 aggregate).
+That operating point was locked. Holdout was not used to choose thresholds.
 
-## Helper kernel
+## Official holdout score (once)
+
+Local official scorer `075fc5f5` on frozen validation `6bba_05db0fb1` +
+`6bba_c328f2fd` after private helper `mahdimzafari/biohub-holdout-zarr-export`
+v1. **Not a Kaggle run. Not a leaderboard score.** Runtime 275.1 s, peak RAM
+758 MB. Code `d735680`. Config hashes: association `0a97ad15532c26dc`,
+complementary `2c4866928d7262b6`.
+
+| candidate | official combined | edge J | adj edge J | recall | pred nodes | TP/FP/FN div |
+|---|---|---|---|---|---|---|
+| association_v2 | **0.591570** | 0.58881 | 0.59157 | 0.83824 | 96336 | 0/0/5 |
+| complementary_v1 | 0.591384 | 0.58881 | 0.59138 | 0.83824 | 96648 | 0/0/5 |
+
+Per-sequence official combined:
+
+| dataset | association_v2 | complementary_v1 | det nodes (B → E) |
+|---|---|---|---|
+| `6bba_05db0fb1` | **0.564336** | 0.564313 | 61809 → 61839 |
+| `6bba_c328f2fd` | **0.660194** | 0.659601 | 26591 → 26845 |
+
+Decision: **`reject_complementary_v1`**. Combined score regressed (−0.000185).
+Node recall and raw edge Jaccard were identical; extra T_pred (+312 nodes)
+lowered adj-edge Jaccard. Identity switches stayed 135 / 483. No extra
+annotated cells were recovered. Do **not** retune isolation or intensity
+gates after this result. association_v2 remains the scoring candidate.
+
+## Helper kernels
 
 Private `mahdimzafari/biohub-tuning-zarr-export` version 1 **COMPLETE**.
 Zipped only the two frozen-tuning Zarrs (919 MB worker archive). Not a
-submission. Do not overwrite baseline_v1 / association_v2 / geff-export /
-holdout-zarr-export.
+submission.
+
+Private `mahdimzafari/biohub-holdout-zarr-export` version 1 **COMPLETE**.
+Zipped only the two frozen-holdout Zarrs. Reused for this holdout score.
+Not a submission. Do not overwrite baseline_v1 / association_v2 /
+geff-export / holdout-zarr-export / tuning-zarr-export.
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 99+ passed
-on this branch after the complementary family was added.
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 101 passed
+on this branch after the holdout lock and one-shot refusal.

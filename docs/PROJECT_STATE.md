@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (complementary_v1 candidate family). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20 (complementary_v1 rejected on holdout). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -8,7 +8,7 @@ Last updated: 2026-09-20 (complementary_v1 candidate family). Authoritative impl
 - Base branch: `main` (baseline + official scorer + privacy audit + coordination docs + complete-validation harness)
 - Association experiment (keep open, do not merge): `cursor/kaggle-baseline-association-0b83` (PR #2)
 - Division experiment (keep open, do not merge): `cursor/competition-operational-strategy-3381` (PR #4). Official holdout done; do not retune.
-- Active experiment branch: `cursor/complementary-detection-v1` (complementary 3D detection on locked association_v2)
+- Complementary experiment (keep open, do not merge): `cursor/complementary-detection-v1` (PR #5). Locked from 44b6, scored once on 6bba, **rejected**.
 - Command channel: issue #1 (this worker still gets 403 on issues)
 
 ## What is locked
@@ -21,9 +21,9 @@ Last updated: 2026-09-20 (complementary_v1 candidate family). Authoritative impl
 - Locked association: `configs/association_v2.yaml` (12 µm gate + 2-frame gap close + intensity 0.5, greedy). Kernel config hash `2c6966b5204ba542`. Do not overwrite after holdout.
 - Locked conservative division: `configs/division_v2.yaml` (association_v2 + predecessor / no-alternative-parent / anti-alignment). Gates from **all 71 train `44b6` GEFFs**: `max_parent_child_um=10.0`, `min_child_separation_um=8.3`, `max_sibling_alignment=0.05`. Config hash `0fa756963e5d42d1`. Do not retune after holdout.
 
-## Candidate (not locked)
+## Rejected (do not retune)
 
-- `configs/complementary_v1.yaml`: locked baseline_v1 primary DoG + complementary local-max (6.0 µm isolation, 0.45 intensity ratio) + locked association_v2 linker. See `docs/complementary_priors.json`. Official holdout is refused until a lock is recorded from tuning.
+- `configs/complementary_v1.yaml`: locked baseline_v1 primary DoG + complementary local-max (6.0 µm isolation, 0.45 intensity ratio) + locked association_v2 linker. Hash `2c4866928d7262b6`. Tuning 0.633135 vs association_v2 0.632460; holdout **0.591384 vs 0.591570**. Status `rejected_on_holdout`. See `docs/complementary_priors.json`.
 
 ## Measured results (local official scorer, not leaderboard)
 
@@ -35,11 +35,11 @@ On frozen validation (`6bba_05db0fb1` + `6bba_c328f2fd`):
 | B `association_v2` | **0.591570** | local official on both frozen sequences; Kaggle kernel v3 independently audited |
 | C `division_v1` | 0.590 | 0 TP / 3 FP / 5 FN; rejected |
 | D `division_v2` | **0.591570** | identical to B; 0 TP / 0 FP / 5 FN; keep as no-op overlay; do not retune |
-| E `complementary_v1` | tuning **0.633135** | vs association_v2 0.632460 on `44b6` only; not locked; holdout refused |
+| E `complementary_v1` | 0.591384 | rejected; recall unchanged; extra T_pred; do not retune |
 
 Independent official score of the **downloaded** association_v2 kernel v3 CSV vs the train GEFF for public-test overlap `6bba_05db0fb1`: **0.564336**. That is not a leaderboard score. `6bba_c328f2fd` is not in public test.
 
-See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/zarr_export_v1.md`, `reports/geff_export_v1.md`, `reports/kaggle_association_v2_v3_independent_audit.md`, and `experiments/registry.csv`.
+See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, `reports/holdout_pair_division_v2.md`, `reports/complementary_v1.md`, `reports/complementary_v1_holdout.json`, `reports/zarr_export_v1.md`, `reports/geff_export_v1.md`, `reports/kaggle_association_v2_v3_independent_audit.md`, and `experiments/registry.csv`.
 
 ## Kaggle
 
@@ -47,17 +47,17 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`).
 - Private helper kernel `mahdimzafari/biohub-geff-export` version 1 **COMPLETE** (203.74 s). Zipped 73 train GEFFs. **Not a submission.**
 - Private helper kernel `mahdimzafari/biohub-holdout-zarr-export` version 1 **COMPLETE** (13.43 s). Zipped only the two holdout Zarrs (993 MB). **Not a submission.**
-- Private helper kernel `mahdimzafari/biohub-tuning-zarr-export` version 1 **COMPLETE**. Zipped only the two frozen-tuning Zarrs (919 MB). **Not a submission.** Do not overwrite the four kernels above.
+- Private helper kernel `mahdimzafari/biohub-tuning-zarr-export` version 1 **COMPLETE**. Zipped only the two frozen-tuning Zarrs (919 MB). **Not a submission.** Do not overwrite the five kernels above.
 - Competition submit: **not performed**. No public or private leaderboard score.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Complete validation harness
 
-`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Complementary scoring is `scripts/run_complementary_detection.py` and is tuning-only until locked.
+`scripts/run_complete_validation.py` and `scripts/run_holdout_pair.py` inventory both frozen validation sequences and score them with the official scorer plus per-event `score_divisions`. Complementary scoring is `scripts/run_complementary_detection.py` (one-shot holdout after lock; a second holdout score is refused).
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 100 passed (2026-09-20, this branch).
+`PYTHONPATH=src python -m pytest Biohub_Cell_Tracking/tests` — 101 passed (2026-09-20, this branch).
 
 ## Privacy
 

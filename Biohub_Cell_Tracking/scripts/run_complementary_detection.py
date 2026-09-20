@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Official-score complementary_v1 vs locked association_v2 on tuning only.
+"""Official-score complementary_v1 vs locked association_v2.
 
-Does not overwrite baseline_v1, association_v2, or division_v2. A local
-official score is not a Kaggle run and not a leaderboard number. Holdout
-scoring is refused until docs/complementary_priors.json records a lock.
+Tune on 44b6, then score frozen 6bba once after the lock file records an
+operating point. Does not overwrite baseline_v1, association_v2, or
+division_v2. A local official score is not a Kaggle run and not a
+leaderboard number. A second holdout score is refused.
 """
 
 from __future__ import annotations
@@ -43,27 +44,35 @@ from biohub_tracking.track import graph_from_cached_frames  # noqa: E402
 from biohub_tracking.validation import (  # noqa: E402
     FrozenSplitError,
     LOCKED_V1_TUNING,
+    LOCKED_V1_VALIDATION,
     assert_specimen_separated,
     inventory_validation,
     load_split_manifest,
 )
 
 TUNING_DATASETS = LOCKED_V1_TUNING
+VALIDATION_DATASETS = LOCKED_V1_VALIDATION
 CACHE = ROOT / "artifacts" / "cache" / "detections"
 PRIORS = ROOT / "docs" / "complementary_priors.json"
 ASSOC_LOCKED_TUNE = 0.6324600072329115
+ASSOC_LOCKED_HOLDOUT = 0.5915697467955445
+
+
+def _lock_payload(lock_path: Path | None) -> dict:
+    if lock_path is None or not lock_path.exists():
+        return {}
+    return json.loads(lock_path.read_text()) or {}
 
 
 def assert_tuning_only(role: str, lock_path: Path | None = None) -> None:
-    """Refuse holdout until a lock file records an operating point."""
+    """Refuse holdout until locked, and refuse a second holdout score."""
     if role == "tuning":
         return
-    payload: dict = {}
-    if lock_path is not None and lock_path.exists():
-        payload = json.loads(lock_path.read_text()) or {}
-    if payload.get("locked_operating_point"):
-        return
-    raise SystemExit("refusing to score holdout before complementary_v1 is locked on tuning")
+    payload = _lock_payload(lock_path)
+    if not payload.get("locked_operating_point"):
+        raise SystemExit("refusing to score holdout before complementary_v1 is locked on tuning")
+    if payload.get("holdout_scored"):
+        raise SystemExit("refusing to re-score frozen holdout; complementary_v1 already scored once")
 
 
 def cache_path(dataset: str, label: str) -> Path:
@@ -229,8 +238,12 @@ def main() -> None:
     datasets = list(manifest[args.role])
     if args.role == "tuning" and tuple(datasets) != TUNING_DATASETS:
         raise SystemExit(f"refusing rewritten tuning set: {datasets}")
+    if args.role == "validation" and tuple(datasets) != VALIDATION_DATASETS:
+        raise SystemExit(f"refusing rewritten validation set: {datasets}")
     assoc_cfg = load_config(ROOT / "configs" / "association_v2.yaml")
     comp_cfg = load_config(ROOT / "configs" / "complementary_v1.yaml")
+    lock_payload = _lock_payload(args.lock_path)
+    locked = bool(lock_payload.get("locked_operating_point"))
     inventory = inventory_validation(args.data_dir, datasets)
     t0 = time.perf_counter()
     assoc = _score_one("association_v2", datasets, args.data_dir, assoc_cfg, assoc_cfg, "baseline_v1")
@@ -244,6 +257,8 @@ def main() -> None:
     if assoc_score is not None and comp_score is not None:
         if float(comp_score) < float(assoc_score):
             decision = "reject_complementary_v1"
+        elif args.role == "validation":
+            decision = "keep_complementary_v1"
         else:
             decision = "keep_candidate_complementary_v1"
     complete = all(item.zarr_exists and item.geff_exists for item in inventory) and len(inventory) == len(datasets)
@@ -256,6 +271,7 @@ def main() -> None:
         "association_v2": assoc,
         "complementary_v1": comp,
         "association_v2_locked_tune_score": ASSOC_LOCKED_TUNE,
+        "association_v2_locked_holdout_score": ASSOC_LOCKED_HOLDOUT,
         "runtime_sec": runtime,
         "peak_memory_mb": memory,
         "code_version": code,
@@ -267,7 +283,7 @@ def main() -> None:
         "not_a_kaggle_run": True,
         "not_a_leaderboard_score": True,
         "retune_after_holdout": False,
-        "locked": False,
+        "locked": locked,
     }
     assoc.update({"code_version": code, "runtime_sec": runtime, "peak_memory_mb": memory, "split": f"{args.role}:v1.json"})
     comp.update({"code_version": code, "runtime_sec": runtime, "peak_memory_mb": memory, "split": f"{args.role}:v1.json"})

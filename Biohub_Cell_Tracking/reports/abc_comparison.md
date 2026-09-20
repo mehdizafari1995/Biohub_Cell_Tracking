@@ -60,12 +60,13 @@ holdout vs association_v2 on identical detections: **0.591570** both,
 **0 TP / 0 FP / 5 FN**. Keep as a no-op overlay. Do not retune. See
 `reports/division_v2.md` and `reports/holdout_pair_division_v2.md`.
 
-## E `complementary_v1` (new family, not locked)
+## E `complementary_v1` (rejected on holdout)
 
-Candidate complementary local-max on locked baseline_v1 detections + locked
+Locked complementary local-max on locked baseline_v1 detections + locked
 association_v2 linker. Official tuning combined **0.633135** vs association_v2
-**0.632460**. Per-sequence mixed. Not locked. Frozen holdout is refused until
-a lock. See `reports/complementary_v1.md`.
+**0.632460**. Official holdout **0.591384 vs 0.591570**. Recall unchanged;
+extra T_pred (+312 nodes). Rejected. Do not retune. See
+`reports/complementary_v1.md` and `reports/complementary_v1_holdout.json`.
 
 ## Sanity sequence
 
@@ -73,4 +74,4 @@ a lock. See `reports/complementary_v1.md`.
 
 ## Kaggle
 
-A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only and identical to B on holdout. No competition submit was performed. No public or private leaderboard score was returned.
+A has a real Kaggle kernel execution (`mahdimzafari/biohub-baseline-v1` v2). B now also has a real private internet-off kernel execution (`mahdimzafari/biohub-association-v2` v3, 593.53 s, `audit_ok`) on public `test/`. The downloaded worker CSV was independently audited (`reports/kaggle_association_v2_v3_independent_audit.md`): schema `audit_ok`, and official score **0.564336** on public-test overlap `6bba_05db0fb1` (0/0/3 divisions), matching the local 0.564 figure. That is not a leaderboard score. `6bba_c328f2fd` is not in public test. Extra public-test stems (`44b6_*`, `6bba_05b6850b`) are not holdout and were not used to retune. C did not improve locally and has no kernel. D is local-only and identical to B on holdout. E is local-only and worse than B on holdout. No competition submit was performed. No public or private leaderboard score was returned.

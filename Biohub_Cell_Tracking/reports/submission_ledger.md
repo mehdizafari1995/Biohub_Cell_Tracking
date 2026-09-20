@@ -69,9 +69,16 @@ Local official scores only. association_v2 later received a private kernel (see 
 
 ## complementary_v1_family
 
-- **Status:** new experiment family on `cursor/complementary-detection-v1`. Candidate complementary local-max detector. **Not locked.**
+- **Status:** experiment family on `cursor/complementary-detection-v1`. Locked from 44b6, scored once on frozen 6bba, **rejected**. Do not retune.
 - **Helper:** private kernel `mahdimzafari/biohub-tuning-zarr-export` version **1 COMPLETE**. Zipped only `44b6_12dfb391.zarr` and `44b6_267148e4.zarr`. Worker archive 919 MB under ignored `artifacts/kaggle/`. **Not a submission.**
-- **Local official tuning:** complementary_v1 **0.633135** vs locked association_v2 **0.632460** on both frozen-tuning sequences. Decision `keep_candidate_complementary_v1`. Per-sequence mixed. Not a leaderboard score. Holdout not scored.
+- **Local official tuning:** complementary_v1 **0.633135** vs locked association_v2 **0.632460** on both frozen-tuning sequences. Decision `keep_candidate_complementary_v1`. Per-sequence mixed. Not a leaderboard score.
+- **Kaggle public / private scores:** not returned.
+
+## complementary_v1_holdout
+
+- **Status:** local official scorer on both frozen validation sequences after reusing `biohub-holdout-zarr-export` v1. **Not a Kaggle run.**
+- **association_v2:** combined **0.591570**, recall 0.838, 0/0/5 divisions, 96336 pred nodes. Matches the locked 0.591570 figure.
+- **complementary_v1:** combined **0.591384**, recall 0.838, 0/0/5 divisions, 96648 pred nodes. Extra T_pred lowered adj-edge Jaccard. Decision `reject_complementary_v1`. Do not retune.
 - **Kaggle public / private scores:** not returned.
 
 ## Policy
