@@ -159,6 +159,33 @@ def download_kernel_output_zip(
     raise RuntimeError(f"kernel output download failed for {slug}")
 
 
+_cool_until = 0.0
+_n_rate_limited = 0
+
+
+def _respect_rate_limit() -> None:
+    """Sleep if a previous 429 asked for a cool-down. Never prints the token."""
+    remaining = _cool_until - time.time()
+    if remaining > 0:
+        time.sleep(remaining)
+
+
+def _note_rate_limited(retry_after: str | None = None) -> float:
+    """Record a 429. Returns the cool-down used (seconds)."""
+    global _cool_until, _n_rate_limited
+    _n_rate_limited += 1
+    wait = 45.0
+    if retry_after:
+        try:
+            wait = float(retry_after)
+        except ValueError:
+            wait = 45.0
+    wait = min(max(wait, 30.0), 120.0)
+    _cool_until = max(_cool_until, time.time() + wait)
+    print(f"rate_limited n={_n_rate_limited} cool={wait:.0f}s", flush=True)
+    return wait
+
+
 def download_file(
     file_name: str,
     dest: Path,
@@ -172,8 +199,9 @@ def download_file(
     if dest.exists() and dest.stat().st_size > 0:
         if expected_bytes is None or dest.stat().st_size == int(expected_bytes):
             return True
-    delay = 5.0
+    delay = 8.0
     for attempt in range(10):
+        _respect_rate_limit()
         existing = dest.stat().st_size if dest.exists() else 0
         req = urllib.request.Request(url)
         req.add_header("Authorization", f"Bearer {_token()}")
@@ -196,7 +224,7 @@ def download_file(
                         dest.unlink(missing_ok=True)
                         delay = _sleep_backoff(delay)
                         continue
-                time.sleep(min_interval_sec + random.uniform(0.0, 0.5))
+                time.sleep(min_interval_sec + random.uniform(0.0, 0.4 * min_interval_sec))
             return dest.exists() and dest.stat().st_size > 0
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
@@ -204,7 +232,8 @@ def download_file(
             if exc.code == 416 and dest.exists() and dest.stat().st_size > 0:
                 return True
             if exc.code == 429:
-                delay = max(delay, 20.0)
+                retry_after = exc.headers.get("Retry-After") if getattr(exc, "headers", None) else None
+                delay = max(delay, _note_rate_limited(retry_after))
             if exc.code in {429, 500, 502, 503} and attempt < 9:
                 delay = _sleep_backoff(delay)
                 continue

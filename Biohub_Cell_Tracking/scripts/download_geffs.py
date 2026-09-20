@@ -2,8 +2,8 @@
 """Download GEFF graphs only (no image volumes) for inventory and split selection.
 
 Use ``--required-only`` to skip optional group metadata. Previous full-file
-crawls at 0.35 s spacing hit HTTP 429; default interval is 1.8 s with the
-kaggle_api backoff. Never run two downloaders in parallel.
+crawls at 0.35–1.8 s spacing hit HTTP 429; default interval is 4.0 s with a
+process-wide cool-down after 429. Never run two downloaders in parallel.
 """
 
 from __future__ import annotations
@@ -81,7 +81,7 @@ def main() -> None:
     parser.add_argument("--required-only", action="store_true", default=True)
     parser.add_argument("--full-metadata", action="store_true", help="Download all 21 GEFF files.")
     parser.add_argument("--skip-complete", action="store_true")
-    parser.add_argument("--interval", type=float, default=1.8)
+    parser.add_argument("--interval", type=float, default=4.0)
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument(
         "--also",
