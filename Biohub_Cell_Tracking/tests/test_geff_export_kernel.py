@@ -66,3 +66,27 @@ def test_extract_geff_export_zip_skips_zarr(tmp_path: Path):
     assert stats["n_stores"] == 1
     assert (tmp_path / "data/train/44b6_aaa.geff/zarr.json").read_text() == "g"
     assert not (tmp_path / "data/train/44b6_aaa.zarr").exists()
+
+
+def test_extract_geff_export_unwraps_worker_inner_zip(tmp_path: Path):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "download_geffs",
+        ROOT / "scripts" / "download_geffs.py",
+    )
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    inner = tmp_path / "train_geffs_44b6.zip"
+    with zipfile.ZipFile(inner, "w") as zf:
+        zf.writestr("train/44b6_12dfb391.geff/zarr.json", b"inner")
+        zf.writestr("train/44b6_12dfb391.zarr/0/c/0", b"nope")
+    outer = tmp_path / "worker.zip"
+    with zipfile.ZipFile(outer, "w") as zf:
+        zf.write(inner, arcname="train_geffs_44b6.zip")
+        zf.writestr("geff_export_manifest.json", b"{}")
+    stats = mod.extract_geff_export_zip(outer, tmp_path / "data")
+    assert stats["n_stores"] == 1
+    assert (tmp_path / "data/train/44b6_12dfb391.geff/zarr.json").read_bytes() == b"inner"
+    assert not (tmp_path / "data/train/44b6_12dfb391.zarr").exists()

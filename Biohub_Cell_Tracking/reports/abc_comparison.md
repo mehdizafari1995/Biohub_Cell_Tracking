@@ -60,6 +60,13 @@ holdout vs association_v2 on identical detections: **0.591570** both,
 **0 TP / 0 FP / 5 FN**. Keep as a no-op overlay. Do not retune. See
 `reports/division_v2.md` and `reports/holdout_pair_division_v2.md`.
 
+## E `complementary_v1` (new family, not locked)
+
+Candidate complementary local-max on locked baseline_v1 detections + locked
+association_v2 linker. Official tuning combined **0.633135** vs association_v2
+**0.632460**. Per-sequence mixed. Not locked. Frozen holdout is refused until
+a lock. See `reports/complementary_v1.md`.
+
 ## Sanity sequence
 
 `docs/splits/v2.json` adds `44b6_2a2eff9f` (100 frames, 1 GT division). Same specimen prefix as tuning. Locked association_v2 official score 0.801, recall 0.995, 16 switches. This is **not** a third-embryo holdout; the downloaded GEFF inventory only has prefixes `44b6` and `6bba`.

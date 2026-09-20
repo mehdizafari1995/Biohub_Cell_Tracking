@@ -85,6 +85,24 @@ Private CPU helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition.
 """,
     },
+    "tuning_zarr_export": {
+        "source": "notebooks/kaggle_tuning_zarr_export.py",
+        "notebook": "notebooks/kaggle_tuning_zarr_export.ipynb",
+        "kernel_dir": "kaggle_kernel/tuning_zarr_export",
+        "code_file": "kaggle_tuning_zarr_export.ipynb",
+        "kernel_id": "mahdimzafari/biohub-tuning-zarr-export",
+        "title": "Biohub Tuning Zarr Export",
+        "markdown": """# Biohub tuning Zarr export
+
+Private CPU helper kernel. **Not a competition submission.**
+
+- Zips **only** frozen-tuning `44b6_12dfb391.zarr` and `44b6_267148e4.zarr`.
+- Does **not** copy holdout volumes or GEFF stores.
+- Attach the competition dataset. **Internet OFF**. Keep private.
+- Do **not** overwrite `mahdimzafari/biohub-baseline-v1`, `mahdimzafari/biohub-association-v2`, `mahdimzafari/biohub-geff-export`, or `mahdimzafari/biohub-holdout-zarr-export`.
+- Do **not** Submit to Competition.
+""",
+    },
 }
 
 

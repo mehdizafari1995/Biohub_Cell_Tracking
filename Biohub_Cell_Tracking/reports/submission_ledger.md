@@ -67,6 +67,13 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 
 Local official scores only. association_v2 later received a private kernel (see above). division_v1 did not (0.590, 0/3/5 divisions) and has no Kaggle run.
 
+## complementary_v1_family
+
+- **Status:** new experiment family on `cursor/complementary-detection-v1`. Candidate complementary local-max detector. **Not locked.**
+- **Helper:** private kernel `mahdimzafari/biohub-tuning-zarr-export` version **1 COMPLETE**. Zipped only `44b6_12dfb391.zarr` and `44b6_267148e4.zarr`. Worker archive 919 MB under ignored `artifacts/kaggle/`. **Not a submission.**
+- **Local official tuning:** complementary_v1 **0.633135** vs locked association_v2 **0.632460** on both frozen-tuning sequences. Decision `keep_candidate_complementary_v1`. Per-sequence mixed. Not a leaderboard score. Holdout not scored.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

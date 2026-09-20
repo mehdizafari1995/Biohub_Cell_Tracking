@@ -20,6 +20,7 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-baseline-v1",
     "mahdimzafari/biohub-association-v2",
     "mahdimzafari/biohub-geff-export",
+    "mahdimzafari/biohub-holdout-zarr-export",
 }
 
 

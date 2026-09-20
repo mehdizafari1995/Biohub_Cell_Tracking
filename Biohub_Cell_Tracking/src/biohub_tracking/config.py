@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -21,6 +23,13 @@ class DetectionConfig:
     min_distance_um: float = 4.0
     suppress_duplicates: bool = False
     anisotropic: bool = False
+    complementary_method: str = "none"
+    complementary_threshold: float = 0.04
+    complementary_min_sigma: float = 2.0
+    complementary_max_sigma: float = 5.0
+    complementary_min_distance_um: float = 6.0
+    complementary_intensity_ratio: float = 0.45
+    complementary_anisotropic: bool = True
 
 
 @dataclass(frozen=True)
@@ -74,6 +83,13 @@ class PipelineConfig:
                 "min_distance_um": self.detection.min_distance_um,
                 "suppress_duplicates": self.detection.suppress_duplicates,
                 "anisotropic": self.detection.anisotropic,
+                "complementary_method": self.detection.complementary_method,
+                "complementary_threshold": self.detection.complementary_threshold,
+                "complementary_min_sigma": self.detection.complementary_min_sigma,
+                "complementary_max_sigma": self.detection.complementary_max_sigma,
+                "complementary_min_distance_um": self.detection.complementary_min_distance_um,
+                "complementary_intensity_ratio": self.detection.complementary_intensity_ratio,
+                "complementary_anisotropic": self.detection.complementary_anisotropic,
             },
             "linking": {
                 "method": self.linking.method,
@@ -132,6 +148,13 @@ def load_config(path: str | Path | None = None, overrides: dict[str, Any] | None
             min_distance_um=float(det.get("min_distance_um", 4.0)),
             suppress_duplicates=bool(det.get("suppress_duplicates", False)),
             anisotropic=bool(det.get("anisotropic", False)),
+            complementary_method=str(det.get("complementary_method", "none")),
+            complementary_threshold=float(det.get("complementary_threshold", 0.04)),
+            complementary_min_sigma=float(det.get("complementary_min_sigma", 2.0)),
+            complementary_max_sigma=float(det.get("complementary_max_sigma", 5.0)),
+            complementary_min_distance_um=float(det.get("complementary_min_distance_um", 6.0)),
+            complementary_intensity_ratio=float(det.get("complementary_intensity_ratio", 0.45)),
+            complementary_anisotropic=bool(det.get("complementary_anisotropic", True)),
         ),
         linking=LinkingConfig(
             method=str(link.get("method", "greedy")),
@@ -167,6 +190,12 @@ def load_config(path: str | Path | None = None, overrides: dict[str, Any] | None
             min_displacement_um=float(link.get("min_displacement_um", 1.0)),
         ),
     )
+
+
+def pipeline_config_hash(config: PipelineConfig) -> str:
+    """Stable 16-hex digest of the pipeline dict. Used for experiment ledgers."""
+    blob = json.dumps(config.to_dict(), sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(blob).hexdigest()[:16]
 
 
 def _deep_merge(base: dict[str, Any], extra: dict[str, Any]) -> dict[str, Any]:

@@ -23,6 +23,7 @@ from biohub_tracking.kaggle_api import (  # noqa: E402
 ALLOWED_SLUGS = {
     "mahdimzafari/biohub-geff-export",
     "mahdimzafari/biohub-holdout-zarr-export",
+    "mahdimzafari/biohub-tuning-zarr-export",
     "mahdimzafari/biohub-association-v2",
     "mahdimzafari/biohub-baseline-v1",
 }
