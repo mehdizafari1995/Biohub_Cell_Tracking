@@ -30,7 +30,7 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Output:** `/kaggle/working/submission.csv` 12 948 601 bytes, 253 773 rows, 129 500 nodes, 124 273 edges, 11 985 interpolated nodes, 0 predicted divisions. Worker audit: `audit_ok`. `submission.csv` was not copied into git.
 - **Worker:** 593.53 s (1.48 s/frame), peak RAM 421 MB. Decoder was `blosc2 4.1.2`; `zarr`/`imagecodecs`/`numcodecs` were missing.
 - **Local official score:** 0.592 on the full frozen validation split (`6bba_05db0fb1` + `6bba_c328f2fd`). That number is local official, not a leaderboard score.
-- **Competition submit:** not performed. No public or private leaderboard score was returned.
+- **Competition submit:** Mahdi submitted this version from the Kaggle UI. See `association_v2_competition_submit_56399003`.
 - **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-association-v2 → version 3 → **Submit to Competition**.
 
 ## association_v2_kernel_v3_independent_audit
@@ -50,6 +50,15 @@ Machine-readable copy: `reports/submission_ledger.csv`. Rows are append-only. Pr
 - **Official scorer on public-test overlap `6bba_05db0fb1`:** combined **0.564336**, same as the first independent audit. Official commit `075fc5f5`. Not a leaderboard score.
 - **Tests:** `pytest Biohub_Cell_Tracking/tests` — 48 passed.
 - **Kaggle public / private scores:** not returned. Kernel was not re-pushed.
+
+## association_v2_competition_submit_56399003
+
+- **Status:** competition submission **pending**. Read-only API check at `2026-09-20T17:25:30Z`. No retry, cancel, or second submit.
+- **ref:** `56399003`. **date:** `2026-09-20T15:12:52.307Z`. Kernel `mahdimzafari/biohub-association-v2` `scriptVersionId=351174414`.
+- **Scores:** public empty, private empty. `errorDescription` empty. `totalBytes` 0 while pending.
+- **Elapsed:** 2.21 h of 12 h CPU (~9.79 h remaining). UI `Notebook Running` is the hidden-test scoring rerun, not a hang of the 593.53 s public-test v3 worker.
+- **Source kernel:** `kernels/status=complete`, `lastRunTime=2026-09-19T23:36:49.317Z`. Available logs are public-test v3 (`n_test=4`, `audit_ok`). Scoring-rerun logs are not exposed on `/kernels/output` yet.
+- **Second submission:** unused.
 
 ## association_v2_local / division_v1_local
 

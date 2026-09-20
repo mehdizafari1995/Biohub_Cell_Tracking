@@ -53,3 +53,9 @@ Do not upload: Kaggle data, credentials, model weights, GEFF/Zarr volumes, `subm
 - Stdlib + official re-audit both `audit_ok`. Overlap score 0.564336 unchanged. Kernel not re-pushed. Competition submit not performed.
 - `pytest` 48 passed with official scorer available.
 - Issue #1 still 403 (`issues:read` missing).
+
+## 2026-09-20T17:25Z read-only competition status
+
+- Submission `56399003` pending since `2026-09-20T15:12:52.307Z`. No scores, no error. Second slot unused.
+- No kernel push, cancel, data download, or `competitions submit` from this worker.
+- Sanitized report: `reports/kaggle_association_v2_submission_56399003_status.md`.

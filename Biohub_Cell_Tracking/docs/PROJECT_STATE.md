@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-20 (association_v2 kernel v3 live re-verification). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-20T17:25Z (read-only status of association_v2 competition submit). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
@@ -39,7 +39,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/kaggle_associatio
 - Private kernel `mahdimzafari/biohub-association-v2` version 3 **COMPLETE** on public `test/` (593.53 s, 1.48 s/frame, peak RAM 421 MB, `audit_ok`, 129500 nodes / 124273 edges / 11985 interpolated / 0 divisions). Decoder: `blosc2` (no `zarr` on the image).
 - Independent re-audit of the downloaded worker `submission.csv`: schema/coverage/integrity `audit_ok`; counts match the worker manifest; all edges `dt=1`; 0 predicted divisions; integer voxel centroids inside `(100, 64, 256, 256)`. CSV was not copied into git.
 - 2026-09-20T15:00Z worker re-verification: live `kernels/status` = `complete` (no failure); outputs `submission.csv` + `run_manifest.json`; re-downloaded zip 3 658 915 bytes; CSV 12 948 601 bytes. Stdlib + official re-audit both `audit_ok` and match the earlier 0.564336 overlap figure. Kernel was **not** re-pushed (no version 4). Competition submit was **not** performed.
-- Competition submit: **not performed**. No public or private leaderboard score.
+- Competition submit: Mahdi submitted `mahdimzafari/biohub-association-v2` `scriptVersionId=351174414` (version 3) from the Kaggle UI. Submission **56399003** dated `2026-09-20T15:12:52.307Z`, status **pending** at `2026-09-20T17:25:30Z` (elapsed 2.21 h, ~9.79 h left of 12 h CPU). No public or private score yet. No errorDescription. Second submission unused. See `reports/kaggle_association_v2_submission_56399003_status.md`.
 - `Kaggle` is used only through configured secrets / `KAGGLE_API_TOKEN`. Never print tokens.
 
 ## Tests
