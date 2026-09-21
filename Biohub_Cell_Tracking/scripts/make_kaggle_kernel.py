@@ -254,6 +254,29 @@ Private **CPU** helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition.
 """,
     },
+    "learned_unet_conflict_v1": {
+        "source": "notebooks/kaggle_learned_unet_conflict_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_conflict_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_conflict_v1",
+        "code_file": "kaggle_learned_unet_conflict_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-conflict-v1",
+        "title": "Biohub Learned UNet Conflict V1",
+        "enable_gpu": False,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-infer-v1"],
+        "markdown": """# Biohub learned_unet_conflict_v1
+
+Private **CPU** helper kernel. **Not a competition submission.**
+
+- New slug. Do **not** overwrite rejected `learned_unet_link_v1` / `link_v2` / `motion_v1` / `hung_v1`.
+- Loads locked `learned_unet_infer_v1` JSON graphs. Detection is not retuned.
+- Keeps unique last-position nearest-neighbor matches. Applies Hungarian 1-1 only when two tracks share the same nearest neighbor inside the locked association_v2 12 µm gate.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-infer-v1`. **Internet OFF**. **GPU OFF**.
+- Do **not** overwrite locked train/infer/holdout/test/gap-test/link slugs.
+- Do **not** Submit to Competition.
+""",
+    },
     "learned_unet_hung_v1": {
         "source": "notebooks/kaggle_learned_unet_hung_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_hung_v1.ipynb",

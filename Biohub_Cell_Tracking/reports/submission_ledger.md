@@ -204,6 +204,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_hung_v1 **0.439023** vs locked learned_unet_infer_v1 **0.655751**. Detection counts match (80741 / 36951). Official TP/FP/FN 743/559/307 vs infer 877/221/173. Extra leftover-allowed edges +7309. Divisions 0/0/2. Recall unchanged 0.970. Decision `reject_learned_unet_hung_v1`. Do not retune. Do not score holdout.
 - **Kaggle public / private scores:** not returned.
 
+## learned_unet_conflict_v1_tune
+
+- **Status:** local official scorer on locked learned infer graphs + unique last-position NNs and Hungarian only on shared-nearest collisions inside the locked last-position 12 µm gate. **Not a Kaggle run.** Helper packaged, not pushed. Frozen `6bba` was **not** scored.
+- **Config hash:** `8503d804fb9e9f1d`. Parent infer `d7578b5f64ddac08`. Intensity unused. Transformer unused. Velocity unused. Full-frame Hungarian unused.
+- **Local official tuning:** learned_unet_conflict_v1 **0.645100** vs locked learned_unet_infer_v1 **0.655751**. Detection counts match (80741 / 36951). Official TP/FP/FN 875/239/175 vs infer 877/221/173. Extra collision second-choice edges +1720. Divisions 0/0/2. Recall unchanged 0.970. Decision `reject_learned_unet_conflict_v1`. Do not retune. Do not score holdout.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
