@@ -104,3 +104,32 @@ def test_sanitize_submission_drops_urls_and_empty_private_score():
     )
     assert names == ["run_manifest.json", "submission.csv"]
     assert "token" not in json.dumps(names)
+
+
+def test_sanitize_topic_drops_author_and_absolute_urls():
+    raw = {
+        "id": 738217,
+        "title": "focus3d : one of the best 3d cell segmentation",
+        "topicUrl": "/competitions/biohub-cell-tracking-during-development/discussion/738217",
+        "authorName": "someone",
+        "email": "hidden@example.com",
+        "url": "https://www.kaggle.com/example?token=SECRET",
+        "commentCount": 50,
+        "votes": 36,
+        "postDate": "2026-08-30T15:24:33.9075585Z",
+        "lastCommentPostDate": "2026-09-20T08:19:52.7733333Z",
+        "isSticky": False,
+    }
+    safe = kaggle_api.sanitize_topic(raw)
+    assert safe["id"] == 738217
+    assert safe["title"].startswith("focus3d")
+    assert safe["topicUrl"].startswith("/competitions/")
+    assert safe["votes"] == 36
+    assert "authorName" not in safe
+    assert "email" not in safe
+    blob = json.dumps(safe)
+    assert "SECRET" not in blob
+    assert "token=" not in blob
+    assert "hidden@example.com" not in blob
+    abs_only = kaggle_api.sanitize_topic({"id": 1, "url": "https://evil.example/?token=SECRET"})
+    assert abs_only["topicUrl"] is None

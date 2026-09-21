@@ -20,6 +20,8 @@ from typing import Any
 
 from .learned_gap import LOCKED_GAP_HASH
 from .learned_gap_test import (
+    ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
     GAP_SEC_PER_VOLUME,
     GAP_TEST_KERNEL_SLUG,
     LOCKED_GAP_TEST_HASH,
@@ -46,6 +48,7 @@ from .learned_test import (
 )
 
 PRUNE_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-prune-test-v1"
+PRUNE_TEST_LAST_RUN_UTC = "2026-09-21T04:28:27Z"
 PRUNE_OVERHEAD_SEC_PER_VOLUME = 0.5
 PRUNE_SEC_PER_VOLUME = GAP_SEC_PER_VOLUME + PRUNE_OVERHEAD_SEC_PER_VOLUME
 GAP_TEST_MEASURED_PUBLIC_SEC = 330.0157964229584
@@ -166,6 +169,57 @@ def hidden_projection_from_rehearsal(
     }
 
 
+def classify_prune_test_submit_poll(
+    *,
+    kernel_complete: bool,
+    kernel_failed: bool,
+    output_names: Sequence[str],
+    submissions: Sequence[Mapping[str, Any]],
+    association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
+) -> dict[str, Any]:
+    """Classify a read-only prune-test submit poll. Never submits.
+
+    The preferred worker is ``mahdimzafari/biohub-learned-unet-prune-test-v1``.
+    Association_v2 submission ``56399003`` (public API string ``0.553``) is
+    not that kernel: it was created before the prune-test lastRunTime.
+    """
+    names = [str(name) for name in output_names]
+    rows = [dict(row) for row in submissions]
+    refs = [row.get("ref") for row in rows]
+    extra = [row for row in rows if str(row.get("ref")) != str(association_ref)]
+    association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
+    if kernel_failed:
+        decision = "record_kernel_error"
+    elif not kernel_complete:
+        decision = "wait_kernel"
+    elif "submission.csv" not in names:
+        decision = "kernel_missing_csv"
+    elif extra:
+        decision = "new_submission_present"
+    else:
+        decision = "human_action_required_ui_submit"
+    return {
+        "slug": PRUNE_TEST_KERNEL_SLUG,
+        "decision": decision,
+        "kernel_complete": bool(kernel_complete),
+        "kernel_failed": bool(kernel_failed),
+        "output_names": names,
+        "n_submissions": len(rows),
+        "submission_refs": refs,
+        "association_v2_submission_present": bool(association),
+        "prune_test_submission_present": bool(extra),
+        "is_competition_submission": False,
+        "is_leaderboard_score": False,
+        "human_action": (
+            "Mahdi must Submit to Competition from the Kaggle UI on "
+            "mahdimzafari/biohub-learned-unet-prune-test-v1 version 1. "
+            "Do not submit from the CLI."
+            if decision == "human_action_required_ui_submit"
+            else None
+        ),
+    }
+
+
 def refuse_overwrite_locked_slugs(slug: str) -> None:
     if slug == TEST_KERNEL_SLUG:
         raise ValueError("refusing to overwrite locked learned_unet_test_v1 slug")
@@ -241,9 +295,13 @@ def compare_prune_vs_gap_counts(
 
 
 __all__ = [
+    "ASSOCIATION_V2_PUBLIC_SCORE",
+    "ASSOCIATION_V2_SUBMISSION_REF",
     "GAP_TEST_KERNEL_SLUG",
     "LOCKED_PRUNE_TEST_HASH",
     "PRUNE_TEST_KERNEL_SLUG",
+    "PRUNE_TEST_LAST_RUN_UTC",
+    "classify_prune_test_submit_poll",
     "compare_prune_vs_gap_counts",
     "hidden_projection_from_rehearsal",
     "list_test_zarrs",

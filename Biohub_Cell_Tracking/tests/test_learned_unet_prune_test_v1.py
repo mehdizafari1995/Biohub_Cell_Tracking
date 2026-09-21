@@ -22,6 +22,8 @@ from biohub_tracking.learned_collect import (  # noqa: E402
 )
 from biohub_tracking.learned_gap import LOCKED_GAP_HASH  # noqa: E402
 from biohub_tracking.learned_gap_test import (  # noqa: E402
+    ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
     ESTIMATE_HIDDEN_VOLUMES,
     GAP_TEST_KERNEL_SLUG,
     LOCKED_GAP_TEST_HASH,
@@ -32,6 +34,7 @@ from biohub_tracking.learned_prune import LOCKED_PRUNE_HASH  # noqa: E402
 from biohub_tracking.learned_prune_test import (  # noqa: E402
     LOCKED_PRUNE_TEST_HASH,
     PRUNE_TEST_KERNEL_SLUG,
+    classify_prune_test_submit_poll,
     compare_prune_vs_gap_counts,
     hidden_projection_from_rehearsal,
     prune_test_config_hash as locked_hash,
@@ -240,6 +243,48 @@ def test_push_keeps_gap_test_forbidden_and_allows_new_prune_slug():
     assert PRUNE_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert GAP_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+
+
+def test_classify_prune_test_submit_poll_requires_ui_when_only_association_exists():
+    association = {
+        "ref": ASSOCIATION_V2_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ASSOCIATION_V2_PUBLIC_SCORE,
+        "private_score_returned": False,
+        "date": "2026-09-20T15:12:52.307Z",
+    }
+    poll = classify_prune_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json", "submission.csv"],
+        submissions=[association],
+    )
+    assert poll["decision"] == "human_action_required_ui_submit"
+    assert poll["prune_test_submission_present"] is False
+    assert poll["association_v2_submission_present"] is True
+    assert poll["is_competition_submission"] is False
+    assert poll["is_leaderboard_score"] is False
+    assert "Kaggle UI" in poll["human_action"]
+    assert "CLI" in poll["human_action"]
+    assert "prune-test-v1" in poll["human_action"]
+    assert classify_prune_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json"],
+        submissions=[association],
+    )["decision"] == "kernel_missing_csv"
+    extra = classify_prune_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[association, {"ref": 999, "status": "pending", "publicScore": None}],
+    )
+    assert extra["decision"] == "new_submission_present"
+    assert extra["prune_test_submission_present"] is True
+    poll_src = (ROOT / "scripts" / "poll_prune_test_submit.py").read_text()
+    assert "list_competition_submissions" in poll_src
+    assert "competitions/submit" not in poll_src
+    assert "kernels/push" not in poll_src
 
 
 def test_compare_prune_vs_gap_rejects_edge_changes():

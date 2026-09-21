@@ -263,6 +263,22 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** specify orgop; do not launch this cycle. Champion remains `learned_unet_prune_v1` / prune-test v1 `READY_FOR_MANUAL_SUBMISSION_REVIEW`.
 - **Kaggle public / private scores:** not returned.
 
+## learned_unet_prune_test_v1_submit_poll
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-prune-test-v1` at **2026-09-21T04:48:29Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit.
+- **Config hash:** `074a71dec68304e8`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**). Prune-test last recorded complete poll **2026-09-21T04:28:27Z** is after that submission, so 56399003 cannot be the prune worker.
+- **Decision:** `human_action_required_ui_submit`.
+- **Kaggle public / private scores for this slug:** not returned.
+
+## public_094_discussion_inventory
+
+- **Status:** read-only topics API follow-up. **No kernel launched. No competition submission.**
+- **738217:** independently retrieved title **focus3d : one of the best 3d cell segmentation**; 36 votes; 50 comments; posted 2026-08-30. HTML body still an SPA shell. **Not used as a source.** Not part of `learned_unet_orgop_v1`.
+- **740392:** still absent from the first hot page (20 of 112). Pagination params ignored. Kernel search 0 hits. **Not used.**
+- **Orgop:** hash `250c5bfacd4a8198` remains specified, `LAUNCH_AUTHORIZED=False`.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

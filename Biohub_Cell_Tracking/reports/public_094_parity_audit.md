@@ -37,8 +37,8 @@ Independently verified public-test claims this cycle:
 | 730160 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/730160 | Public-weight leakage | comments retrieved | public ckpt trained on **199/199** videos; 40 “test” names sit inside that train list | public discussion | in-sample / embryo leak |
 | 734604 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/734604 | Public ckpt post-process wall | comments retrieved | “retrain; decompose detection vs linking vs post-process” | public discussion | method advice, no 0.94 number |
 | 735352 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/735352 | Possible big leaderboard shakeup | comments retrieved | plugin “0.940 untuned” on a public model; top-10 gaps <0.001 | public discussion | author plugin claim, not a scored notebook we ran |
-| 738217 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738217 | page exists | HTML body **not** independently extracted this cycle | prior notes said focus3d / hengck23; **not used** as a source | unresolved body | unresolved |
-| 740392 | requested | **not** in the hot-topic API page; HTML shell only | — | **not independently readable** | unresolved | unresolved |
+| 738217 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738217 | topics API title **focus3d : one of the best 3d cell segmentation** (author field empty) | posted 2026-08-30; 36 votes; 50 comments; last comment 2026-09-20 | no numeric score in the topics metadata | public discussion; HTML is an SPA shell | metadata only; **not used** as a source; not the 0.94 ILP stack |
+| 740392 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/740392 | **absent** from authenticated topics first page (20 of 112); kernel search 0 hits; HTML SPA shell | — | **not independently readable** | unresolved body | unresolved; **not used** |
 | 742064 / 742266 | public 0.947 stack comments (web index) | 199-video weights are in-sample | — | 0.947 lineage | public | in-sample |
 
 ## Inventory (public notebooks / datasets)
@@ -81,8 +81,10 @@ Shared stack behind the public 0.94 titles, in order:
    motion relink, min-track filters, optional DivNet mitosis, optional
    density-adaptive gates on **public-test stem names**.
 5. **Not required for 0.94 titles.** Cellpose / focus3d were not
-   extracted from the notebooks we flattened. Discussion **738217** body
-   was not retrieved, so focus3d is **not** part of the locked proposal.
+   extracted from the notebooks we flattened. Discussion **738217** is
+   independently titled “focus3d : one of the best 3d cell
+   segmentation” (topics API; 36 votes). The HTML body is still an SPA
+   shell, so focus3d remains **not** part of the locked orgop proposal.
 
 Discussion **716952** is a different pipeline: multi-scale DoG +
 Hungarian, no deep model, public LB **0.826**. Detection was the lever;
@@ -187,6 +189,19 @@ Do **not** download Pilkwang / Reyhan / DivNet / organizer-split
    `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`.
 5. Public 0.553 / 0.94 titles are not tune targets. No CLI submit.
    No overwrite of prune-test v1.
+
+## Follow-up inventory (2026-09-21T04:48:29Z)
+
+Authenticated topics API independently retrieved **738217** metadata
+(title, 36 votes, 50 comments). **740392** is still absent from the
+first hot page (20 of 112); pagination query params are ignored by the
+host. HTML bodies remain SPA shells. Neither ID was used as a source.
+`learned_unet_orgop_v1` stays specified, not launched.
+
+Read-only prune-test submit poll: kernel still **COMPLETE** with
+`run_manifest.json` + `submission.csv`. Competition list still exactly
+association_v2 **56399003** / public API **0.553**. Decision
+`human_action_required_ui_submit`. Did not download CSV. Did not submit.
 
 ## What this cycle did not do
 

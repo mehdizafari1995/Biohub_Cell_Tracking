@@ -70,9 +70,15 @@
     {
       "id": 738217,
       "url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738217",
-      "retrieved": false,
+      "retrieved": true,
+      "title": "focus3d : one of the best 3d cell segmentation",
+      "votes": 36,
+      "commentCount": 50,
+      "postDate": "2026-08-30T15:24:33.9075585Z",
+      "lastCommentPostDate": "2026-09-20T08:19:52.7733333Z",
       "score_claim": null,
-      "kind": "html_body_not_extracted",
+      "kind": "topics_api_metadata",
+      "body_retrieved": false,
       "used_as_source": false
     },
     {
@@ -80,7 +86,9 @@
       "url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/740392",
       "retrieved": false,
       "score_claim": null,
-      "kind": "not_independently_readable"
+      "kind": "not_in_topics_first_page",
+      "body_retrieved": false,
+      "used_as_source": false
     }
   ],
   "notebooks": [

@@ -33,4 +33,6 @@ Open `6bba` only after a documented keep. Compare holdout to prune
 
 `mahdimzafari/biohub-learned-unet-prune-test-v1` v1 remains
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Do not overwrite v1 while orgop is specified.
+Read-only poll still shows only association_v2 **56399003**.
+Discussion **738217** is independently titled focus3d segmentation
+and is **not** part of orgop. Do not overwrite v1 while orgop is specified.

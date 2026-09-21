@@ -161,6 +161,51 @@ def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
     }
 
 
+def sanitize_topic(raw: Mapping[str, Any] | None) -> dict[str, Any]:
+    """Keep ledger-safe discussion-topic fields. Drops authors, emails, and URLs."""
+    item = dict(raw or {})
+    topic_url = item.get("topicUrl") or item.get("url")
+    rel = None
+    if isinstance(topic_url, str) and topic_url.startswith("/"):
+        rel = topic_url
+    return {
+        "id": item.get("id") or item.get("topicId"),
+        "title": item.get("title") or item.get("topicTitle") or item.get("name"),
+        "topicUrl": rel,
+        "commentCount": item.get("commentCount"),
+        "votes": item.get("votes") or item.get("totalVotes"),
+        "postDate": item.get("postDate") or item.get("date"),
+        "lastCommentPostDate": item.get("lastCommentPostDate"),
+        "isSticky": bool(item.get("isSticky")),
+    }
+
+
+def list_competition_topics(competition: str = COMPETITION) -> dict[str, Any]:
+    """Return sanitized competition discussion topics. Never prints the token.
+
+    The public API currently returns the first hot page only (20 of many).
+    Pagination query params are ignored by the host; do not invent extra pages.
+    """
+    url = f"{API_ROOT}/competitions/{urllib.parse.quote(competition)}/topics"
+    data = _request(url)
+    items: list[Any]
+    total = None
+    if isinstance(data, dict):
+        items = data.get("topics") or data.get("items") or data.get("data") or []
+        total = data.get("totalCount") or data.get("total")
+    elif isinstance(data, list):
+        items = data
+    else:
+        items = []
+    topics = [sanitize_topic(item) for item in items if isinstance(item, dict)]
+    return {
+        "topics": topics,
+        "n_returned": len(topics),
+        "total_count": total,
+        "first_page_only": True,
+    }
+
+
 def list_competition_submissions(competition: str = COMPETITION) -> list[dict[str, Any]]:
     """Return sanitized competition submissions. Never submits. Never prints the token."""
     url = f"{API_ROOT}/competitions/submissions/list/{urllib.parse.quote(competition)}"
