@@ -322,6 +322,28 @@ Private **GPU** test-time notebook with locked gap overlay. Discovers every `tes
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step.
 """,
     },
+    "learned_unet_orgop_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgop_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgop_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgop_v1",
+        "code_file": "kaggle_learned_unet_orgop_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgop-v1",
+        "title": "Biohub Learned UNet Orgop V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgop_v1
+
+Private **GPU** helper kernel. **Not a competition submission.**
+
+- New slug. Do **not** overwrite locked train/infer/holdout/test/gap-test/prune-test slugs.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Organizer defaults: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, transformer softmax 0.5, tracksdata ILP `-1.0/0.1/0.1/1.0`.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** Submit to Competition.
+""",
+    },
     "learned_unet_prune_test_v1": {
         "source": "notebooks/kaggle_learned_unet_prune_test_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_prune_test_v1.ipynb",

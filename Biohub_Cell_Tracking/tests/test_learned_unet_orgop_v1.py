@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from pathlib import Path
 
 import pytest
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "notebooks"))
 
 from biohub_tracking.learned_infer import LOCKED_INFER_HASH, TRAIN_CONFIG_HASH  # noqa: E402
 from biohub_tracking.learned_orgop import (  # noqa: E402
@@ -26,7 +29,8 @@ from biohub_tracking.learned_orgop import (  # noqa: E402
     PRUNE_LOCKED_HOLDOUT,
     TRAIN_KERNEL_SLUG,
     allowed_weight_names,
-    assert_kernel_not_launched,
+    apply_tracksdata_ilp,
+    assert_launch_authorized,
     assert_tuning_only,
     orgop_config_hash,
     orgop_config_payload,
@@ -34,6 +38,7 @@ from biohub_tracking.learned_orgop import (  # noqa: E402
     refuse_holdout_design,
     refuse_public_weight_sources,
     runtime_estimate,
+    tuning_decision,
 )
 from biohub_tracking.learned_split import HoldoutLeakError  # noqa: E402
 
@@ -61,6 +66,15 @@ def test_orgop_hash_is_immutable_and_matches_yaml():
     cfg = _yaml()
     assert orgop_config_hash() == "250c5bfacd4a8198"
     assert LOCKED_ORGOP_HASH == "250c5bfacd4a8198"
+    from kaggle_learned_unet_orgop_v1 import (  # noqa: E402
+        LOCKED_ORGOP_HASH as NB_HASH,
+        orgop_config_hash as nb_hash,
+        orgop_config_payload as nb_payload,
+    )
+
+    assert NB_HASH == "250c5bfacd4a8198"
+    assert nb_hash() == "250c5bfacd4a8198"
+    assert nb_payload() == payload
     assert payload["train_config_hash"] == TRAIN_CONFIG_HASH == "4c38035d6657f2ad"
     assert payload["infer_config_hash"] == LOCKED_INFER_HASH == "d7578b5f64ddac08"
     for key, value in payload.items():
@@ -119,11 +133,11 @@ def test_orgop_refuses_public_and_organizer_split_weights():
     assert "pilkwang/biohub-deepcenter" in BANNED_PUBLIC_WEIGHT_MARKERS
 
 
-def test_orgop_kernel_is_specified_not_launched():
-    assert LAUNCH_AUTHORIZED is False
-    with pytest.raises(SystemExit, match="not authorized"):
-        assert_kernel_not_launched()
-    assert "learned_unet_orgop_v1" not in _make_mod.KERNELS
+def test_orgop_kernel_is_new_slug_and_does_not_overwrite_locked():
+    assert LAUNCH_AUTHORIZED is True
+    assert_launch_authorized()
+    assert "learned_unet_orgop_v1" in _make_mod.KERNELS
+    assert _make_mod.KERNELS["learned_unet_orgop_v1"]["kernel_id"] == ORGOP_KERNEL_SLUG
     assert ORGOP_KERNEL_SLUG not in _push_mod.FORBIDDEN_SLUGS
     locked = {
         "mahdimzafari/biohub-learned-unet-v1",
@@ -145,8 +159,30 @@ def test_orgop_does_not_use_public_lb_or_claim_094():
     public_lb_not_a_tune_target(INFER_LOCKED_TUNE)
     public_lb_not_a_tune_target(PRUNE_LOCKED_HOLDOUT)
     estimate = runtime_estimate()
-    assert estimate["launched"] is False
+    assert estimate["launched"] is True
     assert estimate["volumes"] == 2
     assert estimate["hidden_test_not_projected"] is True
     assert 0.655 < INFER_LOCKED_TUNE < 0.66
     assert 0.701 < PRUNE_LOCKED_HOLDOUT < 0.702
+    assert tuning_decision(0.6557507105877639).startswith("reject")
+    assert tuning_decision(0.6557507105877640).startswith("keep")
+
+
+def test_orgop_ilp_keeps_high_prob_edge_and_refuses_holdout_payload():
+    payload = {
+        "dataset": "44b6_12dfb391",
+        "node_id": [1, 2, 3],
+        "t": [0, 1, 1],
+        "z": [0, 0, 0],
+        "y": [0, 0, 1],
+        "x": [0, 1, 0],
+        "candidate_edges": [[1, 2, 0.9, 1.0], [1, 3, 0.2, 2.0]],
+        "edges": [[1, 2], [1, 3]],
+        "edge_prob": [0.9, 0.2],
+        "edge_dist": [1.0, 2.0],
+    }
+    solved = apply_tracksdata_ilp(payload)
+    assert solved["solver_status"] == "tracksdata_ilp"
+    assert solved["edges"] == [[1, 2]]
+    with pytest.raises(HoldoutLeakError):
+        apply_tracksdata_ilp({**payload, "dataset": "6bba_05db0fb1"})

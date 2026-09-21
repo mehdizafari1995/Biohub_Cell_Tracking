@@ -40,7 +40,7 @@ from .learned_split import FALLBACK_WEIGHTS_NAME, specimen_of
 ORGOP_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgop-v1"
 INFER_LOCKED_TUNE = 0.6557507105877639
 PRUNE_LOCKED_HOLDOUT = 0.7013778258203534
-LAUNCH_AUTHORIZED = False
+LAUNCH_AUTHORIZED = True
 
 # Organizer ``predict_unet_transformer.py`` CLI / notebook defaults.
 ORGANIZER_DET_THRESHOLD = 0.99
@@ -129,6 +129,110 @@ def assert_kernel_not_launched() -> None:
         )
 
 
+def assert_launch_authorized() -> None:
+    if not LAUNCH_AUTHORIZED:
+        raise SystemExit("learned_unet_orgop_v1 launch is not authorized")
+
+
+def apply_tracksdata_ilp(
+    payload: Mapping[str, Any],
+    *,
+    edge_weight: float = ORGANIZER_ILP_EDGE_WEIGHT,
+    appearance_weight: float = ORGANIZER_ILP_APPEARANCE_WEIGHT,
+    disappearance_weight: float = ORGANIZER_ILP_DISAPPEARANCE_WEIGHT,
+    division_weight: float = ORGANIZER_ILP_DIVISION_WEIGHT,
+) -> dict[str, Any]:
+    """Run official tracksdata ILP on candidate edges. Fail closed if missing."""
+    import polars as pl
+    import tracksdata as td
+
+    refuse_holdout_design([str(payload["dataset"])])
+    node_id = [int(x) for x in payload.get("node_id") or []]
+    t = [int(x) for x in payload.get("t") or []]
+    z = [float(x) for x in payload.get("z") or []]
+    y = [float(x) for x in payload.get("y") or []]
+    x = [float(x) for x in payload.get("x") or []]
+    raw_edges = list(payload.get("candidate_edges") or payload.get("edges") or [])
+    probs = list(payload.get("edge_prob") or [])
+    dists = list(payload.get("edge_dist") or [])
+    graph = td.graph.InMemoryGraph()
+    for key in ("z", "y", "x"):
+        graph.add_node_attr_key(key, pl.Float64, -999999.0)
+    assigned = (
+        graph.bulk_add_nodes(
+            [{"t": ti, "z": zi, "y": yi, "x": xi} for ti, zi, yi, xi in zip(t, z, y, x, strict=True)]
+        )
+        if node_id
+        else []
+    )
+    id_map = dict(zip(node_id, assigned, strict=True))
+    parsed: list[tuple[int, int, float, float]] = []
+    for idx, edge in enumerate(raw_edges):
+        if len(edge) >= 4:
+            src, tgt, prob, dist = int(edge[0]), int(edge[1]), float(edge[2]), float(edge[3])
+        else:
+            src, tgt = int(edge[0]), int(edge[1])
+            prob = float(probs[idx]) if idx < len(probs) else 0.0
+            dist = float(dists[idx]) if idx < len(dists) else 0.0
+        parsed.append((src, tgt, prob, dist))
+    if parsed:
+        graph.add_edge_attr_key("edge_prob", pl.Float64, 0.0)
+        graph.add_edge_attr_key("edge_dist", pl.Float64, 0.0)
+        graph.bulk_add_edges(
+            [
+                {
+                    "source_id": id_map[src],
+                    "target_id": id_map[tgt],
+                    "edge_prob": prob,
+                    "edge_dist": dist,
+                }
+                for src, tgt, prob, dist in parsed
+            ]
+        )
+    if graph.num_edges() == 0:
+        out = dict(payload)
+        out["edges"] = []
+        out["edge_prob"] = []
+        out["edge_dist"] = []
+        out["solver_status"] = "ilp_skipped_no_candidates"
+        out["n_candidate_edges"] = 0
+        return out
+    solver = td.solvers.ILPSolver(
+        edge_weight=float(edge_weight) * td.EdgeAttr("edge_prob"),
+        appearance_weight=float(appearance_weight),
+        disappearance_weight=float(disappearance_weight),
+        division_weight=float(division_weight),
+    )
+    solved = solver.solve(graph)
+    if solved is None:
+        raise RuntimeError("tracksdata ILPSolver returned no solution")
+    rev = {int(v): int(k) for k, v in id_map.items()}
+    kept: list[list[int]] = []
+    kept_prob: list[float] = []
+    kept_dist: list[float] = []
+    edge_df = solved.edge_attrs(attr_keys=["edge_prob", "edge_dist"])
+    src_col = "source_id" if "source_id" in edge_df.columns else edge_df.columns[0]
+    tgt_col = "target_id" if "target_id" in edge_df.columns else edge_df.columns[1]
+    for row in edge_df.iter_rows(named=True):
+        kept.append([rev[int(row[src_col])], rev[int(row[tgt_col])]])
+        kept_prob.append(float(row.get("edge_prob", 0.0)))
+        kept_dist.append(float(row.get("edge_dist", 0.0)))
+    out = dict(payload)
+    out["candidate_edges"] = [[s, d, p, dist] for s, d, p, dist in parsed]
+    out["edges"] = kept
+    out["edge_prob"] = kept_prob
+    out["edge_dist"] = kept_dist
+    out["solver_status"] = "tracksdata_ilp"
+    out["n_candidate_edges"] = len(parsed)
+    return out
+
+
+def tuning_decision(combined: float) -> str:
+    if float(combined) > INFER_LOCKED_TUNE:
+        return "keep_candidate_learned_unet_orgop_v1"
+    return "reject_learned_unet_orgop_v1"
+
+
 def refuse_public_weight_sources(sources: Iterable[str]) -> None:
     """Reject Pilkwang / organizer / DivNet public checkpoints for this slug."""
     cleaned = [str(s).strip().lower() for s in sources if str(s).strip()]
@@ -184,5 +288,5 @@ def runtime_estimate() -> dict[str, Any]:
         "expected_minutes_high": 15,
         "ilp_runtime_multiplier_vs_greedy": 3.8,
         "hidden_test_not_projected": True,
-        "launched": False,
+        "launched": True,
     }

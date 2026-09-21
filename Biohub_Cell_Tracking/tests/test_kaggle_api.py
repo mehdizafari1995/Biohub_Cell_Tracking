@@ -56,6 +56,7 @@ def test_fetch_kernel_output_allows_helper_slugs_only():
     assert "mahdimzafari/biohub-learned-unet-motion-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-hung-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-prune-test-v1" in mod.ALLOWED_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgop-v1" in mod.ALLOWED_SLUGS
 
 
 def test_rate_limit_cooldown_is_bounded_and_silent_of_secrets():
