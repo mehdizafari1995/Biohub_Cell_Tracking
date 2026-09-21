@@ -6,8 +6,10 @@ Do not launch a kernel from this note. Do not submit.
 
 ## Facts
 
-- Our champion `learned_unet_prune_v1` (**0.701378**) is official frozen
-  `6bba` after 3-epoch 44b6-only training. It is not a public LB number.
+- Our holdout champion is `learned_unet_orgdet_holdout_v1` (**0.705226**
+  vs prune **0.701378**) after locked 0.99/pool-3.0 detections plus
+  greedy 12 µm. It is not a public LB number. `learned_unet_prune_v1`
+  (**0.701378**) remains a locked prior keep.
 - Public 0.94-class notebooks share organizer `DET_THRESHOLD=0.99` +
   tracksdata ILP plus **Pilkwang/Reyhan weights trained on all 199
   videos**. Discussion 730160: those checkpoints have seen both embryos.
@@ -25,24 +27,38 @@ Authorized cycle `learned_unet_orgop_v1` (hash `250c5bfacd4a8198`)
 ran organizer predict defaults (0.99 + ILP) on locked 44b6 weights
 only. Official 44b6 combined **0.0 vs infer 0.655751**. Softmax>0.5
 wrote 0 candidate edges. Decision **`reject_learned_unet_orgop_v1`**.
-Do **not** retune. Do **not** open `6bba`. Public 0.553 is
-association_v2 only.
+Zero-edge diagnosis: no silent load defect; transformer near init
+(rel 0.11 vs UNet 6.34). Do **not** launch `orgop_fix`. CPU canary
+`learned_unet_edge_train_canary_v1` (`1a3d524e4d922701`) is `canary_ok`.
+Do **not** retune orgop. Do **not** open `6bba` for orgop. Public 0.553
+is association_v2 only.
 
-## Next specified experiment (not launched)
+## Next specified experiment (packaged, not launched)
 
 `learned_unet_retrain_v1` hash `92a419926fa7e40b`. Resume locked
 `learned_unet_v1_last.pt` for +3 epochs on 44b6 only. Reserved slug
-`mahdimzafari/biohub-learned-unet-retrain-v1`.
-`LAUNCH_AUTHORIZED=False`. Do **not** launch until review. Do **not**
-overwrite the locked train helper. See
+`mahdimzafari/biohub-learned-unet-retrain-v1`. Helper packaged
+(`notebooks/kaggle_learned_unet_retrain_v1.py`).
+`LAUNCH_AUTHORIZED=False`. Canary `canary_ok` is evidence the pair head
+can learn peaked softmax; still do **not** launch until review. Do
+**not** overwrite the locked train helper. See
 `Biohub_Cell_Tracking/reports/learned_unet_retrain_v1.md`.
 
-## Still the packaged public-test worker
+Authorized unbundled detection overlay `learned_unet_orgdet_v1` hash
+`80b20589198148b7` official-scored on 44b6: **0.679578 vs infer
+0.655751**. One-shot holdout `learned_unet_orgdet_holdout_v1` hash
+`912f0c19b572a054` is **0.705226 vs prune 0.701378**. Do **not** score
+`6bba` again.
 
-`mahdimzafari/biohub-learned-unet-prune-test-v1` v1 remains
+## Packaged public-test worker
+
+`mahdimzafari/biohub-learned-unet-orgdet-test-v1` v1 is
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-21T05:47:28Z** still shows only
+Read-only poll **2026-09-21T15:40:47Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
-Discussion **738217** is independently titled focus3d segmentation
-and is **not** part of orgop or retrain. Do not overwrite prune-test
-v1 or completed orgop helper v1.
+Prune-test v1 remains COMPLETE / `audit_ok` but is no longer the
+preferred worker. Discussion **738217** is independently titled
+focus3d segmentation and is **not** part of orgop or retrain.
+Discussion **740392** is closed as `topic_id_not_found` (by-id HTTP
+404, kernel search 0). Do not overwrite orgdet-test v1, prune-test v1,
+or completed orgop helper v1.

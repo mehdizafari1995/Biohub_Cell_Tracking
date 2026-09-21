@@ -1,0 +1,145 @@
+{
+  "status": "diagnosed",
+  "decision": "no_implementation_defect_transformer_near_init",
+  "orgop_hash": "250c5bfacd4a8198",
+  "train_hash": "4c38035d6657f2ad",
+  "orgop_tune_combined": 0.0,
+  "orgop_graphs": {
+    "stems": [
+      "44b6_12dfb391",
+      "44b6_267148e4"
+    ],
+    "n_nodes": [
+      62480,
+      28672
+    ],
+    "n_candidate_edges": [
+      0,
+      0
+    ],
+    "n_edges": [
+      0,
+      0
+    ],
+    "opened_holdout": false
+  },
+  "checkpoint": {
+    "best_sha16": "418493a0ac484db0",
+    "last_sha16": "9c277184d85bbff0",
+    "best_equals_last": true,
+    "config_hash": "4c38035d6657f2ad",
+    "n_state_tensors": 136,
+    "n_transformer_keys": 60,
+    "missing_keys": [],
+    "unexpected_keys": [],
+    "strict_load": true,
+    "splits_test": [
+      "44b6_12dfb391",
+      "44b6_267148e4"
+    ],
+    "holdout_in_splits": [],
+    "group_rms_ckpt": {
+      "unet": {
+        "n_params": 1497600,
+        "l2": 299.265456,
+        "rms": 0.244545
+      },
+      "detect_head": {
+        "n_params": 33,
+        "l2": 0.873476,
+        "rms": 0.152053
+      },
+      "transformer": {
+        "n_params": 580353,
+        "l2": 53.463671,
+        "rms": 0.07018
+      },
+      "transformer.pair_mlp": {
+        "n_params": 41601,
+        "l2": 8.363435,
+        "rms": 0.041005
+      }
+    },
+    "group_rel_to_seed0_init": {
+      "unet": {
+        "n": 1497600,
+        "delta_l2": 286.735717,
+        "rel": 6.337876
+      },
+      "detect_head": {
+        "n": 33,
+        "delta_l2": 0.258116,
+        "rel": 0.400892
+      },
+      "transformer": {
+        "n": 580353,
+        "delta_l2": 5.646898,
+        "rel": 0.105857
+      },
+      "transformer.pair_mlp": {
+        "n": 41601,
+        "delta_l2": 2.010281,
+        "rel": 0.24928
+      }
+    },
+    "random_400x80": {
+      "logit_mean": -2.518662452697754,
+      "logit_std": 2.3813650608062744,
+      "prob_max": 0.011934035457670689,
+      "n_gt_half": 0
+    },
+    "weights_path_used_by_orgop": "learned_unet_v1_last.pt",
+    "same_as_best": true
+  },
+  "dense_softmax_blocker": {
+    "8": false,
+    "64": true,
+    "400": true,
+    "800": true
+  },
+  "infer_vs_orgop": {
+    "same_fallback_weights": "learned_unet_v1_last.pt",
+    "infer_uses_transformer_edges": false,
+    "orgop_uses_transformer_softmax_0.5": true,
+    "orgop_ilp_skipped": true,
+    "silent_partial_load": false
+  },
+  "runtime_projection": {
+    "sec_per_epoch": 3910.6494437853494,
+    "source": "mahdimzafari/biohub-learned-unet-v1 v3",
+    "rows": [
+      {
+        "epochs": 3,
+        "videos": 69,
+        "hours": 3.26,
+        "under_12h": true
+      },
+      {
+        "epochs": 10,
+        "videos": 69,
+        "hours": 10.86,
+        "under_12h": true
+      },
+      {
+        "epochs": 20,
+        "videos": 69,
+        "hours": 21.73,
+        "under_12h": false
+      },
+      {
+        "epochs": 50,
+        "videos": 69,
+        "hours": 54.31,
+        "under_12h": false
+      }
+    ],
+    "recommended_next_budget_epochs": 10,
+    "organizer_50_epoch_exceeds_12h": true,
+    "kernel_push": false,
+    "opened_holdout": false
+  },
+  "code_version": "8d66468",
+  "opened_holdout": false,
+  "is_leaderboard_score": false,
+  "notes": "Orgop v1 remains rejected. Do not retune 250c5bfacd4a8198. Do not overwrite mahdimzafari/biohub-learned-unet-orgop-v1 v1."
+}

@@ -1,0 +1,35 @@
+# learned_unet_edge_train_canary_v1 — CPU evidence canary after rejected
+# orgop v1 (hash 250c5bfacd4a8198, 0 candidate edges).
+# Hash 1a3d524e4d922701.
+# Proves finite det/edge losses, nonzero edge grads, peaked softmax, and
+# checkpoint reload exactness on synthetic 44b6-refusing tensors.
+# Do not open 6bba. Do not write submission.csv. Do not push a kernel.
+# Do not attach public 199-video / DeepCenter weights.
+# Not a competition submission. Not a scoring candidate.
+
+label: learned_unet_edge_train_canary_v1
+train_label: learned_unet_v1
+parent_orgop_hash: 250c5bfacd4a8198
+train_config_hash: 4c38035d6657f2ad
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+refuses_public_199_video_weights: true
+writes_submission_csv: false
+kernel_push: false
+n_src: 12
+n_tgt: 12
+n_steps: 60
+lr: 0.001
+seed: 0
+feat_dim: 64
+freeze_unet: true
+edge_activation: softmax
+edge_threshold: 0.5
+edge_supervision: gt_node_index
+min_prob_max: 0.5
+min_n_gt_half: 1
+opens_6bba: false
+uses_199_video_weights: false

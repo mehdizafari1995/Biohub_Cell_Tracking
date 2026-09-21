@@ -260,6 +260,19 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Helper:** 153.71 s, peak 1227 MB, T4. Internet off. No `submission.csv`. 91152 nodes / 0 edges / 0 softmax>0.5 candidates.
 - **Local official tuning:** combined **0.0 vs infer 0.655751**. Divisions 0/0/2. Solver `ilp_skipped_no_candidates`. Decision `reject_learned_unet_orgop_v1`. Not a leaderboard score.
 
+## learned_unet_orgop_zero_edge_diagnosis
+
+- **Status:** read-only checkpoint/graph diagnosis. **No new kernel. No competition submission.** Frozen `6bba` was not opened.
+- **Finding:** `best.pt` tensor-equals `last.pt`. Strict load, 0 missing transformer keys. UNet rel-to-init **6.34** vs transformer **0.11**. Random 400×80 `prob_max=0.012`. Decision `no_implementation_defect_transformer_near_init`. Do **not** launch `learned_unet_orgop_fix_v1`.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_edge_train_canary_v1
+
+- **Status:** local CPU canary hash `1a3d524e4d922701`. **No kernel pushed.** Frozen `6bba` was not opened. No `submission.csv`.
+- **Result:** `canary_ok`. Finite det/edge losses, nonzero edge grads, 12/12 pairs >0.5, reload max abs 0.0, 0.60 s.
+- **Projection:** 10-epoch 44b6 retrain **10.86 h** under 12 h; 50-epoch organizer scale 54.31 h over. Next family `learned_unet_edge_train_v1` is **not launched**.
+- **Kaggle public / private scores:** not returned.
+
 ## public_094_parity_audit
 
 - **Status:** read-only strategy audit. **No kernel launched. No competition submission.**

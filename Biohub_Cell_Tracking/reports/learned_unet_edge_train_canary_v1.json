@@ -1,0 +1,108 @@
+{
+  "status": "canary_ok",
+  "decision": "canary_ok",
+  "config_hash": "1a3d524e4d922701",
+  "parent_orgop_hash": "250c5bfacd4a8198",
+  "train_config_hash": "4c38035d6657f2ad",
+  "config": {
+    "label": "learned_unet_edge_train_canary_v1",
+    "train_label": "learned_unet_v1",
+    "parent_orgop_hash": "250c5bfacd4a8198",
+    "train_config_hash": "4c38035d6657f2ad",
+    "tuning_specimen": "44b6",
+    "holdout_specimens": [
+      "6bba"
+    ],
+    "frozen_holdout": [
+      "6bba_05db0fb1",
+      "6bba_c328f2fd"
+    ],
+    "refuses_public_199_video_weights": true,
+    "writes_submission_csv": false,
+    "kernel_push": false,
+    "n_src": 12,
+    "n_tgt": 12,
+    "n_steps": 60,
+    "lr": 0.001,
+    "seed": 0,
+    "feat_dim": 64,
+    "freeze_unet": true,
+    "edge_activation": "softmax",
+    "edge_threshold": 0.5,
+    "edge_supervision": "gt_node_index",
+    "min_prob_max": 0.5,
+    "min_n_gt_half": 1,
+    "opens_6bba": false,
+    "uses_199_video_weights": false
+  },
+  "result": {
+    "status": "canary_ok",
+    "detection_loss_finite": true,
+    "detection_loss": 1.4002989530563354,
+    "first": {
+      "step": 0,
+      "edge_loss": 0.17214274406433105,
+      "grad_l2": 0.017620593309402466,
+      "prob_max": 0.09713627398014069,
+      "n_gt_half": 0
+    },
+    "last": {
+      "step": 59,
+      "edge_loss": 0.0005257779848761857,
+      "grad_l2": 0.005319287534803152,
+      "prob_max": 0.9937230944633484,
+      "n_gt_half": 12
+    },
+    "final_prob_max": 0.9960222840309143,
+    "final_n_gt_half": 12,
+    "reload_max_abs": 0.0,
+    "finite_losses": true,
+    "nonzero_edge_grad": true,
+    "noncollapsed_softmax": true,
+    "checkpoint_reload_exact": true,
+    "runtime_sec": 0.6016139984130859,
+    "opened_holdout": false,
+    "wrote_submission_csv": false,
+    "kernel_pushed": false,
+    "used_199_video_weights": false
+  },
+  "runtime_projection": {
+    "sec_per_epoch": 3910.6494437853494,
+    "source": "mahdimzafari/biohub-learned-unet-v1 v3",
+    "rows": [
+      {
+        "epochs": 3,
+        "videos": 69,
+        "hours": 3.26,
+        "under_12h": true
+      },
+      {
+        "epochs": 10,
+        "videos": 69,
+        "hours": 10.86,
+        "under_12h": true
+      },
+      {
+        "epochs": 20,
+        "videos": 69,
+        "hours": 21.73,
+        "under_12h": false
+      },
+      {
+        "epochs": 50,
+        "videos": 69,
+        "hours": 54.31,
+        "under_12h": false
+      }
+    ],
+    "recommended_next_budget_epochs": 10,
+    "organizer_50_epoch_exceeds_12h": true,
+    "kernel_push": false,
+    "opened_holdout": false
+  },
+  "code_version": "8d66468",
+  "is_kaggle_run": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "CPU transformer canary on synthetic 1-1 targets. Architecture from locked learned_unet_v1. 6bba refused. Not a leaderboard score."
+}
