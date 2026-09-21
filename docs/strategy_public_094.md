@@ -54,7 +54,7 @@ Authorized unbundled detection overlay `learned_unet_orgdet_v1` hash
 
 `mahdimzafari/biohub-learned-unet-orgdet-test-v1` v1 is
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-21T16:50:55Z** still shows only
+Read-only poll **2026-09-21T17:49:37Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
 Prune-test v1 remains COMPLETE / `audit_ok` but is no longer the
 preferred worker. Discussion **738217** is independently titled
