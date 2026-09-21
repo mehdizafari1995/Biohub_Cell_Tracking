@@ -55,6 +55,8 @@ from .learned_test import (
 )
 
 ORGDET_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
+# Saved-kernel poll time for orgdet-test v1 COMPLETE (public-test worker, not a scoring rerun).
+ORGDET_TEST_LAST_RUN_UTC = "2026-09-21T11:07:02Z"
 ORGDET_HOLDOUT_MEASURED_SEC = 173.79521799087524
 ORGDET_HOLDOUT_MEASURED_VOLUMES = 2
 ORGDET_HOLDOUT_MEASURED_PEAK_MEMORY_MB = 1185.26171875
@@ -178,6 +180,58 @@ def hidden_projection_from_rehearsal(
     }
 
 
+def classify_orgdet_test_submit_poll(
+    *,
+    kernel_complete: bool,
+    kernel_failed: bool,
+    output_names: Sequence[str],
+    submissions: Sequence[Mapping[str, Any]],
+    association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
+) -> dict[str, Any]:
+    """Classify a read-only orgdet-test submit poll. Never submits.
+
+    The preferred worker is ``mahdimzafari/biohub-learned-unet-orgdet-test-v1``.
+    Association_v2 submission ``56399003`` (public API string ``0.553``) is
+    not that kernel: it was created before the orgdet-test lastRunTime.
+    """
+    names = [str(name) for name in output_names]
+    rows = [dict(row) for row in submissions]
+    refs = [row.get("ref") for row in rows]
+    extra = [row for row in rows if str(row.get("ref")) != str(association_ref)]
+    association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
+    if kernel_failed:
+        decision = "record_kernel_error"
+    elif not kernel_complete:
+        decision = "wait_kernel"
+    elif "submission.csv" not in names:
+        decision = "kernel_missing_csv"
+    elif extra:
+        decision = "new_submission_present"
+    else:
+        decision = "human_action_required_ui_submit"
+    return {
+        "slug": ORGDET_TEST_KERNEL_SLUG,
+        "decision": decision,
+        "kernel_complete": bool(kernel_complete),
+        "kernel_failed": bool(kernel_failed),
+        "output_names": names,
+        "n_submissions": len(rows),
+        "submission_refs": refs,
+        "association_v2_submission_present": bool(association),
+        "orgdet_test_submission_present": bool(extra),
+        "is_competition_submission": False,
+        "is_leaderboard_score": False,
+        "human_action": (
+            "Mahdi must Submit to Competition from the Kaggle UI on "
+            "mahdimzafari/biohub-learned-unet-orgdet-test-v1 version 1 "
+            "before the 2026-09-22 23:59 UTC entry deadline. "
+            "Do not submit from the CLI. Do not submit prune-test or gap-test now."
+            if decision == "human_action_required_ui_submit"
+            else None
+        ),
+    }
+
+
 def refuse_overwrite_locked_slugs(slug: str) -> None:
     locked = {
         TEST_KERNEL_SLUG: "learned_unet_test_v1",
@@ -260,6 +314,8 @@ __all__ = [
     "BANNED_PUBLIC_WEIGHT_MARKERS",
     "LOCKED_ORGDET_TEST_HASH",
     "ORGDET_TEST_KERNEL_SLUG",
+    "ORGDET_TEST_LAST_RUN_UTC",
+    "classify_orgdet_test_submit_poll",
     "hidden_projection_from_rehearsal",
     "list_test_zarrs",
     "orgdet_test_config_hash",

@@ -391,6 +391,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Worker:** 334.23 s, peak RAM 1183 MB. Weights `learned_unet_v1_last.pt`. Public test 188509 nodes / 172148 edges / 0 divisions. `6bba_05db0fb1` 84328/78493 matches locked orgdet holdout. Hidden projection **4.62 h** under 12 h.
 - **Kaggle public / private scores:** not returned. Competition list still association_v2 **56399003** / **0.553** only.
 
+## learned_unet_orgdet_test_v1_submit_poll (2026-09-21T11:48:44Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-orgdet-test-v1` at **2026-09-21T11:48:44Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1. Did **not** retry 740392. Did **not** launch retrain.
+- **Config hash:** `c45c859610d29e90`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
+- **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

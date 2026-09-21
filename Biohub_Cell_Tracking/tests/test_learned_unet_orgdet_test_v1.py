@@ -21,6 +21,7 @@ from biohub_tracking.learned_collect import (  # noqa: E402
 )
 from biohub_tracking.learned_gap_test import (  # noqa: E402
     ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
     ESTIMATE_HIDDEN_VOLUMES,
     GAP_TEST_KERNEL_SLUG,
 )
@@ -32,6 +33,7 @@ from biohub_tracking.learned_orgdet_holdout import (  # noqa: E402
 from biohub_tracking.learned_orgdet_test import (  # noqa: E402
     LOCKED_ORGDET_TEST_HASH,
     ORGDET_TEST_KERNEL_SLUG,
+    classify_orgdet_test_submit_poll,
     hidden_projection_from_rehearsal,
     orgdet_test_config_hash as locked_hash,
     orgdet_test_config_payload as locked_payload,
@@ -270,6 +272,60 @@ def test_refuses_public_weights_and_public_lb_tune_target(tmp_path: Path):
     except SystemExit as exc:
         assert "reject" in str(exc)
     assert ASSOCIATION_V2_PUBLIC_SCORE == "0.553"
+
+
+def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exists():
+    association = {
+        "ref": ASSOCIATION_V2_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ASSOCIATION_V2_PUBLIC_SCORE,
+        "private_score_returned": False,
+        "date": "2026-09-20T15:12:52.307Z",
+    }
+    poll = classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json", "submission.csv"],
+        submissions=[association],
+    )
+    assert poll["decision"] == "human_action_required_ui_submit"
+    assert poll["orgdet_test_submission_present"] is False
+    assert poll["association_v2_submission_present"] is True
+    assert poll["is_competition_submission"] is False
+    assert poll["is_leaderboard_score"] is False
+    assert "Kaggle UI" in poll["human_action"]
+    assert "CLI" in poll["human_action"]
+    assert "orgdet-test-v1" in poll["human_action"]
+    assert "prune-test" in poll["human_action"]
+    assert classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json"],
+        submissions=[association],
+    )["decision"] == "kernel_missing_csv"
+    extra = classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[association, {"ref": 999, "status": "pending", "publicScore": None}],
+    )
+    assert extra["decision"] == "new_submission_present"
+    assert extra["orgdet_test_submission_present"] is True
+    poll_src = (ROOT / "scripts" / "poll_orgdet_test_submit.py").read_text()
+    assert "list_competition_submissions" in poll_src
+    assert "competitions/submit" not in poll_src
+    assert "kernels/push" not in poll_src
+    live = json.loads((ROOT / "reports" / "learned_unet_orgdet_test_v1_submit_poll.json").read_text())
+    assert live["orgdet_test_config_hash"] == LOCKED_ORGDET_TEST_HASH
+    assert live["is_leaderboard_score"] is False
+    assert live["is_competition_submission"] is False
+    assert live["decision"] in {
+        "human_action_required_ui_submit",
+        "new_submission_present",
+        "wait_kernel",
+        "kernel_missing_csv",
+        "record_kernel_error",
+    }
 
 
 def test_keep_orgdet_test_complete_report_matches_holdout_overlap():
