@@ -321,6 +321,21 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Acceptance (after authorized launch):** official 44b6 vs infer **0.655751**; reject and keep `6bba` closed unless strictly better; then one-shot vs prune **0.701378**.
 - **Kaggle public / private scores:** not returned. Public 0.553 unused.
 
+## public_094_discussion_inventory (2026-09-21T07:51:24Z)
+
+- **Status:** read-only topics API plus by-id lookup. **No kernel launched. No competition submission.**
+- **740392:** `GET /topics/740392` HTTP **404** (`topic_id_not_found`). Absent from hot page 20/112. Kernel search 0. HTML SPA generic title. **Not used as a source.** Do not retry hourly.
+- **738217:** still independently titled focus3d; unused.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_prune_test_v1_submit_poll (2026-09-21T07:51:05Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-prune-test-v1` at **2026-09-21T07:51:05Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit.
+- **Config hash:** `074a71dec68304e8`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
+- **Kaggle public / private scores for this slug:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

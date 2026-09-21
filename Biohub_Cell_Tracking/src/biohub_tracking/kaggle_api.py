@@ -206,6 +206,81 @@ def list_competition_topics(competition: str = COMPETITION) -> dict[str, Any]:
     }
 
 
+def get_competition_topic(topic_id: int, competition: str = COMPETITION) -> dict[str, Any]:
+    """Look up one sanitized topic by numeric id. Never prints the token.
+
+    Direct ``/topics/{id}`` currently returns HTTP 404 HTML even for
+    known hot-page ids. Treat 404 as a negative retrieval, not a body.
+    """
+    tid = int(topic_id)
+    url = (
+        f"{API_ROOT}/competitions/{urllib.parse.quote(competition)}/topics/{tid}"
+    )
+    delay = 3.0
+    for attempt in range(8):
+        req = urllib.request.Request(url)
+        req.add_header("Authorization", f"Bearer {_token()}")
+        req.add_header("User-Agent", "biohub-cell-tracking/0.1")
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                payload = json.loads(resp.read().decode())
+            topic_raw = payload
+            if isinstance(payload, dict) and isinstance(payload.get("topic"), dict):
+                topic_raw = payload["topic"]
+            if not isinstance(topic_raw, dict):
+                topic_raw = {}
+            return {
+                "id": tid,
+                "retrieved": True,
+                "http_status": 200,
+                "kind": "topic_by_id",
+                "topic": sanitize_topic(topic_raw),
+                "used_as_source": False,
+                "body_retrieved": False,
+            }
+        except urllib.error.HTTPError as exc:
+            if exc.code == 404:
+                return {
+                    "id": tid,
+                    "retrieved": False,
+                    "http_status": 404,
+                    "kind": "topic_id_not_found",
+                    "topic": None,
+                    "used_as_source": False,
+                    "body_retrieved": False,
+                }
+            if exc.code == 429:
+                delay = max(delay, 15.0)
+            if exc.code in {429, 500, 502, 503} and attempt < 7:
+                delay = _sleep_backoff(delay)
+                continue
+            raise
+    raise RuntimeError(f"topic lookup failed: {tid}")
+
+
+def search_kernels(query: str, page_size: int = 5) -> dict[str, Any]:
+    """Return sanitized kernel titles for a search query. Never prints the token."""
+    encoded = urllib.parse.quote(str(query))
+    size = max(1, min(int(page_size), 20))
+    url = f"{API_ROOT}/kernels/list?search={encoded}&pageSize={size}"
+    data = _request(url)
+    items = data if isinstance(data, list) else []
+    names: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        label = item.get("title") or item.get("ref") or item.get("kernelSlug")
+        if not label:
+            continue
+        text = str(label)
+        if text in seen:
+            continue
+        seen.add(text)
+        names.append(text)
+    return {"query": str(query), "n": len(names), "names": names}
+
+
 def list_competition_submissions(competition: str = COMPETITION) -> list[dict[str, Any]]:
     """Return sanitized competition submissions. Never submits. Never prints the token."""
     url = f"{API_ROOT}/competitions/submissions/list/{urllib.parse.quote(competition)}"

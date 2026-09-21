@@ -142,3 +142,45 @@ def test_sanitize_topic_drops_author_and_absolute_urls():
     assert "hidden@example.com" not in blob
     abs_only = kaggle_api.sanitize_topic({"id": 1, "url": "https://evil.example/?token=SECRET"})
     assert abs_only["topicUrl"] is None
+
+
+def test_get_competition_topic_treats_404_as_not_found(monkeypatch):
+    def boom(req, timeout=120):
+        raise kaggle_api.urllib.error.HTTPError(
+            req.full_url, 404, "Not Found", hdrs=None, fp=None
+        )
+
+    monkeypatch.setattr(kaggle_api, "_token", lambda: "unused-test-token")
+    monkeypatch.setattr(kaggle_api.urllib.request, "urlopen", boom)
+    result = kaggle_api.get_competition_topic(740392)
+    assert result["id"] == 740392
+    assert result["retrieved"] is False
+    assert result["http_status"] == 404
+    assert result["kind"] == "topic_id_not_found"
+    assert result["used_as_source"] is False
+    assert result["body_retrieved"] is False
+    assert result["topic"] is None
+    blob = json.dumps(result)
+    assert "unused-test-token" not in blob
+
+
+def test_search_kernels_drops_urls(monkeypatch):
+    monkeypatch.setattr(
+        kaggle_api,
+        "_request",
+        lambda url, retries=8: [
+            {
+                "title": "public notebook",
+                "url": "https://signed.example/?token=SECRET",
+                "ref": "someone/public-notebook",
+            }
+        ],
+    )
+    hits = kaggle_api.search_kernels("740392", page_size=5)
+    assert hits["query"] == "740392"
+    assert hits["n"] == 1
+    assert hits["names"] == ["public notebook"]
+    blob = json.dumps(hits)
+    assert "SECRET" not in blob
+    assert "token=" not in blob
+    assert "url" not in blob

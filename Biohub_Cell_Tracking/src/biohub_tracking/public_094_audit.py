@@ -13,6 +13,7 @@ from typing import Any
 REQUESTED_DISCUSSION_IDS = (716952, 730160, 734604, 735352, 738217, 740392)
 FOCUS3D_DISCUSSION_ID = 738217
 FOCUS3D_TITLE = "focus3d : one of the best 3d cell segmentation"
+UNREAD_DISCUSSION_ID = 740392
 ORGOP_HASH = "250c5bfacd4a8198"
 ORGOP_LAUNCH_AUTHORIZED = False
 
@@ -64,3 +65,50 @@ def classify_requested_discussions(
             }
         )
     return rows
+
+
+def apply_by_id_lookups(
+    rows: Sequence[Mapping[str, Any]],
+    lookups: Sequence[Mapping[str, Any]],
+) -> list[dict[str, Any]]:
+    """Overlay dedicated by-id lookups onto first-page misses.
+
+    Retrieved first-page metadata stays. Missing rows become
+    ``topic_id_not_found`` or ``topic_by_id`` without using the body as
+    a source. Public 0.553 is not a tune target.
+    """
+    by_id: dict[int, Mapping[str, Any]] = {}
+    for item in lookups:
+        try:
+            by_id[int(item.get("id"))] = item
+        except (TypeError, ValueError):
+            continue
+    out: list[dict[str, Any]] = []
+    for row in rows:
+        merged = dict(row)
+        if merged.get("retrieved"):
+            out.append(merged)
+            continue
+        try:
+            did = int(merged.get("id"))
+        except (TypeError, ValueError):
+            out.append(merged)
+            continue
+        lookup = by_id.get(did)
+        if lookup is None:
+            out.append(merged)
+            continue
+        merged["retrieved"] = bool(lookup.get("retrieved"))
+        merged["kind"] = lookup.get("kind") or merged.get("kind")
+        merged["http_status"] = lookup.get("http_status")
+        merged["used_as_source"] = False
+        merged["body_retrieved"] = False
+        topic = lookup.get("topic") if isinstance(lookup.get("topic"), Mapping) else {}
+        if merged["retrieved"]:
+            merged["title"] = topic.get("title")
+            merged["votes"] = topic.get("votes")
+            merged["commentCount"] = topic.get("commentCount")
+            merged["postDate"] = topic.get("postDate")
+            merged["lastCommentPostDate"] = topic.get("lastCommentPostDate")
+        out.append(merged)
+    return out

@@ -41,8 +41,9 @@ overwrite the locked train helper. See
 
 `mahdimzafari/biohub-learned-unet-prune-test-v1` v1 remains
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-21T06:54:02Z** still shows only
+Read-only poll **2026-09-21T07:51:05Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
 Discussion **738217** is independently titled focus3d segmentation
-and is **not** part of orgop or retrain. Do not overwrite prune-test
-v1 or completed orgop helper v1.
+and is **not** part of orgop or retrain. Discussion **740392** is
+closed as `topic_id_not_found` (by-id HTTP 404, kernel search 0).
+Do not overwrite prune-test v1 or completed orgop helper v1.

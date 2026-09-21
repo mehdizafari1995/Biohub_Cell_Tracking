@@ -38,7 +38,7 @@ Independently verified public-test claims this cycle:
 | 734604 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/734604 | Public ckpt post-process wall | comments retrieved | “retrain; decompose detection vs linking vs post-process” | public discussion | method advice, no 0.94 number |
 | 735352 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/735352 | Possible big leaderboard shakeup | comments retrieved | plugin “0.940 untuned” on a public model; top-10 gaps <0.001 | public discussion | author plugin claim, not a scored notebook we ran |
 | 738217 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738217 | topics API title **focus3d : one of the best 3d cell segmentation** (author field empty) | posted 2026-08-30; 36 votes; 50 comments; last comment 2026-09-20 | no numeric score in the topics metadata | public discussion; HTML is an SPA shell | metadata only; **not used** as a source; not the 0.94 ILP stack |
-| 740392 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/740392 | **absent** from authenticated topics first page (20 of 112); kernel search 0 hits; HTML SPA shell | — | **not independently readable** | unresolved body | unresolved; **not used** |
+| 740392 | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/740392 | **topic_id_not_found** (by-id HTTP 404; absent from hot page 20/112; kernel search 0; HTML SPA generic title; no web index) | — | **not independently readable** | closed unread | unused; do not retry hourly |
 | 742064 / 742266 | public 0.947 stack comments (web index) | 199-video weights are in-sample | — | 0.947 lineage | public | in-sample |
 
 ## Inventory (public notebooks / datasets)
@@ -236,3 +236,16 @@ deadline **2026-09-22 23:59 UTC**.
 - Did not treat 0.9462 as a measured API score
 - Did not retune prune / hung / motion / conflict
 - Did not launch `learned_unet_retrain_v1`
+
+## By-id follow-up (2026-09-21T07:51:24Z)
+
+Authenticated `GET /topics/{id}` 404s for 740392 (and for other
+off-page IDs 716952/730160/734604). Kernel search for `740392` returns
+0. HTML remains an SPA shell with the competition title only. Kind
+**`topic_id_not_found`**. **Not used as a source.** Do not retry this
+ID every hourly cycle. Retrain stays `LAUNCH_AUTHORIZED=False`.
+
+Read-only prune-test submit poll **2026-09-21T07:51:05Z**: kernel still
+**COMPLETE**; competition list still association_v2 **56399003** /
+**0.553**. Decision `human_action_required_ui_submit`. Did not download
+CSV. Did not submit.

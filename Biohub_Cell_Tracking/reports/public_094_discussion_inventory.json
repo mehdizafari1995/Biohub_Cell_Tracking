@@ -1,7 +1,7 @@
 {
   "audit_id": "public_094_discussion_inventory",
-  "timestamp_utc": "2026-09-21T04:48:29Z",
-  "code_version": "77c3d78",
+  "timestamp_utc": "2026-09-21T07:51:24Z",
+  "code_version": "5a57870",
   "orgop_hash": "250c5bfacd4a8198",
   "orgop_launch_authorized": false,
   "kernel_launched": false,
@@ -17,6 +17,41 @@
     738217,
     740392
   ],
+  "by_id_lookups": [
+    {
+      "id": 716952,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 730160,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 734604,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 740392,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    }
+  ],
+  "kernel_search_740392_n": 0,
   "discussions": [
     {
       "id": 716952,
@@ -26,9 +61,10 @@
       "commentCount": null,
       "postDate": null,
       "lastCommentPostDate": null,
-      "kind": "not_in_topics_first_page",
+      "kind": "topic_id_not_found",
       "used_as_source": false,
-      "body_retrieved": false
+      "body_retrieved": false,
+      "http_status": 404
     },
     {
       "id": 730160,
@@ -38,9 +74,10 @@
       "commentCount": null,
       "postDate": null,
       "lastCommentPostDate": null,
-      "kind": "not_in_topics_first_page",
+      "kind": "topic_id_not_found",
       "used_as_source": false,
-      "body_retrieved": false
+      "body_retrieved": false,
+      "http_status": 404
     },
     {
       "id": 734604,
@@ -50,9 +87,10 @@
       "commentCount": null,
       "postDate": null,
       "lastCommentPostDate": null,
-      "kind": "not_in_topics_first_page",
+      "kind": "topic_id_not_found",
       "used_as_source": false,
-      "body_retrieved": false
+      "body_retrieved": false,
+      "http_status": 404
     },
     {
       "id": 735352,
@@ -86,11 +124,13 @@
       "commentCount": null,
       "postDate": null,
       "lastCommentPostDate": null,
-      "kind": "not_in_topics_first_page",
+      "kind": "topic_id_not_found",
       "used_as_source": false,
-      "body_retrieved": false
+      "body_retrieved": false,
+      "http_status": 404
     }
   ],
   "focus3d_title_matches": true,
-  "notes": "Read-only topics API. HTML bodies are SPA shells and were not used as sources. 740392 is absent from the first hot page. Did not launch orgop. Did not submit. Public 0.553 unused."
+  "unread_740392_kind": "topic_id_not_found",
+  "notes": "Read-only topics API plus by-id lookup. HTML bodies are SPA shells and were not used as sources. 740392 is absent from the first hot page and the by-id endpoint 404s; kernel search is empty. Did not launch retrain or orgop. Did not submit. Public 0.553 unused."
 }
