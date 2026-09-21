@@ -212,6 +212,21 @@ wrote 0 candidate edges. Decision **`reject_learned_unet_orgop_v1`**.
 Frozen `6bba` was not opened. See `reports/learned_unet_orgop_v1.md`.
 This audit body above remains the pre-launch specification.
 
+## Next specified experiment (2026-09-21T05:47:28Z)
+
+After orgop reject, the honest detection lever from this audit
+(ranked #6, “after orgop”) is specified as `learned_unet_retrain_v1`
+hash `92a419926fa7e40b`: resume locked `learned_unet_v1_last.pt` for
++3 epochs on 44b6 only. Reserved slug
+`mahdimzafari/biohub-learned-unet-retrain-v1`.
+`LAUNCH_AUTHORIZED=False`. Not in `KERNELS`. Not pushed.
+See `reports/learned_unet_retrain_v1.md`.
+
+Read-only prune-test submit poll at the same timestamp: kernel still
+**COMPLETE**; competition list still association_v2 **56399003** /
+**0.553**. Decision still `human_action_required_ui_submit`. Entry
+deadline **2026-09-22 23:59 UTC**.
+
 ## What the audit cycle did not do
 
 - Did not launch `learned_unet_orgop_v1` during the audit itself
@@ -220,3 +235,4 @@ This audit body above remains the pre-launch specification.
 - Did not submit or merge
 - Did not treat 0.9462 as a measured API score
 - Did not retune prune / hung / motion / conflict
+- Did not launch `learned_unet_retrain_v1`
