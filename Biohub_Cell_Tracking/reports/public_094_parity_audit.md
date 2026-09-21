@@ -219,7 +219,8 @@ After orgop reject, the honest detection lever from this audit
 hash `92a419926fa7e40b`: resume locked `learned_unet_v1_last.pt` for
 +3 epochs on 44b6 only. Reserved slug
 `mahdimzafari/biohub-learned-unet-retrain-v1`.
-`LAUNCH_AUTHORIZED=False`. Not in `KERNELS`. Not pushed.
+`LAUNCH_AUTHORIZED=False`. In `KERNELS`; `push_kaggle_kernel.py` refuses
+until a reviewed cycle. Not pushed.
 See `reports/learned_unet_retrain_v1.md`.
 
 Read-only prune-test submit poll at the same timestamp: kernel still
@@ -249,3 +250,12 @@ Read-only prune-test submit poll **2026-09-21T07:51:05Z**: kernel still
 **COMPLETE**; competition list still association_v2 **56399003** /
 **0.553**. Decision `human_action_required_ui_submit`. Did not download
 CSV. Did not submit.
+
+## Hourly prune-test submit poll (2026-09-21T08:47:44Z)
+
+Read-only prune-test submit poll **2026-09-21T08:47:44Z**: kernel still
+**COMPLETE**; outputs still `run_manifest.json` + `submission.csv`.
+Competition list still exactly association_v2 **56399003** / public API
+**0.553**. Decision `human_action_required_ui_submit`. Did **not**
+download CSV. Did **not** submit. Did **not** retry 740392. Retrain stays
+`LAUNCH_AUTHORIZED=False`. Entry deadline **2026-09-22 23:59 UTC**.

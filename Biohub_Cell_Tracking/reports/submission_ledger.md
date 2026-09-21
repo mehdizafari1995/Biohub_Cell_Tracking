@@ -336,6 +336,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
 - **Kaggle public / private scores for this slug:** not returned.
 
+## learned_unet_prune_test_v1_submit_poll (2026-09-21T08:47:44Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-prune-test-v1` at **2026-09-21T08:47:44Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** retry 740392. Did **not** launch retrain.
+- **Config hash:** `074a71dec68304e8`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
+- **Kaggle public / private scores for this slug:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

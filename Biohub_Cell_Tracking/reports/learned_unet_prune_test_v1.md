@@ -87,5 +87,5 @@ did not trigger.
 `HUMAN_ACTION_REQUIRED`: Mahdi must **Submit to Competition** from the
 Kaggle UI on `mahdimzafari/biohub-learned-unet-prune-test-v1` version 1
 **before the 2026-09-22 23:59 UTC entry deadline**.
-Do not overwrite this slug. Read-only poll **2026-09-21T05:47:28Z**
+Do not overwrite this slug. Read-only poll **2026-09-21T08:47:44Z**
 still shows only association_v2 **56399003** / **0.553**.
