@@ -225,6 +225,19 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Competition list:** still exactly one row (association_v2 **56399003**). Gap-test lastRunTime **2026-09-20T18:41:51Z** is after that submission, so 56399003 cannot be the gap worker.
 - **Decision:** `human_action_required_ui_submit`.
 - **Kaggle public / private scores for this slug:** not returned.
+- **2026-09-21T03:59:39Z status-only reconfirm:** kernel still complete; competition list still exactly one row. Did not download CSV. Did not submit.
+
+## learned_unet_prune_v1_tune
+
+- **Status:** local official scorer on locked learned infer graphs + locked gap overlay + drop degree-0 leftovers. **Not a Kaggle run.** No new kernel. Frozen `6bba` was **not** scored in this row.
+- **Config hash:** `115753ea16aaf021`. Parent gap `f4d888d190c45a4a`. Parent infer `d7578b5f64ddac08`.
+- **Local official tuning:** learned_unet_prune_v1 **0.662081** vs locked learned_unet_gap_v1 **0.658452**. Dropped 425 isolates. Divisions 0/0/2. Decision `keep_candidate_learned_unet_prune_v1`. Not a leaderboard score.
+
+## learned_unet_prune_v1_holdout
+
+- **Status:** local official scorer on locked learned holdout graphs + locked gap overlay + drop degree-0 leftovers. **Not a Kaggle run.** No new kernel. One-shot only.
+- **Config hash:** `115753ea16aaf021`. Parent holdout `d374a21f03dddc04`. Parent gap `f4d888d190c45a4a`.
+- **Local official holdout:** learned_unet_prune_v1 **0.701378** vs locked learned_unet_gap_v1 **0.701026**. Dropped 491 isolates. Edge Jaccard unchanged 0.74335. Divisions 0/0/5. Decision `keep_candidate_learned_unet_prune_v1`. Do not retune. Do not score holdout again. Not a leaderboard score.
 
 ## Policy
 

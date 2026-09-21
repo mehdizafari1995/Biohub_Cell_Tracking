@@ -1,0 +1,17 @@
+{
+  "label": "learned_unet_prune_v1",
+  "config_hash": "115753ea16aaf021",
+  "parent_gap_hash": "f4d888d190c45a4a",
+  "decision": "keep_candidate_learned_unet_prune_v1",
+  "n_dropped_tune": 425,
+  "n_dropped_holdout": 491,
+  "tune_edge_tp_change_12dfb391": "700->703",
+  "holdout_edge_jaccard_unchanged": 0.7433450527373179,
+  "holdout_edge_tp_fp_fn": {
+    "6bba_05db0fb1": [1051, 210, 132],
+    "6bba_c328f2fd": [429, 98, 71]
+  },
+  "notes": "Isolates inflate T_pred. On 44b6 they also stole a few GT matches. On 6bba edges were identical to gap; adj Jaccard rose from the T_pred penalty only. Not a leaderboard score.",
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false
+}

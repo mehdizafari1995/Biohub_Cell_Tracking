@@ -9,9 +9,9 @@ Private GPU kernel, internet off, competition dataset plus locked `biohub-learne
 - Slug: [`mahdimzafari/biohub-learned-unet-gap-test-v1`](https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-gap-test-v1)
 - Source: `notebooks/kaggle_learned_unet_gap_test_v1.py`
 - Version 1 **COMPLETE** on public `test/` (330.0 s, peak RAM 1184 MB, `audit_ok`). **Not submitted.** Read-only poll 2026-09-21T02:50:39Z confirmed the kernel is still complete and still absent from the competition submission list.
-- Local official holdout of the parent overlay is **0.701026**. That is not a leaderboard score.
+- Local official holdout of the parent overlay is **0.701026**. Isolate-prune overlay `learned_unet_prune_v1` later scored **0.701378** on the same frozen `6bba` (hash `115753ea16aaf021`). That prune overlay has **no** public-test kernel yet. This is not a leaderboard score.
 
-Do **not** overwrite this slug. Do **not** submit from the CLI.
+Do **not** overwrite this slug. Do **not** submit from the CLI. Next packaging step is a **new** `learned_unet_prune_test_v1` slug.
 
 ## Previous public-test worker (association_v2)
 

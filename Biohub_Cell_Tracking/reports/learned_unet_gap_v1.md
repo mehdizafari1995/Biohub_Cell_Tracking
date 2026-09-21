@@ -98,8 +98,9 @@ This is a local official score, not a Kaggle leaderboard number.
 
 ## Next
 
-Gap test-time slug `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 is
-**COMPLETE / inferred** (330.0 s, `audit_ok`, hash `85379c198ebc7241`).
-Do **not** overwrite it or `mahdimzafari/biohub-learned-unet-test-v1` v1.
-Do **not** retune. Do **not** score frozen `6bba` again. Do not submit
+`learned_unet_prune_v1` overlay (hash `115753ea16aaf021`) kept after
+one-shot official holdout (**0.701378 vs this overlay 0.701026**). Do
+**not** retune this gap hash. Do **not** score frozen `6bba` again. Next
+packaging step is a **new** `learned_unet_prune_test_v1` slug. Do **not**
+overwrite `mahdimzafari/biohub-learned-unet-gap-test-v1` v1. Do not submit
 from the CLI.

@@ -1,0 +1,36 @@
+# learned_unet_prune_v1 — drop leftover degree-0 detections after the
+# locked learned_unet_gap_v1 overlay. Detection / consecutive dt=1
+# links stay at learned_unet_infer_v1 (d7578b5f64ddac08). Gap gates
+# stay at learned_unet_gap_v1 (f4d888d190c45a4a). This is not another
+# 12 µm assignment. Tune on 44b6 only. Do not open 6bba until a
+# documented 44b6 keep. Do not overwrite locked train/infer/holdout/
+# test/gap-test slugs. Learned graphs have no intensity; intensity_weight
+# is unused. Not a competition submission.
+
+label: learned_unet_prune_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+holdout_label: learned_unet_holdout_v1
+gap_label: learned_unet_gap_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+holdout_config_hash: d374a21f03dddc04
+gap_config_hash: f4d888d190c45a4a
+source_graphs: locked_learned_unet_graphs
+retunes_detection: false
+retunes_consecutive_links: false
+retunes_gap_gates: false
+uses_intensity: false
+uses_transformer: false
+linker: gap_then_drop_degree0
+gate_um: 12.0
+max_gap_frames: 2
+gap_scale: sqrt_dt
+assignment: greedy
+interpolate_gaps: true
+drop_degree0: true
+max_parents_per_node: 1
+max_children_per_node: 1
+intensity_weight: 0.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false

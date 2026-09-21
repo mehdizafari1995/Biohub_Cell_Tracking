@@ -1,0 +1,22 @@
+{
+  "label": "learned_unet_prune_v1",
+  "config_hash": "115753ea16aaf021",
+  "parent_gap_hash": "f4d888d190c45a4a",
+  "parent_infer_hash": "d7578b5f64ddac08",
+  "n_volumes_tuning": 2,
+  "estimate_sec_tuning": 10.6,
+  "estimate_hours_hidden_199": 0.29,
+  "kaggle_gpu_limit_hours": 12.0,
+  "under_limit": true,
+  "peak_memory_mb_budget": 900.0,
+  "measured_tune_sec": 6.854,
+  "measured_tune_peak_mb": 606.3,
+  "measured_holdout_sec": 9.833,
+  "measured_holdout_peak_mb": 835.7,
+  "needs_gpu": false,
+  "needs_new_unet_pass": false,
+  "hypothesis": "After locked learned_unet_gap_v1, leftover degree-0 detections inflate T_pred without contributing edges. Dropping them on 44b6 only should raise adjusted edge Jaccard versus locked gap 0.658452. Frozen 6bba is refused until that comparison keeps the candidate. Not another 12 µm assignment.",
+  "source": "CPU locked gap overlay then drop degree-0 leftovers on locked learned infer graphs; no transformer; no new UNet pass",
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false
+}
