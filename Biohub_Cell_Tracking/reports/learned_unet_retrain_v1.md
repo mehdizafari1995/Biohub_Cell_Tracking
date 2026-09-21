@@ -21,7 +21,7 @@ and seed stay frozen. After training, a later cycle would official-score
 pool 5.0) vs **0.655751**. Public 199-video / DeepCenter / organizer-split
 weights stay refused.
 
-## Operating point (specified, not launched)
+## Operating point (packaged, not launched)
 
 Config: `configs/learned_unet_retrain_v1.yaml`. Hash `92a419926fa7e40b`.
 Reserved slug `mahdimzafari/biohub-learned-unet-retrain-v1`.
@@ -61,7 +61,9 @@ datasets.
 
 ## This cycle
 
-Specified and tested only. Kernel **not** launched. Champion remains
+Packaged and tested. Kernel **not** launched. `LAUNCH_AUTHORIZED=False`.
+Notebook `notebooks/kaggle_learned_unet_retrain_v1.py` is in `KERNELS`;
+`push_kaggle_kernel.py` refuses a push until a reviewed cycle. Champion remains
 `learned_unet_prune_v1` / prune-test v1
 `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED` /
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`.

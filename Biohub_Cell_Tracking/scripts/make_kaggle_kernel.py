@@ -366,6 +366,28 @@ Private **GPU** test-time notebook with locked gap overlay then degree-0 prune. 
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step.
 """,
     },
+    "learned_unet_retrain_v1": {
+        "source": "notebooks/kaggle_learned_unet_retrain_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_retrain_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_retrain_v1",
+        "code_file": "kaggle_learned_unet_retrain_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-retrain-v1",
+        "title": "Biohub Learned UNet Retrain V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_retrain_v1
+
+Private **GPU** helper kernel. **Not a competition submission.** **Not launched.**
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-v1` v3 or locked infer/holdout/test/gap-test/prune-test/orgop slugs.
+- Resume locked 44b6-only `learned_unet_v1_last.pt` for **3 additional epochs**. `LAUNCH_AUTHORIZED=False`.
+- Refuses public 199-video / DeepCenter / organizer-split checkpoints. Never opens `6bba`.
+- Writes continuation weights + `retrain_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: 3.10–3.75 h T4 x2 from parent 11732 s / 3 epochs, under 12 h.
+- Do **not** push until a reviewed cycle flips `LAUNCH_AUTHORIZED`. Do **not** Submit to Competition.
+""",
+    },
 }
 
 

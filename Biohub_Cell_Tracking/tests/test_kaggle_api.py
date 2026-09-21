@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import time
 
+import pytest
+
 from biohub_tracking import kaggle_api
 
 
@@ -31,6 +33,10 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-learned-unet-link-v2" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-prune-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgop-v1" in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-retrain-v1" not in mod.FORBIDDEN_SLUGS
+    assert mod.RETRAIN_LAUNCH_AUTHORIZED is False
+    with pytest.raises(SystemExit, match="not authorized"):
+        mod.push_kernel("learned_unet_retrain_v1")
 
 
 def test_fetch_kernel_output_allows_helper_slugs_only():
@@ -58,6 +64,7 @@ def test_fetch_kernel_output_allows_helper_slugs_only():
     assert "mahdimzafari/biohub-learned-unet-hung-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-prune-test-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgop-v1" in mod.ALLOWED_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-retrain-v1" not in mod.ALLOWED_SLUGS
 
 
 def test_rate_limit_cooldown_is_bounded_and_silent_of_secrets():

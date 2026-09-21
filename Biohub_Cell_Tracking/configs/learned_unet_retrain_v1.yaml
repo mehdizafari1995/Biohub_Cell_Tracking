@@ -4,7 +4,7 @@
 # Do not attach public 199-video / DeepCenter weights.
 # Do not open 6bba. Do not write submission.csv.
 # Do not overwrite mahdimzafari/biohub-learned-unet-v1.
-# LAUNCH_AUTHORIZED=False. Not a competition submission.
+# LAUNCH_AUTHORIZED=False. Packaged, not a competition submission.
 
 label: learned_unet_retrain_v1
 parent_label: learned_unet_v1

@@ -17,6 +17,7 @@ from biohub_tracking.learned_retrain import (  # noqa: E402
     LAUNCH_AUTHORIZED,
     LOCKED_RETRAIN_HASH,
     PRUNE_LOCKED_HOLDOUT,
+    RESUME_WEIGHTS_NAME,
     RETRAIN_KERNEL_SLUG,
     TRAIN_KERNEL_SLUG,
     allowed_resume_weight_names,
@@ -32,6 +33,21 @@ from biohub_tracking.learned_retrain import (  # noqa: E402
     tuning_decision,
 )
 from biohub_tracking.learned_split import HoldoutLeakError, INTERNAL_VAL_STEMS  # noqa: E402
+
+sys.path.insert(0, str(ROOT / "notebooks"))
+from kaggle_learned_unet_retrain_v1 import (  # noqa: E402
+    CONFIG_LABEL as NB_LABEL,
+    KERNEL_SLUG as NB_SLUG,
+    LAUNCH_AUTHORIZED as NB_LAUNCH,
+    LOCKED_RETRAIN_HASH as NB_HASH,
+    RESUME_WEIGHTS_NAME as NB_RESUME,
+    HoldoutLeakError as NBHoldoutLeakError,
+    config_hash as nb_hash,
+    config_payload as nb_payload,
+    find_resume_weights,
+    main as kernel_main,
+    refuse_public_weight_sources as nb_refuse_public,
+)
 
 _MAKE = importlib.util.spec_from_file_location(
     "make_kaggle_kernel", ROOT / "scripts" / "make_kaggle_kernel.py"
@@ -119,8 +135,20 @@ def test_retrain_is_specified_not_launched_and_does_not_overwrite():
         assert_kernel_not_launched()
     with pytest.raises(SystemExit, match="not authorized"):
         assert_launch_authorized()
-    assert "learned_unet_retrain_v1" not in _make_mod.KERNELS
+    spec = _make_mod.KERNELS["learned_unet_retrain_v1"]
+    assert spec["kernel_id"] == RETRAIN_KERNEL_SLUG
+    assert spec.get("enable_gpu") is True
+    assert spec.get("kernel_sources") == [TRAIN_KERNEL_SLUG]
+    meta = _make_mod.metadata_payload(spec)
+    assert meta["enable_gpu"] is True
+    assert meta["enable_internet"] is False
+    assert meta["is_private"] is True
+    assert meta["id"] == RETRAIN_KERNEL_SLUG
+    assert TRAIN_KERNEL_SLUG in meta["kernel_sources"]
     assert RETRAIN_KERNEL_SLUG not in _push_mod.FORBIDDEN_SLUGS
+    assert _push_mod.RETRAIN_LAUNCH_AUTHORIZED is False
+    with pytest.raises(SystemExit, match="not authorized"):
+        _push_mod.push_kernel("learned_unet_retrain_v1")
     locked = {
         "mahdimzafari/biohub-learned-unet-v1",
         "mahdimzafari/biohub-learned-unet-infer-v1",
@@ -132,6 +160,13 @@ def test_retrain_is_specified_not_launched_and_does_not_overwrite():
     }
     assert locked <= _push_mod.FORBIDDEN_SLUGS
     assert RETRAIN_KERNEL_SLUG == "mahdimzafari/biohub-learned-unet-retrain-v1"
+    fetch = importlib.util.spec_from_file_location(
+        "fetch_kernel_output", ROOT / "scripts" / "fetch_kernel_output.py"
+    )
+    assert fetch and fetch.loader
+    fetch_mod = importlib.util.module_from_spec(fetch)
+    fetch.loader.exec_module(fetch_mod)
+    assert RETRAIN_KERNEL_SLUG not in fetch_mod.ALLOWED_SLUGS
 
 
 def test_retrain_does_not_use_public_lb_and_estimates_under_12h():
@@ -152,3 +187,41 @@ def test_retrain_does_not_use_public_lb_and_estimates_under_12h():
     assert 0.701 < PRUNE_LOCKED_HOLDOUT < 0.702
     assert tuning_decision(0.6557507105877639).startswith("reject")
     assert tuning_decision(0.6557507105877640).startswith("keep")
+
+
+def test_retrain_notebook_matches_locked_hash_and_refuses_launch(tmp_path: Path, monkeypatch):
+    source = (ROOT / "notebooks" / "kaggle_learned_unet_retrain_v1.py").read_text()
+    assert "to_csv(" not in source
+    assert "graphs_to_submission" not in source
+    assert "LAUNCH_AUTHORIZED = False" in source
+    assert RESUME_WEIGHTS_NAME == NB_RESUME == "learned_unet_v1_last.pt"
+    assert NB_LABEL == "learned_unet_retrain_v1"
+    assert NB_SLUG == RETRAIN_KERNEL_SLUG
+    assert NB_LAUNCH is False
+    assert nb_payload() == retrain_config_payload()
+    assert nb_hash() == LOCKED_RETRAIN_HASH == NB_HASH == "92a419926fa7e40b"
+    with pytest.raises(NBHoldoutLeakError):
+        nb_refuse_public(["pilkwang/biohub-deepcenter-unet3d-center-prior"])
+    public_dir = tmp_path / "public"
+    public_dir.mkdir()
+    (public_dir / "checkpoint_last.pth").write_bytes(b"nope")
+    assert find_resume_weights([public_dir]) is None
+    parent = tmp_path / "parent"
+    parent.mkdir()
+    (parent / "learned_unet_v1_last.pt").write_bytes(b"weights")
+    found = find_resume_weights([parent])
+    assert found is not None and found.name == "learned_unet_v1_last.pt"
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("BIOHUB_LEARNED_DRY_RUN", "1")
+    result = kernel_main()
+    assert result["status"] == "blocked_launch_not_authorized"
+    assert result["config_hash"] == "92a419926fa7e40b"
+    assert result["launch_authorized"] is False
+    assert result["is_competition_submission"] is False
+    assert result["overwrites_parent_slug"] is False
+    assert not (tmp_path / "submission.csv").exists()
+    assert (tmp_path / "retrain_manifest.json").exists()
+    spec = _make_mod.KERNELS["learned_unet_retrain_v1"]
+    nb = _make_mod.build_notebook(source, spec["markdown"], enable_gpu=True)
+    assert nb["metadata"]["kaggle"]["accelerator"] == "gpu"
+    assert nb["metadata"]["kaggle"]["isInternetEnabled"] is False

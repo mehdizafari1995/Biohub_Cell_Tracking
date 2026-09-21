@@ -15,6 +15,10 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from biohub_tracking.kaggle_api import API_ROOT, _token  # noqa: E402
 from make_kaggle_kernel import KERNELS  # noqa: E402
+from biohub_tracking.learned_retrain import (  # noqa: E402
+    LAUNCH_AUTHORIZED as RETRAIN_LAUNCH_AUTHORIZED,
+    RETRAIN_KERNEL_SLUG,
+)
 
 FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-baseline-v1",
@@ -66,6 +70,15 @@ def _load_notebook_text(kernel_name: str) -> tuple[str, dict]:
 def push_kernel(kernel_name: str) -> dict:
     if kernel_name not in KERNELS:
         raise SystemExit(f"unknown kernel {kernel_name!r}")
+    spec = KERNELS[kernel_name]
+    slug = spec["kernel_id"]
+    if slug in FORBIDDEN_SLUGS:
+        raise SystemExit(f"refusing to overwrite locked kernel {slug}")
+    if slug == RETRAIN_KERNEL_SLUG and not RETRAIN_LAUNCH_AUTHORIZED:
+        raise SystemExit(
+            "learned_unet_retrain_v1 launch is not authorized; wait for a "
+            "reviewed cycle. Do not overwrite mahdimzafari/biohub-learned-unet-v1"
+        )
     text, meta = _load_notebook_text(kernel_name)
     payload = {
         "slug": meta["id"],
@@ -118,6 +131,11 @@ def main() -> None:
     slug = spec["kernel_id"]
     if slug in FORBIDDEN_SLUGS:
         raise SystemExit(f"refusing to overwrite locked kernel {slug}")
+    if slug == RETRAIN_KERNEL_SLUG and not RETRAIN_LAUNCH_AUTHORIZED:
+        raise SystemExit(
+            "learned_unet_retrain_v1 launch is not authorized; wait for a "
+            "reviewed cycle. Do not overwrite mahdimzafari/biohub-learned-unet-v1"
+        )
     if args.status_only:
         status = kernel_status(slug)
         print(json.dumps({k: status.get(k) for k in ("status", "failureMessage", "hasFailureMessage")}, indent=2))

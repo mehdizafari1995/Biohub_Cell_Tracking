@@ -27,11 +27,12 @@ wrote 0 candidate edges. Decision **`reject_learned_unet_orgop_v1`**.
 Do **not** retune. Do **not** open `6bba`. Public 0.553 is
 association_v2 only.
 
-## Next specified experiment (not launched)
+## Next specified experiment (packaged, not launched)
 
 `learned_unet_retrain_v1` hash `92a419926fa7e40b`. Resume locked
 `learned_unet_v1_last.pt` for +3 epochs on 44b6 only. Reserved slug
-`mahdimzafari/biohub-learned-unet-retrain-v1`.
+`mahdimzafari/biohub-learned-unet-retrain-v1`. Helper packaged
+(`notebooks/kaggle_learned_unet_retrain_v1.py`).
 `LAUNCH_AUTHORIZED=False`. Do **not** launch until review. Do **not**
 overwrite the locked train helper. See
 `reports/learned_unet_retrain_v1.md`.
@@ -40,7 +41,7 @@ overwrite the locked train helper. See
 
 `mahdimzafari/biohub-learned-unet-prune-test-v1` v1 remains
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-21T05:47:28Z** still shows only
+Read-only poll **2026-09-21T06:54:02Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
 Discussion **738217** is independently titled focus3d segmentation
 and is **not** part of orgop or retrain. Do not overwrite prune-test

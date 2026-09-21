@@ -303,6 +303,24 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Acceptance (after authorized launch):** official 44b6 vs infer **0.655751**; reject and keep `6bba` closed unless strictly better; then one-shot vs prune **0.701378**.
 - **Kaggle public / private scores:** not returned. Public 0.553 unused.
 
+## learned_unet_prune_test_v1_submit_poll (2026-09-21T06:54:02Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-prune-test-v1` at **2026-09-21T06:54:02Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit.
+- **Config hash:** `074a71dec68304e8`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
+- **Kaggle public / private scores for this slug:** not returned.
+
+## learned_unet_retrain_v1_packaged
+
+- **Status:** packaged, not launched. **No kernel pushed. No competition submission.**
+- **Config hash:** `92a419926fa7e40b`. Parent train `4c38035d6657f2ad`. Reserved slug `mahdimzafari/biohub-learned-unet-retrain-v1`. `LAUNCH_AUTHORIZED=False`.
+- **Notebook:** `notebooks/kaggle_learned_unet_retrain_v1.py`. In `KERNELS`. `push_kaggle_kernel.py` refuses until launch is authorized. Does not overwrite `mahdimzafari/biohub-learned-unet-v1`.
+- **Hypothesis:** +3-epoch 44b6-only continuation of locked `learned_unet_v1_last.pt` after orgop reject. Public 199-video weights refused.
+- **Estimate:** 3.10–3.75 h GPU T4 x2 from parent 11732 s / 3 epochs. Under 12 h. Hidden-test not projected.
+- **Acceptance (after authorized launch):** official 44b6 vs infer **0.655751**; reject and keep `6bba` closed unless strictly better; then one-shot vs prune **0.701378**.
+- **Kaggle public / private scores:** not returned. Public 0.553 unused.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
