@@ -251,11 +251,16 @@ Read-only prune-test submit poll **2026-09-21T07:51:05Z**: kernel still
 **0.553**. Decision `human_action_required_ui_submit`. Did not download
 CSV. Did not submit.
 
-## Hourly prune-test submit poll (2026-09-21T08:47:44Z)
+## Hourly prune-test submit poll (2026-09-21T09:45:57Z)
 
-Read-only prune-test submit poll **2026-09-21T08:47:44Z**: kernel still
+Read-only prune-test submit poll **2026-09-21T09:45:57Z**: kernel still
 **COMPLETE**; outputs still `run_manifest.json` + `submission.csv`.
 Competition list still exactly association_v2 **56399003** / public API
 **0.553**. Decision `human_action_required_ui_submit`. Did **not**
 download CSV. Did **not** submit. Did **not** retry 740392. Retrain stays
 `LAUNCH_AUTHORIZED=False`. Entry deadline **2026-09-22 23:59 UTC**.
+
+Authorized unbundled overlay `learned_unet_orgdet_v1` hash
+`80b20589198148b7` official-scored on 44b6: **0.679578 vs infer
+0.655751**. Decision **`keep_candidate_learned_unet_orgdet_v1`**. Frozen
+`6bba` not opened. See `reports/learned_unet_orgdet_v1.md`.

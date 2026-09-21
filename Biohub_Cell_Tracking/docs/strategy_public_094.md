@@ -37,11 +37,17 @@ association_v2 only.
 overwrite the locked train helper. See
 `reports/learned_unet_retrain_v1.md`.
 
+Authorized unbundled detection overlay `learned_unet_orgdet_v1` hash
+`80b20589198148b7` official-scored on 44b6: **0.679578 vs infer
+0.655751**. `keep_candidate_learned_unet_orgdet_v1`. Frozen `6bba` not
+opened. Next: one-shot 6bba GPU helper at locked 0.99+greedy vs prune
+**0.701378**.
+
 ## Still the packaged public-test worker
 
 `mahdimzafari/biohub-learned-unet-prune-test-v1` v1 remains
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-21T08:47:44Z** still shows only
+Read-only poll **2026-09-21T09:45:57Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
 Discussion **738217** is independently titled focus3d segmentation
 and is **not** part of orgop or retrain. Discussion **740392** is

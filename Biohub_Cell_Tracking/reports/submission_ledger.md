@@ -344,6 +344,23 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
 - **Kaggle public / private scores for this slug:** not returned.
 
+## learned_unet_prune_test_v1_submit_poll (2026-09-21T09:45:57Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-prune-test-v1` at **2026-09-21T09:45:57Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** retry 740392. Did **not** launch retrain.
+- **Config hash:** `074a71dec68304e8`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
+- **Kaggle public / private scores for this slug:** not returned.
+
+## learned_unet_orgdet_v1_tune
+
+- **Status:** local official scorer on frozen-tuning `44b6_12dfb391` + `44b6_267148e4`. **Not a Kaggle run. Not a leaderboard score.**
+- **Config hash:** `80b20589198148b7`. Parent infer `d7578b5f64ddac08`. Rejected orgop `250c5bfacd4a8198`.
+- **Hypothesis:** orgop failed on empty transformer edges; greedy 12 µm on the same 0.99 detections should isolate detection.
+- **Official 44b6:** **0.679578 vs infer 0.655751**. Recall 0.97004. TP/FP/FN **877/220/173** vs infer **877/221/173**. Nodes **91152** vs **117692**. 0/0/2 divisions. Per-sequence 0.772105 / 0.467676.
+- **Decision:** `keep_candidate_learned_unet_orgdet_v1`. Frozen `6bba` not opened. Helper packaged, not pushed.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

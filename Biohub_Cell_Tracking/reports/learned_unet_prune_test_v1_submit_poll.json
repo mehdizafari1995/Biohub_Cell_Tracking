@@ -1,6 +1,6 @@
 {
-  "polled_utc": "2026-09-21T08:47:44Z",
-  "code_version": "9c0d16e",
+  "polled_utc": "2026-09-21T09:45:57Z",
+  "code_version": "02081de",
   "prune_test_config_hash": "074a71dec68304e8",
   "kernel": {
     "slug": "mahdimzafari/biohub-learned-unet-prune-test-v1",

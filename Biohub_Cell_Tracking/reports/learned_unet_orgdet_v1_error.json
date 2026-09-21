@@ -1,0 +1,22 @@
+{
+  "status": "tuning_error_analysis",
+  "decision": "keep_candidate_learned_unet_orgdet_v1",
+  "config_hash": "80b20589198148b7",
+  "rejected_orgop_hash": "250c5bfacd4a8198",
+  "opened_holdout": false,
+  "is_leaderboard_score": false,
+  "n_nodes": [62480, 28672],
+  "n_edges": [58617, 25440],
+  "n_orgop_edges": [0, 0],
+  "n_over_12um": [0, 0],
+  "max_out_degree": [1, 1],
+  "max_in_degree": [1, 1],
+  "detection_counts_match_orgop": true,
+  "official_tp_fp_fn": [877, 220, 173],
+  "infer_tp_fp_fn": [877, 221, 173],
+  "infer_pred_nodes_edges": [117692, 106385],
+  "orgdet_pred_nodes_edges": [91152, 84057],
+  "node_recall": 0.9700416968817984,
+  "failure_mode": "none_kept_on_tuning",
+  "analysis": "Organizer 0.99 detections plus locked greedy 12 µm recovered the same official TPs (877) as infer 0.5 detections while dropping 26540 extra predicted nodes. Adjusted Jaccard rose because T_pred fell. Gate held (0 over 12 µm). Frozen 6bba not opened."
+}
