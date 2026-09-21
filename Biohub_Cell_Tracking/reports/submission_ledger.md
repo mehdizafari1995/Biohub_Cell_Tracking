@@ -384,6 +384,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Estimate:** 86.9 s/volume from orgdet-holdout v1. Public 4 volumes ~5.8 min. Hidden ~199 volumes **~4.8 h** under 12 h.
 - **Kaggle public / private scores:** not returned.
 
+## learned_unet_orgdet_test_v1_kernel_v1
+
+- **Status:** private GPU test-time kernel `mahdimzafari/biohub-learned-unet-orgdet-test-v1` version **1 COMPLETE / inferred**. Environment label `kaggle_input`. GPU T4 x2, internet off. Worker `audit_ok`. Independent stream `audit_ok`. **Not submitted.**
+- **Config hash:** `c45c859610d29e90` (locked orgdet holdout 0.99 / pool 3.0 / TTA + greedy 12 µm on discovered `test/*.zarr`). Parent holdout `912f0c19b572a054`.
+- **Worker:** 334.23 s, peak RAM 1183 MB. Weights `learned_unet_v1_last.pt`. Public test 188509 nodes / 172148 edges / 0 divisions. `6bba_05db0fb1` 84328/78493 matches locked orgdet holdout. Hidden projection **4.62 h** under 12 h.
+- **Kaggle public / private scores:** not returned. Competition list still association_v2 **56399003** / **0.553** only.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

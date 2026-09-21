@@ -57,20 +57,47 @@ competition data + locked `mahdimzafari/biohub-learned-unet-v1`
 weights. Refuses public 199-video / DeepCenter checkpoints. **Not a
 competition submission.** Do **not** submit from the CLI.
 
+## Kaggle rehearsal (not a leaderboard score)
+
+Private GPU kernel `mahdimzafari/biohub-learned-unet-orgdet-test-v1`
+version **1 COMPLETE / inferred**. Internet off. Environment
+`kaggle_input`. T4 x2, torch 2.10+cu128. Weights
+`/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+Worker `audit_ok`. Independent stream audit `audit_ok`. **Not submitted.**
+Competition list still exactly association_v2 **56399003**. Frozen
+`6bba` was not official-scored again.
+
+| metric | prune-test v1 | orgdet-test v1 |
+|---|---|---|
+| nodes | 250864 | **188509** |
+| edges | 242412 | **172148** |
+| gap links | 13912 | **0** |
+| interpolated | 19953 | **0** |
+| dropped isolates | 796 | **0** |
+| divisions | 0 | 0 |
+| runtime | 348.18 s | **334.23 s** |
+| peak RAM | 1202 MB | **1183 MB** |
+| worker audit | ok | ok |
+| independent audit | ok | ok |
+
+Per-sequence: `44b6_0113de3b` 26355/24972, `44b6_0b24845f` 69893/61602,
+`6bba_05b6850b` 7933/7081, `6bba_05db0fb1` **84328/78493** matches locked
+orgdet-holdout graphs exactly.
+
+Hidden-test projection from this rehearsal: **83.56 s/volume × 199 ≈
+4.62 h**, peak ~1.2 GB, under the 12 h GPU limit. Fail-closed gate
+did not trigger.
+
 ## Status
 
-Packaged, not yet pushed as of this report. Holdout keep
-`keep_candidate_learned_unet_orgdet_holdout_v1` is required before
-launch. `learned_unet_prune_test_v1` v1 remains the current public-test
-worker (`READY_FOR_MANUAL_SUBMISSION_REVIEW`) until this slug is
-COMPLETE / `audit_ok`.
+`READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** submit from the CLI.
+Do **not** overwrite v1. CSV stays under ignored `artifacts/kaggle/`.
 
 ## Next
 
-Push private GPU kernel `mahdimzafari/biohub-learned-unet-orgdet-test-v1`
-once, wait COMPLETE, collect `submission.csv` + `run_manifest.json`
-into ignored `artifacts/kaggle/`, and confirm `audit_ok`. Do **not**
-overwrite prune-test v1. Do **not** submit from the CLI.
-`HUMAN_ACTION_REQUIRED` remains: Mahdi must UI-submit prune-test v1
-before 2026-09-22 23:59 UTC unless this slug is COMPLETE / `audit_ok`
-first.
+`HUMAN_ACTION_REQUIRED` — Mahdi must **Submit to Competition** from the
+Kaggle UI on `mahdimzafari/biohub-learned-unet-orgdet-test-v1` version 1
+**before the 2026-09-22 23:59 UTC entry deadline**. Do not submit
+prune-test or gap-test now that orgdet-test v1 is COMPLETE / `audit_ok`.
+Do not resubmit association_v2 **56399003**. Do not launch retrain.
+Do not score frozen `6bba` again.

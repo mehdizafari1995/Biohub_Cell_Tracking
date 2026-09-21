@@ -46,6 +46,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-orgop-v1",
     # Orgdet holdout v1 COMPLETE / inferred 2026-09-21. Official 6bba 0.705226 vs prune 0.701378. Keep. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1",
+    # Orgdet test-time v1 COMPLETE / inferred 2026-09-21. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
 }
 
 

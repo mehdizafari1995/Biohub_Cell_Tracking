@@ -34,7 +34,7 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-learned-unet-prune-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgop-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1" in mod.FORBIDDEN_SLUGS
-    assert "mahdimzafari/biohub-learned-unet-orgdet-test-v1" not in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgdet-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" not in mod.FORBIDDEN_SLUGS
     assert mod.RETRAIN_LAUNCH_AUTHORIZED is False
     with pytest.raises(SystemExit, match="not authorized"):

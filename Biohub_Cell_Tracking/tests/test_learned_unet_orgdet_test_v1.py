@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -220,7 +221,7 @@ def test_push_keeps_locked_slugs_forbidden_and_allows_new_orgdet_test_slug():
     assert GAP_TEST_SLUG in mod.FORBIDDEN_SLUGS
     assert PRUNE_TEST_SLUG in mod.FORBIDDEN_SLUGS
     assert ORGDET_HOLDOUT_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
-    assert ORGDET_TEST_KERNEL_SLUG not in mod.FORBIDDEN_SLUGS
+    assert ORGDET_TEST_KERNEL_SLUG in mod.FORBIDDEN_SLUGS
     fetch = importlib.util.spec_from_file_location(
         "fetch_kernel_output",
         ROOT / "scripts" / "fetch_kernel_output.py",
@@ -269,3 +270,18 @@ def test_refuses_public_weights_and_public_lb_tune_target(tmp_path: Path):
     except SystemExit as exc:
         assert "reject" in str(exc)
     assert ASSOCIATION_V2_PUBLIC_SCORE == "0.553"
+
+
+def test_keep_orgdet_test_complete_report_matches_holdout_overlap():
+    report = json.loads((ROOT / "reports" / "learned_unet_orgdet_test_v1_complete.json").read_text())
+    assert report["status"] == "inferred"
+    assert report["config_hash"] == LOCKED_ORGDET_TEST_HASH
+    assert report["audit_ok"] is True
+    assert report["independent_audit_ok"] is True
+    assert report["is_leaderboard_score"] is False
+    assert report["n_nodes"] == 188509
+    assert report["n_edges"] == 172148
+    assert report["holdout_overlap_6bba_05db0fb1"]["matches_orgdet_holdout_v1"] is True
+    assert report["holdout_overlap_6bba_05db0fb1"]["n_nodes"] == 84328
+    assert report["hidden_projection"]["under_limit"] is True
+    assert report["hidden_projection"]["estimate_hours"] < 12.0

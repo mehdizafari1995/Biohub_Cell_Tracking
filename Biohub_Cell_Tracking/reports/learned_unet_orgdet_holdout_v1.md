@@ -73,10 +73,8 @@ See `reports/learned_unet_orgdet_holdout_v1_error.json`.
 ## Next
 
 Keep `learned_unet_orgdet_holdout_v1` as the holdout champion
-(**0.705226 vs prune 0.701378**). Packaged public-test GPU notebook
-`learned_unet_orgdet_test_v1` (hash `c45c859610d29e90`) at this locked
-operating point. Do **not** overwrite prune-test v1, gap-test v1, or
-this holdout helper. Push `mahdimzafari/biohub-learned-unet-orgdet-test-v1`
-next. `learned_unet_prune_test_v1` v1 remains the current public-test
-worker `READY_FOR_MANUAL_SUBMISSION_REVIEW` until the orgdet test-time
-slug is COMPLETE / `audit_ok`.
+(**0.705226 vs prune 0.701378**). Public-test GPU notebook
+`learned_unet_orgdet_test_v1` hash `c45c859610d29e90` v1 **COMPLETE /
+`audit_ok`**. Do **not** overwrite prune-test v1, gap-test v1, this
+holdout helper, or orgdet-test v1. `HUMAN_ACTION_REQUIRED`: UI-submit
+orgdet-test v1 before 2026-09-22 23:59 UTC.
