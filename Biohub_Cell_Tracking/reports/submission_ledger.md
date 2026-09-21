@@ -253,10 +253,17 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Kaggle public / private scores:** not returned. Competition list still exactly association_v2 **56399003**. Do **not** submit from the CLI.
 - **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-prune-test-v1 → version 1 → **Submit to Competition**.
 
+## learned_unet_orgop_v1_tune
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-orgop-v1` version **1 COMPLETE / inferred**, then local official scorer on frozen-tuning `44b6` only. **Not a competition submission.** Frozen `6bba` was not opened.
+- **Config hash:** `250c5bfacd4a8198`. Train hash `4c38035d6657f2ad`. Weights `learned_unet_v1_last.pt` from the locked train helper. No public 199-video checkpoints.
+- **Helper:** 153.71 s, peak 1227 MB, T4. Internet off. No `submission.csv`. 91152 nodes / 0 edges / 0 softmax>0.5 candidates.
+- **Local official tuning:** combined **0.0 vs infer 0.655751**. Divisions 0/0/2. Solver `ilp_skipped_no_candidates`. Decision `reject_learned_unet_orgop_v1`. Not a leaderboard score.
+
 ## public_094_parity_audit
 
 - **Status:** read-only strategy audit. **No kernel launched. No competition submission.**
-- **Proposed config:** `learned_unet_orgop_v1` hash `250c5bfacd4a8198` (organizer `det_threshold=0.99` + official ILP on locked 44b6-only weights). `LAUNCH_AUTHORIZED=False`. Not in `KERNELS`.
+- **Proposed config (audit-time):** `learned_unet_orgop_v1` hash `250c5bfacd4a8198` (organizer `det_threshold=0.99` + official ILP on locked 44b6-only weights). Later authorized cycle rejected on 44b6 at **0.0**; see `learned_unet_orgop_v1_tune`.
 - **Public 0.94 stack:** organizer 0.99 + ILP plus Pilkwang/Reyhan 199-video TemporalUNet / DeepCenter / seed-314159 pack. Rules-legal public data; **method-rejected** for the candidate (discussion 730160 leak).
 - **0.9462:** not independently returned as an API `publicScore`. Nearby author-reported claims: 0.941 lineage, 0.942 one-knob, 0.948 title reproduced at 0.935. Rule-based 716952 ceiling 0.826.
 - **Public 0.553:** association_v2 **56399003** only. Not used for tuning.
@@ -276,7 +283,7 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Status:** read-only topics API follow-up. **No kernel launched. No competition submission.**
 - **738217:** independently retrieved title **focus3d : one of the best 3d cell segmentation**; 36 votes; 50 comments; posted 2026-08-30. HTML body still an SPA shell. **Not used as a source.** Not part of `learned_unet_orgop_v1`.
 - **740392:** still absent from the first hot page (20 of 112). Pagination params ignored. Kernel search 0 hits. **Not used.**
-- **Orgop:** hash `250c5bfacd4a8198` remains specified, `LAUNCH_AUTHORIZED=False`.
+- **Orgop (inventory-time):** hash `250c5bfacd4a8198` was still specified. Later authorized cycle rejected on 44b6 at **0.0**.
 - **Kaggle public / private scores:** not returned.
 
 ## Policy

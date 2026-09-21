@@ -203,9 +203,18 @@ Read-only prune-test submit poll: kernel still **COMPLETE** with
 association_v2 **56399003** / public API **0.553**. Decision
 `human_action_required_ui_submit`. Did not download CSV. Did not submit.
 
-## What this cycle did not do
+## Authorized cycle outcome (2026-09-21T05:09:14Z)
 
-- Did not launch `learned_unet_orgop_v1`
+The later reviewed cycle launched reserved slug
+`mahdimzafari/biohub-learned-unet-orgop-v1` v1 on locked 44b6 weights
+only. Official 44b6 combined **0.0 vs infer 0.655751**. Softmax>0.5
+wrote 0 candidate edges. Decision **`reject_learned_unet_orgop_v1`**.
+Frozen `6bba` was not opened. See `reports/learned_unet_orgop_v1.md`.
+This audit body above remains the pre-launch specification.
+
+## What the audit cycle did not do
+
+- Did not launch `learned_unet_orgop_v1` during the audit itself
 - Did not attach public 199-video weights
 - Did not official-score `6bba`
 - Did not submit or merge

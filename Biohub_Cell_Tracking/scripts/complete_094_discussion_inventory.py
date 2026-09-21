@@ -19,10 +19,11 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from biohub_tracking.experiments import git_version  # noqa: E402
 from biohub_tracking.kaggle_api import list_competition_topics  # noqa: E402
-from biohub_tracking.learned_orgop import LAUNCH_AUTHORIZED, LOCKED_ORGOP_HASH  # noqa: E402
+from biohub_tracking.learned_orgop import LOCKED_ORGOP_HASH  # noqa: E402
 from biohub_tracking.public_094_audit import (  # noqa: E402
     FOCUS3D_DISCUSSION_ID,
     FOCUS3D_TITLE,
+    ORGOP_LAUNCH_AUTHORIZED,
     REQUESTED_DISCUSSION_IDS,
     classify_requested_discussions,
 )
@@ -36,8 +37,8 @@ def main() -> None:
         default=ROOT / "reports" / "public_094_discussion_inventory.json",
     )
     args = parser.parse_args()
-    if LAUNCH_AUTHORIZED:
-        raise SystemExit("refusing to run inventory after an unauthorized orgop launch flag")
+    if ORGOP_LAUNCH_AUTHORIZED:
+        raise SystemExit("refusing to mix this pre-launch inventory with an audit launch flag")
     listing = list_competition_topics()
     rows = classify_requested_discussions(listing["topics"], REQUESTED_DISCUSSION_IDS)
     focus = next((row for row in rows if row["id"] == FOCUS3D_DISCUSSION_ID), None)

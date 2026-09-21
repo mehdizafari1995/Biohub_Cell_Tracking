@@ -2,10 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from biohub_tracking.learned_orgop import LAUNCH_AUTHORIZED, LOCKED_ORGOP_HASH
+from biohub_tracking.learned_orgop import LOCKED_ORGOP_HASH
 from biohub_tracking.public_094_audit import (
     FOCUS3D_DISCUSSION_ID,
     FOCUS3D_TITLE,
+    ORGOP_LAUNCH_AUTHORIZED,
     REQUESTED_DISCUSSION_IDS,
     classify_requested_discussions,
 )
@@ -17,7 +18,7 @@ def test_requested_ids_include_unresolved_focus3d_and_740392():
     assert REQUESTED_DISCUSSION_IDS == (716952, 730160, 734604, 735352, 738217, 740392)
     assert FOCUS3D_DISCUSSION_ID == 738217
     assert FOCUS3D_TITLE == "focus3d : one of the best 3d cell segmentation"
-    assert LAUNCH_AUTHORIZED is False
+    assert ORGOP_LAUNCH_AUTHORIZED is False
     assert LOCKED_ORGOP_HASH == "250c5bfacd4a8198"
 
 
@@ -52,4 +53,4 @@ def test_classify_requested_discussions_marks_focus3d_and_missing_740392():
     assert "list_competition_topics" in src
     assert "competitions/submit" not in src
     assert "kernels/push" not in src
-    assert "LAUNCH_AUTHORIZED" in src
+    assert "ORGOP_LAUNCH_AUTHORIZED" in src

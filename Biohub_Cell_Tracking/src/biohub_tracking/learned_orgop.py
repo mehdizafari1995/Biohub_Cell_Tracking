@@ -1,14 +1,13 @@
-"""Proposed organizer operating point on locked 44b6-only weights.
+"""Organizer operating point on locked 44b6-only weights.
 
-``learned_unet_orgop_v1`` is a specification, not a launched kernel.
-It reproduces the organizer inference defaults
-(``det_threshold=0.99`` + tracksdata ILP) on
-``learned_unet_v1`` weights only.
+``learned_unet_orgop_v1`` reproduced organizer inference defaults
+(``det_threshold=0.99`` + tracksdata ILP) on ``learned_unet_v1``
+weights only. Official 44b6 combined was 0.0 vs infer 0.655751
+(softmax>0.5 wrote 0 candidate edges). Status rejected_on_tuning.
 
 Do not attach public 199-video / DeepCenter / secondary-seed weights.
-Do not open ``6bba`` until a documented 44b6 keep.
-Do not write ``submission.csv``.
-Do not launch a Kaggle helper until an authorized cycle.
+Do not open ``6bba``. Do not retune. Do not write ``submission.csv``.
+Do not overwrite the completed helper slug.
 Not a competition submission.
 """
 

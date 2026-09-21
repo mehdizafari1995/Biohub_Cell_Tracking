@@ -138,7 +138,7 @@ def test_orgop_kernel_is_new_slug_and_does_not_overwrite_locked():
     assert_launch_authorized()
     assert "learned_unet_orgop_v1" in _make_mod.KERNELS
     assert _make_mod.KERNELS["learned_unet_orgop_v1"]["kernel_id"] == ORGOP_KERNEL_SLUG
-    assert ORGOP_KERNEL_SLUG not in _push_mod.FORBIDDEN_SLUGS
+    assert ORGOP_KERNEL_SLUG in _push_mod.FORBIDDEN_SLUGS
     locked = {
         "mahdimzafari/biohub-learned-unet-v1",
         "mahdimzafari/biohub-learned-unet-infer-v1",

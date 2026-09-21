@@ -20,13 +20,12 @@ Do not launch a kernel from this note. Do not submit.
 ## Decision
 
 Copying the 0.947 weight pack is forbidden for the candidate.
-The one high-upside, rules-compliant next experiment is
-`learned_unet_orgop_v1` (hash `250c5bfacd4a8198`): locked 44b6 weights
-+ organizer predict defaults (0.99 + ILP). Specified, not launched.
-
-Tune only on `44b6_12dfb391` + `44b6_267148e4` vs infer **0.655751**.
-Open `6bba` only after a documented keep. Compare holdout to prune
-**0.701378**. Public 0.553 is association_v2 only.
+Authorized cycle `learned_unet_orgop_v1` (hash `250c5bfacd4a8198`)
+ran organizer predict defaults (0.99 + ILP) on locked 44b6 weights
+only. Official 44b6 combined **0.0 vs infer 0.655751**. Softmax>0.5
+wrote 0 candidate edges. Decision **`reject_learned_unet_orgop_v1`**.
+Do **not** retune. Do **not** open `6bba`. Public 0.553 is
+association_v2 only.
 
 ## Still the packaged public-test worker
 
@@ -34,4 +33,5 @@ Open `6bba` only after a documented keep. Compare holdout to prune
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
 Read-only poll still shows only association_v2 **56399003**.
 Discussion **738217** is independently titled focus3d segmentation
-and is **not** part of orgop. Do not overwrite v1 while orgop is specified.
+and is **not** part of orgop. Do not overwrite prune-test v1 or
+completed orgop helper v1.

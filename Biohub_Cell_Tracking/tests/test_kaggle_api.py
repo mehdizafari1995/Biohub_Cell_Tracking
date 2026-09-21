@@ -30,6 +30,7 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-learned-unet-link-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-link-v2" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-prune-test-v1" in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgop-v1" in mod.FORBIDDEN_SLUGS
 
 
 def test_fetch_kernel_output_allows_helper_slugs_only():

@@ -1,11 +1,12 @@
-# learned_unet_orgop_v1 — proposed organizer operating point on locked
+# learned_unet_orgop_v1 — organizer operating point on locked
 # 44b6-only learned_unet_v1 weights. Hash 250c5bfacd4a8198.
 # Detection threshold 0.99 + official tracksdata ILP
 # (edge -1.0, appear/disappear 0.1, division 1.0).
+# Official 44b6 0.0 vs infer 0.655751. rejected_on_tuning.
 # Do not attach public 199-video / DeepCenter / secondary-seed weights.
-# Do not open 6bba until a documented 44b6 keep.
-# Do not write submission.csv. Do not launch a kernel until authorized.
-# Do not overwrite locked train/infer/holdout/test/gap-test/prune-test slugs.
+# Do not open 6bba. Do not retune. Do not write submission.csv.
+# Do not overwrite this completed slug or locked train/infer/holdout/
+# test/gap-test/prune-test slugs.
 # Not a competition submission.
 
 label: learned_unet_orgop_v1

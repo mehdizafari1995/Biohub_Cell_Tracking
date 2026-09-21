@@ -38,6 +38,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-link-v2",
     # Prune test-time v1 COMPLETE / inferred 2026-09-21. Public-test CSV locked. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-prune-test-v1",
+    # Orgop v1 COMPLETE / inferred 2026-09-21. Official 44b6 0.0 vs infer 0.655751. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgop-v1",
 }
 
 
