@@ -253,6 +253,16 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Kaggle public / private scores:** not returned. Competition list still exactly association_v2 **56399003**. Do **not** submit from the CLI.
 - **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-prune-test-v1 → version 1 → **Submit to Competition**.
 
+## public_094_parity_audit
+
+- **Status:** read-only strategy audit. **No kernel launched. No competition submission.**
+- **Proposed config:** `learned_unet_orgop_v1` hash `250c5bfacd4a8198` (organizer `det_threshold=0.99` + official ILP on locked 44b6-only weights). `LAUNCH_AUTHORIZED=False`. Not in `KERNELS`.
+- **Public 0.94 stack:** organizer 0.99 + ILP plus Pilkwang/Reyhan 199-video TemporalUNet / DeepCenter / seed-314159 pack. Rules-legal public data; **method-rejected** for the candidate (discussion 730160 leak).
+- **0.9462:** not independently returned as an API `publicScore`. Nearby author-reported claims: 0.941 lineage, 0.942 one-knob, 0.948 title reproduced at 0.935. Rule-based 716952 ceiling 0.826.
+- **Public 0.553:** association_v2 **56399003** only. Not used for tuning.
+- **Decision:** specify orgop; do not launch this cycle. Champion remains `learned_unet_prune_v1` / prune-test v1 `READY_FOR_MANUAL_SUBMISSION_REVIEW`.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
