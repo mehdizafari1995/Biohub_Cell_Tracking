@@ -229,7 +229,7 @@ def test_push_keeps_gap_test_forbidden_and_allows_new_prune_slug():
     assert HOLDOUT_SLUG in mod.FORBIDDEN_SLUGS
     assert TEST_SLUG in mod.FORBIDDEN_SLUGS
     assert GAP_TEST_SLUG in mod.FORBIDDEN_SLUGS
-    assert PRUNE_TEST_SLUG not in mod.FORBIDDEN_SLUGS
+    assert PRUNE_TEST_SLUG in mod.FORBIDDEN_SLUGS
     fetch = importlib.util.spec_from_file_location(
         "fetch_kernel_output",
         ROOT / "scripts" / "fetch_kernel_output.py",

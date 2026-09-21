@@ -51,7 +51,39 @@ Internet off. GPU on (same T4 class as gap-test). Attaches competition
 data + locked `mahdimzafari/biohub-learned-unet-v1` weights. **Not a
 competition submission.** Do **not** submit from the CLI.
 
+## Kaggle rehearsal (not a leaderboard score)
+
+Private GPU kernel `mahdimzafari/biohub-learned-unet-prune-test-v1`
+version **1 COMPLETE / inferred**. Internet off. Environment
+`kaggle_input`. T4 x2, torch 2.10+cu128. Weights
+`/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+**Not submitted.** Competition list still exactly association_v2
+**56399003**.
+
+| metric | gap-test v1 | prune-test v1 |
+|---|---|---|
+| nodes | 251660 | **250864** |
+| edges | 242412 | **242412** |
+| gap links | 13912 | 13912 |
+| interpolated | 19953 | 19953 |
+| dropped isolates | — | **796** |
+| divisions | 0 | 0 |
+| runtime | 330.02 s | **348.18 s** |
+| peak RAM | 1184 MB | **1202 MB** |
+| worker audit | ok | ok |
+| independent audit | ok | ok |
+
+Per-sequence isolate drops: `44b6_0113de3b` 220, `44b6_0b24845f` 233,
+`6bba_05b6850b` 139, `6bba_05db0fb1` 204. Edges match locked gap-test
+on every stem, including holdout-overlap `6bba_05db0fb1` 100197.
+
+Hidden-test projection from this rehearsal: **87.05 s/volume × 199 ≈
+4.81 h**, peak ~1.2 GB, under the 12 h GPU limit. Fail-closed gate
+did not trigger.
+
 ## Status
 
-Packaged. Rehearsal result is recorded after the private kernel
-completes. Do not treat a local dry-run as a Kaggle execution.
+`READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** submit from the CLI.
+`HUMAN_ACTION_REQUIRED`: Mahdi must **Submit to Competition** from the
+Kaggle UI on `mahdimzafari/biohub-learned-unet-prune-test-v1` version 1.
+Do not overwrite this slug.

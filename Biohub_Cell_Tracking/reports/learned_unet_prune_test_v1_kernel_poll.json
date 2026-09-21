@@ -1,0 +1,39 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-prune-test-v1",
+  "polled_utc": "2026-09-21T04:28:27Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-prune-test-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [
+    {
+      "name": "run_manifest.json",
+      "size": null
+    },
+    {
+      "name": "submission.csv",
+      "size": null
+    }
+  ],
+  "decision": "download_complete_helper",
+  "prune_test_config_hash": "074a71dec68304e8",
+  "code_version": "4cea665",
+  "downloaded": true,
+  "extracted": {
+    "run_manifest.json": "run_manifest.json",
+    "submission.csv": "submission.csv"
+  },
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "Private GPU prune test-time poll. Not a competition submission. CSV stays under ignored artifacts/kaggle/. Not a leaderboard score. Do not score frozen 6bba holdout again. Do not overwrite mahdimzafari/biohub-learned-unet-gap-test-v1."
+}

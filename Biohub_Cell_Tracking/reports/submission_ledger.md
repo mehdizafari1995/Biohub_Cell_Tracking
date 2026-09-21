@@ -240,6 +240,19 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Config hash:** `115753ea16aaf021`. Parent holdout `d374a21f03dddc04`. Parent gap `f4d888d190c45a4a`.
 - **Local official holdout:** learned_unet_prune_v1 **0.701378** vs locked learned_unet_gap_v1 **0.701026**. Dropped 491 isolates. Edge Jaccard unchanged 0.74335. Divisions 0/0/5. Decision `keep_candidate_learned_unet_prune_v1`. Do not retune. Do not score holdout again. Not a leaderboard score.
 
+## learned_unet_prune_test_v1_kernel
+
+- **Status:** private GPU test-time kernel `mahdimzafari/biohub-learned-unet-prune-test-v1` version **1 COMPLETE** / `inferred`. Internet off. Environment `kaggle_input`. Writes `submission.csv`. **Not a competition submission.**
+- **Config hash:** `074a71dec68304e8`. Locked infer `d7578b5f64ddac08` / holdout `d374a21f03dddc04` / gap overlay `f4d888d190c45a4a` / prune `115753ea16aaf021` / gap-test parent `85379c198ebc7241` / no-gap test parent `7a8725b818fc609b` / train `4c38035d6657f2ad`. Discovers every `test/*.zarr`. Never opens `train/` volumes.
+- **Datasets:** `44b6_0113de3b`, `44b6_0b24845f`, `6bba_05b6850b`, `6bba_05db0fb1` (exact sample_submission stems).
+- **Output:** `/kaggle/working/submission.csv` 25 849 389 bytes, 493 276 rows, 250 864 nodes, 242 412 edges, 13 912 gap links, 19 953 interpolated nodes, **796 dropped isolates**, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Worker:** 348.18 s (0.87 s/frame), peak RAM 1202 MB. T4 x2, torch 2.10+cu128. Weights `/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt`.
+- **Vs gap-test:** edges unchanged (242412). Nodes 251660 → 250864. Per-stem edges match locked gap-test, including `6bba_05db0fb1` 100197. Frozen `6bba` was not official-scored again.
+- **Estimate vs measured:** public 4 volumes estimated 390 s; measured 348.2 s. Hidden-test projection from rehearsal **4.81 h** (199 × 87.05 s), under 12 h.
+- **Do not overwrite:** this slug, `mahdimzafari/biohub-learned-unet-gap-test-v1` v1, or `mahdimzafari/biohub-learned-unet-test-v1` v1.
+- **Kaggle public / private scores:** not returned. Competition list still exactly association_v2 **56399003**. Do **not** submit from the CLI.
+- **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-prune-test-v1 → version 1 → **Submit to Competition**.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
