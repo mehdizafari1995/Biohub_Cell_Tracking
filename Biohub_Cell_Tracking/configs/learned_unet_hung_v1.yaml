@@ -1,0 +1,46 @@
+# learned_unet_hung_v1 — 44b6-only Hungarian last-position relink of locked
+# learned detections. Hash f67bc97d0521dc78. Do not retune after holdout. Do not
+# overwrite rejected learned_unet_link_v1 / link_v2 / motion_v1. Do not open
+# 6bba until a documented 44b6 keep. Do not write submission.csv.
+# Do not overwrite locked train/infer/holdout/test/gap-test slugs.
+# Not a competition submission.
+
+label: learned_unet_hung_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+rejected_link_v1_hash: 3a7423c6858ace41
+rejected_link_v2_hash: 1d4015dc499bd604
+rejected_motion_hash: 66853b6f1445c18b
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+infer_stems:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+source_graphs: locked_learned_unet_infer_graphs
+retunes_detection: false
+uses_intensity: false
+uses_transformer: false
+uses_velocity: false
+linker: last_position_hungarian_1to1
+motion_model: last_position
+gate_um: 12.0
+max_link_um: 12.0
+max_gap_frames: 0
+assignment: hungarian
+interpolate_gaps: false
+max_parents_per_node: 1
+max_children_per_node: 1
+intensity_weight: 0.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false
+kernel_slug: mahdimzafari/biohub-learned-unet-hung-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1
+rejected_link_v1_slug: mahdimzafari/biohub-learned-unet-link-v1
+rejected_link_v2_slug: mahdimzafari/biohub-learned-unet-link-v2
+rejected_motion_slug: mahdimzafari/biohub-learned-unet-motion-v1
