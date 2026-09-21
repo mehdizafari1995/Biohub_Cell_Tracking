@@ -98,7 +98,7 @@ See `Biohub_Cell_Tracking/reports/abc_comparison.md`, `reports/division_v2.md`, 
 
 ## Tests
 
-`PYTHONPATH=src python -m pytest tests` on this run — 246 passed after locking prune-test in `FORBIDDEN_SLUGS`. Train, infer, holdout, no-gap test, gap-test, prune-test, and completed link-v1/link-v2 slugs stay in `FORBIDDEN_SLUGS`. Do not retune rejected `learned_unet_division_v1`, `learned_unet_link_v1`, `learned_unet_link_v2`, `learned_unet_motion_v1`, `learned_unet_hung_v1`, or `learned_unet_conflict_v1`. Do not retune or rescore `learned_unet_gap_v1` or `learned_unet_prune_v1` after the holdout lock. Do not submit `learned_unet_prune_test_v1` or `learned_unet_gap_test_v1` from the CLI.
+`PYTHONPATH=src python -m pytest tests` on this run — 252 passed after locking `learned_unet_orgop_v1` (hash `250c5bfacd4a8198`, not launched) and prune-test in `FORBIDDEN_SLUGS`. Train, infer, holdout, no-gap test, gap-test, prune-test, and completed link-v1/link-v2 slugs stay in `FORBIDDEN_SLUGS`. Do not retune rejected `learned_unet_division_v1`, `learned_unet_link_v1`, `learned_unet_link_v2`, `learned_unet_motion_v1`, `learned_unet_hung_v1`, or `learned_unet_conflict_v1`. Do not retune or rescore `learned_unet_gap_v1` or `learned_unet_prune_v1` after the holdout lock. Do not submit `learned_unet_prune_test_v1` or `learned_unet_gap_test_v1` from the CLI. Do not launch `learned_unet_orgop_v1` until a reviewed cycle.
 
 ## Privacy
 
