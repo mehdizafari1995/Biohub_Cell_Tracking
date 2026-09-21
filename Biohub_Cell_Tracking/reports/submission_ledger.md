@@ -211,6 +211,21 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_conflict_v1 **0.645100** vs locked learned_unet_infer_v1 **0.655751**. Detection counts match (80741 / 36951). Official TP/FP/FN 875/239/175 vs infer 877/221/173. Extra collision second-choice edges +1720. Divisions 0/0/2. Recall unchanged 0.970. Decision `reject_learned_unet_conflict_v1`. Do not retune. Do not score holdout.
 - **Kaggle public / private scores:** not returned.
 
+## association_v2_kernel_v3_lb_reconfirm
+
+- **Status:** read-only competition submission list at **2026-09-21T02:50:39Z**. Did not submit. Did not download a CSV.
+- **Ref:** **56399003**. Kernel `mahdimzafari/biohub-association-v2` version 3. Submitted **2026-09-20T15:12:52.307Z**. Status **complete**.
+- **Public score:** API string **`0.553`**. Private score **not returned**. Do not invent extra digits. Do not use 0.553 to retune. This is **not** a `learned_unet_gap_test_v1` score.
+- **Config hash:** `2c6966b5204ba542`.
+
+## learned_unet_gap_test_v1_submit_poll
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-gap-test-v1` at **2026-09-21T02:50:39Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit.
+- **Config hash:** `85379c198ebc7241`.
+- **Competition list:** still exactly one row (association_v2 **56399003**). Gap-test lastRunTime **2026-09-20T18:41:51Z** is after that submission, so 56399003 cannot be the gap worker.
+- **Decision:** `human_action_required_ui_submit`.
+- **Kaggle public / private scores for this slug:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

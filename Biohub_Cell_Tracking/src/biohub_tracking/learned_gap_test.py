@@ -13,8 +13,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Mapping, Sequence
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from .learned_gap import LOCKED_GAP_HASH, LOCKED_GATES
 from .learned_holdout import LOCKED_HOLDOUT_HASH
@@ -95,6 +96,13 @@ def gap_test_config_hash(payload: Mapping[str, Any] | None = None) -> str:
 LOCKED_GAP_TEST_HASH = gap_test_config_hash(gap_test_config_payload())
 assert LOCKED_GAP_TEST_HASH == "85379c198ebc7241"
 
+# Independently verified association_v2 competition submission. Not the gap-test kernel.
+ASSOCIATION_V2_SUBMISSION_REF = 56399003
+ASSOCIATION_V2_PUBLIC_SCORE = "0.553"
+ASSOCIATION_V2_SUBMITTED_UTC = "2026-09-20T15:12:52.307Z"
+# Saved-kernel lastRunTime for gap-test v1 (public-test worker, not a scoring rerun).
+GAP_TEST_LAST_RUN_UTC = "2026-09-20T18:41:51.1Z"
+
 
 def runtime_estimate(
     n_volumes: int,
@@ -157,9 +165,64 @@ def write_estimate_json(path: str | Path, n_public: int = 4, n_hidden: int = EST
     return payload
 
 
+def classify_gap_test_submit_poll(
+    *,
+    kernel_complete: bool,
+    kernel_failed: bool,
+    output_names: Sequence[str],
+    submissions: Sequence[Mapping[str, Any]],
+    association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
+) -> dict[str, Any]:
+    """Classify a read-only gap-test submit poll. Never submits.
+
+    The preferred worker is ``mahdimzafari/biohub-learned-unet-gap-test-v1``.
+    Association_v2 submission ``56399003`` (public API string ``0.553``) is
+    not that kernel: it was created before the gap-test lastRunTime.
+    """
+    names = [str(name) for name in output_names]
+    rows = [dict(row) for row in submissions]
+    refs = [row.get("ref") for row in rows]
+    extra = [row for row in rows if str(row.get("ref")) != str(association_ref)]
+    association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
+    if kernel_failed:
+        decision = "record_kernel_error"
+    elif not kernel_complete:
+        decision = "wait_kernel"
+    elif "submission.csv" not in names:
+        decision = "kernel_missing_csv"
+    elif extra:
+        decision = "new_submission_present"
+    else:
+        decision = "human_action_required_ui_submit"
+    return {
+        "slug": GAP_TEST_KERNEL_SLUG,
+        "decision": decision,
+        "kernel_complete": bool(kernel_complete),
+        "kernel_failed": bool(kernel_failed),
+        "output_names": names,
+        "n_submissions": len(rows),
+        "submission_refs": refs,
+        "association_v2_submission_present": bool(association),
+        "gap_test_submission_present": bool(extra),
+        "is_competition_submission": False,
+        "is_leaderboard_score": False,
+        "human_action": (
+            "Mahdi must Submit to Competition from the Kaggle UI on "
+            "mahdimzafari/biohub-learned-unet-gap-test-v1 version 1. "
+            "Do not submit from the CLI."
+            if decision == "human_action_required_ui_submit"
+            else None
+        ),
+    }
+
+
 __all__ = [
+    "ASSOCIATION_V2_PUBLIC_SCORE",
+    "ASSOCIATION_V2_SUBMISSION_REF",
     "GAP_TEST_KERNEL_SLUG",
+    "GAP_TEST_LAST_RUN_UTC",
     "LOCKED_GAP_TEST_HASH",
+    "classify_gap_test_submit_poll",
     "gap_test_config_hash",
     "gap_test_config_payload",
     "list_test_zarrs",

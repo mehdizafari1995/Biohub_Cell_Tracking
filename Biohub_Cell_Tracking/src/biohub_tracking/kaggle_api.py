@@ -8,6 +8,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from collections.abc import Mapping, Sequence
 from typing import Any, Iterator
 
 
@@ -123,6 +124,55 @@ def kernel_output_list(slug: str) -> list[dict[str, Any]]:
         if isinstance(files, list):
             return [item for item in files if isinstance(item, dict)]
     return []
+
+
+def kernel_output_names(files: Sequence[Mapping[str, Any]] | None) -> list[str]:
+    """Return output file names only. Drops signed URLs and other secrets."""
+    names: list[str] = []
+    seen: set[str] = set()
+    for item in files or []:
+        name = item.get("fileName") or item.get("name") or item.get("file")
+        if not name:
+            continue
+        label = str(name)
+        if label in seen:
+            continue
+        seen.add(label)
+        names.append(label)
+    return names
+
+
+def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
+    """Keep ledger-safe competition-submission fields. Never copies tokens or URLs."""
+    item = dict(raw or {})
+    public = item.get("publicScore")
+    if public is not None:
+        public = str(public)
+    private_present = bool(item.get("hasPrivateScore")) and bool(str(item.get("privateScore") or "").strip())
+    return {
+        "ref": item.get("ref") or item.get("id"),
+        "status": item.get("status"),
+        "publicScore": public,
+        "private_score_returned": private_present,
+        "date": item.get("date") or item.get("submittedDate") or item.get("dateSubmitted"),
+        "fileName": item.get("fileName"),
+        "errorDescription": item.get("errorDescription") or None,
+        "scriptVersionId": item.get("scriptVersionId") or item.get("kernelVersion"),
+    }
+
+
+def list_competition_submissions(competition: str = COMPETITION) -> list[dict[str, Any]]:
+    """Return sanitized competition submissions. Never submits. Never prints the token."""
+    url = f"{API_ROOT}/competitions/submissions/list/{urllib.parse.quote(competition)}"
+    data = _request(url)
+    rows: list[Any]
+    if isinstance(data, list):
+        rows = data
+    elif isinstance(data, dict):
+        rows = data.get("submissions") or data.get("items") or data.get("data") or []
+    else:
+        rows = []
+    return [sanitize_submission(item) for item in rows if isinstance(item, dict)]
 
 
 def download_kernel_output_zip(

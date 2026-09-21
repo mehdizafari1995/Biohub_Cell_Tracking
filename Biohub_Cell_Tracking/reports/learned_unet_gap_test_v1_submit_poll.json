@@ -1,0 +1,51 @@
+{
+  "polled_utc": "2026-09-21T02:50:39Z",
+  "code_version": "f3306b5",
+  "gap_test_config_hash": "85379c198ebc7241",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-gap-test-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_names": [
+    "run_manifest.json",
+    "submission.csv"
+  ],
+  "submissions": [
+    {
+      "ref": 56399003,
+      "status": "complete",
+      "publicScore": "0.553",
+      "private_score_returned": false,
+      "date": "2026-09-20T15:12:52.307Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": null
+    }
+  ],
+  "association_v2_submission_ref": 56399003,
+  "association_v2_public_score": "0.553",
+  "gap_test_last_run_utc": "2026-09-20T18:41:51.1Z",
+  "slug": "mahdimzafari/biohub-learned-unet-gap-test-v1",
+  "decision": "human_action_required_ui_submit",
+  "kernel_complete": true,
+  "kernel_failed": false,
+  "n_submissions": 1,
+  "submission_refs": [
+    56399003
+  ],
+  "association_v2_submission_present": true,
+  "gap_test_submission_present": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "human_action": "Mahdi must Submit to Competition from the Kaggle UI on mahdimzafari/biohub-learned-unet-gap-test-v1 version 1. Do not submit from the CLI.",
+  "notes": "Read-only poll. Did not download submission.csv. Did not submit. Did not overwrite locked slugs. Association_v2 ref 56399003 public API string 0.553 is not a gap-test leaderboard score."
+}

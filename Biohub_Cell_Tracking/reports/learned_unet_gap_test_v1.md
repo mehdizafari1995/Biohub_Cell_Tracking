@@ -67,8 +67,14 @@ Estimate vs measured: public 4 volumes estimated 388 s; measured 330.0 s.
 
 ## Next
 
+Read-only submit poll **2026-09-21T02:50:39Z**: kernel still **COMPLETE**, outputs
+still `run_manifest.json` + `submission.csv`, competition list still exactly
+one row (association_v2 ref **56399003**, public API string **`0.553`**,
+submitted 2026-09-20T15:12:52Z, before this kernel's lastRunTime
+2026-09-20T18:41:51Z). Gap-test is **not** a competition submission.
+
 If a public leaderboard number is wanted: `HUMAN_ACTION_REQUIRED` — Mahdi
 must **Submit to Competition** from the Kaggle UI on this slug version 1.
 Do **not** submit from the CLI. Do **not** retune. Do **not** score
 `6bba` again. Prefer this gap slug over submitting the no-gap
-`biohub-learned-unet-test-v1` v1.
+`biohub-learned-unet-test-v1` v1. Do not resubmit association_v2.

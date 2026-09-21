@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import time
 
 from biohub_tracking import kaggle_api
@@ -67,3 +68,37 @@ def test_rate_limit_cooldown_is_bounded_and_silent_of_secrets():
     floor = kaggle_api._note_rate_limited("1")
     assert floor == 30.0
     kaggle_api._cool_until = 0.0
+
+
+def test_sanitize_submission_drops_urls_and_empty_private_score():
+    raw = {
+        "ref": 56399003,
+        "status": "complete",
+        "publicScore": "0.553",
+        "privateScore": "",
+        "hasPrivateScore": False,
+        "date": "2026-09-20T15:12:52.307Z",
+        "fileName": "submission.csv",
+        "errorDescription": "",
+        "url": "https://www.kaggle.com/example?token=SECRET",
+        "submittedBy": "mahdimzafari",
+    }
+    safe = kaggle_api.sanitize_submission(raw)
+    assert safe["ref"] == 56399003
+    assert safe["publicScore"] == "0.553"
+    assert safe["private_score_returned"] is False
+    assert "url" not in safe
+    assert "submittedBy" not in safe
+    blob = json.dumps(safe)
+    assert "SECRET" not in blob
+    assert "token=" not in blob
+    names = kaggle_api.kernel_output_names(
+        [
+            {"fileName": "run_manifest.json", "url": "https://signed.example/a"},
+            {"fileName": "submission.csv", "url": "https://signed.example/b?token=SECRET"},
+            {"fileName": "submission.csv"},
+            {"name": None},
+        ]
+    )
+    assert names == ["run_manifest.json", "submission.csv"]
+    assert "token" not in json.dumps(names)

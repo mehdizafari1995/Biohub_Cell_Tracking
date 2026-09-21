@@ -25,9 +25,12 @@ from biohub_tracking.learned_gap import (  # noqa: E402
     apply_locked_overlay_arrays,
 )
 from biohub_tracking.learned_gap_test import (  # noqa: E402
+    ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
     ESTIMATE_HIDDEN_VOLUMES,
     GAP_TEST_KERNEL_SLUG,
     LOCKED_GAP_TEST_HASH,
+    classify_gap_test_submit_poll,
     gap_test_config_hash as locked_hash,
     gap_test_config_payload as locked_payload,
     refuse_overwrite_nogap_slug,
@@ -196,3 +199,44 @@ def test_push_keeps_nogap_test_forbidden_and_allows_new_gap_slug():
     fetch.loader.exec_module(fetch_mod)
     assert GAP_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+
+
+def test_classify_gap_test_submit_poll_requires_ui_when_only_association_exists():
+    association = {
+        "ref": ASSOCIATION_V2_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ASSOCIATION_V2_PUBLIC_SCORE,
+        "private_score_returned": False,
+        "date": "2026-09-20T15:12:52.307Z",
+    }
+    poll = classify_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json", "submission.csv"],
+        submissions=[association],
+    )
+    assert poll["decision"] == "human_action_required_ui_submit"
+    assert poll["gap_test_submission_present"] is False
+    assert poll["association_v2_submission_present"] is True
+    assert poll["is_competition_submission"] is False
+    assert poll["is_leaderboard_score"] is False
+    assert "Kaggle UI" in poll["human_action"]
+    assert "CLI" in poll["human_action"]
+    assert classify_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json"],
+        submissions=[association],
+    )["decision"] == "kernel_missing_csv"
+    extra = classify_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[association, {"ref": 999, "status": "pending", "publicScore": None}],
+    )
+    assert extra["decision"] == "new_submission_present"
+    assert extra["gap_test_submission_present"] is True
+    poll_src = (ROOT / "scripts" / "poll_gap_test_submit.py").read_text()
+    assert "list_competition_submissions" in poll_src
+    assert "competitions/submit" not in poll_src
+    assert "kernels/push" not in poll_src
