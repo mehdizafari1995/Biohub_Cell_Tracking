@@ -15,7 +15,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 1. Package a **new** public-test slug `learned_unet_prune_test_v1` (locked infer + locked gap overlay + drop degree-0). Do **not** overwrite `mahdimzafari/biohub-learned-unet-gap-test-v1` v1. Estimate CPU overlay is cheap on top of the locked 330 s / 1184 MB gap-test worker. Hidden-test budget remains ~5.4 h under the 12 h GPU limit.
 2. Keep `learned_unet_conflict_v1` rejected. Hash `8503d804fb9e9f1d`. Do **not** retune. Do **not** score frozen `6bba` for that overlay. Do **not** package another collision-Hungarian variant.
-3. Keep `learned_unet_link_v1` / `link_v2` / `motion_v1` / `hung_v1` rejected. Do **not** retune those hashes. Do **not** score frozen `6bba` for those overlays.
+3. Keep `learned_unet_link_v1` / `link_v2` / `motion_v1` / `hung_v1` rejected. Hung hash `f67bc97d0521dc78` was independently reconfirmed on 44b6 at **0.439023 vs infer 0.655751** (2026-09-21T04:12Z). Do **not** retune those hashes. Do **not** score frozen `6bba` for those overlays.
 4. Keep `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 locked until a prune-test kernel is COMPLETE / `audit_ok`. Do **not** overwrite v1. Do **not** retune. Do **not** score 6bba again for the gap overlay.
 5. Keep `learned_unet_prune_v1` locked after one-shot holdout. Hash `115753ea16aaf021`. Do **not** retune. Do **not** score frozen `6bba` again.
 6. Keep `learned_unet_division_v1` rejected. Do **not** retune gates. Do **not** score frozen `6bba` for that overlay.

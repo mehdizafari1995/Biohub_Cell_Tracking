@@ -75,12 +75,11 @@ detections. See `reports/learned_unet_hung_v1_error.json`.
 
 ## Next
 
-Keep `learned_unet_gap_v1` / `learned_unet_gap_test_v1` as the candidate.
-Do **not** retune this Hungarian hash. Do **not** package another
-full-frame Hungarian-threshold variant. Do **not** score `6bba` for this
-family. If a later run starts a **new** slug, it needs a different
-hypothesis than "Hungarian on every last-position 12 µm pair" (for
-example, Hungarian only on true shared-nearest collisions). If a public
-leaderboard number is wanted, Mahdi submits
-`biohub-learned-unet-gap-test-v1` v1 from the Kaggle UI. Do **not**
-submit from the CLI.
+Keep `learned_unet_hung_v1` rejected. An independent 44b6 reconfirm on
+2026-09-21T04:12Z reproduced **0.4390229473498808**. Do **not** retune
+this Hungarian hash. Do **not** package another full-frame
+Hungarian-threshold variant. Do **not** score `6bba` for this family.
+Current holdout champion is `learned_unet_prune_v1` (**0.701378**).
+Next packaging step is a **new** public-test slug
+`learned_unet_prune_test_v1`. Do **not** overwrite
+`biohub-learned-unet-gap-test-v1` v1. Do **not** submit from the CLI.

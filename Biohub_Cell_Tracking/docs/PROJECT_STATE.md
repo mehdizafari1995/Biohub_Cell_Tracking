@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-21 (learned_unet_prune_v1 kept after one-shot 6bba). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-21 (independently reconfirmed reject_learned_unet_hung_v1; prune_v1 remains champion). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
