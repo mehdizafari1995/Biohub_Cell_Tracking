@@ -1,0 +1,44 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1",
+  "polled_utc": "2026-09-21T10:50:19Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [
+    {
+      "name": "graphs/6bba_05db0fb1.json",
+      "size": null
+    },
+    {
+      "name": "graphs/6bba_c328f2fd.json",
+      "size": null
+    },
+    {
+      "name": "infer_manifest.json",
+      "size": null
+    }
+  ],
+  "decision": "download_complete_helper",
+  "orgdet_holdout_config_hash": "912f0c19b572a054",
+  "code_version": "6bbb274",
+  "downloaded": true,
+  "extracted": {
+    "6bba_05db0fb1.json": "6bba_05db0fb1.json",
+    "6bba_c328f2fd.json": "6bba_c328f2fd.json",
+    "infer_manifest.json": "infer_manifest.json"
+  },
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "Private GPU orgdet-holdout-helper poll. Not a competition submission. Graphs stay under ignored artifacts/kaggle/. Not a leaderboard score. 6bba one-shot only. 44b6 graphs refused. Orgop v1 not overwritten."
+}

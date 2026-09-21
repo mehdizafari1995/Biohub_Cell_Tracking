@@ -1,0 +1,61 @@
+# learned_unet_orgdet_test_v1 — public/hidden test inference at the
+# locked learned_unet_orgdet_holdout_v1 operating point (hash
+# 912f0c19b572a054): det 0.99, pool 3.0 µm, flip TTA, greedy 12 µm
+# last-position. Hash c45c859610d29e90. Discovers every test/*.zarr.
+# Never opens train volumes. Writes submission.csv + run_manifest.json.
+# Do not overwrite mahdimzafari/biohub-learned-unet-prune-test-v1,
+# mahdimzafari/biohub-learned-unet-gap-test-v1,
+# mahdimzafari/biohub-learned-unet-test-v1, or
+# mahdimzafari/biohub-learned-unet-orgdet-holdout-v1. Do not retune.
+# Do not score 6bba again. Do not submit from the CLI.
+
+label: learned_unet_orgdet_test_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+orgdet_label: learned_unet_orgdet_v1
+orgdet_holdout_label: learned_unet_orgdet_holdout_v1
+orgop_label: learned_unet_orgop_v1
+test_label: learned_unet_test_v1
+gap_test_label: learned_unet_gap_test_v1
+prune_test_label: learned_unet_prune_test_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+orgdet_config_hash: 80b20589198148b7
+orgdet_holdout_config_hash: 912f0c19b572a054
+rejected_orgop_hash: 250c5bfacd4a8198
+test_parent_hash: 7a8725b818fc609b
+gap_test_parent_hash: 85379c198ebc7241
+prune_test_parent_hash: 074a71dec68304e8
+discovers_test_zarrs: true
+hardcoded_test_stems: []
+opens_train_volumes: false
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+linker: greedy_gate_12um
+motion_model: last_position
+gate_um: 12.0
+max_link_um: 12.0
+max_gap_frames: 0
+assignment: greedy
+interpolate_gaps: false
+drop_degree0: false
+max_parents_per_node: 1
+max_children_per_node: 1
+intensity_weight: 0.0
+downsample: [1, 4, 4]
+normalize: window_minmax
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: true
+writes_run_manifest: true
+one_shot_holdout: false
+kernel_slug: mahdimzafari/biohub-learned-unet-orgdet-test-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1
+orgdet_kernel_slug: mahdimzafari/biohub-learned-unet-orgdet-v1
+orgdet_holdout_kernel_slug: mahdimzafari/biohub-learned-unet-orgdet-holdout-v1
+orgop_kernel_slug: mahdimzafari/biohub-learned-unet-orgop-v1
+test_kernel_slug: mahdimzafari/biohub-learned-unet-test-v1
+gap_test_kernel_slug: mahdimzafari/biohub-learned-unet-gap-test-v1
+prune_test_kernel_slug: mahdimzafari/biohub-learned-unet-prune-test-v1
+weights_name: learned_unet_v1_best.pt

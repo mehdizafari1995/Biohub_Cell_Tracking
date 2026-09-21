@@ -358,7 +358,30 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Config hash:** `80b20589198148b7`. Parent infer `d7578b5f64ddac08`. Rejected orgop `250c5bfacd4a8198`.
 - **Hypothesis:** orgop failed on empty transformer edges; greedy 12 µm on the same 0.99 detections should isolate detection.
 - **Official 44b6:** **0.679578 vs infer 0.655751**. Recall 0.97004. TP/FP/FN **877/220/173** vs infer **877/221/173**. Nodes **91152** vs **117692**. 0/0/2 divisions. Per-sequence 0.772105 / 0.467676.
-- **Decision:** `keep_candidate_learned_unet_orgdet_v1`. Frozen `6bba` not opened. Helper packaged, not pushed.
+- **Decision:** `keep_candidate_learned_unet_orgdet_v1`. Frozen `6bba` later scored once via `learned_unet_orgdet_holdout_v1` (0.705226). Helper packaged, not pushed.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_orgdet_holdout_v1_kernel_v1
+
+- **Status:** private helper kernel `mahdimzafari/biohub-learned-unet-orgdet-holdout-v1` version **1 COMPLETE / inferred**. Environment label `kaggle_input`. GPU T4 x2, internet off. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `912f0c19b572a054` (locked orgdet 0.99 / pool 3.0 / TTA + greedy 12 µm on frozen 6bba). Parent orgdet `80b20589198148b7`. Train `4c38035d6657f2ad`.
+- **Worker:** 173.80 s, peak RAM 1185 MB. Weights `learned_unet_v1_last.pt`. Graphs `6bba_05db0fb1` 84328/78493 and `6bba_c328f2fd` 37482/35147.
+- **Local official holdout:** **0.705226 vs prune 0.701378**. Recall 0.939, 0/0/5 divisions. Nodes 121810 vs prune 158640. Decision `keep_candidate_learned_unet_orgdet_holdout_v1`. Not a leaderboard score. Do not retune. Do not score `6bba` again. Do not overwrite this slug.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_prune_test_v1_submit_poll (2026-09-21T10:45:23Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-prune-test-v1` at **2026-09-21T10:45:23Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** retry 740392. Did **not** launch retrain.
+- **Config hash:** `074a71dec68304e8`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**.
+- **Kaggle public / private scores for this slug:** not returned.
+
+## learned_unet_orgdet_test_v1_packaged
+
+- **Status:** packaged private GPU public-test notebook `mahdimzafari/biohub-learned-unet-orgdet-test-v1`. **Not pushed.** **Not a competition submission.**
+- **Config hash:** `c45c859610d29e90`. Parent orgdet holdout `912f0c19b572a054`. Locked 0.99 / pool 3.0 / TTA + greedy 12 µm. Discovers `test/*.zarr`. Writes `submission.csv`.
+- **Estimate:** 86.9 s/volume from orgdet-holdout v1. Public 4 volumes ~5.8 min. Hidden ~199 volumes **~4.8 h** under 12 h.
 - **Kaggle public / private scores:** not returned.
 
 ## Policy

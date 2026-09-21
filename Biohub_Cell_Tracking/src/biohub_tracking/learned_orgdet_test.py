@@ -1,0 +1,275 @@
+"""Test-time inference helpers for learned_unet_orgdet_test_v1.
+
+Applies the locked ``learned_unet_orgdet_holdout_v1`` operating point
+(organizer detections ``det_threshold=0.99``, ``pool_kernel_um=3.0``,
+flip TTA, greedy 12 µm last-position, no gap, no ILP) to every
+discovered ``test/*.zarr``. Never opens ``train/`` volumes. Writes
+``submission.csv`` + ``run_manifest.json``. Do not overwrite locked
+prune-test, gap-test, no-gap test, or orgdet-holdout slugs. Do not
+retune. Do not score frozen ``6bba`` again. Not a competition
+submission until a human submits from the Kaggle UI.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from collections.abc import Mapping, Sequence
+from pathlib import Path
+from typing import Any
+
+from .learned_gap_test import (
+    ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
+    GAP_TEST_KERNEL_SLUG,
+    LOCKED_GAP_TEST_HASH,
+    LOCKED_TEST_HASH,
+)
+from .learned_infer import LOCKED_INFER_HASH, TRAIN_CONFIG_HASH
+from .learned_orgdet import LOCKED_ORGDET_HASH, ORGDET_KERNEL_SLUG
+from .learned_orgdet_holdout import (
+    LOCKED_ORGDET_HOLDOUT_HASH,
+    ORGDET_HOLDOUT_KERNEL_SLUG,
+)
+from .learned_orgop import (
+    BANNED_PUBLIC_WEIGHT_MARKERS,
+    INFER_KERNEL_SLUG,
+    LOCKED_ORGOP_HASH as REJECTED_ORGOP_HASH,
+    ORGANIZER_DET_THRESHOLD,
+    ORGANIZER_POOL_KERNEL_UM,
+    ORGOP_KERNEL_SLUG,
+    refuse_public_weight_sources,
+)
+from .learned_prune_test import LOCKED_PRUNE_TEST_HASH, PRUNE_TEST_KERNEL_SLUG
+from .learned_split import KERNEL_SLUG as TRAIN_KERNEL_SLUG
+from .learned_test import (
+    ESTIMATE_HIDDEN_VOLUMES,
+    HOLDOUT_KERNEL_SLUG,
+    KAGGLE_GPU_LIMIT_HOURS,
+    SCALE_ZYX,
+    TEST_KERNEL_SLUG,
+    WEIGHTS_NAME,
+    list_test_zarrs,
+    refuse_hardcoded_public_stems,
+    refuse_train_volume,
+)
+
+ORGDET_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
+ORGDET_HOLDOUT_MEASURED_SEC = 173.79521799087524
+ORGDET_HOLDOUT_MEASURED_VOLUMES = 2
+ORGDET_HOLDOUT_MEASURED_PEAK_MEMORY_MB = 1185.26171875
+ORGDET_SEC_PER_VOLUME = ORGDET_HOLDOUT_MEASURED_SEC / ORGDET_HOLDOUT_MEASURED_VOLUMES
+MAX_LINK_UM = 12.0
+
+
+def orgdet_test_config_payload() -> dict[str, Any]:
+    """Locked orgdet holdout operating point on discovered test volumes."""
+    return {
+        "label": "learned_unet_orgdet_test_v1",
+        "train_label": "learned_unet_v1",
+        "infer_label": "learned_unet_infer_v1",
+        "orgdet_label": "learned_unet_orgdet_v1",
+        "orgdet_holdout_label": "learned_unet_orgdet_holdout_v1",
+        "orgop_label": "learned_unet_orgop_v1",
+        "test_label": "learned_unet_test_v1",
+        "gap_test_label": "learned_unet_gap_test_v1",
+        "prune_test_label": "learned_unet_prune_test_v1",
+        "train_config_hash": TRAIN_CONFIG_HASH,
+        "infer_config_hash": LOCKED_INFER_HASH,
+        "orgdet_config_hash": LOCKED_ORGDET_HASH,
+        "orgdet_holdout_config_hash": LOCKED_ORGDET_HOLDOUT_HASH,
+        "rejected_orgop_hash": REJECTED_ORGOP_HASH,
+        "test_parent_hash": LOCKED_TEST_HASH,
+        "gap_test_parent_hash": LOCKED_GAP_TEST_HASH,
+        "prune_test_parent_hash": LOCKED_PRUNE_TEST_HASH,
+        "discovers_test_zarrs": True,
+        "hardcoded_test_stems": [],
+        "opens_train_volumes": False,
+        "det_threshold": ORGANIZER_DET_THRESHOLD,
+        "det_tta": True,
+        "pool_kernel_um": ORGANIZER_POOL_KERNEL_UM,
+        "linker": "greedy_gate_12um",
+        "motion_model": "last_position",
+        "gate_um": MAX_LINK_UM,
+        "max_link_um": MAX_LINK_UM,
+        "max_gap_frames": 0,
+        "assignment": "greedy",
+        "interpolate_gaps": False,
+        "drop_degree0": False,
+        "max_parents_per_node": 1,
+        "max_children_per_node": 1,
+        "intensity_weight": 0.0,
+        "downsample": [1, 4, 4],
+        "normalize": "window_minmax",
+        "scale_zyx": list(SCALE_ZYX),
+        "writes_submission_csv": True,
+        "writes_run_manifest": True,
+        "one_shot_holdout": False,
+        "kernel_slug": ORGDET_TEST_KERNEL_SLUG,
+        "train_kernel_slug": TRAIN_KERNEL_SLUG,
+        "infer_kernel_slug": INFER_KERNEL_SLUG,
+        "orgdet_kernel_slug": ORGDET_KERNEL_SLUG,
+        "orgdet_holdout_kernel_slug": ORGDET_HOLDOUT_KERNEL_SLUG,
+        "orgop_kernel_slug": ORGOP_KERNEL_SLUG,
+        "test_kernel_slug": TEST_KERNEL_SLUG,
+        "gap_test_kernel_slug": GAP_TEST_KERNEL_SLUG,
+        "prune_test_kernel_slug": PRUNE_TEST_KERNEL_SLUG,
+        "weights_name": WEIGHTS_NAME,
+    }
+
+
+def orgdet_test_config_hash(payload: Mapping[str, Any] | None = None) -> str:
+    blob = json.dumps(payload or orgdet_test_config_payload(), sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(blob).hexdigest()[:16]
+
+
+LOCKED_ORGDET_TEST_HASH = orgdet_test_config_hash(orgdet_test_config_payload())
+assert LOCKED_ORGDET_TEST_HASH == "c45c859610d29e90"
+assert LOCKED_ORGDET_HOLDOUT_HASH == "912f0c19b572a054"
+assert LOCKED_ORGDET_HASH == "80b20589198148b7"
+assert REJECTED_ORGOP_HASH == "250c5bfacd4a8198"
+assert LOCKED_PRUNE_TEST_HASH == "074a71dec68304e8"
+
+
+def runtime_estimate(
+    n_volumes: int,
+    sec_per_volume: float = ORGDET_SEC_PER_VOLUME,
+    limit_hours: float = KAGGLE_GPU_LIMIT_HOURS,
+    peak_memory_mb: float = ORGDET_HOLDOUT_MEASURED_PEAK_MEMORY_MB,
+) -> dict[str, Any]:
+    """Estimate GPU time from measured orgdet-holdout 173.8 s / 2 volumes."""
+    n = int(n_volumes)
+    sec = float(n) * float(sec_per_volume)
+    hours = sec / 3600.0
+    return {
+        "n_volumes": n,
+        "sec_per_volume": float(sec_per_volume),
+        "estimate_sec": sec,
+        "estimate_hours": hours,
+        "kaggle_gpu_limit_hours": float(limit_hours),
+        "under_limit": sec < float(limit_hours) * 3600.0,
+        "peak_memory_mb_observed": float(peak_memory_mb),
+        "source": (
+            "learned_unet_orgdet_holdout_v1 v1 measured 173.8 s / 2 volumes "
+            "(86.9 s/volume) at locked 0.99 / pool 3.0 / TTA + greedy 12 µm"
+        ),
+    }
+
+
+def hidden_projection_from_rehearsal(
+    public_runtime_sec: float,
+    n_public: int = 4,
+    n_hidden: int = ESTIMATE_HIDDEN_VOLUMES,
+    peak_memory_mb: float = ORGDET_HOLDOUT_MEASURED_PEAK_MEMORY_MB,
+    limit_hours: float = KAGGLE_GPU_LIMIT_HOURS,
+) -> dict[str, Any]:
+    """Project hidden-test wall time from a completed public rehearsal."""
+    n_pub = int(n_public)
+    sec_per = float(public_runtime_sec) / max(n_pub, 1)
+    hidden = runtime_estimate(int(n_hidden), sec_per_volume=sec_per, peak_memory_mb=peak_memory_mb)
+    fail_closed = (not hidden["under_limit"]) or hidden["estimate_hours"] >= 0.9 * float(limit_hours)
+    return {
+        "public_runtime_sec": float(public_runtime_sec),
+        "n_public": n_pub,
+        "sec_per_volume": sec_per,
+        "hidden_test": hidden,
+        "fail_closed_approaches_12h": fail_closed,
+        "is_leaderboard_score": False,
+    }
+
+
+def refuse_overwrite_locked_slugs(slug: str) -> None:
+    locked = {
+        TEST_KERNEL_SLUG: "learned_unet_test_v1",
+        GAP_TEST_KERNEL_SLUG: "learned_unet_gap_test_v1",
+        PRUNE_TEST_KERNEL_SLUG: "learned_unet_prune_test_v1",
+        ORGDET_HOLDOUT_KERNEL_SLUG: "learned_unet_orgdet_holdout_v1",
+    }
+    if slug in locked:
+        raise ValueError(f"refusing to overwrite locked {locked[slug]} slug")
+
+
+def require_orgdet_holdout_keep(path: str | Path) -> dict[str, Any]:
+    dest = Path(path)
+    if not dest.exists():
+        raise SystemExit("refusing orgdet test-time; orgdet holdout keep report missing.")
+    payload = json.loads(dest.read_text())
+    decision = str(payload.get("decision") or "")
+    if decision != "keep_candidate_learned_unet_orgdet_holdout_v1":
+        raise SystemExit(f"refusing orgdet test-time; holdout decision is {decision}")
+    if payload.get("config_hash") != LOCKED_ORGDET_HOLDOUT_HASH:
+        raise SystemExit("refusing orgdet test-time; orgdet holdout hash drifted")
+    return payload
+
+
+def refuse_public_orgdet_test_weights(sources: Sequence[str]) -> None:
+    refuse_public_weight_sources(sources)
+
+
+def public_lb_not_a_tune_target(score: float | str) -> None:
+    text = str(score).strip()
+    if text in {"0.553", "0.5530"} or abs(float(score) - 0.553) < 1e-9:
+        raise ValueError(
+            "public leaderboard 0.553 is association_v2 only and is not a "
+            "learned_unet_orgdet_test_v1 tune target"
+        )
+
+
+def write_estimate_json(
+    path: str | Path,
+    n_public: int = 4,
+    n_hidden: int = ESTIMATE_HIDDEN_VOLUMES,
+) -> dict[str, Any]:
+    dest = Path(path)
+    payload = {
+        "label": "learned_unet_orgdet_test_v1",
+        "config_hash": LOCKED_ORGDET_TEST_HASH,
+        "train_config_hash": TRAIN_CONFIG_HASH,
+        "infer_config_hash": LOCKED_INFER_HASH,
+        "orgdet_config_hash": LOCKED_ORGDET_HASH,
+        "orgdet_holdout_config_hash": LOCKED_ORGDET_HOLDOUT_HASH,
+        "rejected_orgop_hash": REJECTED_ORGOP_HASH,
+        "test_parent_hash": LOCKED_TEST_HASH,
+        "gap_test_parent_hash": LOCKED_GAP_TEST_HASH,
+        "prune_test_parent_hash": LOCKED_PRUNE_TEST_HASH,
+        "sec_per_volume": ORGDET_SEC_PER_VOLUME,
+        "source": runtime_estimate(1)["source"],
+        "peak_memory_mb_observed": ORGDET_HOLDOUT_MEASURED_PEAK_MEMORY_MB,
+        "public_test": {k: v for k, v in runtime_estimate(n_public).items() if k != "source"},
+        "hidden_test_train_sized": {
+            k: v for k, v in runtime_estimate(n_hidden).items() if k != "source"
+        },
+        "kaggle_gpu_limit_hours": KAGGLE_GPU_LIMIT_HOURS,
+        "is_leaderboard_score": False,
+        "note": (
+            "Estimate only. Not a Kaggle run and not a leaderboard score. "
+            "Do not overwrite mahdimzafari/biohub-learned-unet-prune-test-v1, "
+            "mahdimzafari/biohub-learned-unet-gap-test-v1, "
+            "mahdimzafari/biohub-learned-unet-test-v1, or "
+            "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1."
+        ),
+    }
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(json.dumps(payload, indent=2) + "\n")
+    return payload
+
+
+__all__ = [
+    "ASSOCIATION_V2_PUBLIC_SCORE",
+    "ASSOCIATION_V2_SUBMISSION_REF",
+    "BANNED_PUBLIC_WEIGHT_MARKERS",
+    "LOCKED_ORGDET_TEST_HASH",
+    "ORGDET_TEST_KERNEL_SLUG",
+    "hidden_projection_from_rehearsal",
+    "list_test_zarrs",
+    "orgdet_test_config_hash",
+    "orgdet_test_config_payload",
+    "public_lb_not_a_tune_target",
+    "refuse_hardcoded_public_stems",
+    "refuse_overwrite_locked_slugs",
+    "refuse_public_orgdet_test_weights",
+    "refuse_train_volume",
+    "require_orgdet_holdout_keep",
+    "runtime_estimate",
+    "write_estimate_json",
+]

@@ -76,11 +76,10 @@ adjusted metric even when sparse-GT node FPs are free. See
 ## Next
 
 Keep `learned_unet_orgdet_v1` as a 44b6 keep. Do **not** retune.
-Package a **new** 6bba-only GPU helper that reuses the locked orgop
-detection path (`0.99` / pool 3.0 / TTA) plus this locked greedy
-linker, then official-score once vs champion
-`learned_unet_prune_v1` **0.701378**. Do **not** overwrite orgop v1,
-prune-test v1, or locked infer/holdout slugs. Do **not** launch
-`learned_unet_retrain_v1`. Current packaged public-test worker remains
-`learned_unet_prune_test_v1` v1
-`READY_FOR_MANUAL_SUBMISSION_REVIEW`.
+One-shot frozen `6bba` helper `learned_unet_orgdet_holdout_v1` hash
+`912f0c19b572a054` official-scored **0.705226 vs prune 0.701378**.
+Decision **`keep_candidate_learned_unet_orgdet_holdout_v1`**. Do **not**
+score holdout again. Do **not** overwrite that helper v1. Packaged
+`learned_unet_orgdet_test_v1` public-test GPU notebook (hash
+`c45c859610d29e90`). Next: push that new slug. Do **not** overwrite
+prune-test v1. Do **not** launch `learned_unet_retrain_v1`.

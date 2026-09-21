@@ -1,0 +1,36 @@
+{
+  "label": "learned_unet_orgdet_test_v1",
+  "config_hash": "c45c859610d29e90",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "orgdet_config_hash": "80b20589198148b7",
+  "orgdet_holdout_config_hash": "912f0c19b572a054",
+  "rejected_orgop_hash": "250c5bfacd4a8198",
+  "test_parent_hash": "7a8725b818fc609b",
+  "gap_test_parent_hash": "85379c198ebc7241",
+  "prune_test_parent_hash": "074a71dec68304e8",
+  "sec_per_volume": 86.89760899543762,
+  "source": "learned_unet_orgdet_holdout_v1 v1 measured 173.8 s / 2 volumes (86.9 s/volume) at locked 0.99 / pool 3.0 / TTA + greedy 12 \u00b5m",
+  "peak_memory_mb_observed": 1185.26171875,
+  "public_test": {
+    "n_volumes": 4,
+    "sec_per_volume": 86.89760899543762,
+    "estimate_sec": 347.5904359817505,
+    "estimate_hours": 0.09655289888381959,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_observed": 1185.26171875
+  },
+  "hidden_test_train_sized": {
+    "n_volumes": 199,
+    "sec_per_volume": 86.89760899543762,
+    "estimate_sec": 17292.624190092087,
+    "estimate_hours": 4.8035067194700245,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_observed": 1185.26171875
+  },
+  "kaggle_gpu_limit_hours": 12.0,
+  "is_leaderboard_score": false,
+  "note": "Estimate only. Not a Kaggle run and not a leaderboard score. Do not overwrite mahdimzafari/biohub-learned-unet-prune-test-v1, mahdimzafari/biohub-learned-unet-gap-test-v1, mahdimzafari/biohub-learned-unet-test-v1, or mahdimzafari/biohub-learned-unet-orgdet-holdout-v1."
+}

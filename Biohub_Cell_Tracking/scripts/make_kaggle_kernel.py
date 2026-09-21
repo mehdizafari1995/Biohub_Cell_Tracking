@@ -389,6 +389,51 @@ Private **CPU** helper kernel. **Not a competition submission.**
 - Do **not** Submit to Competition.
 """,
     },
+    "learned_unet_orgdet_holdout_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_holdout_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_holdout_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_holdout_v1",
+        "code_file": "kaggle_learned_unet_orgdet_holdout_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1",
+        "title": "Biohub Learned UNet Orgdet Holdout V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgdet_holdout_v1
+
+Private **GPU** helper kernel. **Not a competition submission.** One-shot only.
+
+- New slug. Do **not** overwrite rejected `learned_unet_orgop_v1` or locked train/infer/holdout/test/gap-test/prune-test slugs.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Locked orgdet operating point: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, greedy 12 µm last-position. Hash `912f0c19b572a054`. Parent orgdet hash `80b20589198148b7` is not retuned.
+- Infers only frozen-holdout `6bba_05db0fb1` and `6bba_c328f2fd`. Never opens `44b6`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: ~92 s/volume from holdout v1. Two frozen sequences ~3.1 min, under 12 h.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
+    "learned_unet_orgdet_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_test_v1",
+        "code_file": "kaggle_learned_unet_orgdet_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
+        "title": "Biohub Learned UNet Orgdet Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgdet_test_v1
+
+Private **GPU** test-time notebook at locked orgdet holdout operating point. Discovers every `test/*.zarr`.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-prune-test-v1` v1, `mahdimzafari/biohub-learned-unet-gap-test-v1` v1, `mahdimzafari/biohub-learned-unet-test-v1` v1, or `mahdimzafari/biohub-learned-unet-orgdet-holdout-v1` v1.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Locked orgdet holdout operating point: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, greedy 12 µm last-position. Hash `c45c859610d29e90`. Parent holdout hash `912f0c19b572a054` is not retuned.
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: ~86.9 s/volume from orgdet-holdout v1 (173.8 s / 2). Hidden test ~199 volumes → ~4.8 h, under the 12 h GPU limit.
+- Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
+""",
+    },
     "learned_unet_retrain_v1": {
         "source": "notebooks/kaggle_learned_unet_retrain_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_retrain_v1.ipynb",
