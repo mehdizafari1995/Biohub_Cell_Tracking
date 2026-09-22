@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -13,8 +14,11 @@ sys.path.insert(0, str(ROOT / "notebooks"))
 
 from biohub_tracking.learned_orgdet_gap import LOCKED_ORGDET_GAP_HASH  # noqa: E402
 from biohub_tracking.learned_orgdet_gap_test import (  # noqa: E402
+    ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
     LOCKED_ORGDET_GAP_TEST_HASH,
     ORGDET_GAP_TEST_KERNEL_SLUG,
+    classify_orgdet_gap_test_submit_poll,
     orgdet_gap_test_config_hash,
     orgdet_gap_test_config_payload,
 )
@@ -113,3 +117,58 @@ def test_slug_guards():
     assert ORGDET_GAP_TEST_KERNEL_SLUG in text
     assert "competitions submit" not in text
     assert "artifacts" in text and "kaggle" in text
+
+
+def test_classify_orgdet_gap_test_submit_poll_requires_ui_when_only_association_exists():
+    association = {
+        "ref": ASSOCIATION_V2_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ASSOCIATION_V2_PUBLIC_SCORE,
+        "private_score_returned": False,
+        "date": "2026-09-20T15:12:52.307Z",
+    }
+    poll = classify_orgdet_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json", "submission.csv"],
+        submissions=[association],
+    )
+    assert poll["decision"] == "human_action_required_ui_submit"
+    assert poll["orgdet_gap_test_submission_present"] is False
+    assert poll["association_v2_submission_present"] is True
+    assert poll["is_competition_submission"] is False
+    assert poll["is_leaderboard_score"] is False
+    assert "Kaggle UI" in poll["human_action"]
+    assert "CLI" in poll["human_action"]
+    assert "orgdet-gap-test-v1" in poll["human_action"]
+    assert "orgdet-test" in poll["human_action"]
+    assert classify_orgdet_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json"],
+        submissions=[association],
+    )["decision"] == "kernel_missing_csv"
+    extra = classify_orgdet_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[association, {"ref": 999, "status": "pending", "publicScore": None}],
+    )
+    assert extra["decision"] == "new_submission_present"
+    assert extra["orgdet_gap_test_submission_present"] is True
+    poll_src = (ROOT / "scripts" / "poll_orgdet_gap_test_submit.py").read_text()
+    assert "list_competition_submissions" in poll_src
+    assert "competitions/submit" not in poll_src
+    assert "kernels/push" not in poll_src
+    assert "download_kernel_output" not in poll_src
+    live = json.loads((ROOT / "reports" / "learned_unet_orgdet_gap_test_v1_submit_poll.json").read_text())
+    assert live["orgdet_gap_test_config_hash"] == LOCKED_ORGDET_GAP_TEST_HASH
+    assert live["is_leaderboard_score"] is False
+    assert live["is_competition_submission"] is False
+    assert live["decision"] in {
+        "human_action_required_ui_submit",
+        "new_submission_present",
+        "wait_kernel",
+        "kernel_missing_csv",
+        "record_kernel_error",
+    }

@@ -15,7 +15,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 1. `HUMAN_ACTION_REQUIRED` — Mahdi must **Submit to Competition** from the Kaggle UI on `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` version 1 **before 2026-09-22 23:59 UTC**. Do **not** submit from the CLI. Do **not** overwrite v1. Do **not** submit orgdet-test, prune-test, or infer-family gap-test now that this overlay is the holdout champion and the public-test worker is COMPLETE / `audit_ok`.
 2. Keep `learned_unet_orgdet_gap_v1` locked. Hash `ee31f36151325f9a`. Official 44b6 **0.687221 vs 0.679578**. Official 6bba **0.722805 vs 0.705226**. Do **not** retune. Do **not** score 6bba again.
-3. Keep `learned_unet_orgdet_gap_test_v1` locked. Hash `1ce4837ae16bee52`. Slug is in `FORBIDDEN_SLUGS`. Status-only submit polls may reconfirm the competition list still has only association_v2 **56399003** / **0.553**.
+3. Keep `learned_unet_orgdet_gap_test_v1` locked. Hash `1ce4837ae16bee52`. Slug is in `FORBIDDEN_SLUGS`. Last read-only submit poll **2026-09-22T09:54:43Z** still has only association_v2 **56399003** / **0.553**. Next cron may reconfirm that list; do not invent a leaderboard score.
 4. Keep `learned_unet_retrain` 44b6 lanes rejected. Do **not** retune. Do **not** open `6bba` for retrain.
 5. Keep discussion **740392** closed as `topic_id_not_found`.
 6. Keep rejected overlays (link/motion/hung/conflict/orgop/division) closed. Do not retune.

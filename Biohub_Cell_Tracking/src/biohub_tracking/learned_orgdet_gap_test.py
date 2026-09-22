@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from .learned_gap import LOCKED_GAP_HASH
@@ -105,6 +105,7 @@ def orgdet_gap_test_config_hash(payload: Mapping[str, Any] | None = None) -> str
 
 
 LOCKED_ORGDET_GAP_TEST_HASH = orgdet_gap_test_config_hash()
+ORGDET_GAP_TEST_LAST_RUN_UTC = "2026-09-22T09:05:18Z"
 assert LOCKED_ORGDET_GAP_TEST_HASH == "1ce4837ae16bee52"
 assert LOCKED_ORGDET_GAP_HASH == "ee31f36151325f9a"
 assert LOCKED_ORGDET_TEST_HASH == "c45c859610d29e90"
@@ -112,3 +113,56 @@ assert LOCKED_GAP_HASH == "f4d888d190c45a4a"
 assert ORGDET_LOCKED_HOLDOUT == 0.7052260455024029
 assert ASSOCIATION_V2_SUBMISSION_REF == 56399003
 assert ASSOCIATION_V2_PUBLIC_SCORE == "0.553"
+
+
+def classify_orgdet_gap_test_submit_poll(
+    *,
+    kernel_complete: bool,
+    kernel_failed: bool,
+    output_names: Sequence[str],
+    submissions: Sequence[Mapping[str, Any]],
+    association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
+) -> dict[str, Any]:
+    """Classify a read-only orgdet-gap-test submit poll. Never submits.
+
+    The preferred worker is ``mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1``.
+    Association_v2 submission ``56399003`` (public API string ``0.553``) is
+    not that kernel. Do not treat that public score as this slug's result.
+    """
+    names = [str(name) for name in output_names]
+    rows = [dict(row) for row in submissions]
+    refs = [row.get("ref") for row in rows]
+    extra = [row for row in rows if str(row.get("ref")) != str(association_ref)]
+    association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
+    if kernel_failed:
+        decision = "record_kernel_error"
+    elif not kernel_complete:
+        decision = "wait_kernel"
+    elif "submission.csv" not in names:
+        decision = "kernel_missing_csv"
+    elif extra:
+        decision = "new_submission_present"
+    else:
+        decision = "human_action_required_ui_submit"
+    return {
+        "slug": ORGDET_GAP_TEST_KERNEL_SLUG,
+        "decision": decision,
+        "kernel_complete": bool(kernel_complete),
+        "kernel_failed": bool(kernel_failed),
+        "output_names": names,
+        "n_submissions": len(rows),
+        "submission_refs": refs,
+        "association_v2_submission_present": bool(association),
+        "orgdet_gap_test_submission_present": bool(extra),
+        "is_competition_submission": False,
+        "is_leaderboard_score": False,
+        "human_action": (
+            "Mahdi must Submit to Competition from the Kaggle UI on "
+            "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1 version 1 "
+            "before the 2026-09-22 23:59 UTC entry deadline. "
+            "Do not submit from the CLI. Do not submit orgdet-test, "
+            "prune-test, or infer-family gap-test."
+            if decision == "human_action_required_ui_submit"
+            else None
+        ),
+    }
