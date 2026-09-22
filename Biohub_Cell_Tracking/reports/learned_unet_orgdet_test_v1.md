@@ -93,7 +93,7 @@ did not trigger.
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** submit from the CLI.
 Do **not** overwrite v1. CSV stays under ignored `artifacts/kaggle/`.
 
-Read-only submit poll **2026-09-22T01:48:51Z**: kernel still `complete`,
+Read-only submit poll **2026-09-22T02:47:03Z**: kernel still `complete`,
 outputs still `run_manifest.json` + `submission.csv`, competition list
 still exactly one row (association_v2 **56399003** / **0.553**). Decision
 `human_action_required_ui_submit`. Did **not** download CSV. Did **not**
