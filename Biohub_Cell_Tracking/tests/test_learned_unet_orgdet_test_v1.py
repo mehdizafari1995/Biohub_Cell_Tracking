@@ -33,6 +33,8 @@ from biohub_tracking.learned_orgdet_holdout import (  # noqa: E402
 from biohub_tracking.learned_orgdet_test import (  # noqa: E402
     LOCKED_ORGDET_TEST_HASH,
     ORGDET_TEST_KERNEL_SLUG,
+    ORGDET_TEST_PUBLIC_SCORE,
+    ORGDET_TEST_SUBMISSION_REF,
     classify_orgdet_test_submit_poll,
     hidden_projection_from_rehearsal,
     orgdet_test_config_hash as locked_hash,
@@ -255,7 +257,13 @@ def test_refuses_public_weights_and_public_lb_tune_target(tmp_path: Path):
         raise AssertionError("expected ValueError")
     except ValueError:
         pass
+    try:
+        public_lb_not_a_tune_target(ORGDET_TEST_PUBLIC_SCORE)
+        raise AssertionError("expected ValueError")
+    except ValueError:
+        pass
     public_lb_not_a_tune_target(0.705226)
+    public_lb_not_a_tune_target(0.722805)
     assert "pilkwang/biohub-deepcenter" in BANNED_PUBLIC_WEIGHT_MARKERS
     keep = tmp_path / "keep.json"
     keep.write_text(
@@ -320,7 +328,7 @@ def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exis
         submissions=[
             association,
             {
-                "ref": 56466744,
+                "ref": ORGDET_TEST_SUBMISSION_REF,
                 "status": "pending",
                 "publicScore": "",
                 "date": "2026-09-22T14:13:11.68Z",
@@ -329,10 +337,34 @@ def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exis
             },
         ],
     )
+    assert proven["decision"] == "new_submission_present"
     assert proven["orgdet_test_submission_present"] is True
     assert proven["orgdet_test_identity_proven"] is True
     assert proven["new_submission_identity"] == ["orgdet_test"]
     assert proven["new_submission_script_version_ids"] == [351557863]
+    scored = classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[
+            association,
+            {
+                "ref": ORGDET_TEST_SUBMISSION_REF,
+                "status": "complete",
+                "publicScore": ORGDET_TEST_PUBLIC_SCORE,
+                "date": "2026-09-22T14:13:11.68Z",
+                "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
+                "scriptVersionId": 351557863,
+            },
+        ],
+    )
+    assert scored["decision"] == "public_score_returned"
+    assert scored["new_submission_status"] == "complete"
+    assert scored["new_submission_public_score"] == ORGDET_TEST_PUBLIC_SCORE
+    assert scored["orgdet_test_identity_proven"] is True
+    assert scored["is_leaderboard_score"] is False
+    assert scored["is_competition_submission"] is False
+    assert "not a tune target" in scored["human_action"]
     prune = classify_orgdet_test_submit_poll(
         kernel_complete=True,
         kernel_failed=False,
@@ -373,11 +405,12 @@ def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exis
     assert live["decision"] in {
         "human_action_required_ui_submit",
         "new_submission_present",
+        "public_score_returned",
         "wait_kernel",
         "kernel_missing_csv",
         "record_kernel_error",
     }
-    if live["decision"] == "new_submission_present":
+    if live["decision"] in {"new_submission_present", "public_score_returned"}:
         assert "orgdet_test_identity_proven" in live
         assert live["new_submission_identity"]
         if live["orgdet_test_identity_proven"]:
@@ -386,6 +419,10 @@ def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exis
             assert live["new_submission_kernel_slugs"] == [
                 "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
             ]
+    if live["decision"] == "public_score_returned":
+        assert live["new_submission_status"] == "complete"
+        assert live["new_submission_public_score"] == ORGDET_TEST_PUBLIC_SCORE
+        assert live["new_submission_refs"] == [ORGDET_TEST_SUBMISSION_REF]
 
 
 def test_keep_orgdet_test_complete_report_matches_holdout_overlap():

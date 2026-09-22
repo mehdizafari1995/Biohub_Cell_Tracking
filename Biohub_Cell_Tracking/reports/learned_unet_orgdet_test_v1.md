@@ -91,23 +91,25 @@ did not trigger.
 ## Status
 
 Mahdi initiated a Kaggle UI submit. Read-only poll
-**2026-09-22T16:42:10Z** reconfirmed the second competition row first
-seen at **2026-09-22T14:23:04Z**. Identity remains proven from the
-relative `/code/` path: notebook
+**2026-09-22T17:41:09Z** recorded the second competition row first
+seen at **2026-09-22T14:23:04Z** as **complete**. Identity remains
+proven from the relative `/code/` path: notebook
 `mahdimzafari/biohub-learned-unet-orgdet-test-v1`,
 `scriptVersionId` **351557863**. That is **not** association_v2
 **56399003**, prune-test, infer-family gap-test, or
 `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle `versionNumber` was
-**not** returned. Status still **pending**. Public score **not returned**.
-This poll is **not** a leaderboard score. Do **not** retune from any
-later public score. Do **not** resubmit. Do **not** submit from the
-CLI. Do **not** overwrite v1. CSV stays under ignored
-`artifacts/kaggle/`.
+**not** returned. Status **complete**. Public API string **`0.612`**.
+Private score **not returned**. This **0.612** is a Kaggle-returned
+public score for orgdet-test only. It is **not** a local official
+holdout score and **not** an orgdet-gap-test score. Do **not** invent
+extra digits. Do **not** retune from **0.612**. Do **not** resubmit.
+Do **not** submit from the CLI. Do **not** overwrite v1. CSV stays
+under ignored `artifacts/kaggle/`.
 
 ## Next
 
-Poll read-only until Kaggle returns a terminal status and
-`publicScore`. Do **not** resubmit. Do **not** submit prune-test or
-gap-test. Do **not** overwrite the completed retrain helper. Do **not**
-score frozen `6bba` again. Do **not** use a returned public score for
-tuning.
+Do **not** re-poll **56466744** as pending. Do **not** resubmit. Do
+**not** submit prune-test or gap-test unless a later message separately
+authorizes that extra UI click. Do **not** overwrite the completed
+retrain helper. Do **not** score frozen `6bba` again. Do **not** use
+**0.612** or **0.553** for tuning.

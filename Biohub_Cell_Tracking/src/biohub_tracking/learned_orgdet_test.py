@@ -57,6 +57,8 @@ from .learned_test import (
 ORGDET_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
 ASSOCIATION_V2_KERNEL_SLUG = "mahdimzafari/biohub-association-v2"
 ORGDET_GAP_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1"
+ORGDET_TEST_PUBLIC_SCORE = "0.612"
+ORGDET_TEST_SUBMISSION_REF = 56466744
 
 
 def classify_submission_notebook(slug: str | None, ref: Any = None) -> str:
@@ -224,18 +226,21 @@ def classify_orgdet_test_submit_poll(
     ]
     orgdet_rows = [row for row, label in zip(extra, extra_labels) if label == "orgdet_test"]
     identity_proven = bool(orgdet_rows)
+    newest = extra[0] if extra else None
+    newest_score = str((newest or {}).get("publicScore") or "").strip()
+    newest_status = str((newest or {}).get("status") or "").strip().lower()
     if kernel_failed:
         decision = "record_kernel_error"
     elif not kernel_complete:
         decision = "wait_kernel"
     elif "submission.csv" not in names:
         decision = "kernel_missing_csv"
+    elif extra and newest_status == "complete" and newest_score:
+        decision = "public_score_returned"
     elif extra:
         decision = "new_submission_present"
     else:
         decision = "human_action_required_ui_submit"
-    newest = extra[0] if extra else None
-    newest_score = str((newest or {}).get("publicScore") or "").strip()
     return {
         "slug": ORGDET_TEST_KERNEL_SLUG,
         "decision": decision,
@@ -263,10 +268,15 @@ def classify_orgdet_test_submit_poll(
             "Do not submit from the CLI. Do not submit prune-test or gap-test now."
             if decision == "human_action_required_ui_submit"
             else (
-                "Do not resubmit. Poll until Kaggle returns a terminal status "
-                "and publicScore. Do not use any returned public score for tuning."
-                if decision == "new_submission_present"
-                else None
+                "Do not resubmit. Recorded publicScore is not a tune target. "
+                "Do not invent extra digits. Do not poll this ref as pending."
+                if decision == "public_score_returned"
+                else (
+                    "Do not resubmit. Poll until Kaggle returns a terminal status "
+                    "and publicScore. Do not use any returned public score for tuning."
+                    if decision == "new_submission_present"
+                    else None
+                )
             )
         ),
     }
@@ -302,11 +312,23 @@ def refuse_public_orgdet_test_weights(sources: Sequence[str]) -> None:
 
 def public_lb_not_a_tune_target(score: float | str) -> None:
     text = str(score).strip()
-    if text in {"0.553", "0.5530"} or abs(float(score) - 0.553) < 1e-9:
-        raise ValueError(
-            "public leaderboard 0.553 is association_v2 only and is not a "
-            "learned_unet_orgdet_test_v1 tune target"
-        )
+    forbidden = {
+        "0.553": "public leaderboard 0.553 is association_v2 only and is not a "
+        "learned_unet_orgdet_test_v1 tune target",
+        "0.5530": "public leaderboard 0.553 is association_v2 only and is not a "
+        "learned_unet_orgdet_test_v1 tune target",
+        "0.612": "public leaderboard 0.612 is orgdet-test 56466744 only and is "
+        "not a learned_unet_orgdet_test_v1 tune target",
+        "0.6120": "public leaderboard 0.612 is orgdet-test 56466744 only and is "
+        "not a learned_unet_orgdet_test_v1 tune target",
+    }
+    if text in forbidden:
+        raise ValueError(forbidden[text])
+    value = float(score)
+    if abs(value - 0.553) < 1e-9:
+        raise ValueError(forbidden["0.553"])
+    if abs(value - 0.612) < 1e-9:
+        raise ValueError(forbidden["0.612"])
 
 
 def write_estimate_json(
@@ -352,6 +374,8 @@ __all__ = [
     "ASSOCIATION_V2_KERNEL_SLUG",
     "ASSOCIATION_V2_PUBLIC_SCORE",
     "ASSOCIATION_V2_SUBMISSION_REF",
+    "ORGDET_TEST_PUBLIC_SCORE",
+    "ORGDET_TEST_SUBMISSION_REF",
     "BANNED_PUBLIC_WEIGHT_MARKERS",
     "LOCKED_ORGDET_TEST_HASH",
     "ORGDET_TEST_KERNEL_SLUG",

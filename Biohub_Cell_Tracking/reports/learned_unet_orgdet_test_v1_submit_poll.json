@@ -1,6 +1,6 @@
 {
-  "polled_utc": "2026-09-22T16:42:10Z",
-  "code_version": "3ee3dcd",
+  "polled_utc": "2026-09-22T17:41:09Z",
+  "code_version": "8fd68dd",
   "orgdet_test_config_hash": "c45c859610d29e90",
   "kernel": {
     "slug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
@@ -22,8 +22,8 @@
   "submissions": [
     {
       "ref": 56466744,
-      "status": "pending",
-      "publicScore": "",
+      "status": "complete",
+      "publicScore": "0.612",
       "private_score_returned": false,
       "date": "2026-09-22T14:13:11.68Z",
       "fileName": "submission.csv",
@@ -47,7 +47,7 @@
   "association_v2_public_score": "0.553",
   "orgdet_test_last_run_utc": "2026-09-21T11:07:02Z",
   "slug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
-  "decision": "new_submission_present",
+  "decision": "public_score_returned",
   "kernel_complete": true,
   "kernel_failed": false,
   "n_submissions": 2,
@@ -70,11 +70,11 @@
   "new_submission_refs": [
     56466744
   ],
-  "new_submission_status": "pending",
+  "new_submission_status": "complete",
   "new_submission_date": "2026-09-22T14:13:11.68Z",
-  "new_submission_public_score": null,
+  "new_submission_public_score": "0.612",
   "is_competition_submission": false,
   "is_leaderboard_score": false,
-  "human_action": "Do not resubmit. Poll until Kaggle returns a terminal status and publicScore. Do not use any returned public score for tuning.",
+  "human_action": "Do not resubmit. Recorded publicScore is not a tune target. Do not invent extra digits. Do not poll this ref as pending.",
   "notes": "Read-only poll. Did not download submission.csv. Did not submit. Did not overwrite locked slugs. Association_v2 ref 56399003 public API string 0.553 is not an orgdet-test leaderboard score. Notebook identity is taken only from a relative /code/ path; absolute URLs and tokens are dropped. A missing path is identity_unproven. Empty publicScore is not a leaderboard score."
 }

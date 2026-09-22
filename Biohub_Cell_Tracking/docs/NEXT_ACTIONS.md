@@ -13,7 +13,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Next (this family)
 
-1. Read-only orgdet-test submit poll **2026-09-22T16:42:10Z** reconfirmed competition ref **56466744**, status still **pending**, public score still **not returned**. Notebook identity remains proven as `mahdimzafari/biohub-learned-unet-orgdet-test-v1` (`scriptVersionId` **351557863**). That is **not** association_v2 **56399003**, **not** prune-test, **not** infer-family gap-test, and **not** `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle `versionNumber` was not returned. Decision `new_submission_present`. This is **not** a leaderboard score. Do **not** resubmit. Do **not** use a later public score for tuning.
+1. Read-only orgdet-test submit poll **2026-09-22T17:41:09Z** recorded competition ref **56466744** as **complete** with Kaggle-returned public API string **`0.612`**. Private score **not returned**. Notebook identity remains proven as `mahdimzafari/biohub-learned-unet-orgdet-test-v1` (`scriptVersionId` **351557863**). That is **not** association_v2 **56399003**, **not** prune-test, **not** infer-family gap-test, and **not** `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle `versionNumber` was not returned. Decision `public_score_returned`. This **0.612** is a Kaggle-returned public score for the fallback orgdet-test notebook. It is **not** an orgdet-gap-test score, **not** a local official holdout score, and **not** a tune target. Do **not** invent extra digits. Do **not** resubmit. Do **not** re-poll **56466744** as pending.
 2. Keep `learned_unet_orgdet_gap_v1` locked. Hash `ee31f36151325f9a`. Official 44b6 **0.687221 vs 0.679578**. Official 6bba **0.722805 vs 0.705226**. Do **not** retune. Do **not** score 6bba again.
 3. Keep `learned_unet_orgdet_gap_test_v1` locked. Hash `1ce4837ae16bee52`. Slug is in `FORBIDDEN_SLUGS`. It is **not** the pending competition row. Additional competition submission is **not** authorized this cycle. Do **not** overwrite v1.
 4. Keep `learned_unet_orgdet_test_v1` locked. Hash `c45c859610d29e90`. Kernel v1 COMPLETE / `audit_ok`. Do **not** overwrite v1. Do **not** resubmit.
@@ -24,13 +24,13 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 ## HUMAN_ACTION_REQUIRED
 
 - Grant this worker `issues:read` so cron runs can read issue #1.
-- Do **not** resubmit. Mahdi already initiated the Kaggle UI submit of `mahdimzafari/biohub-learned-unet-orgdet-test-v1`. Competition ref **56466744** is **pending**; public score not returned. Poll read-only. This repo does not authorize `kaggle competitions submit`. Do not resubmit association_v2 **56399003**. Do not submit orgdet-gap-test, prune-test, or infer-family gap-test unless a later message separately authorizes that extra UI click.
+- Do **not** resubmit. Mahdi already UI-submitted `mahdimzafari/biohub-learned-unet-orgdet-test-v1`. Competition ref **56466744** is **complete**; public API string **`0.612`**; private not returned. This repo does not authorize `kaggle competitions submit`. Do not resubmit association_v2 **56399003**. Do not submit orgdet-gap-test, prune-test, or infer-family gap-test unless a later message separately authorizes that extra UI click. Do not use **0.612** or **0.553** for tuning.
 
 ## Later (blocked or expensive)
 
 - complementary_v1, linkable_v1, learned_unet_division_v1, learned_unet_link_v1, learned_unet_link_v2, learned_unet_motion_v1, learned_unet_hung_v1, learned_unet_conflict_v1, learned_unet_orgop_v1, and the `learned_unet_retrain` 44b6 lanes are closed.
 - Copying public 199-video / DeepCenter checkpoints is forbidden for any KEEP_CANDIDATE path.
-- Poll **56466744** read-only until Kaggle returns a terminal status and `publicScore`. Do not invent a leaderboard score. Do not retune from any returned public score.
+- **56466744** is terminal. Public API **`0.612`** is recorded. Do not re-poll it as pending. Do not invent extra digits. Do not retune from **0.612** or **0.553**. Additional UI submit of preferred worker `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` remains unauthorized unless a later message separately authorizes that extra click.
 
 ## Never from automation
 
