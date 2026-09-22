@@ -46,6 +46,8 @@ ORGOP_CONFIG_HASH = "250c5bfacd4a8198"
 ORGDET_HOLDOUT_CONFIG_HASH = "912f0c19b572a054"
 ORGDET_TEST_CONFIG_HASH = "c45c859610d29e90"
 LINK_V2_CONFIG_HASH = "1d4015dc499bd604"
+RETRAIN_SLUG = "mahdimzafari/biohub-learned-unet-retrain-v1"
+RETRAIN_CONFIG_HASH = "92a419926fa7e40b"
 BANNED_OUTPUT_NAMES = frozenset({"submission.csv"})
 KAGGLE_NOISE_NAMES = frozenset(
     {
@@ -62,6 +64,15 @@ TRAIN_ALLOWED_NAMES = frozenset(
         "learned_unet_v1_config.json",
         "learned_unet_v1_best.pt",
         "learned_unet_v1_last.pt",
+    }
+)
+RETRAIN_ALLOWED_NAMES = frozenset(
+    {
+        "retrain_manifest.json",
+        "dataset_splits.json",
+        "learned_unet_retrain_v1_config.json",
+        "learned_unet_retrain_v1_best.pt",
+        "learned_unet_retrain_v1_last.pt",
     }
 )
 INFER_ALLOWED_NAMES = frozenset(
@@ -174,6 +185,27 @@ def extract_learned_train_output(archive: Path, dest_dir: Path) -> dict[str, Pat
             refuse_holdout_stems(stems)
     if find_weights([dest_dir]) is None and not written:
         raise FileNotFoundError("learned train helper zip had no allowed files")
+    return written
+
+
+def extract_learned_retrain_output(archive: Path, dest_dir: Path) -> dict[str, Path]:
+    """Extract continuation weights and manifests. Refuses submission.csv."""
+    from .learned_retrain import verify_retrain_manifest
+
+    written = _extract_allowed(Path(archive), Path(dest_dir), set(RETRAIN_ALLOWED_NAMES))
+    manifest = written.get("retrain_manifest.json")
+    if manifest is not None:
+        verify_retrain_manifest(manifest)
+    splits_path = written.get("dataset_splits.json")
+    if splits_path is not None:
+        splits = json.loads(splits_path.read_text())
+        stems = list(splits.get("train") or []) + list(splits.get("test") or [])
+        if stems:
+            refuse_holdout_stems(stems)
+    best = dest_dir / "learned_unet_retrain_v1_best.pt"
+    last = dest_dir / "learned_unet_retrain_v1_last.pt"
+    if not written and not best.exists() and not last.exists():
+        raise FileNotFoundError("learned retrain helper zip had no allowed files")
     return written
 
 
@@ -341,6 +373,41 @@ def summarize_collected_train(dest_dir: Path) -> dict[str, Any]:
         "wrote_best": (dest_dir / "learned_unet_v1_best.pt").is_file(),
         "wrote_last": (dest_dir / "learned_unet_v1_last.pt").is_file(),
         "weights_name": weights.name if weights else None,
+        "has_submission_csv": (dest_dir / "submission.csv").exists(),
+        "is_kaggle_run": bool(payload.get("is_kaggle_run")),
+        "is_competition_submission": False,
+        "is_leaderboard_score": False,
+    }
+
+
+def summarize_collected_retrain(dest_dir: Path) -> dict[str, Any]:
+    from .learned_retrain import verify_retrain_manifest
+
+    dest_dir = Path(dest_dir)
+    manifest_path = dest_dir / "retrain_manifest.json"
+    payload: dict[str, Any] = {}
+    if manifest_path.exists():
+        payload = verify_retrain_manifest(manifest_path)
+    history = payload.get("history") or []
+    return {
+        "status": payload.get("status") or "no_manifest",
+        "config_hash": payload.get("config_hash") or RETRAIN_CONFIG_HASH,
+        "splits": payload.get("splits"),
+        "n_epochs": len(history),
+        "best_train_loss": payload.get("best_train_loss"),
+        "last_edge_loss": history[-1].get("edge_loss") if history else None,
+        "last_transformer_grad_norm": (
+            history[-1].get("transformer_grad_norm") if history else None
+        ),
+        "last_n_candidate_edges": history[-1].get("n_candidate_edges") if history else None,
+        "wrote_best": (dest_dir / "learned_unet_retrain_v1_best.pt").is_file(),
+        "wrote_last": (dest_dir / "learned_unet_retrain_v1_last.pt").is_file(),
+        "best_sha16": payload.get("best_sha16"),
+        "last_sha16": payload.get("last_sha16"),
+        "checkpoint_reload_exact": payload.get("checkpoint_reload_exact"),
+        "runtime_sec": payload.get("runtime_sec"),
+        "peak_memory_mb": payload.get("peak_memory_mb"),
+        "resumed_from": Path(str(payload.get("resumed_from") or "")).name or None,
         "has_submission_csv": (dest_dir / "submission.csv").exists(),
         "is_kaggle_run": bool(payload.get("is_kaggle_run")),
         "is_competition_submission": False,

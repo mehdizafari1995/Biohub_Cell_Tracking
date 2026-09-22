@@ -141,7 +141,7 @@ def test_retrain_is_authorized_and_does_not_overwrite():
     assert meta["is_private"] is True
     assert meta["id"] == RETRAIN_KERNEL_SLUG
     assert TRAIN_KERNEL_SLUG in meta["kernel_sources"]
-    assert RETRAIN_KERNEL_SLUG not in _push_mod.FORBIDDEN_SLUGS
+    assert RETRAIN_KERNEL_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert _push_mod.RETRAIN_LAUNCH_AUTHORIZED is True
     locked = {
         "mahdimzafari/biohub-learned-unet-v1",

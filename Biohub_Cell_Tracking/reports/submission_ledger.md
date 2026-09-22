@@ -598,6 +598,41 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
 - **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
 
+## learned_unet_retrain_v1_kernel_complete (2026-09-22T07:40:50Z)
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-v1` version **1 COMPLETE / trained**. Downloaded to ignored `artifacts/kaggle/`. **Not a competition submission.** No `submission.csv`.
+- **Config hash:** `92a419926fa7e40b`. Parent train `4c38035d6657f2ad`. Infer `d7578b5f64ddac08`.
+- **Training:** 69 `44b6` train + 2 internal-val. 3 extra epochs. Best train loss **0.2629**. Transformer grad **2.64–4.76**. Candidate edges 12190 → 17989. Runtime **10461.4 s**, peak RAM **1816.6 MB**, T4 x2. Resume `learned_unet_v1_last.pt`. Reload exact. Frozen `6bba` closed.
+- **Kaggle public / private scores:** not returned. Not a competition submission.
+
+## learned_unet_retrain_infer_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-infer-v1`. **Not a competition submission.** Frozen `6bba` stays closed.
+- **Config hash:** `1db21f87d00ce083`.
+- **v1 ERROR:** `checkpoint config_hash is not locked learned_unet_v1` (retrain weights carry `92a419926fa7e40b`). No graphs.
+- **v2 RUNNING:** load accepts parent or retrain hash. Status-only poll **2026-09-22T07:47Z**.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_retrain_orgdet_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-orgdet-v1`. **Not a competition submission.**
+- **Config hash:** `594f6fbc03c974cf`.
+- **v1 ERROR:** same parent-hash-only checkpoint refuse. **v2 RUNNING.**
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_retrain_orgop_v1_kernel
+
+- **Status:** packaged `mahdimzafari/biohub-learned-unet-retrain-orgop-v1`. **Not pushed** (Kaggle max 2 GPU sessions). Hash `f924802e5f716a61`. Includes the checkpoint-hash fix. **Not a competition submission.**
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_orgdet_test_v1_submit_poll (2026-09-22T07:45:56Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-orgdet-test-v1` at **2026-09-22T07:45:56Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1. Did **not** retry 740392. Did **not** push a second retrain version.
+- **Config hash:** `c45c859610d29e90`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
+- **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

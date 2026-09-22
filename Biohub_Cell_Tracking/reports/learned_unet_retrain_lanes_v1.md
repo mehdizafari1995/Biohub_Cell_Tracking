@@ -40,8 +40,12 @@ true; a later locked cycle must do that once.
 
 ## This cycle
 
-Retrain helper v1 is still **RUNNING** (poll **2026-09-22T06:45:07Z**,
-0 outputs). The scorer therefore cannot run. Did **not** invent a
-score. Did **not** launch lane infer kernels. Did **not** push a
-second retrain version. Champion remains
+Retrain helper v1 is **COMPLETE / trained**. Lane A/B v1 failed
+(`checkpoint config_hash is not locked learned_unet_v1`). Load now
+accepts parent train hash or retrain hash `92a419926fa7e40b`. Lane A
+`mahdimzafari/biohub-learned-unet-retrain-infer-v1` v2 and lane B
+`mahdimzafari/biohub-learned-unet-retrain-orgdet-v1` v2 are **RUNNING**.
+Lane C is packaged, not pushed (Kaggle max 2 GPU sessions). The scorer
+cannot run until graphs exist. Did **not** invent a score. Did **not**
+push a second retrain version. Champion remains
 `learned_unet_orgdet_holdout_v1` **0.705226**.

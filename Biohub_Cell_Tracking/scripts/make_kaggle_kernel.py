@@ -456,6 +456,69 @@ Private **GPU** helper kernel. **Not a competition submission.** Launch authoriz
 - Do **not** Submit to Competition.
 """,
     },
+    "learned_unet_retrain_infer_v1": {
+        "source": "notebooks/kaggle_learned_unet_retrain_infer_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_retrain_infer_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_retrain_infer_v1",
+        "code_file": "kaggle_learned_unet_retrain_infer_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-retrain-infer-v1",
+        "title": "Biohub Learned UNet Retrain Infer V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-retrain-v1"],
+        "markdown": """# Biohub learned_unet_retrain_infer_v1
+
+Private **GPU** helper kernel. **Not a competition submission.** Lane A.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-retrain-v1` or locked infer/orgdet slugs.
+- Loads `learned_unet_retrain_v1` weights. Locked infer operating point: det 0.5 / pool 5.0 / greedy 12 µm. Hash `1db21f87d00ce083`.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-retrain-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
+    "learned_unet_retrain_orgdet_v1": {
+        "source": "notebooks/kaggle_learned_unet_retrain_orgdet_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_retrain_orgdet_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_retrain_orgdet_v1",
+        "code_file": "kaggle_learned_unet_retrain_orgdet_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1",
+        "title": "Biohub Learned UNet Retrain Orgdet V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-retrain-v1"],
+        "markdown": """# Biohub learned_unet_retrain_orgdet_v1
+
+Private **GPU** helper kernel. **Not a competition submission.** Lane B.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-retrain-v1` or locked orgdet slugs.
+- Loads `learned_unet_retrain_v1` weights. Locked orgdet operating point: det 0.99 / pool 3.0 / greedy 12 µm. Hash `594f6fbc03c974cf`.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-retrain-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
+    "learned_unet_retrain_orgop_v1": {
+        "source": "notebooks/kaggle_learned_unet_retrain_orgop_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_retrain_orgop_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_retrain_orgop_v1",
+        "code_file": "kaggle_learned_unet_retrain_orgop_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
+        "title": "Biohub Learned UNet Retrain Orgop V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-retrain-v1"],
+        "markdown": """# Biohub learned_unet_retrain_orgop_v1
+
+Private **GPU** helper kernel. **Not a competition submission.** Lane C.
+
+- New slug. Do **not** overwrite rejected `learned_unet_orgop_v1` or `mahdimzafari/biohub-learned-unet-retrain-v1`.
+- Loads `learned_unet_retrain_v1` weights. Organizer 0.99 / pool 3.0 / softmax 0.5 / fixed ILP. Hash `f924802e5f716a61`.
+- Infers only frozen-tuning `44b6_12dfb391` and `44b6_267148e4`. Never opens `6bba`.
+- Writes JSON graphs + `infer_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-retrain-v1`. **Internet OFF**. **GPU ON**.
+- Do **not** Submit to Competition. Weights stay out of git.
+""",
+    },
 }
 
 

@@ -126,6 +126,74 @@ def test_retrain_lanes_decide_all_without_opening_6bba():
         decide_all_lanes({"A": 0.66})
 
 
+def test_retrain_lane_notebooks_match_locked_hashes_and_refuse_holdout():
+    import importlib.util
+    import sys
+
+    sys.path.insert(0, str(ROOT / "notebooks"))
+    infer = __import__("kaggle_learned_unet_retrain_infer_v1")
+    orgdet = __import__("kaggle_learned_unet_retrain_orgdet_v1")
+    orgop = __import__("kaggle_learned_unet_retrain_orgop_v1")
+    assert infer.infer_config_payload() == lane_a_payload()
+    assert orgdet.infer_config_payload() == lane_b_payload()
+    assert orgop.orgop_config_payload() == lane_c_payload()
+    assert infer.LOCKED_LANE_HASH == LANE_A_HASH
+    assert orgdet.LOCKED_LANE_HASH == LANE_B_HASH
+    assert orgop.LOCKED_LANE_HASH == LANE_C_HASH
+    with pytest.raises(infer.HoldoutLeakError):
+        infer.refuse_holdout_stems(["6bba_05db0fb1"])
+    with pytest.raises(orgdet.HoldoutLeakError):
+        orgdet.refuse_holdout_stems(["6bba_c328f2fd"])
+    with pytest.raises(orgop.HoldoutLeakError):
+        orgop.refuse_holdout_stems(["6bba_05db0fb1"])
+    infer_src = (ROOT / "notebooks/kaggle_learned_unet_retrain_infer_v1.py").read_text()
+    orgdet_src = (ROOT / "notebooks/kaggle_learned_unet_retrain_orgdet_v1.py").read_text()
+    orgop_src = (ROOT / "notebooks/kaggle_learned_unet_retrain_orgop_v1.py").read_text()
+    for source in (infer_src, orgdet_src, orgop_src):
+        assert "to_csv(" not in source
+        assert "PARENT_RETRAIN_HASH" in source
+        assert "allowed_hashes = {TRAIN_CONFIG_HASH, PARENT_RETRAIN_HASH}" in source
+        assert "checkpoint config_hash is not locked learned_unet_v1 or learned_unet_retrain_v1" in source
+    assert "graphs_to_submission" not in orgop_src
+    make = importlib.util.spec_from_file_location(
+        "make_kaggle_kernel", ROOT / "scripts" / "make_kaggle_kernel.py"
+    )
+    assert make and make.loader
+    make_mod = importlib.util.module_from_spec(make)
+    make.loader.exec_module(make_mod)
+    for name, slug in (
+        ("learned_unet_retrain_infer_v1", LANE_A_SLUG),
+        ("learned_unet_retrain_orgdet_v1", LANE_B_SLUG),
+        ("learned_unet_retrain_orgop_v1", LANE_C_SLUG),
+    ):
+        spec = make_mod.KERNELS[name]
+        assert spec["kernel_id"] == slug
+        assert spec.get("enable_gpu") is True
+        assert spec["kernel_sources"] == ["mahdimzafari/biohub-learned-unet-retrain-v1"]
+        meta = make_mod.metadata_payload(spec)
+        assert meta["enable_internet"] is False
+        assert meta["is_private"] is True
+    push = importlib.util.spec_from_file_location(
+        "push_kaggle_kernel", ROOT / "scripts" / "push_kaggle_kernel.py"
+    )
+    assert push and push.loader
+    push_mod = importlib.util.module_from_spec(push)
+    push.loader.exec_module(push_mod)
+    assert "mahdimzafari/biohub-learned-unet-retrain-v1" in push_mod.FORBIDDEN_SLUGS
+    assert LANE_A_SLUG not in push_mod.FORBIDDEN_SLUGS
+    assert LANE_B_SLUG not in push_mod.FORBIDDEN_SLUGS
+    assert LANE_C_SLUG not in push_mod.FORBIDDEN_SLUGS
+
+
+def test_retrain_lane_collect_script_is_fail_closed():
+    source = (ROOT / "scripts" / "collect_learned_unet_retrain_lane.py").read_text()
+    assert "extract_learned_infer_output" in source
+    assert "kaggle competitions submit" not in source
+    assert "LANE_A_SLUG" in source
+    assert "submission.csv" in source
+    assert "6bba" in source
+
+
 def test_retrain_lane_scorer_script_is_fail_closed():
     source = (ROOT / "scripts" / "run_learned_unet_retrain_lanes.py").read_text()
     assert "refuse_incomplete_retrain" in source

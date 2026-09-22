@@ -153,6 +153,55 @@ def tuning_decision(combined: float) -> str:
     return "reject_learned_unet_retrain_v1"
 
 
+def verify_retrain_manifest(path: str | Path) -> dict[str, Any]:
+    """Confirm the continuation helper stayed 44b6-only. Does not open volumes."""
+    payload = json.loads(Path(path).read_text())
+    if payload.get("config_hash") != LOCKED_RETRAIN_HASH:
+        raise HoldoutLeakError(
+            "retrain config hash does not match locked learned_unet_retrain_v1"
+        )
+    if payload.get("status") != "trained":
+        raise HoldoutLeakError(
+            f"retrain helper status is {payload.get('status')!r}; refusing incomplete weights"
+        )
+    if payload.get("is_competition_submission"):
+        raise HoldoutLeakError("retrain helper must not be a competition submission")
+    if payload.get("writes_submission_csv") or (payload.get("config") or {}).get(
+        "writes_submission_csv"
+    ):
+        raise HoldoutLeakError("retrain helper must not write submission.csv")
+    cfg = payload.get("config") or {}
+    if cfg and retrain_config_hash(cfg) != LOCKED_RETRAIN_HASH:
+        raise HoldoutLeakError("retrain config payload does not match locked hash")
+    splits = payload.get("splits") or {}
+    stems = list(splits.get("train") or []) + list(splits.get("test") or [])
+    if stems:
+        refuse_holdout_stems(stems)
+        other = [s for s in stems if not str(s).startswith(f"{TUNING_SPECIMEN}_")]
+        if other:
+            raise HoldoutLeakError("retrain manifest is not 44b6-only: " + ", ".join(other))
+    resumed = str(payload.get("resumed_from") or "")
+    allowed_resume_weight_names([Path(resumed).name] if resumed else [RESUME_WEIGHTS_NAME])
+    refuse_public_weight_sources([resumed] if resumed else [])
+    history = payload.get("history") or []
+    if len(history) != ADDITIONAL_EPOCHS:
+        raise HoldoutLeakError(
+            f"retrain helper must complete {ADDITIONAL_EPOCHS} epochs; got {len(history)}"
+        )
+    for row in history:
+        for key in ("train_loss", "det_loss", "edge_loss", "transformer_grad_norm"):
+            value = float(row[key])
+            if value != value or value <= 0.0:
+                raise HoldoutLeakError(f"retrain {key} is not a positive finite value")
+    if payload.get("checkpoint_reload_exact") is not True:
+        raise HoldoutLeakError("retrain checkpoint reload was not exact")
+    if payload.get("missing_keys") or payload.get("unexpected_keys"):
+        raise HoldoutLeakError("retrain checkpoint load was not strict")
+    if not payload.get("wrote_best") or not payload.get("wrote_last"):
+        raise HoldoutLeakError("retrain helper did not write best/last weights")
+    return payload
+
+
 def runtime_estimate() -> dict[str, Any]:
     """Continuation of locked 3-epoch helper. Not a hidden-test projection."""
     per_epoch = PARENT_TRAIN_RUNTIME_SEC / float(PARENT_EPOCHS)

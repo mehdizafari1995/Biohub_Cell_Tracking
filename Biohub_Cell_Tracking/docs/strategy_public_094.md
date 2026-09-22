@@ -32,12 +32,13 @@ Zero-edge diagnosis: no silent load defect; transformer near init
 Do **not** retune orgop. Do **not** open `6bba` for orgop. Public 0.553
 is association_v2 only.
 
-## Next specified experiment (helper v1 running)
+## Next specified experiment (helper v1 complete; lanes running)
 
 `learned_unet_retrain_v1` hash `92a419926fa7e40b`. Resume locked
 `learned_unet_v1_last.pt` for +3 epochs on 44b6 only. Slug
-`mahdimzafari/biohub-learned-unet-retrain-v1`. Status-only poll
-**2026-09-22T06:45:07Z**: version **1 RUNNING**, no outputs. Fail-closed
+`mahdimzafari/biohub-learned-unet-retrain-v1`. Collected
+**2026-09-22T07:40:50Z**: version **1 COMPLETE / trained**. Lane A/B v2
+**RUNNING**. Lane C packaged, not pushed. Fail-closed
 lane scorer `scripts/run_learned_unet_retrain_lanes.py` is packaged.
 Canary
 `canary_ok` is evidence the pair head can learn peaked softmax. Do

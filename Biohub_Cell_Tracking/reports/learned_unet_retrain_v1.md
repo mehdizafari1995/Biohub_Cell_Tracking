@@ -25,7 +25,8 @@ weights stay refused.
 
 Config: `configs/learned_unet_retrain_v1.yaml`. Hash `92a419926fa7e40b`.
 Reserved slug `mahdimzafari/biohub-learned-unet-retrain-v1`.
-`LAUNCH_AUTHORIZED=True`. In `KERNELS`. Private helper v1 **RUNNING**.
+`LAUNCH_AUTHORIZED=True`. In `KERNELS`. Private helper v1 **COMPLETE / trained**.
+Slug is now in `FORBIDDEN_SLUGS`.
 
 - Resume from `learned_unet_v1_last.pt` only
 - `additional_epochs=3`, `from_scratch=false`
@@ -61,14 +62,18 @@ datasets.
 
 ## This cycle
 
-Launch authorized. Status-only poll **2026-09-22T06:45:07Z**: private helper
-`mahdimzafari/biohub-learned-unet-retrain-v1` version **1 RUNNING**, 0 output
-files, no `submission.csv`, no failure message. Did **not** download. Did
-**not** push a second version. Does **not** overwrite the parent train slug.
-44b6 lanes A/B/C hashes `1db21f87d00ce083` / `594f6fbc03c974cf` /
-`f924802e5f716a61` are locked before scores. Fail-closed official scorer
-`scripts/run_learned_unet_retrain_lanes.py` is packaged and refuses
-incomplete helper / missing graphs / `6bba`. Frozen `6bba` stays closed
-until a lane wins. Champion remains `learned_unet_orgdet_holdout_v1`
+Launch authorized. Collected **2026-09-22T07:40:50Z**: private helper
+`mahdimzafari/biohub-learned-unet-retrain-v1` version **1 COMPLETE / trained**.
+69 train + 2 internal-val `44b6` only. 3 extra epochs. Best train loss
+**0.2629** (parent 0.3604). Transformer grad **2.64–4.76**. Candidate edges
+12190 → 17989. Runtime **10461 s**, peak **1817 MB**, T4 x2. Resume
+`learned_unet_v1_last.pt`. Reload exact. No `submission.csv`. Slug is now
+locked. 44b6 lanes A/B/C hashes `1db21f87d00ce083` / `594f6fbc03c974cf` /
+`f924802e5f716a61` are locked before scores. Lane A/B v1 failed on a
+parent-hash-only checkpoint check; v2 accepts the retrain hash and is
+**RUNNING**. Lane C is packaged, not pushed (2 GPU session limit).
+Fail-closed official scorer `scripts/run_learned_unet_retrain_lanes.py`
+refuses incomplete helper / missing graphs / `6bba`. Frozen `6bba` stays
+closed until a lane wins. Champion remains `learned_unet_orgdet_holdout_v1`
 **0.705226** / orgdet-test v1 `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED` /
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`.

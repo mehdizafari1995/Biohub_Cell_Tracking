@@ -16,6 +16,8 @@ from biohub_tracking.learned_collect import (
     LINK_SLUG,
     LINK_V2_CONFIG_HASH,
     LINK_V2_SLUG,
+    RETRAIN_CONFIG_HASH,
+    RETRAIN_SLUG,
     TEST_CONFIG_HASH,
     TEST_SLUG,
     TRAIN_SLUG,
@@ -23,12 +25,15 @@ from biohub_tracking.learned_collect import (
     collect_decision,
     extract_learned_holdout_output,
     extract_learned_infer_output,
+    extract_learned_retrain_output,
     extract_learned_test_output,
     extract_learned_train_output,
     refuse_submission_outputs,
     safe_kernel_status,
+    summarize_collected_retrain,
     summarize_collected_train,
 )
+from biohub_tracking.learned_retrain import retrain_config_payload
 from biohub_tracking.learned_split import (
     TRAIN_CONFIG_HASH,
     HoldoutLeakError,
@@ -102,6 +107,62 @@ def test_extract_train_zip_keeps_weights_and_refuses_submission(tmp_path: Path):
         extract_learned_train_output(banned, dest / "bad")
     with pytest.raises(ValueError, match="submission.csv"):
         refuse_submission_outputs(["nested/submission.csv"])
+
+
+def test_extract_retrain_zip_keeps_weights_and_refuses_submission(tmp_path: Path):
+    dest = tmp_path / "artifacts" / "kaggle" / "learned_unet_retrain_v1"
+    dest.mkdir(parents=True)
+    assert_helper_dest(dest)
+    history = [
+        {
+            "epoch": i,
+            "train_loss": 0.3 - 0.01 * i,
+            "det_loss": 0.02,
+            "edge_loss": 0.25,
+            "transformer_grad_norm": 2.0,
+        }
+        for i in range(3)
+    ]
+    archive = _zip(
+        tmp_path / "retrain_ok.zip",
+        {
+            "retrain_manifest.json": json.dumps(
+                {
+                    "status": "trained",
+                    "config_hash": RETRAIN_CONFIG_HASH,
+                    "config": retrain_config_payload(),
+                    "splits": {"train": ["44b6_aaa"], "test": ["44b6_12dfb391", "44b6_267148e4"]},
+                    "history": history,
+                    "checkpoint_reload_exact": True,
+                    "missing_keys": [],
+                    "unexpected_keys": [],
+                    "wrote_best": True,
+                    "wrote_last": True,
+                    "resumed_from": "/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt",
+                    "is_kaggle_run": True,
+                    "is_competition_submission": False,
+                    "best_train_loss": 0.28,
+                }
+            ),
+            "learned_unet_retrain_v1_best.pt": b"fake-best",
+            "learned_unet_retrain_v1_last.pt": b"fake-last",
+            "dataset_splits.json": json.dumps(
+                {"train": ["44b6_aaa"], "test": ["44b6_12dfb391", "44b6_267148e4"]}
+            ),
+        },
+    )
+    written = extract_learned_retrain_output(archive, dest)
+    assert "retrain_manifest.json" in written
+    assert "learned_unet_retrain_v1_best.pt" in written
+    summary = summarize_collected_retrain(dest)
+    assert summary["status"] == "trained"
+    assert summary["config_hash"] == RETRAIN_CONFIG_HASH
+    assert summary["n_epochs"] == 3
+    assert summary["has_submission_csv"] is False
+    assert RETRAIN_SLUG.endswith("biohub-learned-unet-retrain-v1")
+    banned = _zip(tmp_path / "retrain_banned.zip", {"submission.csv": "id,dataset\n"})
+    with pytest.raises(ValueError, match="submission.csv"):
+        extract_learned_retrain_output(banned, dest / "bad")
 
 
 def test_extract_train_zip_refuses_holdout_manifest_and_volumes(tmp_path: Path):

@@ -1,0 +1,12 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
+  "lane": "C",
+  "polled_utc": "2026-09-22T07:47:44Z",
+  "config_hash": "f924802e5f716a61",
+  "decision": "not_pushed",
+  "error_type": "HTTPError",
+  "downloaded": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "code_version": "61c1d12"
+}

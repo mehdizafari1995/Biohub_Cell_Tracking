@@ -22,6 +22,10 @@ from biohub_tracking.kaggle_api import (  # noqa: E402
     kernel_output_list,
     kernel_status,
 )
+from biohub_tracking.learned_collect import (  # noqa: E402
+    extract_learned_retrain_output,
+    summarize_collected_retrain,
+)
 from biohub_tracking.learned_retrain import LOCKED_RETRAIN_HASH, RETRAIN_KERNEL_SLUG  # noqa: E402
 
 
@@ -73,10 +77,18 @@ def main() -> None:
     if "submission.csv" in names:
         raise SystemExit("retrain helper must not write submission.csv")
     decision = "status_only"
+    extracted: dict[str, str] = {}
+    collected = None
     if not args.status_only and str(status.get("status") or "").lower() in {"complete", "completed"}:
         dest.mkdir(parents=True, exist_ok=True)
         zip_path = dest / "learned_unet_retrain_v1_output.zip"
-        download_kernel_output_zip(args.slug, zip_path)
+        if not zip_path.exists():
+            download_kernel_output_zip(args.slug, zip_path)
+        written = extract_learned_retrain_output(zip_path, dest)
+        extracted = {name: str(path.name) for name, path in written.items()}
+        collected = summarize_collected_retrain(dest)
+        if collected.get("has_submission_csv"):
+            raise SystemExit("retrain helper wrote submission.csv; refusing")
         decision = "downloaded"
     report = {
         "slug": args.slug,
@@ -85,7 +97,10 @@ def main() -> None:
         "kernel": status,
         "output_files": files,
         "decision": decision,
+        "extracted": extracted,
+        "collected": collected,
         "is_competition_submission": False,
+        "is_leaderboard_score": False,
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2))
