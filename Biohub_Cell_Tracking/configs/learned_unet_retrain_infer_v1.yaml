@@ -1,0 +1,32 @@
+# learned_unet_retrain_infer_v1 — preregistered 44b6 retrain lane A.
+# Hash 1db21f87d00ce083. Locked before any 44b6 score. Do not sweep.
+# Do not open 6bba. Do not write submission.csv. Not a submission.
+
+label: learned_unet_retrain_infer_v1
+lane: A
+parent_retrain_hash: 92a419926fa7e40b
+parent_train_hash: 4c38035d6657f2ad
+parent_infer_hash: d7578b5f64ddac08
+comparator: 0.6557507105877639
+tuning_specimen: 44b6
+holdout_specimens:
+- 6bba
+infer_stems:
+- 44b6_12dfb391
+- 44b6_267148e4
+frozen_holdout:
+- 6bba_05db0fb1
+- 6bba_c328f2fd
+weights_name: learned_unet_retrain_v1_best.pt
+fallback_weights_name: learned_unet_retrain_v1_last.pt
+det_threshold: 0.5
+det_tta: true
+pool_kernel_um: 5.0
+linker: greedy_gate_12um
+gate_um: 12.0
+uses_transformer: false
+uses_ilp: false
+writes_submission_csv: false
+opens_6bba: false
+kernel_slug: mahdimzafari/biohub-learned-unet-retrain-infer-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-retrain-v1

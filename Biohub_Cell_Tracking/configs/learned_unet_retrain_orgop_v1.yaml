@@ -1,0 +1,37 @@
+# learned_unet_retrain_orgop_v1 — preregistered 44b6 retrain lane C.
+# Hash f924802e5f716a61. Locked before any 44b6 score. Do not sweep.
+# Do not open 6bba. Do not write submission.csv. Not a submission.
+
+label: learned_unet_retrain_orgop_v1
+lane: C
+parent_retrain_hash: 92a419926fa7e40b
+parent_train_hash: 4c38035d6657f2ad
+parent_orgop_hash: 250c5bfacd4a8198
+comparator: lane_B_official_combined
+tuning_specimen: 44b6
+holdout_specimens:
+- 6bba
+infer_stems:
+- 44b6_12dfb391
+- 44b6_267148e4
+frozen_holdout:
+- 6bba_05db0fb1
+- 6bba_c328f2fd
+weights_name: learned_unet_retrain_v1_best.pt
+fallback_weights_name: learned_unet_retrain_v1_last.pt
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+edge_activation: softmax
+edge_threshold: 0.5
+linker: tracksdata_ilp
+use_ilp: true
+ilp_edge_weight: -1.0
+ilp_appearance_weight: 0.1
+ilp_disappearance_weight: 0.1
+ilp_division_weight: 1.0
+uses_transformer: true
+writes_submission_csv: false
+opens_6bba: false
+kernel_slug: mahdimzafari/biohub-learned-unet-retrain-orgop-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-retrain-v1

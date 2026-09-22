@@ -4,9 +4,9 @@ Hypothesis (after ``reject_learned_unet_orgop_v1``): additional epochs on the
 locked specimen-separated weights improve detection enough to beat greedy
 infer 0.655751. Public 199-video / DeepCenter checkpoints stay refused.
 
-Do **not** launch until a reviewed cycle. Do **not** overwrite the locked
-train helper. Do **not** open ``6bba``. Do **not** write ``submission.csv``.
-Not a competition submission.
+Launch is authorized for this reviewed cycle. Do **not** overwrite the
+locked train helper. Do **not** open ``6bba`` until a 44b6 lane wins.
+Do **not** write ``submission.csv``. Not a competition submission.
 """
 
 from __future__ import annotations
@@ -37,7 +37,7 @@ from .learned_split import (
 )
 
 RETRAIN_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-retrain-v1"
-LAUNCH_AUTHORIZED = False
+LAUNCH_AUTHORIZED = True
 PARENT_EPOCHS = 3
 ADDITIONAL_EPOCHS = 3
 TOTAL_EPOCHS_EQUIVALENT = 6
@@ -169,6 +169,7 @@ def runtime_estimate() -> dict[str, Any]:
         "max_hours": 11.0,
         "under_12h": True,
         "hidden_test_not_projected": True,
+        "authorized": True,
         "launched": False,
         "overwrites_parent_slug": False,
     }

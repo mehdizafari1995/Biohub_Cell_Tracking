@@ -5,7 +5,7 @@ Kaggle helper kernel: learned_unet_retrain_v1 GPU continuation.
 Specimen-separated organizer TemporalUNet3D + SimpleNodeTransformer.
 Never opens 6bba volumes. Never writes submission.csv.
 Never overwrites mahdimzafari/biohub-learned-unet-v1.
-LAUNCH_AUTHORIZED=False until a reviewed cycle. Not a competition submission.
+LAUNCH_AUTHORIZED=True for this reviewed cycle. Not a competition submission.
 
 Attach competition `biohub-cell-tracking-during-development` and
 `mahdimzafari/biohub-learned-unet-v1`. Internet OFF. GPU ON.
@@ -36,7 +36,7 @@ PARENT_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-v1"
 INFER_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-infer-v1"
 PARENT_TRAIN_HASH = "4c38035d6657f2ad"
 LOCKED_INFER_HASH = "d7578b5f64ddac08"
-LAUNCH_AUTHORIZED = False
+LAUNCH_AUTHORIZED = True
 PARENT_EPOCHS = 3
 ADDITIONAL_EPOCHS = 3
 TOTAL_EPOCHS_EQUIVALENT = 6
@@ -871,7 +871,14 @@ def train_on_splits(
     refuse_public_weight_sources([str(resume_path)])
     blob = torch.load(resume_path, map_location=device)
     state = blob["state_dict"] if isinstance(blob, dict) and "state_dict" in blob else blob
-    model.load_state_dict(state)
+    incompat = model.load_state_dict(state, strict=False)
+    if incompat.missing_keys or incompat.unexpected_keys:
+        raise RuntimeError(
+            "learned_unet_retrain_v1 parent checkpoint keys mismatch: "
+            f"missing={list(incompat.missing_keys)[:8]} "
+            f"unexpected={list(incompat.unexpected_keys)[:8]}"
+        )
+    model.load_state_dict(state, strict=True)
     optimizer = torch.optim.AdamW(model.parameters(), lr=float(cfg["lr"]))
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     downsample = list(cfg["downsample"])
@@ -881,6 +888,50 @@ def train_on_splits(
     best_loss = float("inf")
     stopped_early = False
     last_epoch = -1
+
+    def _module_grad_norm(module: Any) -> float:
+        total = 0.0
+        for param in module.parameters():
+            if param.grad is None:
+                continue
+            total += float(param.grad.detach().float().pow(2).sum().item())
+        return float(total ** 0.5)
+
+    def _module_norm(module: Any) -> float:
+        total = 0.0
+        for param in module.parameters():
+            total += float(param.detach().float().pow(2).sum().item())
+        return float(total ** 0.5)
+
+    def _snapshot(module: Any) -> dict[str, Any]:
+        return {name: param.detach().float().cpu().clone() for name, param in module.named_parameters()}
+
+    def _update_norm(before: dict[str, Any], module: Any) -> float:
+        total = 0.0
+        for name, param in module.named_parameters():
+            prev = before.get(name)
+            if prev is None:
+                continue
+            total += float((param.detach().float().cpu() - prev).pow(2).sum().item())
+        return float(total ** 0.5)
+
+    def _sha16(path: Path) -> str:
+        return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+
+    def _reload_max_abs(path: Path) -> float:
+        reload_model = UNetNodeTransformer()
+        reload_blob = torch.load(path, map_location="cpu")
+        reload_state = (
+            reload_blob["state_dict"]
+            if isinstance(reload_blob, dict) and "state_dict" in reload_blob
+            else reload_blob
+        )
+        reload_model.load_state_dict(reload_state, strict=True)
+        current = {name: param.detach().float().cpu() for name, param in model.named_parameters()}
+        peak = 0.0
+        for name, param in reload_model.named_parameters():
+            peak = max(peak, float((param.detach().float() - current[name]).abs().max().item()))
+        return peak
 
     def timed_out() -> bool:
         return (time.time() - started) >= max_seconds
@@ -903,8 +954,16 @@ def train_on_splits(
         model.train()
         optimizer.zero_grad()
         running = 0.0
+        running_det = 0.0
+        running_edge = 0.0
         n_steps = 0
         n_windows = 0
+        grad_norms: list[float] = []
+        update_norms: list[float] = []
+        logit_vals: list[float] = []
+        prob_maxes: list[float] = []
+        n_candidate_edges = 0
+        n_pairs = 0
         for stem in splits["train"]:
             if timed_out():
                 stopped_early = True
@@ -962,43 +1021,110 @@ def train_on_splits(
                     masks[:, 1, :nt1],
                 )[0]
                 eloss = edge_loss(logits, torch.from_numpy(target).to(device))
+                if not (torch.isfinite(dloss) and torch.isfinite(eloss)):
+                    raise RuntimeError(
+                        f"nonfinite loss det={float(dloss.detach())} edge={float(eloss.detach())}"
+                    )
+                probs = torch.softmax(logits.detach(), dim=0)
+                logit_cpu = logits.detach().float().cpu().reshape(-1)
+                if logit_cpu.numel():
+                    logit_vals.extend(float(v) for v in logit_cpu[:64].tolist())
+                    prob_maxes.append(float(probs.max().item()))
+                    n_candidate_edges += int((probs > 0.5).sum().item())
+                    n_pairs += int(probs.numel())
                 loss = (eloss + float(cfg["det_loss_weight"]) * dloss) / accum
                 loss.backward()
                 running += float(loss.item()) * accum
+                running_det += float(dloss.detach().item())
+                running_edge += float(eloss.detach().item())
                 n_windows += 1
                 n_steps += 1
                 if n_steps % accum == 0:
+                    grad_norms.append(_module_grad_norm(model.transformer))
+                    before = _snapshot(model.transformer)
                     torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
                     optimizer.step()
+                    update_norms.append(_update_norm(before, model.transformer))
                     optimizer.zero_grad()
             if stopped_early:
                 break
         if n_steps % accum != 0:
+            grad_norms.append(_module_grad_norm(model.transformer))
+            before = _snapshot(model.transformer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
+            update_norms.append(_update_norm(before, model.transformer))
             optimizer.zero_grad()
         epoch_loss = running / max(n_windows, 1)
-        history.append({"epoch": epoch, "train_loss": epoch_loss, "n_windows": n_windows})
+        epoch_det = running_det / max(n_windows, 1)
+        epoch_edge = running_edge / max(n_windows, 1)
+        if not (np.isfinite(epoch_loss) and np.isfinite(epoch_det) and np.isfinite(epoch_edge)):
+            raise RuntimeError("nonfinite epoch loss")
+        transformer_grad = max(grad_norms) if grad_norms else 0.0
+        transformer_update = max(update_norms) if update_norms else 0.0
+        if n_windows and transformer_grad <= 0.0:
+            raise RuntimeError("zero transformer gradients")
+        logit_arr = np.asarray(logit_vals, dtype=np.float64)
+        if logit_arr.size and float(np.nanstd(logit_arr)) < 1e-8:
+            raise RuntimeError("collapsed edge logits")
+        quantiles = {}
+        if logit_arr.size:
+            qs = np.quantile(logit_arr, [0.0, 0.25, 0.5, 0.75, 1.0])
+            quantiles = {
+                "logit_min": float(qs[0]),
+                "logit_q25": float(qs[1]),
+                "logit_q50": float(qs[2]),
+                "logit_q75": float(qs[3]),
+                "logit_max": float(qs[4]),
+                "prob_max": float(max(prob_maxes) if prob_maxes else 0.0),
+            }
+        history.append(
+            {
+                "epoch": epoch,
+                "train_loss": epoch_loss,
+                "det_loss": epoch_det,
+                "edge_loss": epoch_edge,
+                "n_windows": n_windows,
+                "transformer_grad_norm": transformer_grad,
+                "transformer_update_norm": transformer_update,
+                "n_candidate_edges": n_candidate_edges,
+                "n_pairs": n_pairs,
+                **quantiles,
+            }
+        )
         last_epoch = epoch
         if epoch_loss <= best_loss:
             best_loss = epoch_loss
             save(OUTPUT_BEST_NAME)
         save(OUTPUT_LAST_NAME)
         print(
-            f"epoch {epoch} loss={epoch_loss:.4f} windows={n_windows} params={n_params}",
+            f"epoch {epoch} loss={epoch_loss:.4f} det={epoch_det:.4f} "
+            f"edge={epoch_edge:.4f} grad={transformer_grad:.4f} "
+            f"windows={n_windows} params={n_params}",
             flush=True,
         )
         if stopped_early:
             break
 
+    best_path = working / OUTPUT_BEST_NAME
+    last_path = working / OUTPUT_LAST_NAME
+    reload_max_abs = _reload_max_abs(last_path) if last_path.exists() else None
+    if reload_max_abs is not None and reload_max_abs > 1e-6:
+        raise RuntimeError(f"checkpoint reload not exact: {reload_max_abs}")
     return {
         "n_params": n_params,
         "best_train_loss": None if best_loss == float("inf") else best_loss,
         "history": history,
         "last_epoch": last_epoch,
         "stopped_early_time_budget": stopped_early,
-        "wrote_best": (working / OUTPUT_BEST_NAME).exists(),
-        "wrote_last": (working / OUTPUT_LAST_NAME).exists(),
+        "wrote_best": best_path.exists(),
+        "wrote_last": last_path.exists(),
+        "best_sha16": _sha16(best_path) if best_path.exists() else None,
+        "last_sha16": _sha16(last_path) if last_path.exists() else None,
+        "checkpoint_reload_max_abs": reload_max_abs,
+        "checkpoint_reload_exact": reload_max_abs == 0.0 if reload_max_abs is not None else False,
+        "missing_keys": [],
+        "unexpected_keys": [],
         "resumed_from": str(resume_path),
         "from_scratch": False,
     }
@@ -1040,6 +1166,11 @@ def main() -> dict[str, Any]:
                 "runtime_sec": time.time() - started,
             }
         )
+        write_manifest(manifest_path, manifest)
+        assert_no_submission_csv(working)
+        return manifest
+    if os.environ.get("BIOHUB_LEARNED_DRY_RUN") == "1":
+        manifest.update({"status": "dry_run", "runtime_sec": time.time() - started})
         write_manifest(manifest_path, manifest)
         assert_no_submission_csv(working)
         return manifest

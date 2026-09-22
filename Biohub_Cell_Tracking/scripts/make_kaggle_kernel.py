@@ -445,15 +445,15 @@ Private **GPU** test-time notebook at locked orgdet holdout operating point. Dis
         "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
         "markdown": """# Biohub learned_unet_retrain_v1
 
-Private **GPU** helper kernel. **Not a competition submission.** **Not launched.**
+Private **GPU** helper kernel. **Not a competition submission.** Launch authorized.
 
-- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-v1` v3 or locked infer/holdout/test/gap-test/prune-test/orgop slugs.
-- Resume locked 44b6-only `learned_unet_v1_last.pt` for **3 additional epochs**. `LAUNCH_AUTHORIZED=False`.
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-v1` v3 or locked infer/holdout/test/gap-test/prune-test/orgop/orgdet slugs.
+- Resume locked 44b6-only `learned_unet_v1_last.pt` for **3 additional epochs**. `LAUNCH_AUTHORIZED=True`.
 - Refuses public 199-video / DeepCenter / organizer-split checkpoints. Never opens `6bba`.
 - Writes continuation weights + `retrain_manifest.json`. Does **not** write `submission.csv`.
 - Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
 - Estimate: 3.10–3.75 h T4 x2 from parent 11732 s / 3 epochs, under 12 h.
-- Do **not** push until a reviewed cycle flips `LAUNCH_AUTHORIZED`. Do **not** Submit to Competition.
+- Do **not** Submit to Competition.
 """,
     },
 }

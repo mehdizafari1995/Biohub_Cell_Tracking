@@ -36,9 +36,7 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" not in mod.FORBIDDEN_SLUGS
-    assert mod.RETRAIN_LAUNCH_AUTHORIZED is False
-    with pytest.raises(SystemExit, match="not authorized"):
-        mod.push_kernel("learned_unet_retrain_v1")
+    assert mod.RETRAIN_LAUNCH_AUTHORIZED is True
 
 
 def test_fetch_kernel_output_allows_helper_slugs_only():
@@ -69,7 +67,7 @@ def test_fetch_kernel_output_allows_helper_slugs_only():
     assert "mahdimzafari/biohub-learned-unet-orgdet-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-test-v1" in mod.ALLOWED_SLUGS
-    assert "mahdimzafari/biohub-learned-unet-retrain-v1" not in mod.ALLOWED_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-retrain-v1" in mod.ALLOWED_SLUGS
 
 
 def test_rate_limit_cooldown_is_bounded_and_silent_of_secrets():
