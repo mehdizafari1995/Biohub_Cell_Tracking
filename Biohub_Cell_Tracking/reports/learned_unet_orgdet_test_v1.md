@@ -90,20 +90,23 @@ did not trigger.
 
 ## Status
 
-`READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** submit from the CLI.
-Do **not** overwrite v1. CSV stays under ignored `artifacts/kaggle/`.
-
-Read-only submit poll **2026-09-22T06:45:08Z**: kernel still `complete`,
-outputs still `run_manifest.json` + `submission.csv`, competition list
-still exactly one row (association_v2 **56399003** / **0.553**). Decision
-`human_action_required_ui_submit`. Did **not** download CSV. Did **not**
-submit. Public `0.553` is **not** an orgdet-test leaderboard score.
+Mahdi initiated a Kaggle UI submit. Read-only poll
+**2026-09-22T14:23:04Z** recorded a second competition row. Identity
+is proven from the relative `/code/` path: notebook
+`mahdimzafari/biohub-learned-unet-orgdet-test-v1`,
+`scriptVersionId` **351557863**. That is **not** association_v2
+**56399003**, prune-test, infer-family gap-test, or
+`mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle `versionNumber` was
+**not** returned. Status **pending**. Public score **not returned**.
+This poll is **not** a leaderboard score. Do **not** retune from any
+later public score. Do **not** resubmit. Do **not** submit from the
+CLI. Do **not** overwrite v1. CSV stays under ignored
+`artifacts/kaggle/`.
 
 ## Next
 
-`HUMAN_ACTION_REQUIRED` — Mahdi must **Submit to Competition** from the
-Kaggle UI on `mahdimzafari/biohub-learned-unet-orgdet-test-v1` version 1
-**before the 2026-09-22 23:59 UTC entry deadline**. Do not submit
-prune-test or gap-test now that orgdet-test v1 is COMPLETE / `audit_ok`.
-Do not resubmit association_v2 **56399003**. Do not overwrite the
-running retrain helper. Do not score frozen `6bba` again.
+Poll read-only until Kaggle returns a terminal status and
+`publicScore`. Do **not** resubmit. Do **not** submit prune-test or
+gap-test. Do **not** overwrite the completed retrain helper. Do **not**
+score frozen `6bba` again. Do **not** use a returned public score for
+tuning.

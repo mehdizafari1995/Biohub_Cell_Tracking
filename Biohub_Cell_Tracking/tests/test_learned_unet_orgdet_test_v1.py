@@ -310,7 +310,58 @@ def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exis
         submissions=[association, {"ref": 999, "status": "pending", "publicScore": None}],
     )
     assert extra["decision"] == "new_submission_present"
-    assert extra["orgdet_test_submission_present"] is True
+    assert extra["orgdet_test_submission_present"] is False
+    assert extra["orgdet_test_identity_proven"] is False
+    assert extra["new_submission_identity"] == ["identity_unproven"]
+    proven = classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[
+            association,
+            {
+                "ref": 56466744,
+                "status": "pending",
+                "publicScore": "",
+                "date": "2026-09-22T14:13:11.68Z",
+                "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
+                "scriptVersionId": 351557863,
+            },
+        ],
+    )
+    assert proven["orgdet_test_submission_present"] is True
+    assert proven["orgdet_test_identity_proven"] is True
+    assert proven["new_submission_identity"] == ["orgdet_test"]
+    assert proven["new_submission_script_version_ids"] == [351557863]
+    prune = classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[
+            association,
+            {
+                "ref": 1,
+                "kernelSlug": "mahdimzafari/biohub-learned-unet-prune-test-v1",
+            },
+        ],
+    )
+    assert prune["decision"] == "new_submission_present"
+    assert prune["orgdet_test_identity_proven"] is False
+    assert prune["new_submission_identity"] == ["prune_test"]
+    gap = classify_orgdet_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[
+            association,
+            {
+                "ref": 2,
+                "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
+            },
+        ],
+    )
+    assert gap["orgdet_test_identity_proven"] is False
+    assert gap["new_submission_identity"] == ["orgdet_gap_test"]
     poll_src = (ROOT / "scripts" / "poll_orgdet_test_submit.py").read_text()
     assert "list_competition_submissions" in poll_src
     assert "competitions/submit" not in poll_src
@@ -326,6 +377,15 @@ def test_classify_orgdet_test_submit_poll_requires_ui_when_only_association_exis
         "kernel_missing_csv",
         "record_kernel_error",
     }
+    if live["decision"] == "new_submission_present":
+        assert "orgdet_test_identity_proven" in live
+        assert live["new_submission_identity"]
+        if live["orgdet_test_identity_proven"]:
+            assert live["orgdet_test_submission_present"] is True
+            assert "orgdet_test" in live["new_submission_identity"]
+            assert live["new_submission_kernel_slugs"] == [
+                "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
+            ]
 
 
 def test_keep_orgdet_test_complete_report_matches_holdout_overlap():

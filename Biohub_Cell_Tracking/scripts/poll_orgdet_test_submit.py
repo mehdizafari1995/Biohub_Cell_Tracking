@@ -78,7 +78,10 @@ def main() -> None:
         "notes": (
             "Read-only poll. Did not download submission.csv. Did not submit. "
             "Did not overwrite locked slugs. Association_v2 ref 56399003 public "
-            "API string 0.553 is not an orgdet-test leaderboard score."
+            "API string 0.553 is not an orgdet-test leaderboard score. "
+            "Notebook identity is taken only from a relative /code/ path; "
+            "absolute URLs and tokens are dropped. A missing path is "
+            "identity_unproven. Empty publicScore is not a leaderboard score."
         ),
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)
@@ -94,6 +97,13 @@ def main() -> None:
                     "output_names",
                     "n_submissions",
                     "submission_refs",
+                    "orgdet_test_identity_proven",
+                    "new_submission_identity",
+                    "new_submission_kernel_slugs",
+                    "new_submission_script_version_ids",
+                    "new_submission_status",
+                    "new_submission_date",
+                    "new_submission_public_score",
                     "human_action",
                     "is_competition_submission",
                     "is_leaderboard_score",

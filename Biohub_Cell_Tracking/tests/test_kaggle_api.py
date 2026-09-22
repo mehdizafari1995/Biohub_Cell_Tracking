@@ -100,17 +100,24 @@ def test_sanitize_submission_drops_urls_and_empty_private_score():
         "fileName": "submission.csv",
         "errorDescription": "",
         "url": "https://www.kaggle.com/example?token=SECRET",
+        "urlNullable": "/code/mahdimzafari/biohub-association-v2?scriptVersionId=351174414",
         "submittedBy": "mahdimzafari",
     }
     safe = kaggle_api.sanitize_submission(raw)
     assert safe["ref"] == 56399003
     assert safe["publicScore"] == "0.553"
     assert safe["private_score_returned"] is False
+    assert safe["kernelSlug"] == "mahdimzafari/biohub-association-v2"
+    assert safe["scriptVersionId"] == 351174414
     assert "url" not in safe
+    assert "urlNullable" not in safe
     assert "submittedBy" not in safe
     blob = json.dumps(safe)
     assert "SECRET" not in blob
     assert "token=" not in blob
+    assert kaggle_api.parse_submission_notebook_identity(
+        {"url": "https://www.kaggle.com/code/x/y?token=SECRET"}
+    ) == {"kernelSlug": None, "scriptVersionId": None}
     names = kaggle_api.kernel_output_names(
         [
             {"fileName": "run_manifest.json", "url": "https://signed.example/a"},

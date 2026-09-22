@@ -10,6 +10,7 @@ import urllib.request
 from pathlib import Path
 from collections.abc import Mapping, Sequence
 from typing import Any, Iterator
+from urllib.parse import parse_qs, urlparse
 
 
 COMPETITION = "biohub-cell-tracking-during-development"
@@ -142,6 +143,47 @@ def kernel_output_names(files: Sequence[Mapping[str, Any]] | None) -> list[str]:
     return names
 
 
+def parse_submission_notebook_identity(raw: Mapping[str, Any] | None) -> dict[str, Any]:
+    """Extract notebook slug + scriptVersionId from relative ``/code/`` paths.
+
+    Absolute URLs, query tokens, and author fields are ignored. A missing
+    relative path leaves identity unproven.
+    """
+    item = dict(raw or {})
+    version = item.get("scriptVersionId") or item.get("kernelVersion")
+    slug = item.get("kernelSlug") or item.get("slug")
+    if isinstance(slug, str):
+        slug = slug.strip() or None
+    else:
+        slug = None
+    for key in ("urlNullable", "relativeUrl"):
+        text = item.get(key)
+        if not isinstance(text, str):
+            continue
+        if text.startswith("http") or "token=" in text.lower():
+            continue
+        parsed = urlparse(text)
+        if parsed.scheme or parsed.netloc:
+            continue
+        parts = [p for p in parsed.path.split("/") if p]
+        if len(parts) != 3 or parts[0] != "code":
+            continue
+        slug = f"{parts[1]}/{parts[2]}"
+        if version in (None, ""):
+            vids = parse_qs(parsed.query).get("scriptVersionId") or []
+            if vids:
+                try:
+                    version = int(vids[0])
+                except ValueError:
+                    version = vids[0]
+        break
+    if version in (None, ""):
+        version = None
+    elif isinstance(version, str) and version.isdigit():
+        version = int(version)
+    return {"kernelSlug": slug, "scriptVersionId": version}
+
+
 def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
     """Keep ledger-safe competition-submission fields. Never copies tokens or URLs."""
     item = dict(raw or {})
@@ -149,6 +191,10 @@ def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
     if public is not None:
         public = str(public)
     private_present = bool(item.get("hasPrivateScore")) and bool(str(item.get("privateScore") or "").strip())
+    error = item.get("errorDescription")
+    if isinstance(error, str) and not error.strip():
+        error = None
+    identity = parse_submission_notebook_identity(item)
     return {
         "ref": item.get("ref") or item.get("id"),
         "status": item.get("status"),
@@ -156,8 +202,9 @@ def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
         "private_score_returned": private_present,
         "date": item.get("date") or item.get("submittedDate") or item.get("dateSubmitted"),
         "fileName": item.get("fileName"),
-        "errorDescription": item.get("errorDescription") or None,
-        "scriptVersionId": item.get("scriptVersionId") or item.get("kernelVersion"),
+        "errorDescription": error,
+        "scriptVersionId": identity["scriptVersionId"],
+        "kernelSlug": identity["kernelSlug"],
     }
 
 

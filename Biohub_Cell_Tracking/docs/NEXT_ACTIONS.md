@@ -13,23 +13,24 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Next (this family)
 
-1. `HUMAN_ACTION_REQUIRED` — Mahdi must **Submit to Competition** from the Kaggle UI on `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` version 1 **before 2026-09-22 23:59 UTC**. Do **not** submit from the CLI. Do **not** overwrite v1. Do **not** submit orgdet-test, prune-test, or infer-family gap-test now that this overlay is the holdout champion and the public-test worker is COMPLETE / `audit_ok`.
+1. Read-only orgdet-test submit poll **2026-09-22T14:23:04Z** recorded competition ref **56466744**, status **pending**, public score **not returned**. Notebook identity is proven as `mahdimzafari/biohub-learned-unet-orgdet-test-v1` (`scriptVersionId` **351557863**). That is **not** association_v2 **56399003**, **not** prune-test, **not** infer-family gap-test, and **not** `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle `versionNumber` was not returned. Decision `new_submission_present`. This is **not** a leaderboard score. Do **not** resubmit. Do **not** use a later public score for tuning.
 2. Keep `learned_unet_orgdet_gap_v1` locked. Hash `ee31f36151325f9a`. Official 44b6 **0.687221 vs 0.679578**. Official 6bba **0.722805 vs 0.705226**. Do **not** retune. Do **not** score 6bba again.
-3. Keep `learned_unet_orgdet_gap_test_v1` locked. Hash `1ce4837ae16bee52`. Slug is in `FORBIDDEN_SLUGS`. Last read-only submit poll **2026-09-22T13:46:09Z** still has only association_v2 **56399003** / **0.553**. Next cron may reconfirm that list; do not invent a leaderboard score.
-4. Keep `learned_unet_retrain` 44b6 lanes rejected. Do **not** retune. Do **not** open `6bba` for retrain.
-5. Keep discussion **740392** closed as `topic_id_not_found`.
-6. Keep rejected overlays (link/motion/hung/conflict/orgop/division) closed. Do not retune.
+3. Keep `learned_unet_orgdet_gap_test_v1` locked. Hash `1ce4837ae16bee52`. Slug is in `FORBIDDEN_SLUGS`. It is **not** the pending competition row. Additional competition submission is **not** authorized this cycle. Do **not** overwrite v1.
+4. Keep `learned_unet_orgdet_test_v1` locked. Hash `c45c859610d29e90`. Kernel v1 COMPLETE / `audit_ok`. Do **not** overwrite v1. Do **not** resubmit.
+5. Keep `learned_unet_retrain` 44b6 lanes rejected. Do **not** retune. Do **not** open `6bba` for retrain. Do **not** overwrite the completed retrain helper.
+6. Keep discussion **740392** closed as `topic_id_not_found`.
+7. Keep rejected overlays (link/motion/hung/conflict/orgop/division) closed. Do not retune.
 
 ## HUMAN_ACTION_REQUIRED
 
 - Grant this worker `issues:read` so cron runs can read issue #1.
-- Mahdi must **Submit to Competition** from the Kaggle UI on `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` version 1 **before the 2026-09-22 23:59 UTC entry deadline**. This repo does not authorize `kaggle competitions submit`. Do not resubmit association_v2 **56399003**. Do not UI-submit orgdet-test now that orgdet-gap-test v1 is COMPLETE / `audit_ok`.
+- Do **not** resubmit. Mahdi already initiated the Kaggle UI submit of `mahdimzafari/biohub-learned-unet-orgdet-test-v1`. Competition ref **56466744** is **pending**; public score not returned. Poll read-only. This repo does not authorize `kaggle competitions submit`. Do not resubmit association_v2 **56399003**. Do not submit orgdet-gap-test, prune-test, or infer-family gap-test unless a later message separately authorizes that extra UI click.
 
 ## Later (blocked or expensive)
 
 - complementary_v1, linkable_v1, learned_unet_division_v1, learned_unet_link_v1, learned_unet_link_v2, learned_unet_motion_v1, learned_unet_hung_v1, learned_unet_conflict_v1, learned_unet_orgop_v1, and the `learned_unet_retrain` 44b6 lanes are closed.
 - Copying public 199-video / DeepCenter checkpoints is forbidden for any KEEP_CANDIDATE path.
-- Final Kaggle submission: `HUMAN_ACTION_REQUIRED` — Mahdi must submit version output from the Kaggle UI.
+- Poll **56466744** read-only until Kaggle returns a terminal status and `publicScore`. Do not invent a leaderboard score. Do not retune from any returned public score.
 
 ## Never from automation
 

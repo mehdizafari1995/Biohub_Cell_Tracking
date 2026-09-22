@@ -55,6 +55,26 @@ from .learned_test import (
 )
 
 ORGDET_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
+ASSOCIATION_V2_KERNEL_SLUG = "mahdimzafari/biohub-association-v2"
+ORGDET_GAP_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1"
+
+
+def classify_submission_notebook(slug: str | None, ref: Any = None) -> str:
+    """Label a competition row from a proven notebook slug. Never guesses."""
+    text = str(slug or "").strip()
+    if text == ORGDET_TEST_KERNEL_SLUG:
+        return "orgdet_test"
+    if text == PRUNE_TEST_KERNEL_SLUG:
+        return "prune_test"
+    if text == GAP_TEST_KERNEL_SLUG:
+        return "gap_test"
+    if text == ORGDET_GAP_TEST_KERNEL_SLUG:
+        return "orgdet_gap_test"
+    if text == ASSOCIATION_V2_KERNEL_SLUG or str(ref) == str(ASSOCIATION_V2_SUBMISSION_REF):
+        return "association_v2"
+    if text:
+        return "other_notebook"
+    return "identity_unproven"
 # Saved-kernel poll time for orgdet-test v1 COMPLETE (public-test worker, not a scoring rerun).
 ORGDET_TEST_LAST_RUN_UTC = "2026-09-21T11:07:02Z"
 ORGDET_HOLDOUT_MEASURED_SEC = 173.79521799087524
@@ -199,6 +219,11 @@ def classify_orgdet_test_submit_poll(
     refs = [row.get("ref") for row in rows]
     extra = [row for row in rows if str(row.get("ref")) != str(association_ref)]
     association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
+    extra_labels = [
+        classify_submission_notebook(row.get("kernelSlug"), row.get("ref")) for row in extra
+    ]
+    orgdet_rows = [row for row, label in zip(extra, extra_labels) if label == "orgdet_test"]
+    identity_proven = bool(orgdet_rows)
     if kernel_failed:
         decision = "record_kernel_error"
     elif not kernel_complete:
@@ -209,6 +234,8 @@ def classify_orgdet_test_submit_poll(
         decision = "new_submission_present"
     else:
         decision = "human_action_required_ui_submit"
+    newest = extra[0] if extra else None
+    newest_score = str((newest or {}).get("publicScore") or "").strip()
     return {
         "slug": ORGDET_TEST_KERNEL_SLUG,
         "decision": decision,
@@ -218,7 +245,15 @@ def classify_orgdet_test_submit_poll(
         "n_submissions": len(rows),
         "submission_refs": refs,
         "association_v2_submission_present": bool(association),
-        "orgdet_test_submission_present": bool(extra),
+        "orgdet_test_submission_present": identity_proven,
+        "orgdet_test_identity_proven": identity_proven,
+        "new_submission_identity": extra_labels,
+        "new_submission_kernel_slugs": [row.get("kernelSlug") for row in extra],
+        "new_submission_script_version_ids": [row.get("scriptVersionId") for row in extra],
+        "new_submission_refs": [row.get("ref") for row in extra],
+        "new_submission_status": (newest or {}).get("status"),
+        "new_submission_date": (newest or {}).get("date"),
+        "new_submission_public_score": newest_score or None,
         "is_competition_submission": False,
         "is_leaderboard_score": False,
         "human_action": (
@@ -227,7 +262,12 @@ def classify_orgdet_test_submit_poll(
             "before the 2026-09-22 23:59 UTC entry deadline. "
             "Do not submit from the CLI. Do not submit prune-test or gap-test now."
             if decision == "human_action_required_ui_submit"
-            else None
+            else (
+                "Do not resubmit. Poll until Kaggle returns a terminal status "
+                "and publicScore. Do not use any returned public score for tuning."
+                if decision == "new_submission_present"
+                else None
+            )
         ),
     }
 
@@ -309,6 +349,7 @@ def write_estimate_json(
 
 
 __all__ = [
+    "ASSOCIATION_V2_KERNEL_SLUG",
     "ASSOCIATION_V2_PUBLIC_SCORE",
     "ASSOCIATION_V2_SUBMISSION_REF",
     "BANNED_PUBLIC_WEIGHT_MARKERS",
@@ -316,6 +357,7 @@ __all__ = [
     "ORGDET_TEST_KERNEL_SLUG",
     "ORGDET_TEST_LAST_RUN_UTC",
     "classify_orgdet_test_submit_poll",
+    "classify_submission_notebook",
     "hidden_projection_from_rehearsal",
     "list_test_zarrs",
     "orgdet_test_config_hash",
