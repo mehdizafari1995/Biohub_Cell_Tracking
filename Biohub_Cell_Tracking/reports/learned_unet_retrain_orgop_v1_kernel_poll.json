@@ -1,26 +1,43 @@
 {
   "slug": "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
   "lane": "C",
-  "polled_utc": "2026-09-22T07:55:26Z",
+  "polled_utc": "2026-09-22T07:59:56Z",
   "config_hash": "f924802e5f716a61",
   "kernel": {
     "slug": "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
-    "status": "error",
+    "status": "complete",
     "failureMessage": null,
     "hasFailureMessage": false,
     "versionNumber": null,
     "lastRunTime": null,
-    "is_complete": false,
-    "is_error": true,
+    "is_complete": true,
+    "is_error": false,
     "is_running": false,
     "is_competition_submission": false,
     "is_leaderboard_score": false
   },
-  "output_files": [],
-  "decision": "status_only",
-  "downloaded": false,
-  "extracted": {},
-  "code_version": "14e4b3d",
+  "output_files": [
+    {
+      "name": "graphs/44b6_12dfb391.json",
+      "size": null
+    },
+    {
+      "name": "graphs/44b6_267148e4.json",
+      "size": null
+    },
+    {
+      "name": "infer_manifest.json",
+      "size": null
+    }
+  ],
+  "decision": "download_complete_helper",
+  "downloaded": true,
+  "extracted": {
+    "44b6_12dfb391.json": "44b6_12dfb391.json",
+    "44b6_267148e4.json": "44b6_267148e4.json",
+    "infer_manifest.json": "infer_manifest.json"
+  },
+  "code_version": "de2da2d",
   "is_competition_submission": false,
   "is_leaderboard_score": false,
   "notes": "Private GPU 44b6 lane poll. Not a competition submission. Do not open 6bba. Not a leaderboard score."

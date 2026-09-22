@@ -183,7 +183,7 @@ def test_retrain_lane_notebooks_match_locked_hashes_and_refuse_holdout():
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" in push_mod.FORBIDDEN_SLUGS
     assert LANE_A_SLUG in push_mod.FORBIDDEN_SLUGS
     assert LANE_B_SLUG in push_mod.FORBIDDEN_SLUGS
-    assert LANE_C_SLUG not in push_mod.FORBIDDEN_SLUGS
+    assert LANE_C_SLUG in push_mod.FORBIDDEN_SLUGS
 
 
 def test_retrain_lane_collect_script_is_fail_closed():

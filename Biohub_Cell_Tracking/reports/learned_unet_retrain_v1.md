@@ -68,12 +68,9 @@ Launch authorized. Collected **2026-09-22T07:40:50Z**: private helper
 **0.2629** (parent 0.3604). Transformer grad **2.64–4.76**. Candidate edges
 12190 → 17989. Runtime **10461 s**, peak **1817 MB**, T4 x2. Resume
 `learned_unet_v1_last.pt`. Reload exact. No `submission.csv`. Slug is now
-locked. 44b6 lanes A/B/C hashes `1db21f87d00ce083` / `594f6fbc03c974cf` /
-`f924802e5f716a61` are locked before scores. Lane A/B v1 failed on a
-parent-hash-only checkpoint check; v2 accepts the retrain hash and is
-**RUNNING**. Lane C is packaged, not pushed (2 GPU session limit).
-Fail-closed official scorer `scripts/run_learned_unet_retrain_lanes.py`
-refuses incomplete helper / missing graphs / `6bba`. Frozen `6bba` stays
-closed until a lane wins. Champion remains `learned_unet_orgdet_holdout_v1`
-**0.705226** / orgdet-test v1 `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED` /
+locked. Official 44b6 lanes A/B/C are **rejected**
+(**0.626370 / 0.642049 / 0.0** vs infer 0.655751 / orgdet 0.679578 /
+lane B). Frozen `6bba` stayed closed. Champion remains
+`learned_unet_orgdet_holdout_v1` **0.705226** / orgdet-test v1
+`KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED` /
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`.

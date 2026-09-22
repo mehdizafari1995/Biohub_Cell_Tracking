@@ -607,23 +607,31 @@ Local official scores only. association_v2 later received a private kernel (see 
 
 ## learned_unet_retrain_infer_v1_kernel
 
-- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-infer-v1`. **Not a competition submission.** Frozen `6bba` stays closed.
-- **Config hash:** `1db21f87d00ce083`.
-- **v1 ERROR:** `checkpoint config_hash is not locked learned_unet_v1` (retrain weights carry `92a419926fa7e40b`). No graphs.
-- **v2 RUNNING:** load accepts parent or retrain hash. Status-only poll **2026-09-22T07:47Z**.
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-infer-v1` version **2 COMPLETE / inferred**. **Not a competition submission.**
+- **Config hash:** `1db21f87d00ce083`. Checkpoint `92a419926fa7e40b`. 146.3 s, 1118 MB. Graphs 69997/65214 and 35471/31289.
+- **v1 ERROR:** parent-hash-only load. **v2** accepts retrain hash.
+- **Official 44b6:** **0.626370 vs infer 0.655751**. Decision `reject_lane`. Frozen `6bba` not opened.
 - **Kaggle public / private scores:** not returned.
 
 ## learned_unet_retrain_orgdet_v1_kernel
 
-- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-orgdet-v1`. **Not a competition submission.**
-- **Config hash:** `594f6fbc03c974cf`.
-- **v1 ERROR:** same parent-hash-only checkpoint refuse. **v2 RUNNING.**
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-orgdet-v1` version **2 COMPLETE / inferred**. **Not a competition submission.**
+- **Config hash:** `594f6fbc03c974cf`. 150.5 s, 1181 MB. Graphs 63356/59236 and 30896/27391.
+- **Official 44b6:** **0.642049 vs orgdet 0.679578**. Decision `reject_lane`. Frozen `6bba` not opened.
 - **Kaggle public / private scores:** not returned.
 
 ## learned_unet_retrain_orgop_v1_kernel
 
-- **Status:** packaged `mahdimzafari/biohub-learned-unet-retrain-orgop-v1`. **Not pushed** (Kaggle max 2 GPU sessions). Hash `f924802e5f716a61`. Includes the checkpoint-hash fix. **Not a competition submission.**
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-orgop-v1` version **2 COMPLETE / inferred**. **Not a competition submission.**
+- **Config hash:** `f924802e5f716a61`. v1 errored (parent-orgop hash guard). v2 used locked lane hash. 157.1 s, 1230 MB. Softmax>0.5 candidates 0 / 1. Local ILP applied.
+- **Official 44b6:** **0.0 vs lane B 0.642049**. Decision `reject_lane`. Frozen `6bba` not opened.
 - **Kaggle public / private scores:** not returned.
+
+## learned_unet_retrain_lanes_v1_tune
+
+- **Status:** official local scorer on frozen-tuning 44b6 only. Not a Kaggle run. Not a leaderboard score.
+- **Hashes:** A `1db21f87d00ce083` **0.626370**; B `594f6fbc03c974cf` **0.642049**; C `f924802e5f716a61` **0.0**.
+- **Decision:** `reject_learned_unet_retrain_lanes_v1`. Winner none. `opens_6bba=false`. Champion remains orgdet holdout **0.705226**.
 
 ## learned_unet_orgdet_test_v1_submit_poll (2026-09-22T07:45:56Z)
 
