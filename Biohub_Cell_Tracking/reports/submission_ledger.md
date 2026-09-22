@@ -641,6 +641,46 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
 - **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
 
+## learned_unet_orgdet_test_v1_submit_poll (2026-09-22T08:52:44Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-orgdet-test-v1` at **2026-09-22T08:52:44Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1.
+- **Config hash:** `c45c859610d29e90`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit` as fallback only. Preferred worker is now orgdet-gap-test v1 once COMPLETE / `audit_ok`. Entry deadline **2026-09-22 23:59 UTC**.
+- **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
+
+## learned_unet_orgdet_gap_v1_tune
+
+- **Status:** local official scorer on frozen-tuning `44b6_12dfb391` + `44b6_267148e4`. **Not a Kaggle run.** Not a leaderboard score.
+- **Config hash:** `ee31f36151325f9a`. Parent orgdet `80b20589198148b7`. Parent gap gates `f4d888d190c45a4a`.
+- **Official 44b6:** **0.687221 vs orgdet 0.679578**. extra_edges **9951**. 10.1 s, 530 MB. Decision `keep_candidate_learned_unet_orgdet_gap_v1`.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_orgdet_gap_v1_holdout
+
+- **Status:** one-shot local official scorer on frozen `6bba_05db0fb1` + `6bba_c328f2fd`. **Not a Kaggle run.** Not a leaderboard score. Do **not** score 6bba again.
+- **Config hash:** `ee31f36151325f9a`. Graphs from `mahdimzafari/biohub-learned-unet-orgdet-holdout-v1` v1.
+- **Official 6bba:** **0.722805 vs orgdet 0.705226**. extra_edges **10427**. recall 0.95762. 0/0/5 divisions. 7.2 s, 780 MB. Per-seq `6bba_05db0fb1` 0.739289; `6bba_c328f2fd` 0.684139.
+- **Decision:** `keep_candidate_learned_unet_orgdet_gap_v1`. New holdout champion. Label `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`.
+- **Kaggle public / private scores:** not returned.
+
+## learned_unet_orgdet_gap_test_v1_kernel
+
+- **Status:** private GPU test-time kernel `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` version **1 COMPLETE / inferred** at **2026-09-22T09:05:18Z**. Internet off. T4 x2. Discover `test/*.zarr`. **Not submitted.**
+- **Config hash:** `1ce4837ae16bee52`. Parent overlay `ee31f36151325f9a`. Does **not** overwrite orgdet-test v1.
+- **Output:** `/kaggle/working/submission.csv` 20 791 351 bytes, 397 414 rows, 202 138 nodes, 195 276 edges, 9 499 gap links, 13 629 interpolated, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Worker:** 312.69 s (0.78 s/frame), peak RAM 1176 MB. T4 x2, torch 2.10+cu128.
+- **Holdout overlap:** `6bba_05db0fb1` 88925/86287 matches locked orgdet-gap holdout overlay. Frozen `6bba` was not official-scored again.
+- **Hidden-test projection:** 78.17 s/volume × 199 ≈ **4.32 h**, under 12 h.
+- **Competition submit:** not performed. No public or private leaderboard score was returned.
+- **Manual submit:** https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1 → version 1 → **Submit to Competition**. `HUMAN_ACTION_REQUIRED` before 2026-09-22 23:59 UTC.
+
+## learned_unet_orgdet_gap_test_v1_kernel_poll (2026-09-22T09:01:22Z)
+
+- **Status:** status-only poll of `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` at **2026-09-22T09:01:22Z**. Kernel still **running**. Output files **0**. No `submission.csv`. No failure message. Did **not** download. Did **not** overwrite orgdet-test v1.
+- **Config hash:** `1ce4837ae16bee52`. Decision `status_only`.
+- **Kaggle public / private scores:** not returned. Not a competition submission.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
