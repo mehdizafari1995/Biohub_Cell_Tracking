@@ -705,6 +705,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-gap-test v1, not orgdet-test, prune-test, or infer-family gap-test.
 - **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-gap-test leaderboard score.
 
+## learned_unet_orgdet_gap_test_v1_submit_poll (2026-09-22T12:42:26Z)
+
+- **Status:** read-only reconfirm of `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` at **2026-09-22T12:42:26Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1. Did **not** push a kernel.
+- **Config hash:** `1ce4837ae16bee52`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-gap-test v1, not orgdet-test, prune-test, or infer-family gap-test.
+- **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-gap-test leaderboard score.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
