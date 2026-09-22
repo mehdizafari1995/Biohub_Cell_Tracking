@@ -9,20 +9,32 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Any, Mapping
+from pathlib import Path
+from typing import Any, Iterable, Mapping, Sequence
 
 from .learned_infer import LOCKED_INFER_HASH, TRAIN_CONFIG_HASH
 from .learned_orgdet import LOCKED_ORGDET_HASH
 from .learned_orgdet_holdout import ORGDET_LOCKED_TUNE
 from .learned_orgop import INFER_LOCKED_TUNE, LOCKED_ORGOP_HASH
 from .learned_retrain import LOCKED_RETRAIN_HASH, RETRAIN_KERNEL_SLUG
-from .learned_split import FROZEN_HOLDOUT_STEMS, HOLDOUT_SPECIMENS, INTERNAL_VAL_STEMS, TUNING_SPECIMEN
+from .learned_split import (
+    FROZEN_HOLDOUT_STEMS,
+    HOLDOUT_SPECIMENS,
+    INTERNAL_VAL_STEMS,
+    TUNING_SPECIMEN,
+    HoldoutLeakError,
+    refuse_holdout_stems,
+)
 
 RETRAIN_WEIGHTS_BEST = "learned_unet_retrain_v1_best.pt"
 RETRAIN_WEIGHTS_LAST = "learned_unet_retrain_v1_last.pt"
 LANE_A_COMPARATOR = INFER_LOCKED_TUNE
 LANE_B_COMPARATOR = ORGDET_LOCKED_TUNE
 ORGDET_HOLDOUT_CHAMPION = 0.7052260455024029
+LANE_A_SLUG = "mahdimzafari/biohub-learned-unet-retrain-infer-v1"
+LANE_B_SLUG = "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1"
+LANE_C_SLUG = "mahdimzafari/biohub-learned-unet-retrain-orgop-v1"
+LANE_LABELS = ("A", "B", "C")
 
 
 def _hash(payload: Mapping[str, Any]) -> str:
@@ -145,3 +157,71 @@ def select_winner(scores: Mapping[str, float], comparators: Mapping[str, float])
     if not kept:
         return None
     return max(kept, key=kept.get)
+
+
+def assert_tuning_only(role: str) -> None:
+    if role != "tuning":
+        raise SystemExit(
+            "refusing to score holdout; learned_unet_retrain lanes are 44b6-only "
+            "until a documented locked winner"
+        )
+
+
+def refuse_incomplete_retrain(status: str | None, output_names: Iterable[str] | None = None) -> None:
+    names = [str(name) for name in (output_names or [])]
+    if "submission.csv" in names:
+        raise SystemExit("retrain helper must not write submission.csv")
+    state = str(status or "").strip().lower()
+    if state not in {"complete", "completed"}:
+        raise SystemExit(
+            f"retrain helper is {state or 'unknown'}; do not invent a 44b6 score"
+        )
+
+
+def require_lane_graph_paths(
+    graph_dir: str | Path,
+    stems: Sequence[str] | None = None,
+) -> list[Path]:
+    dest = Path(graph_dir)
+    wanted = tuple(stems or INTERNAL_VAL_STEMS)
+    refuse_holdout_stems(wanted)
+    if not dest.exists():
+        raise FileNotFoundError(f"missing lane graph dir {dest}; do not invent a score")
+    found = [path.stem for path in dest.iterdir() if path.suffix == ".json"]
+    refuse_holdout_stems(found)
+    extra = [stem for stem in found if stem not in wanted and not stem.endswith("manifest")]
+    if extra:
+        raise HoldoutLeakError(
+            "learned_unet_retrain lanes only open frozen-tuning stems; got " + ", ".join(extra)
+        )
+    missing = [stem for stem in wanted if not (dest / f"{stem}.json").exists()]
+    if missing:
+        raise FileNotFoundError(
+            "missing 44b6 lane graphs " + ", ".join(missing) + "; do not invent a score"
+        )
+    return [dest / f"{stem}.json" for stem in wanted]
+
+
+def lane_comparators(scores: Mapping[str, float]) -> dict[str, float]:
+    missing = [name for name in LANE_LABELS if name not in scores]
+    if missing:
+        raise ValueError(f"missing lane scores: {', '.join(missing)}; do not invent a score")
+    return {
+        "A": float(LANE_A_COMPARATOR),
+        "B": float(LANE_B_COMPARATOR),
+        "C": float(scores["B"]),
+    }
+
+
+def decide_all_lanes(scores: Mapping[str, float]) -> dict[str, Any]:
+    comparators = lane_comparators(scores)
+    decisions = {name: lane_decision(scores[name], comparators[name]) for name in LANE_LABELS}
+    winner = select_winner(scores, comparators)
+    return {
+        "decisions": decisions,
+        "comparators": comparators,
+        "winner": winner,
+        "may_open_6bba": winner is not None,
+        "opens_6bba": False,
+        "holdout_champion": ORGDET_HOLDOUT_CHAMPION,
+    }
