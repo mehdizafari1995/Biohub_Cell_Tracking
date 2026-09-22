@@ -61,10 +61,12 @@ datasets.
 
 ## This cycle
 
-Launch authorized. Private helper `mahdimzafari/biohub-learned-unet-retrain-v1`
-version **1 RUNNING**. Does **not** overwrite the parent train slug. 44b6 lanes
-A/B/C hashes `1db21f87d00ce083` / `594f6fbc03c974cf` / `f924802e5f716a61` are
-locked before scores. Frozen `6bba` stays closed until a lane wins. Champion
-remains `learned_unet_orgdet_holdout_v1` **0.705226** / orgdet-test v1
-`KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED` /
+Launch authorized. Status-only poll **2026-09-22T04:50:13Z**: private helper
+`mahdimzafari/biohub-learned-unet-retrain-v1` version **1 RUNNING**, 0 output
+files, no `submission.csv`, no failure message. Did **not** download. Did
+**not** push a second version. Does **not** overwrite the parent train slug.
+44b6 lanes A/B/C hashes `1db21f87d00ce083` / `594f6fbc03c974cf` /
+`f924802e5f716a61` are locked before scores. Frozen `6bba` stays closed
+until a lane wins. Champion remains `learned_unet_orgdet_holdout_v1`
+**0.705226** / orgdet-test v1 `KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED` /
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`.

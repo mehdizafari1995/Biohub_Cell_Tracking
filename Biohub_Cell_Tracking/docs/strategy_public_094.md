@@ -32,16 +32,15 @@ Zero-edge diagnosis: no silent load defect; transformer near init
 Do **not** retune orgop. Do **not** open `6bba` for orgop. Public 0.553
 is association_v2 only.
 
-## Next specified experiment (packaged, not launched)
+## Next specified experiment (helper v1 running)
 
 `learned_unet_retrain_v1` hash `92a419926fa7e40b`. Resume locked
-`learned_unet_v1_last.pt` for +3 epochs on 44b6 only. Reserved slug
-`mahdimzafari/biohub-learned-unet-retrain-v1`. Helper packaged
-(`notebooks/kaggle_learned_unet_retrain_v1.py`).
-`LAUNCH_AUTHORIZED=False`. Canary `canary_ok` is evidence the pair head
-can learn peaked softmax; still do **not** launch until review. Do
-**not** overwrite the locked train helper. See
-`reports/learned_unet_retrain_v1.md`.
+`learned_unet_v1_last.pt` for +3 epochs on 44b6 only. Slug
+`mahdimzafari/biohub-learned-unet-retrain-v1`. Status-only poll
+**2026-09-22T04:50:13Z**: version **1 RUNNING**, no outputs. Canary
+`canary_ok` is evidence the pair head can learn peaked softmax. Do
+**not** overwrite the locked train helper. Do **not** push a second
+version. See `reports/learned_unet_retrain_v1.md`.
 
 Authorized unbundled detection overlay `learned_unet_orgdet_v1` hash
 `80b20589198148b7` official-scored on 44b6: **0.679578 vs infer
@@ -53,7 +52,7 @@ Authorized unbundled detection overlay `learned_unet_orgdet_v1` hash
 
 `mahdimzafari/biohub-learned-unet-orgdet-test-v1` v1 is
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-22T03:43:58Z** still shows only
+Read-only poll **2026-09-22T04:50:14Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
 Prune-test v1 remains COMPLETE / `audit_ok` but is no longer the
 preferred worker. Discussion **738217** is independently titled

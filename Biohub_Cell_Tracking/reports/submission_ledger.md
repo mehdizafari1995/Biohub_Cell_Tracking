@@ -541,6 +541,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
 
 
+## learned_unet_orgdet_test_v1_submit_poll (2026-09-22T04:50:14Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-orgdet-test-v1` at **2026-09-22T04:50:14Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1. Did **not** retry 740392. Did **not** push a second retrain version.
+- **Config hash:** `c45c859610d29e90`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
+- **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
+
 ## learned_unet_retrain_v1_kernel
 
 - **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-v1` version **1 RUNNING**. **Not a competition submission.** Frozen `6bba` stays closed until a 44b6 lane wins.
@@ -548,6 +556,12 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Launch:** internet off, T4 x2, resume `learned_unet_v1_last.pt` for +3 epochs. Does **not** overwrite `mahdimzafari/biohub-learned-unet-v1`.
 - **Preregistered 44b6 lanes (locked before scores):** A infer `1db21f87d00ce083` vs 0.655751; B orgdet `594f6fbc03c974cf` vs 0.679578; C orgop `f924802e5f716a61` vs lane B.
 - **Kaggle public / private scores:** not returned.
+
+## learned_unet_retrain_v1_kernel_poll (2026-09-22T04:50:13Z)
+
+- **Status:** status-only poll of `mahdimzafari/biohub-learned-unet-retrain-v1` at **2026-09-22T04:50:13Z**. Kernel still **running**. Output files **0**. No `submission.csv`. No failure message. Did **not** download. Did **not** push a second version.
+- **Config hash:** `92a419926fa7e40b`. Decision `status_only`.
+- **Kaggle public / private scores:** not returned. Not a competition submission.
 
 ## Policy
 

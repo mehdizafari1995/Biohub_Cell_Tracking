@@ -1,0 +1,15 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-retrain-v1",
+  "polled_utc": "2026-09-22T04:50:13Z",
+  "config_hash": "92a419926fa7e40b",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-retrain-v1",
+    "status": "running",
+    "failureMessage": "",
+    "hasFailureMessage": false,
+    "versionNumber": null
+  },
+  "output_files": [],
+  "decision": "status_only",
+  "is_competition_submission": false
+}
