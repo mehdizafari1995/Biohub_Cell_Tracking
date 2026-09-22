@@ -50,6 +50,10 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
     # Retrain v1 COMPLETE / trained 2026-09-22. Hash 92a419926fa7e40b. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-retrain-v1",
+    # Retrain lane A v2 COMPLETE / inferred 2026-09-22. 44b6 graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-retrain-infer-v1",
+    # Retrain lane B v2 COMPLETE / inferred 2026-09-22. 44b6 graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1",
 }
 
 

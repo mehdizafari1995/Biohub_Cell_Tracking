@@ -1070,8 +1070,8 @@ def main() -> dict[str, Any]:
         raise RuntimeError("refusing to overwrite locked learned slugs")
     started = time.time()
     cfg = orgop_config_payload()
-    if orgop_config_hash(cfg) != LOCKED_ORGOP_HASH:
-        raise RuntimeError("orgop config hash drifted; refuse to run")
+    if orgop_config_hash(cfg) != LOCKED_LANE_HASH:
+        raise RuntimeError("lane C config hash drifted; refuse to run")
     working = output_dir()
     working.mkdir(parents=True, exist_ok=True)
     assert_no_submission_csv(working)

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 import yaml
@@ -180,8 +181,8 @@ def test_retrain_lane_notebooks_match_locked_hashes_and_refuse_holdout():
     push_mod = importlib.util.module_from_spec(push)
     push.loader.exec_module(push_mod)
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" in push_mod.FORBIDDEN_SLUGS
-    assert LANE_A_SLUG not in push_mod.FORBIDDEN_SLUGS
-    assert LANE_B_SLUG not in push_mod.FORBIDDEN_SLUGS
+    assert LANE_A_SLUG in push_mod.FORBIDDEN_SLUGS
+    assert LANE_B_SLUG in push_mod.FORBIDDEN_SLUGS
     assert LANE_C_SLUG not in push_mod.FORBIDDEN_SLUGS
 
 
@@ -202,3 +203,21 @@ def test_retrain_lane_scorer_script_is_fail_closed():
     assert "opens_6bba" in source
     assert "kaggle competitions submit" not in source
     assert "6bba" in source
+
+
+def test_retrain_orgop_notebook_checks_lane_hash_not_parent_orgop():
+    source = (ROOT / "notebooks" / "kaggle_learned_unet_retrain_orgop_v1.py").read_text()
+    assert "if orgop_config_hash(cfg) != LOCKED_LANE_HASH:" in source
+    assert "if orgop_config_hash(cfg) != LOCKED_ORGOP_HASH:" not in source
+    sys.path.insert(0, str(ROOT / "notebooks"))
+    from kaggle_learned_unet_retrain_orgop_v1 import (  # noqa: E402
+        LOCKED_LANE_HASH,
+        LOCKED_ORGOP_HASH,
+        orgop_config_hash,
+        orgop_config_payload,
+    )
+
+    assert orgop_config_hash() == LOCKED_LANE_HASH == LANE_C_HASH == "f924802e5f716a61"
+    assert LOCKED_ORGOP_HASH == "250c5bfacd4a8198"
+    assert orgop_config_hash() != LOCKED_ORGOP_HASH
+    assert orgop_config_payload() == lane_c_payload()

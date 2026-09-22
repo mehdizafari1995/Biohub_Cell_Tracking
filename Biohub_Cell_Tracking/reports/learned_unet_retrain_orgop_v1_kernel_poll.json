@@ -1,12 +1,27 @@
 {
   "slug": "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
   "lane": "C",
-  "polled_utc": "2026-09-22T07:47:44Z",
+  "polled_utc": "2026-09-22T07:55:26Z",
   "config_hash": "f924802e5f716a61",
-  "decision": "not_pushed",
-  "error_type": "HTTPError",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
+    "status": "error",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": false,
+    "is_error": true,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [],
+  "decision": "status_only",
   "downloaded": false,
+  "extracted": {},
+  "code_version": "14e4b3d",
   "is_competition_submission": false,
   "is_leaderboard_score": false,
-  "code_version": "61c1d12"
+  "notes": "Private GPU 44b6 lane poll. Not a competition submission. Do not open 6bba. Not a leaderboard score."
 }
