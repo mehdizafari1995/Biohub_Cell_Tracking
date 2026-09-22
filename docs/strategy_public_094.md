@@ -38,7 +38,7 @@ is association_v2 only.
 `learned_unet_retrain_v1` hash `92a419926fa7e40b`. Resume locked
 `learned_unet_v1_last.pt` for +3 epochs on 44b6 only. Slug
 `mahdimzafari/biohub-learned-unet-retrain-v1`. Status-only poll
-**2026-09-22T05:53:06Z**: version **1 RUNNING**, no outputs. Fail-closed
+**2026-09-22T06:45:07Z**: version **1 RUNNING**, no outputs. Fail-closed
 lane scorer `scripts/run_learned_unet_retrain_lanes.py` is packaged.
 Canary
 `canary_ok` is evidence the pair head can learn peaked softmax. Do
@@ -55,7 +55,7 @@ Authorized unbundled detection overlay `learned_unet_orgdet_v1` hash
 
 `mahdimzafari/biohub-learned-unet-orgdet-test-v1` v1 is
 `READY_FOR_MANUAL_SUBMISSION_REVIEW`. UI submit only. No CLI submit.
-Read-only poll **2026-09-22T05:53:59Z** still shows only
+Read-only poll **2026-09-22T06:45:08Z** still shows only
 association_v2 **56399003**. Entry deadline **2026-09-22 23:59 UTC**.
 Prune-test v1 remains COMPLETE / `audit_ok` but is no longer the
 preferred worker. Discussion **738217** is independently titled

@@ -40,7 +40,7 @@ true; a later locked cycle must do that once.
 
 ## This cycle
 
-Retrain helper v1 is still **RUNNING** (poll **2026-09-22T05:53:06Z**,
+Retrain helper v1 is still **RUNNING** (poll **2026-09-22T06:45:07Z**,
 0 outputs). The scorer therefore cannot run. Did **not** invent a
 score. Did **not** launch lane infer kernels. Did **not** push a
 second retrain version. Champion remains

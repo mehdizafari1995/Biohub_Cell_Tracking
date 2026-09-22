@@ -584,6 +584,20 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Config hash:** `92a419926fa7e40b`. Decision `status_only`.
 - **Kaggle public / private scores:** not returned. Not a competition submission.
 
+## learned_unet_retrain_v1_kernel_poll (2026-09-22T06:45:07Z)
+
+- **Status:** status-only poll of `mahdimzafari/biohub-learned-unet-retrain-v1` at **2026-09-22T06:45:07Z**. Kernel still **running**. Output files **0**. No `submission.csv`. No failure message. Did **not** download. Did **not** push a second version. 44b6 lanes not launched.
+- **Config hash:** `92a419926fa7e40b`. Decision `status_only`.
+- **Kaggle public / private scores:** not returned. Not a competition submission.
+
+## learned_unet_orgdet_test_v1_submit_poll (2026-09-22T06:45:08Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-orgdet-test-v1` at **2026-09-22T06:45:08Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1. Did **not** retry 740392. Did **not** push a second retrain version.
+- **Config hash:** `c45c859610d29e90`.
+- **Competition list:** still exactly one row (association_v2 **56399003**, public API string **`0.553`**).
+- **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
+- **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
