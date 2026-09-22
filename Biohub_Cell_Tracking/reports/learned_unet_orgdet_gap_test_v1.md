@@ -49,14 +49,14 @@ Hidden-test projection from this rehearsal: **78.17 s/volume × 199 ≈
 the Kaggle UI. CSV stays under ignored `artifacts/kaggle/`. Slug is in
 `FORBIDDEN_SLUGS`. Do **not** overwrite v1.
 
-## Submit poll (2026-09-22T12:42:26Z)
+## Submit poll (2026-09-22T13:46:09Z)
 
 Read-only reconfirm. Kernel still **complete**. Outputs still
 `run_manifest.json` + `submission.csv`. Competition list still exactly
 one row (association_v2 **56399003**, public API string **`0.553`**).
 Decision `human_action_required_ui_submit`. Did **not** download the
 CSV. Did **not** submit. `0.553` is **not** this slug's leaderboard
-score. Prior poll **2026-09-22T11:40:00Z** is unchanged.
+score. Prior poll **2026-09-22T12:42:26Z** is unchanged.
 
 ## Next
 
