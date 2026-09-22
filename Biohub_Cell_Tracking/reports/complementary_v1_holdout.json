@@ -1,0 +1,44 @@
+{
+  "decision": "reject_complementary_v1",
+  "not_a_kaggle_run": true,
+  "not_a_leaderboard_score": true,
+  "retune_after_holdout": false,
+  "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+  "code_version_scored": "d735680",
+  "locked_association_hash": "0a97ad15532c26dc",
+  "locked_complementary_hash": "2c4866928d7262b6",
+  "runtime_sec": 275.066,
+  "peak_memory_mb": 757.9,
+  "association_v2": {
+    "score": 0.5915697467955445,
+    "edge_jaccard": 0.5888125613346418,
+    "adj_edge_jaccard": 0.5915697467955445,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 5,
+    "node_recall": 0.8382437474025468,
+    "n_pred_nodes": 96336,
+    "n_pred_edges": 92990,
+    "per_sequence": {
+      "6bba_05db0fb1": 0.5643362235389078,
+      "6bba_c328f2fd": 0.6601944625665863
+    }
+  },
+  "complementary_v1": {
+    "score": 0.5913844796149841,
+    "edge_jaccard": 0.5888125613346418,
+    "adj_edge_jaccard": 0.5913844796149841,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 5,
+    "node_recall": 0.8382437474025468,
+    "n_pred_nodes": 96648,
+    "n_pred_edges": 93298,
+    "per_sequence": {
+      "6bba_05db0fb1": 0.5643128442961481,
+      "6bba_c328f2fd": 0.6596012601507039
+    }
+  }
+}

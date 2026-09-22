@@ -4,19 +4,29 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Now
 
-1. Keep draft PR `cursor/kaggle-baseline-association-0b83` open. Do not merge. Do not mark ready.
-2. Package and run **association_v2** as a private internet-off Kaggle kernel (same path as `baseline_v1`). Record the worker run in the submission ledger. Do **not** submit to the competition.
-   - **Blocked here:** this worker has no Kaggle credentials. `HUMAN_ACTION_REQUIRED` — attach a Kaggle API token (never commit it) or run the private kernel from the Kaggle UI.
-3. Complete specimen-separated validation harness is in `scripts/run_complete_validation.py`. It inventories both frozen validation sequences, scores available volumes with the official scorer, and scores every annotated-division event with `tracking_cellmot.division_metrics.score_divisions`. Do not retune `v1` after seeing holdout.
-   - **Blocked here:** train volumes are not on this machine. Re-run the script once `data/train/{6bba_05db0fb1,6bba_c328f2fd}.{zarr,geff}` are present.
-4. Only after association_v2 has a real Kaggle worker measurement: consider conservative division work as a **new** experiment family. The current `division_v1` failed frozen validation (0/3/5).
+1. Keep draft PR #2 (`cursor/kaggle-baseline-association-0b83`) open. Do not merge. Do not overwrite locked `association_v2`.
+2. Keep draft PR #4 (`cursor/competition-operational-strategy-3381`) open. Official holdout is done: combined **0.591570** identical to association_v2, **0 TP / 0 FP / 5 FN**. Keep the overlay; do **not** retune gates. Do not relaunch rejected `division_v1`.
+3. Keep draft PR #5 (`cursor/complementary-detection-v1`) open. complementary_v1 was locked from 44b6 then scored **once** on frozen `6bba`: **0.591384 vs association_v2 0.591570**. Decision **`reject_complementary_v1`**. Recall unchanged; extra T_pred. Do **not** retune isolation/intensity gates. association_v2 remains the scoring candidate.
+4. Do **not** submit association_v2, division_v2, or complementary_v1 from the CLI.
+
+## Next experiment family (new branch / new draft PR)
+
+PR #5 is concluded. Start a **new** family; do not continue complementary_v1.
+
+Highest remaining: **estimate** organizer learned 3D detection / embedding (UNet + transformer in `third_party/kaggle-cell-tracking-competition`) against Kaggle 12 h, GPU presence, weight size, and internet-off packaging. Write the estimate before any training or kernel push. If GPU/Kaggle weight packaging is blocked, the fallback 44b6-only hypothesis is temporally linkable complementary peaks (add a peak only when it has a neighbor inside the locked 12 µm gate) so T_pred cannot grow from unlinked local-max noise. Tune on `44b6` only. Do not use `6bba` to choose thresholds.
+
+## HUMAN_ACTION_REQUIRED
+
+- If a public leaderboard number is wanted for the association_v2 generalization hypothesis: Mahdi must open https://www.kaggle.com/code/mahdimzafari/biohub-association-v2 version 3 and **Submit to Competition** from the Kaggle UI. This repo does not authorize `kaggle competitions submit`.
+- Grant this worker `issues:read` so cron runs can read issue #1.
 
 ## Later (blocked or expensive)
 
-- Learned 3D detection / embedding (organizer UNet + transformer is GPU/Kaggle, not the CPU slice).
-- Ensembles or complementary candidates, compared on the frozen split against preserved baseline_v1 and association_v2.
-- Harden the final internet-off notebook and runtime for hidden test. Estimate storage, GPU/CPU, and the 12 h limit first.
-- Final Kaggle submission: `HUMAN_ACTION_REQUIRED` — Mahdi must submit version output from the Kaggle UI. This repo does not authorize `kaggle competitions submit`.
+- Learned 3D detection / embedding (organizer UNet + transformer is GPU/Kaggle, not the CPU slice) — estimate first.
+- New complementary/ensemble family only with a documented 44b6 hypothesis that addresses T_pred. complementary_v1 is closed.
+- Optional private kernel of association_v2 + division_v2 overlay under a **new** slug. Do not overwrite `biohub-association-v2`. Overlay was a no-op on holdout.
+- Harden the final internet-off notebook and runtime for hidden test. Worker measurement: 1.48 s/frame, 421 MB.
+- Final Kaggle submission: `HUMAN_ACTION_REQUIRED` — Mahdi must submit version output from the Kaggle UI.
 
 ## Never from automation
 
