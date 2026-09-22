@@ -578,6 +578,12 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local prep:** fail-closed 44b6 lane scorer `scripts/run_learned_unet_retrain_lanes.py` packaged. Refuses incomplete helper, missing graphs, and `6bba`. Not run. Not a score.
 - **Kaggle public / private scores:** not returned. Not a competition submission.
 
+## learned_unet_retrain_v1_kernel_poll (2026-09-22T06:11:33Z)
+
+- **Status:** status-only poll of `mahdimzafari/biohub-learned-unet-retrain-v1` at **2026-09-22T06:11:33Z**. Kernel still **running**. Output files **0**. No `submission.csv`. No failure message. Did **not** download. Did **not** push a second version. 44b6 lanes not launched.
+- **Config hash:** `92a419926fa7e40b`. Decision `status_only`.
+- **Kaggle public / private scores:** not returned. Not a competition submission.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
