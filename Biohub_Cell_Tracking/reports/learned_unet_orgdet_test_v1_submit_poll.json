@@ -1,6 +1,6 @@
 {
-  "polled_utc": "2026-09-21T23:43:20Z",
-  "code_version": "71f859d",
+  "polled_utc": "2026-09-22T00:49:23Z",
+  "code_version": "5393a12",
   "orgdet_test_config_hash": "c45c859610d29e90",
   "kernel": {
     "slug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
