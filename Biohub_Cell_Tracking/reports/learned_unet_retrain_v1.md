@@ -25,7 +25,7 @@ weights stay refused.
 
 Config: `configs/learned_unet_retrain_v1.yaml`. Hash `92a419926fa7e40b`.
 Reserved slug `mahdimzafari/biohub-learned-unet-retrain-v1`.
-`LAUNCH_AUTHORIZED=False`. In `KERNELS`. Push gated. Not pushed.
+`LAUNCH_AUTHORIZED=True`. In `KERNELS`. Private helper v1 **RUNNING**.
 
 - Resume from `learned_unet_v1_last.pt` only
 - `additional_epochs=3`, `from_scratch=false`

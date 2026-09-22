@@ -540,6 +540,15 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `human_action_required_ui_submit`. Entry deadline **2026-09-22 23:59 UTC**. Preferred worker is orgdet-test v1, not prune-test or gap-test.
 - **Kaggle public / private scores for this slug:** not returned. `0.553` is **not** an orgdet-test leaderboard score.
 
+
+## learned_unet_retrain_v1_kernel
+
+- **Status:** private GPU helper `mahdimzafari/biohub-learned-unet-retrain-v1` version **1 RUNNING**. **Not a competition submission.** Frozen `6bba` stays closed until a 44b6 lane wins.
+- **Config hash:** `92a419926fa7e40b`. Parent train `4c38035d6657f2ad`. Infer `d7578b5f64ddac08`.
+- **Launch:** internet off, T4 x2, resume `learned_unet_v1_last.pt` for +3 epochs. Does **not** overwrite `mahdimzafari/biohub-learned-unet-v1`.
+- **Preregistered 44b6 lanes (locked before scores):** A infer `1db21f87d00ce083` vs 0.655751; B orgdet `594f6fbc03c974cf` vs 0.679578; C orgop `f924802e5f716a61` vs lane B.
+- **Kaggle public / private scores:** not returned.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
