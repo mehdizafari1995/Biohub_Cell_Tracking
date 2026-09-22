@@ -731,6 +731,17 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `new_submission_present`. `orgdet_test_identity_proven=true`.
 - **Not a leaderboard score.** Empty `publicScore` is not used for tuning. Do **not** resubmit. Additional UI submit of orgdet-gap-test is **not** authorized this cycle.
 
+## learned_unet_orgdet_test_v1_submit_poll (2026-09-22T15:48:59Z)
+
+- **Status:** read-only reconfirm of `mahdimzafari/biohub-learned-unet-orgdet-test-v1` at **2026-09-22T15:48:59Z**. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1. Did **not** touch `mahdimzafari/biohub-learned-unet-retrain-v1`.
+- **Config hash:** `c45c859610d29e90`.
+- **Competition list (Kaggle-returned, sanitized):** still two rows.
+  - association_v2 **56399003**, status **complete**, date **2026-09-20T15:12:52.307Z**, public API string **`0.553`**, `scriptVersionId` **351174414**, notebook `mahdimzafari/biohub-association-v2`.
+  - orgdet-test **56466744**, status still **pending**, date **2026-09-22T14:13:11.68Z**, `fileName` `submission.csv`, public score **not returned**, private score **not returned**, `scriptVersionId` **351557863**, notebook `mahdimzafari/biohub-learned-unet-orgdet-test-v1`.
+- **Identity:** still proven orgdet-test from the relative `/code/` path. Not association_v2, not prune-test, not infer-family gap-test, and **not** `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle kernel `versionNumber` was **not** returned.
+- **Decision:** `new_submission_present`. `orgdet_test_identity_proven=true`.
+- **Not a leaderboard score.** Empty `publicScore` is not used for tuning. Do **not** resubmit. Additional UI submit of orgdet-gap-test is **not** authorized this cycle.
+
 
 ## Policy
 

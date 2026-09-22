@@ -91,13 +91,14 @@ did not trigger.
 ## Status
 
 Mahdi initiated a Kaggle UI submit. Read-only poll
-**2026-09-22T14:23:04Z** recorded a second competition row. Identity
-is proven from the relative `/code/` path: notebook
+**2026-09-22T15:48:59Z** reconfirmed the second competition row first
+seen at **2026-09-22T14:23:04Z**. Identity remains proven from the
+relative `/code/` path: notebook
 `mahdimzafari/biohub-learned-unet-orgdet-test-v1`,
 `scriptVersionId` **351557863**. That is **not** association_v2
 **56399003**, prune-test, infer-family gap-test, or
 `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kaggle `versionNumber` was
-**not** returned. Status **pending**. Public score **not returned**.
+**not** returned. Status still **pending**. Public score **not returned**.
 This poll is **not** a leaderboard score. Do **not** retune from any
 later public score. Do **not** resubmit. Do **not** submit from the
 CLI. Do **not** overwrite v1. CSV stays under ignored
