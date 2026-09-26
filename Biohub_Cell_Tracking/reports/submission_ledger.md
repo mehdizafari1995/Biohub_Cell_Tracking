@@ -764,6 +764,15 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `public_score_returned`. `orgdet_test_identity_proven=true`.
 - **Kaggle-returned public score for this slug:** **`0.612`** (API string; no extra digits). Private score **not returned**. This is **not** a local official holdout score and **not** an orgdet-gap-test score. Do **not** invent extra digits. Do **not** use **0.612** or **0.553** for tuning. Do **not** resubmit. Do **not** re-poll **56466744** as pending. Additional UI submit of orgdet-gap-test is **not** authorized this cycle.
 
+## learned_unet_orgilp_v1_tune (2026-09-26T17:11:42Z)
+
+- **Status:** local official score of `learned_unet_orgilp_v1` on frozen-tuning `44b6` only. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Config hash:** `dbc6134cddf2048d`. Parent rejected orgop `250c5bfacd4a8198` (not overwritten).
+- **Preflight:** `preflight_ok`. 62480 / 28672 detections; 333502 / 133546 spatial 12 µm candidates; ILP wrote 58805 / 26045 edges (`tracksdata_ilp`, SCIP).
+- **Official 44b6:** **0.676811 vs orgdet-gap 0.687221** (also below orgdet **0.679578**). Recall 0.97004. Divisions 0/0/2. 1008.0 s, 4501 MB.
+- **Decision:** `reject_learned_unet_orgilp_v1`. Frozen `6bba` not opened. `orgilp_gap` not launched (consecutive ILP already lost to greedy).
+- **Kaggle public / private scores:** not applicable; no kernel push and no submit.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

@@ -140,12 +140,14 @@ def apply_tracksdata_ilp(
     appearance_weight: float = ORGANIZER_ILP_APPEARANCE_WEIGHT,
     disappearance_weight: float = ORGANIZER_ILP_DISAPPEARANCE_WEIGHT,
     division_weight: float = ORGANIZER_ILP_DIVISION_WEIGHT,
+    refuse_holdout: bool = True,
 ) -> dict[str, Any]:
     """Run official tracksdata ILP on candidate edges. Fail closed if missing."""
     import polars as pl
     import tracksdata as td
 
-    refuse_holdout_design([str(payload["dataset"])])
+    if refuse_holdout:
+        refuse_holdout_design([str(payload["dataset"])])
     node_id = [int(x) for x in payload.get("node_id") or []]
     t = [int(x) for x in payload.get("t") or []]
     z = [float(x) for x in payload.get("z") or []]
