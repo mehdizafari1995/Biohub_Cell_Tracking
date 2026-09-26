@@ -773,6 +773,22 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `reject_learned_unet_orgilp_v1`. Frozen `6bba` not opened. `orgilp_gap` not launched (consecutive ILP already lost to greedy).
 - **Kaggle public / private scores:** not applicable; no kernel push and no submit.
 
+## learned_unet_orgdet_gap_prune_v1_tune (2026-09-26T17:48:23Z)
+
+- **Status:** local official score of `learned_unet_orgdet_gap_prune_v1` on frozen-tuning `44b6` only. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Config hash:** `862e3e7f7ac0330e`. Parent orgdet-gap `ee31f36151325f9a` (not overwritten).
+- **Official 44b6:** **0.693437 vs orgdet-gap 0.687221**. Recall 0.97603. Divisions 0/0/2. Dropped 227 isolates. Extra edges still 9951. 10.40 s, 528 MB.
+- **Decision:** `keep_candidate_learned_unet_orgdet_gap_prune_v1`. Hash locked before the 6bba look.
+- **Kaggle public / private scores:** not applicable; no kernel push and no submit.
+
+## learned_unet_orgdet_gap_prune_v1_holdout (2026-09-26T17:48:51Z)
+
+- **Status:** local official one-shot score of `learned_unet_orgdet_gap_prune_v1` on frozen `6bba`. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Config hash:** `862e3e7f7ac0330e`.
+- **Official 6bba:** **0.723018 vs orgdet-gap 0.722805**. Recall 0.95762. Divisions 0/0/5. Dropped 296 isolates. Edge TP/FP/FN match locked orgdet-gap. 7.64 s, 776 MB.
+- **Decision:** `keep_candidate_learned_unet_orgdet_gap_prune_v1`. New holdout champion. Do **not** score 6bba again.
+- **Kaggle public / private scores:** not applicable; no kernel push and no submit.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
