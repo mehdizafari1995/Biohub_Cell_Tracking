@@ -829,6 +829,24 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Official 44b6:** **0.695181** vs prune **0.693437** (delta **+0.001743**). Edge Jaccard unchanged. Dropped 1954 nodes. Runtime 10.63 s, peak 512 MB.
 - **Decision:** `reject_learned_unet_orgdet_tcf_v1`. Do **not** retune fragment length. Do **not** score 6bba. Do **not** use public **0.602** / **0.612** / **0.553**.
 
+## learned_unet_orgdet_elf_v1_tune / holdout
+
+- **Status:** local official scores of `learned_unet_orgdet_elf_v1` (long-dt1 edge-length filter after locked orgdet+gap+prune). **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Config hash:** `292c4f1f968f948d`. Parent prune `862e3e7f7ac0330e`. Gate official 44b6 **> 0.693437 + 0.002000** = **0.695437**. Not another 12 µm assignment. Not a short-fragment retune.
+- **Official 44b6:** **0.709838** vs prune **0.693437** (delta **+0.016401**). Edge Jaccard 0.72626. Recall 0.976. Divisions 0/0/2. Dropped 2247 long dt=1 edges. Runtime 11.26 s, peak 529 MB. Decision `keep_candidate_learned_unet_orgdet_elf_v1`. Hash locked before the 6bba look.
+- **Official one-shot 6bba:** **0.737787** vs prune **0.723018**. Edge Jaccard 0.75737. Recall 0.956. Divisions 0/0/5. Dropped 2888 long dt=1 edges. Runtime 7.67 s, peak 771 MB. Decision `keep_candidate_learned_unet_orgdet_elf_v1`. New holdout champion. Do **not** score 6bba again.
+- **Public 0.602 / 0.612 / 0.553** were not used.
+
+## learned_unet_orgdet_elf_test_v1_packaged / complete
+
+- **Status:** private GPU public-test notebook packaged, pushed, and **COMPLETE / inferred**. New slug `mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1`. Hash `ad375d39e13098d1`. Parent overlay `292c4f1f968f948d` (official 44b6 **0.709838**; official 6bba **0.737787**). Does **not** overwrite orgdet-gap-prune-test v1. **Not a competition submission. Not a leaderboard score.**
+- **Output:** `/kaggle/working/submission.csv` 20 279 535 bytes, 387 812 rows, 199 977 nodes, 187 835 edges, 9 499 gap links, 13 629 interpolated, **2 161 dropped isolates**, **7 441 long dt=1**, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Holdout overlap:** `6bba_05db0fb1` **88322/83959** matches locked orgdet-elf holdout overlay. Gap links match prune-test (9499).
+- **Hidden-test projection:** 88.22 s/volume × 199 ≈ **4.88 h**, under 12 h.
+- **Competition submit:** not performed. This slug is **not** on the competition list.
+- **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Additional UI click is **not** authorized unless a later message separately authorizes it.
+- **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

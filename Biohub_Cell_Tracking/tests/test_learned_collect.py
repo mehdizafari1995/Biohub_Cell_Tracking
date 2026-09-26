@@ -428,3 +428,20 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert ORGDET_GAP_PRUNE_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert ORGDET_GAP_PRUNE_TEST_SLUG != ORGDET_GAP_TEST_SLUG
     assert ORGDET_GAP_PRUNE_TEST_SLUG != ORGDET_TEST_SLUG
+    from biohub_tracking.learned_collect import (
+        ORGDET_ELF_TEST_CONFIG_HASH,
+        ORGDET_ELF_TEST_SLUG,
+    )
+
+    orgdet_elf_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_orgdet_elf_test_v1",
+        ROOT / "scripts" / "collect_learned_unet_orgdet_elf_test_v1.py",
+    )
+    assert orgdet_elf_spec and orgdet_elf_spec.loader
+    orgdet_elf_mod = importlib.util.module_from_spec(orgdet_elf_spec)
+    orgdet_elf_spec.loader.exec_module(orgdet_elf_mod)
+    assert orgdet_elf_mod.ORGDET_ELF_TEST_SLUG == ORGDET_ELF_TEST_SLUG
+    assert ORGDET_ELF_TEST_CONFIG_HASH == "ad375d39e13098d1"
+    assert ORGDET_ELF_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert ORGDET_ELF_TEST_SLUG != ORGDET_GAP_PRUNE_TEST_SLUG
+    assert ORGDET_ELF_TEST_SLUG != ORGDET_GAP_TEST_SLUG

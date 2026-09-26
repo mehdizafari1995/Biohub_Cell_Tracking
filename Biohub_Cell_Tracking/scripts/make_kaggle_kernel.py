@@ -478,6 +478,28 @@ Private **GPU** test-time notebook at locked orgdet+gap+prune operating point. D
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_orgdet_elf_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_elf_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_elf_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_elf_test_v1",
+        "code_file": "kaggle_learned_unet_orgdet_elf_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1",
+        "title": "Biohub Learned UNet Orgdet Elf Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgdet_elf_test_v1
+
+Private **GPU** test-time notebook at locked orgdet+gap+prune plus long-dt1 edge-length filter. Discovers every `test/*.zarr`.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1` v1, orgdet-gap-test, orgdet-test, prune-test, gap-test, no-gap test, or orgdet-holdout.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Locked orgdet+gap+prune+elf: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, greedy 12 µm, association_v2 gap-close, drop leftover degree-0, then drop dt=1 edges longer than 8.0 µm. Hash `ad375d39e13098d1`. Parent overlay `292c4f1f968f948d` (official 44b6 **0.709838 vs prune 0.693437**; official 6bba **0.737787 vs 0.723018**).
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: orgdet-gap-test 312.69 s public + cheap CPU isolate drop + ELF filter. Hidden test ~4.4 h, under 12 h.
+- Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
+""",
+    },
     "learned_unet_retrain_v1": {
         "source": "notebooks/kaggle_learned_unet_retrain_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_retrain_v1.ipynb",
