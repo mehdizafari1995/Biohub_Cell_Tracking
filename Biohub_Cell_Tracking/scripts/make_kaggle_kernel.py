@@ -456,6 +456,28 @@ Private **GPU** test-time notebook at locked orgdet+gap operating point. Discove
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_orgdet_gap_prune_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_gap_prune_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_gap_prune_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_gap_prune_test_v1",
+        "code_file": "kaggle_learned_unet_orgdet_gap_prune_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1",
+        "title": "Biohub Learned UNet Orgdet Gap Prune Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgdet_gap_prune_test_v1
+
+Private **GPU** test-time notebook at locked orgdet+gap+prune operating point. Discovers every `test/*.zarr`.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` v1, orgdet-test, prune-test, gap-test, no-gap test, or orgdet-holdout.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Locked orgdet+gap+prune: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, greedy 12 µm, association_v2 gap-close, then drop leftover degree-0. Hash `52a30a5843e0a880`. Parent overlay `862e3e7f7ac0330e` (official 6bba **0.723018 vs orgdet-gap 0.722805**).
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: orgdet-gap-test 312.69 s public + cheap CPU isolate drop. Hidden test ~4.35 h, under 12 h.
+- Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
+""",
+    },
     "learned_unet_retrain_v1": {
         "source": "notebooks/kaggle_learned_unet_retrain_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_retrain_v1.ipynb",

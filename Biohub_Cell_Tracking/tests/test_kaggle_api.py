@@ -69,6 +69,7 @@ def test_fetch_kernel_output_allows_helper_slugs_only():
     assert "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-test-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1" in mod.ALLOWED_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-infer-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1" in mod.ALLOWED_SLUGS

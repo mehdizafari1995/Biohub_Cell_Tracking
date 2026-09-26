@@ -789,6 +789,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Decision:** `keep_candidate_learned_unet_orgdet_gap_prune_v1`. New holdout champion. Do **not** score 6bba again.
 - **Kaggle public / private scores:** not applicable; no kernel push and no submit.
 
+## learned_unet_orgdet_gap_prune_test_v1_packaged
+
+- **Status:** private GPU public-test notebook packaged as a **new** slug `mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1`. Internet off. Attaches competition + `mahdimzafari/biohub-learned-unet-v1`. **Not submitted.**
+- **Config hash:** `52a30a5843e0a880`. Parent overlay `862e3e7f7ac0330e`. Parent orgdet-gap-test `1ce4837ae16bee52`. Discovers `test/*.zarr`. Locked orgdet 0.99 / pool 3.0 / TTA + greedy 12 µm + gap-close + drop degree-0.
+- **Estimate:** orgdet-gap-test 312.69 s / 4 volumes + 0.5 s isolate drop. Hidden-test projection **4.35 h** under 12 h.
+- **Guards:** does **not** overwrite orgdet-gap-test / orgdet-test / prune-test / gap-test / no-gap test. New slug is not in `FORBIDDEN_SLUGS` until v1 COMPLETE.
+- **Competition submit:** not performed. No public or private leaderboard score. Do **not** submit from the CLI.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

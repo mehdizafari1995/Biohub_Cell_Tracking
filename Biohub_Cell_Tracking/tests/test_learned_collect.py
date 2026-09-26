@@ -411,3 +411,20 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert ORGDET_GAP_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert ORGDET_GAP_TEST_SLUG != ORGDET_TEST_SLUG
     assert ORGDET_GAP_TEST_SLUG != GAP_TEST_SLUG
+    from biohub_tracking.learned_collect import (
+        ORGDET_GAP_PRUNE_TEST_CONFIG_HASH,
+        ORGDET_GAP_PRUNE_TEST_SLUG,
+    )
+
+    orgdet_gap_prune_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_orgdet_gap_prune_test_v1",
+        ROOT / "scripts" / "collect_learned_unet_orgdet_gap_prune_test_v1.py",
+    )
+    assert orgdet_gap_prune_spec and orgdet_gap_prune_spec.loader
+    orgdet_gap_prune_mod = importlib.util.module_from_spec(orgdet_gap_prune_spec)
+    orgdet_gap_prune_spec.loader.exec_module(orgdet_gap_prune_mod)
+    assert orgdet_gap_prune_mod.ORGDET_GAP_PRUNE_TEST_SLUG == ORGDET_GAP_PRUNE_TEST_SLUG
+    assert ORGDET_GAP_PRUNE_TEST_CONFIG_HASH == "52a30a5843e0a880"
+    assert ORGDET_GAP_PRUNE_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert ORGDET_GAP_PRUNE_TEST_SLUG != ORGDET_GAP_TEST_SLUG
+    assert ORGDET_GAP_PRUNE_TEST_SLUG != ORGDET_TEST_SLUG
