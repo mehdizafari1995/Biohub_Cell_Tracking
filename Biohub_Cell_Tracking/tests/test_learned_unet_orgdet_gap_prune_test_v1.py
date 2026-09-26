@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -46,6 +47,8 @@ from biohub_tracking.learned_orgdet_gap_prune_test import (  # noqa: E402
 from biohub_tracking.learned_orgdet_gap_test import (  # noqa: E402
     LOCKED_ORGDET_GAP_TEST_HASH,
     ORGDET_GAP_TEST_KERNEL_SLUG,
+    ORGDET_GAP_TEST_PUBLIC_SCORE,
+    ORGDET_GAP_TEST_SUBMISSION_REF,
 )
 from biohub_tracking.learned_orgdet_test import (  # noqa: E402
     LOCKED_ORGDET_TEST_HASH,
@@ -250,7 +253,11 @@ def test_push_keeps_parent_slugs_forbidden_and_allows_new_slug():
         raise AssertionError("expected ValueError")
     except ValueError:
         pass
-    refuse_overwrite_locked_slugs(ORGDET_GAP_PRUNE_TEST_SLUG)
+    try:
+        refuse_overwrite_locked_slugs(ORGDET_GAP_PRUNE_TEST_SLUG)
+        raise AssertionError("expected ValueError")
+    except ValueError:
+        pass
     assert TRAIN_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert INFER_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert HOLDOUT_SLUG in _push_mod.FORBIDDEN_SLUGS
@@ -259,7 +266,7 @@ def test_push_keeps_parent_slugs_forbidden_and_allows_new_slug():
     assert PRUNE_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert ORGDET_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert ORGDET_GAP_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
-    assert ORGDET_GAP_PRUNE_TEST_SLUG not in _push_mod.FORBIDDEN_SLUGS
+    assert ORGDET_GAP_PRUNE_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert ORGDET_GAP_PRUNE_TEST_SLUG in _fetch_mod.ALLOWED_SLUGS
     assert ORGDET_GAP_TEST_SLUG in _fetch_mod.ALLOWED_SLUGS
     collect = ROOT / "scripts" / "collect_learned_unet_orgdet_gap_prune_test_v1.py"
@@ -284,35 +291,46 @@ def test_classify_submit_poll_requires_ui_when_only_known_rows_exist():
         "private_score_returned": False,
         "date": "2026-09-22T14:13:11.68Z",
     }
+    orgdet_gap_test = {
+        "ref": ORGDET_GAP_TEST_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ORGDET_GAP_TEST_PUBLIC_SCORE,
+        "private_score_returned": False,
+        "date": "2026-09-26T16:09:48.773Z",
+        "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
+        "scriptVersionId": 351808956,
+    }
     poll = classify_orgdet_gap_prune_test_submit_poll(
         kernel_complete=True,
         kernel_failed=False,
         output_names=["run_manifest.json", "submission.csv"],
-        submissions=[association, orgdet_test],
+        submissions=[association, orgdet_test, orgdet_gap_test],
     )
     assert poll["decision"] == "human_action_required_ui_submit"
     assert poll["orgdet_gap_prune_test_submission_present"] is False
     assert poll["association_v2_submission_present"] is True
     assert poll["orgdet_test_submission_present"] is True
+    assert poll["orgdet_gap_test_submission_present"] is True
     assert poll["is_competition_submission"] is False
     assert poll["is_leaderboard_score"] is False
     assert "Kaggle UI" in poll["human_action"]
     assert "CLI" in poll["human_action"]
     assert "orgdet-gap-prune-test-v1" in poll["human_action"]
+    assert "0.602" in poll["human_action"]
     assert classify_orgdet_gap_prune_test_submit_poll(
         kernel_complete=True,
         kernel_failed=False,
         output_names=["run_manifest.json"],
-        submissions=[association, orgdet_test],
+        submissions=[association, orgdet_test, orgdet_gap_test],
     )["decision"] == "kernel_missing_csv"
     extra = classify_orgdet_gap_prune_test_submit_poll(
         kernel_complete=True,
         kernel_failed=False,
         output_names=["submission.csv"],
-        submissions=[association, orgdet_test, {"ref": 999, "status": "pending", "publicScore": None}],
+        submissions=[association, orgdet_test, orgdet_gap_test, {"ref": 999, "status": "pending", "publicScore": None}],
     )
     assert extra["decision"] == "new_submission_present"
-    assert extra["orgdet_gap_prune_test_submission_present"] is True
+    assert extra["orgdet_gap_prune_test_submission_present"] is False
     poll_src = (ROOT / "scripts" / "poll_orgdet_gap_prune_test_submit.py").read_text()
     assert "list_competition_submissions" in poll_src
     assert "competitions/submit" not in poll_src
@@ -334,3 +352,21 @@ def test_compare_prune_vs_gap_rejects_edge_changes():
     )
     assert bad["ok"] is False
     assert any("edges changed" in err for err in bad["errors"])
+
+
+def test_keep_orgdet_gap_prune_test_complete_report_matches_holdout_overlap():
+    report = json.loads((ROOT / "reports" / "learned_unet_orgdet_gap_prune_test_v1_complete.json").read_text())
+    assert report["status"] == "inferred"
+    assert report["config_hash"] == LOCKED_ORGDET_GAP_PRUNE_TEST_HASH
+    assert report["audit_ok"] is True
+    assert report["independent_audit_ok"] is True
+    assert report["is_leaderboard_score"] is False
+    assert report["n_nodes"] == 201671
+    assert report["n_edges"] == 195276
+    assert report["n_dropped_isolates"] == 467
+    assert report["holdout_overlap_6bba_05db0fb1"]["matches_orgdet_gap_prune_holdout_v1"] is True
+    assert report["holdout_overlap_6bba_05db0fb1"]["n_nodes"] == 88777
+    assert report["holdout_overlap_6bba_05db0fb1"]["n_edges"] == 86287
+    assert report["compare_vs_orgdet_gap_test"]["ok"] is True
+    assert report["hidden_projection"]["under_limit"] is True
+    assert report["hidden_projection"]["fail_closed_approaches_12h"] is False

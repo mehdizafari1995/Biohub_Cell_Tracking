@@ -24,7 +24,13 @@ from .learned_infer import LOCKED_INFER_HASH, TRAIN_CONFIG_HASH
 from .learned_orgdet import LOCKED_ORGDET_HASH, ORGDET_KERNEL_SLUG
 from .learned_orgdet_gap import LOCKED_ORGDET_GAP_HASH, ORGDET_LOCKED_HOLDOUT
 from .learned_orgdet_holdout import LOCKED_ORGDET_HOLDOUT_HASH, ORGDET_HOLDOUT_KERNEL_SLUG
-from .learned_orgdet_test import LOCKED_ORGDET_TEST_HASH, ORGDET_TEST_KERNEL_SLUG
+from .learned_orgdet_test import (
+    LOCKED_ORGDET_TEST_HASH,
+    ORGDET_TEST_KERNEL_SLUG,
+    ORGDET_TEST_PUBLIC_SCORE,
+    ORGDET_TEST_SUBMISSION_REF,
+    classify_submission_notebook,
+)
 from .learned_orgop import LOCKED_ORGOP_HASH as REJECTED_ORGOP_HASH
 from .learned_orgop import ORGOP_KERNEL_SLUG
 from .learned_prune_test import LOCKED_PRUNE_TEST_HASH, PRUNE_TEST_KERNEL_SLUG
@@ -106,6 +112,8 @@ def orgdet_gap_test_config_hash(payload: Mapping[str, Any] | None = None) -> str
 
 LOCKED_ORGDET_GAP_TEST_HASH = orgdet_gap_test_config_hash()
 ORGDET_GAP_TEST_LAST_RUN_UTC = "2026-09-22T09:05:18Z"
+ORGDET_GAP_TEST_SUBMISSION_REF = 56583783
+ORGDET_GAP_TEST_PUBLIC_SCORE = "0.602"
 assert LOCKED_ORGDET_GAP_TEST_HASH == "1ce4837ae16bee52"
 assert LOCKED_ORGDET_GAP_HASH == "ee31f36151325f9a"
 assert LOCKED_ORGDET_TEST_HASH == "c45c859610d29e90"
@@ -113,6 +121,10 @@ assert LOCKED_GAP_HASH == "f4d888d190c45a4a"
 assert ORGDET_LOCKED_HOLDOUT == 0.7052260455024029
 assert ASSOCIATION_V2_SUBMISSION_REF == 56399003
 assert ASSOCIATION_V2_PUBLIC_SCORE == "0.553"
+assert ORGDET_TEST_SUBMISSION_REF == 56466744
+assert ORGDET_TEST_PUBLIC_SCORE == "0.612"
+assert ORGDET_GAP_TEST_SUBMISSION_REF == 56583783
+assert ORGDET_GAP_TEST_PUBLIC_SCORE == "0.602"
 
 
 def classify_orgdet_gap_test_submit_poll(
@@ -122,25 +134,46 @@ def classify_orgdet_gap_test_submit_poll(
     output_names: Sequence[str],
     submissions: Sequence[Mapping[str, Any]],
     association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
+    orgdet_test_ref: int = ORGDET_TEST_SUBMISSION_REF,
+    orgdet_gap_test_ref: int = ORGDET_GAP_TEST_SUBMISSION_REF,
 ) -> dict[str, Any]:
     """Classify a read-only orgdet-gap-test submit poll. Never submits.
 
-    The preferred worker is ``mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1``.
-    Association_v2 submission ``56399003`` (public API string ``0.553``) is
-    not that kernel. Do not treat that public score as this slug's result.
+    Proven notebook identity decides whether a competition row is this
+    kernel. Association_v2 ``56399003`` (public ``0.553``) and orgdet-test
+    ``56466744`` (public ``0.612``) are not this slug. Do not treat those
+    scores as an orgdet-gap-test result. Do not retune from ``0.602``.
     """
     names = [str(name) for name in output_names]
     rows = [dict(row) for row in submissions]
     refs = [row.get("ref") for row in rows]
-    extra = [row for row in rows if str(row.get("ref")) != str(association_ref)]
     association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
+    orgdet_test = [row for row in rows if str(row.get("ref")) == str(orgdet_test_ref)]
+    labels = [classify_submission_notebook(row.get("kernelSlug"), row.get("ref")) for row in rows]
+    gap_rows = [
+        row
+        for row, label in zip(rows, labels)
+        if label == "orgdet_gap_test" or str(row.get("ref")) == str(orgdet_gap_test_ref)
+    ]
+    extra = [
+        row
+        for row, label in zip(rows, labels)
+        if str(row.get("ref")) not in {str(association_ref), str(orgdet_test_ref)}
+        and label != "orgdet_gap_test"
+        and str(row.get("ref")) != str(orgdet_gap_test_ref)
+    ]
+    gap_newest = gap_rows[0] if gap_rows else None
+    gap_score = str((gap_newest or {}).get("publicScore") or "").strip()
+    gap_status = str((gap_newest or {}).get("status") or "").strip().lower()
     if kernel_failed:
         decision = "record_kernel_error"
     elif not kernel_complete:
         decision = "wait_kernel"
     elif "submission.csv" not in names:
         decision = "kernel_missing_csv"
-    elif extra:
+    elif gap_rows and gap_status == "complete" and gap_score:
+        decision = "public_score_returned"
+    elif extra or (gap_rows and not (gap_status == "complete" and gap_score)):
         decision = "new_submission_present"
     else:
         decision = "human_action_required_ui_submit"
@@ -153,16 +186,34 @@ def classify_orgdet_gap_test_submit_poll(
         "n_submissions": len(rows),
         "submission_refs": refs,
         "association_v2_submission_present": bool(association),
-        "orgdet_gap_test_submission_present": bool(extra),
+        "orgdet_test_submission_present": bool(orgdet_test),
+        "orgdet_gap_test_submission_present": bool(gap_rows),
+        "orgdet_gap_test_identity_proven": bool(gap_rows),
+        "new_submission_public_score": gap_score or None,
+        "new_submission_status": (gap_newest or {}).get("status"),
+        "new_submission_refs": [row.get("ref") for row in gap_rows],
         "is_competition_submission": False,
         "is_leaderboard_score": False,
         "human_action": (
-            "Mahdi must Submit to Competition from the Kaggle UI on "
-            "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1 version 1 "
-            "before the 2026-09-22 23:59 UTC entry deadline. "
-            "Do not submit from the CLI. Do not submit orgdet-test, "
-            "prune-test, or infer-family gap-test."
-            if decision == "human_action_required_ui_submit"
-            else None
+            "Do not resubmit. Recorded publicScore 0.602 is orgdet-gap-test "
+            "56583783 only and is not a tune target. Do not invent extra "
+            "digits. Do not poll this ref as pending."
+            if decision == "public_score_returned"
+            else (
+                "Mahdi must Submit to Competition from the Kaggle UI on "
+                "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1 version 1 "
+                "only if a later message authorizes that extra click. "
+                "Do not submit from the CLI. Do not submit orgdet-test, "
+                "prune-test, infer-family gap-test, or orgdet-gap-prune-test "
+                "unless separately authorized."
+                if decision == "human_action_required_ui_submit"
+                else (
+                    "Do not resubmit. Poll until Kaggle returns a terminal "
+                    "status and publicScore. Do not use any returned public "
+                    "score for tuning."
+                    if decision == "new_submission_present"
+                    else None
+                )
+            )
         ),
     }

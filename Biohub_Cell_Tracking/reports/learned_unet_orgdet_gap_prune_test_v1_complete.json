@@ -1,0 +1,117 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1",
+  "version": 1,
+  "status": "inferred",
+  "config_hash": "52a30a5843e0a880",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "orgdet_config_hash": "80b20589198148b7",
+  "orgdet_holdout_config_hash": "912f0c19b572a054",
+  "orgdet_gap_config_hash": "ee31f36151325f9a",
+  "orgdet_gap_prune_config_hash": "862e3e7f7ac0330e",
+  "orgdet_gap_test_parent_hash": "1ce4837ae16bee52",
+  "orgdet_test_parent_hash": "c45c859610d29e90",
+  "rejected_orgop_hash": "250c5bfacd4a8198",
+  "test_parent_hash": "7a8725b818fc609b",
+  "gap_test_parent_hash": "85379c198ebc7241",
+  "prune_test_parent_hash": "074a71dec68304e8",
+  "checkpoint_hash": "4c38035d6657f2ad",
+  "environment": "kaggle_input",
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "public_lb_score": null,
+  "private_lb_score": null,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "n_nodes": 201671,
+  "n_edges": 195276,
+  "n_gap_links": 9499,
+  "n_interpolated": 13629,
+  "n_dropped_isolates": 467,
+  "n_predicted_divisions": 0,
+  "rows": 396947,
+  "submission_bytes": 20766993,
+  "runtime_sec": 331.07940649986267,
+  "sec_per_frame": 0.8276985162496566,
+  "peak_memory_mb": 1164.23828125,
+  "audit_ok": true,
+  "independent_audit_ok": true,
+  "weights_path": "/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt",
+  "accelerator": null,
+  "cuda_device_count": null,
+  "torch": null,
+  "per_dataset": [
+    {
+      "stem": "44b6_0113de3b",
+      "n_nodes": 26815,
+      "n_edges": 25892,
+      "n_gap_links": 378,
+      "n_interpolated": 542,
+      "n_dropped_isolates": 82,
+      "runtime_sec": 74.37383317947388
+    },
+    {
+      "stem": "44b6_0b24845f",
+      "n_nodes": 77621,
+      "n_edges": 75022,
+      "n_gap_links": 5520,
+      "n_interpolated": 7900,
+      "n_dropped_isolates": 172,
+      "runtime_sec": 90.23400592803955
+    },
+    {
+      "stem": "6bba_05b6850b",
+      "n_nodes": 8458,
+      "n_edges": 8075,
+      "n_gap_links": 404,
+      "n_interpolated": 590,
+      "n_dropped_isolates": 65,
+      "runtime_sec": 69.24842405319214
+    },
+    {
+      "stem": "6bba_05db0fb1",
+      "n_nodes": 88777,
+      "n_edges": 86287,
+      "n_gap_links": 3197,
+      "n_interpolated": 4597,
+      "n_dropped_isolates": 148,
+      "runtime_sec": 91.84575653076172
+    }
+  ],
+  "holdout_overlap_6bba_05db0fb1": {
+    "n_nodes": 88777,
+    "n_edges": 86287,
+    "n_gap_links": 3197,
+    "n_interpolated": 4597,
+    "n_dropped_isolates": 148,
+    "matches_orgdet_gap_prune_holdout_v1": true
+  },
+  "compare_vs_orgdet_gap_test": {
+    "ok": true,
+    "n_nodes_gap": 202138,
+    "n_nodes_prune": 201671,
+    "n_edges_gap": 195276,
+    "n_edges_prune": 195276,
+    "n_dropped_isolates": 467
+  },
+  "hidden_projection": {
+    "sec_per_volume": 82.76985162496567,
+    "n_hidden": 199,
+    "estimate_hours": 4.575333464824491,
+    "under_limit": true,
+    "fail_closed_approaches_12h": false,
+    "peak_memory_mb": 1164.23828125
+  },
+  "competition_submission_refs": [
+    56583783,
+    56466744,
+    56399003
+  ],
+  "code_version": "c5d165b",
+  "note": "Private GPU test-time kernel v1 COMPLETE on public test at locked orgdet+gap+prune OP. Independent stream audit_ok. Edges match locked orgdet-gap-test. 6bba_05db0fb1 88777/86287 matches locked orgdet-gap-prune holdout overlay. Frozen 6bba was not official-scored again. Not a competition submission. Not a leaderboard score. Public 0.602 is orgdet-gap-test 56583783 only."
+}

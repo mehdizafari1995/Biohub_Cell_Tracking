@@ -2,16 +2,17 @@
 
 This is the **local preparation** for a notebook submission. No leaderboard score is claimed until a notebook is actually submitted on Kaggle. A `kaggle kernels push` run on public `test/` is not a competition submission.
 
-## Preferred public-test worker (learned_unet_gap_test_v1)
+## Preferred public-test worker (learned_unet_orgdet_gap_prune_test_v1)
 
 Private GPU kernel, internet off, competition dataset plus locked `biohub-learned-unet-v1` weights attached.
 
-- Slug: [`mahdimzafari/biohub-learned-unet-gap-test-v1`](https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-gap-test-v1)
-- Source: `notebooks/kaggle_learned_unet_gap_test_v1.py`
-- Version 1 **COMPLETE** on public `test/` (330.0 s, peak RAM 1184 MB, `audit_ok`). **Not submitted.** Read-only poll 2026-09-21T02:50:39Z confirmed the kernel is still complete and still absent from the competition submission list.
-- Local official holdout of the parent overlay is **0.701026**. Isolate-prune overlay `learned_unet_prune_v1` later scored **0.701378** on the same frozen `6bba` (hash `115753ea16aaf021`). That prune overlay has **no** public-test kernel yet. This is not a leaderboard score.
+- Slug: [`mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1`](https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1)
+- Source: `notebooks/kaggle_learned_unet_orgdet_gap_prune_test_v1.py`
+- Version 1 **COMPLETE** on public `test/` (331.08 s, peak RAM 1164 MB, `audit_ok`, independent `audit_ok`). **Not submitted.**
+- Local official holdout of the parent overlay is **0.723018**. This is not a leaderboard score.
+- Additional UI submit is **not** authorized unless a later message separately authorizes that extra click.
 
-Do **not** overwrite this slug. Do **not** submit from the CLI. Next packaging step is a **new** `learned_unet_prune_test_v1` slug.
+Do **not** overwrite this slug. Do **not** submit from the CLI. Public **0.602** is orgdet-gap-test **56583783** only and is not a tune target.
 
 ## Previous public-test worker (association_v2)
 
@@ -34,7 +35,9 @@ Do **not** overwrite `mahdimzafari/biohub-baseline-v1` or `mahdimzafari/biohub-a
 - `mahdimzafari/biohub-learned-unet-infer-v1` v3 COMPLETE / inferred — 44b6-only graphs. No `submission.csv`. Do not overwrite.
 - `mahdimzafari/biohub-learned-unet-holdout-v1` v1 COMPLETE / inferred — 6bba graphs. No `submission.csv`. Do not overwrite.
 - `mahdimzafari/biohub-learned-unet-test-v1` v1 COMPLETE / inferred — public-test no-gap worker, `audit_ok`, not submitted. Do not overwrite.
-- `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 COMPLETE / inferred — public-test gap overlay worker, 330.0 s, `audit_ok`, not submitted. Preferred learned submit from the Kaggle UI. Do not overwrite.
+- `mahdimzafari/biohub-learned-unet-gap-test-v1` v1 COMPLETE / inferred — public-test gap overlay worker, 330.0 s, `audit_ok`, not submitted. Do not overwrite.
+- `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` v1 COMPLETE / inferred — UI-submitted; public API **0.602** (ref **56583783**). Do not overwrite. Do not resubmit. Do not retune from 0.602.
+- `mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1` v1 COMPLETE / inferred — preferred unsubmitted worker, 331.08 s, `audit_ok`. Do not overwrite. Do not submit unless later authorized.
 - `mahdimzafari/biohub-learned-unet-link-v1` v1 COMPLETE / inferred — 44b6 transformer linker. Official tune 0.0. Rejected. No `submission.csv`. Not a submit candidate. Do not overwrite.
 
 ## Previous kernel (baseline_v1)
@@ -51,7 +54,7 @@ This repository does **not** authorize `kaggle competitions submit`. Do not subm
 
 ## Exact manual submission step (after the private kernel succeeds)
 
-1. Open https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-gap-test-v1 (preferred). Do **not** submit association_v2 or baseline_v1 now that the gap worker is COMPLETE / `audit_ok`.
+1. Open https://www.kaggle.com/code/mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1 only after a later message authorizes that extra UI click. Do **not** resubmit association_v2, orgdet-test, or orgdet-gap-test.
 2. Confirm **Internet is off**, the kernel is **private**, GPU was used, and version 1 output contains `submission.csv` plus `run_manifest.json`.
 3. Open that version → **Submit to Competition** (or **Submit** on the version output).
 4. Confirm the scoring rerun uses hidden test (public `test/` names are not the hidden set).

@@ -1,6 +1,6 @@
 {
-  "polled_utc": "2026-09-22T13:46:09Z",
-  "code_version": "d82baa2",
+  "polled_utc": "2026-09-26T19:59:50Z",
+  "code_version": "c5d165b",
   "orgdet_gap_test_config_hash": "1ce4837ae16bee52",
   "kernel": {
     "slug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
@@ -21,6 +21,28 @@
   ],
   "submissions": [
     {
+      "ref": 56583783,
+      "status": "complete",
+      "publicScore": "0.602",
+      "private_score_returned": false,
+      "date": "2026-09-26T16:09:48.773Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": 351808956,
+      "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1"
+    },
+    {
+      "ref": 56466744,
+      "status": "complete",
+      "publicScore": "0.612",
+      "private_score_returned": false,
+      "date": "2026-09-22T14:13:11.68Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": 351557863,
+      "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
+    },
+    {
       "ref": 56399003,
       "status": "complete",
       "publicScore": "0.553",
@@ -28,24 +50,34 @@
       "date": "2026-09-20T15:12:52.307Z",
       "fileName": "submission.csv",
       "errorDescription": null,
-      "scriptVersionId": null
+      "scriptVersionId": 351174414,
+      "kernelSlug": "mahdimzafari/biohub-association-v2"
     }
   ],
   "association_v2_submission_ref": 56399003,
   "association_v2_public_score": "0.553",
   "orgdet_gap_test_last_run_utc": "2026-09-22T09:05:18Z",
   "slug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
-  "decision": "human_action_required_ui_submit",
+  "decision": "public_score_returned",
   "kernel_complete": true,
   "kernel_failed": false,
-  "n_submissions": 1,
+  "n_submissions": 3,
   "submission_refs": [
+    56583783,
+    56466744,
     56399003
   ],
   "association_v2_submission_present": true,
-  "orgdet_gap_test_submission_present": false,
+  "orgdet_test_submission_present": true,
+  "orgdet_gap_test_submission_present": true,
+  "orgdet_gap_test_identity_proven": true,
+  "new_submission_public_score": "0.602",
+  "new_submission_status": "complete",
+  "new_submission_refs": [
+    56583783
+  ],
   "is_competition_submission": false,
   "is_leaderboard_score": false,
-  "human_action": "Mahdi must Submit to Competition from the Kaggle UI on mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1 version 1 before the 2026-09-22 23:59 UTC entry deadline. Do not submit from the CLI. Do not submit orgdet-test, prune-test, or infer-family gap-test.",
-  "notes": "Read-only poll. Did not download submission.csv. Did not submit. Did not overwrite locked slugs. Association_v2 ref 56399003 public API string 0.553 is not an orgdet-gap-test leaderboard score."
+  "human_action": "Do not resubmit. Recorded publicScore 0.602 is orgdet-gap-test 56583783 only and is not a tune target. Do not invent extra digits. Do not poll this ref as pending.",
+  "notes": "Read-only poll. Did not download submission.csv. Did not submit. Did not overwrite locked slugs. Association_v2 ref 56399003 public API string 0.553 and orgdet-test 56466744 public 0.612 are not an orgdet-gap-test leaderboard score. Do not retune from 0.602."
 }

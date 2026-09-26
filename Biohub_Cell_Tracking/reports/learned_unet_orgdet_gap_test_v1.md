@@ -58,8 +58,21 @@ Decision `human_action_required_ui_submit`. Did **not** download the
 CSV. Did **not** submit. `0.553` is **not** this slug's leaderboard
 score. Prior poll **2026-09-22T12:42:26Z** is unchanged.
 
+## Submit poll (2026-09-26T19:55:35Z)
+
+Read-only. Kernel still **complete**. Outputs still
+`run_manifest.json` + `submission.csv`. Competition list now has three
+rows. Identity-proven row **56583783** is this notebook (`scriptVersionId`
+**351808956**), status **complete**, public API string **`0.602`**,
+private **not returned**. Decision `public_score_returned`. That
+**0.602** is **not** orgdet-test **0.612**, **not** association_v2
+**0.553**, and **not** a local official holdout score. Do **not**
+invent extra digits. Do **not** retune from **0.602**. Do **not**
+resubmit. Do **not** re-poll **56583783** as pending.
+
 ## Next
 
-`HUMAN_ACTION_REQUIRED` — Mahdi must UI-submit this slug version 1
-before **2026-09-22 23:59 UTC**. Do not submit orgdet-test / prune-test
-/ infer-family gap-test. Do not submit from the CLI.
+Do **not** resubmit this slug. Preferred unsubmitted worker is now
+`learned_unet_orgdet_gap_prune_test_v1` v1 (`READY_FOR_MANUAL_SUBMISSION_REVIEW`).
+Additional UI submit of that prune-test slug is **not** authorized
+unless a later message separately authorizes that extra click.

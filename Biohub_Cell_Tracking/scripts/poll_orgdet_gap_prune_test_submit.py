@@ -85,7 +85,8 @@ def main() -> None:
         "notes": (
             "Read-only poll. Did not download submission.csv. Did not submit. "
             "Did not overwrite locked slugs. Association_v2 ref 56399003 public "
-            "API string 0.553 and orgdet-test 56466744 public 0.612 are not an "
+            "API string 0.553, orgdet-test 56466744 public 0.612, and "
+            "orgdet-gap-test 56583783 public 0.602 are not an "
             "orgdet-gap-prune-test leaderboard score."
         ),
     }

@@ -106,10 +106,9 @@ This is a local official score, not a Kaggle leaderboard number.
 
 ## Next
 
-`learned_unet_orgdet_gap_prune_test_v1` is packaged (hash
-`52a30a5843e0a880`). Do **not** overwrite
-`mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1` v1. Until that
-new kernel is COMPLETE / `audit_ok`, orgdet-gap-test v1 remains the
-fallback packaged public-test worker. Do **not** submit from the CLI.
-Additional UI submit is **not** authorized until that rehearsal is
-marked `READY_FOR_MANUAL_SUBMISSION_REVIEW`.
+`learned_unet_orgdet_gap_prune_test_v1` v1 is **COMPLETE / inferred /
+`audit_ok`** (hash `52a30a5843e0a880`). Independent audit `audit_ok`.
+`READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** overwrite v1. Do
+**not** submit from the CLI. Additional UI submit is **not**
+authorized unless a later message separately authorizes that extra
+click. Public **0.602** is orgdet-gap-test **56583783** only.

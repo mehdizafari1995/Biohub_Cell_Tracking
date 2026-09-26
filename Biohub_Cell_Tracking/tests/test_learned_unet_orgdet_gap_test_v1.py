@@ -18,6 +18,8 @@ from biohub_tracking.learned_orgdet_gap_test import (  # noqa: E402
     ASSOCIATION_V2_SUBMISSION_REF,
     LOCKED_ORGDET_GAP_TEST_HASH,
     ORGDET_GAP_TEST_KERNEL_SLUG,
+    ORGDET_GAP_TEST_PUBLIC_SCORE,
+    ORGDET_GAP_TEST_SUBMISSION_REF,
     classify_orgdet_gap_test_submit_poll,
     orgdet_gap_test_config_hash,
     orgdet_gap_test_config_payload,
@@ -155,7 +157,28 @@ def test_classify_orgdet_gap_test_submit_poll_requires_ui_when_only_association_
         submissions=[association, {"ref": 999, "status": "pending", "publicScore": None}],
     )
     assert extra["decision"] == "new_submission_present"
-    assert extra["orgdet_gap_test_submission_present"] is True
+    assert extra["orgdet_gap_test_submission_present"] is False
+    scored = classify_orgdet_gap_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["submission.csv"],
+        submissions=[
+            association,
+            {
+                "ref": ORGDET_GAP_TEST_SUBMISSION_REF,
+                "status": "complete",
+                "publicScore": ORGDET_GAP_TEST_PUBLIC_SCORE,
+                "date": "2026-09-26T16:09:48.773Z",
+                "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
+                "scriptVersionId": 351808956,
+            },
+        ],
+    )
+    assert scored["decision"] == "public_score_returned"
+    assert scored["orgdet_gap_test_submission_present"] is True
+    assert scored["new_submission_public_score"] == ORGDET_GAP_TEST_PUBLIC_SCORE
+    assert scored["is_leaderboard_score"] is False
+    assert "not a tune target" in scored["human_action"]
     poll_src = (ROOT / "scripts" / "poll_orgdet_gap_test_submit.py").read_text()
     assert "list_competition_submissions" in poll_src
     assert "competitions/submit" not in poll_src
@@ -168,6 +191,7 @@ def test_classify_orgdet_gap_test_submit_poll_requires_ui_when_only_association_
     assert live["decision"] in {
         "human_action_required_ui_submit",
         "new_submission_present",
+        "public_score_returned",
         "wait_kernel",
         "kernel_missing_csv",
         "record_kernel_error",

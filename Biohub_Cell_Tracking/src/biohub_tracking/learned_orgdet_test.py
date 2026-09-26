@@ -228,16 +228,18 @@ def classify_orgdet_test_submit_poll(
     ]
     orgdet_rows = [row for row, label in zip(extra, extra_labels) if label == "orgdet_test"]
     identity_proven = bool(orgdet_rows)
-    newest = extra[0] if extra else None
+    newest = orgdet_rows[0] if orgdet_rows else (extra[0] if extra else None)
     newest_score = str((newest or {}).get("publicScore") or "").strip()
     newest_status = str((newest or {}).get("status") or "").strip().lower()
+    orgdet_score = str((orgdet_rows[0].get("publicScore") if orgdet_rows else "") or "").strip()
+    orgdet_status = str((orgdet_rows[0].get("status") if orgdet_rows else "") or "").strip().lower()
     if kernel_failed:
         decision = "record_kernel_error"
     elif not kernel_complete:
         decision = "wait_kernel"
     elif "submission.csv" not in names:
         decision = "kernel_missing_csv"
-    elif extra and newest_status == "complete" and newest_score:
+    elif orgdet_rows and orgdet_status == "complete" and orgdet_score:
         decision = "public_score_returned"
     elif extra:
         decision = "new_submission_present"

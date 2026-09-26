@@ -29,9 +29,20 @@ from .learned_orgdet_gap_prune import (
     LEARNED_ORGDET_GAP_PRUNE_LOCKED_TUNE,
     LOCKED_ORGDET_GAP_PRUNE_HASH,
 )
-from .learned_orgdet_gap_test import LOCKED_ORGDET_GAP_TEST_HASH, ORGDET_GAP_TEST_KERNEL_SLUG
+from .learned_orgdet_gap_test import (
+    LOCKED_ORGDET_GAP_TEST_HASH,
+    ORGDET_GAP_TEST_KERNEL_SLUG,
+    ORGDET_GAP_TEST_PUBLIC_SCORE,
+    ORGDET_GAP_TEST_SUBMISSION_REF,
+)
 from .learned_orgdet_holdout import LOCKED_ORGDET_HOLDOUT_HASH, ORGDET_HOLDOUT_KERNEL_SLUG
-from .learned_orgdet_test import LOCKED_ORGDET_TEST_HASH, ORGDET_TEST_KERNEL_SLUG
+from .learned_orgdet_test import (
+    LOCKED_ORGDET_TEST_HASH,
+    ORGDET_TEST_KERNEL_SLUG,
+    ORGDET_TEST_PUBLIC_SCORE,
+    ORGDET_TEST_SUBMISSION_REF,
+    classify_submission_notebook,
+)
 from .learned_orgop import LOCKED_ORGOP_HASH as REJECTED_ORGOP_HASH
 from .learned_orgop import ORGOP_KERNEL_SLUG
 from .learned_prune_test import LOCKED_PRUNE_TEST_HASH, PRUNE_TEST_KERNEL_SLUG
@@ -147,6 +158,10 @@ assert LEARNED_ORGDET_GAP_PRUNE_LOCKED_TUNE == 0.6934371804770478
 assert ORGDET_LOCKED_HOLDOUT == 0.7052260455024029
 assert ASSOCIATION_V2_SUBMISSION_REF == 56399003
 assert ASSOCIATION_V2_PUBLIC_SCORE == "0.553"
+assert ORGDET_TEST_SUBMISSION_REF == 56466744
+assert ORGDET_TEST_PUBLIC_SCORE == "0.612"
+assert ORGDET_GAP_TEST_SUBMISSION_REF == 56583783
+assert ORGDET_GAP_TEST_PUBLIC_SCORE == "0.602"
 
 
 def runtime_estimate(
@@ -203,28 +218,36 @@ def classify_orgdet_gap_prune_test_submit_poll(
     output_names: Sequence[str],
     submissions: Sequence[Mapping[str, Any]],
     association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
-    orgdet_test_ref: int = 56466744,
+    orgdet_test_ref: int = ORGDET_TEST_SUBMISSION_REF,
+    orgdet_gap_test_ref: int = ORGDET_GAP_TEST_SUBMISSION_REF,
 ) -> dict[str, Any]:
     """Classify a read-only orgdet-gap-prune-test submit poll. Never submits.
 
-    Known competition rows (association_v2 ``56399003`` and orgdet-test
-    ``56466744``) are not this kernel. Do not treat their public scores as
-    this slug's result.
+    Known competition rows (association_v2 ``56399003``, orgdet-test
+    ``56466744``, and orgdet-gap-test ``56583783``) are not this kernel.
+    Do not treat their public scores as this slug's result.
     """
     names = [str(name) for name in output_names]
     rows = [dict(row) for row in submissions]
     refs = [row.get("ref") for row in rows]
-    known = {str(association_ref), str(orgdet_test_ref)}
-    extra = [row for row in rows if str(row.get("ref")) not in known]
+    known = {str(association_ref), str(orgdet_test_ref), str(orgdet_gap_test_ref)}
+    labels = [classify_submission_notebook(row.get("kernelSlug"), row.get("ref")) for row in rows]
+    prune_rows = [row for row, label in zip(rows, labels) if label == "orgdet_gap_prune_test"]
+    extra = [
+        row
+        for row, label in zip(rows, labels)
+        if str(row.get("ref")) not in known and label != "orgdet_gap_prune_test"
+    ]
     association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
     orgdet_test = [row for row in rows if str(row.get("ref")) == str(orgdet_test_ref)]
+    orgdet_gap_test = [row for row in rows if str(row.get("ref")) == str(orgdet_gap_test_ref)]
     if kernel_failed:
         decision = "record_kernel_error"
     elif not kernel_complete:
         decision = "wait_kernel"
     elif "submission.csv" not in names:
         decision = "kernel_missing_csv"
-    elif extra:
+    elif prune_rows or extra:
         decision = "new_submission_present"
     else:
         decision = "human_action_required_ui_submit"
@@ -238,7 +261,8 @@ def classify_orgdet_gap_prune_test_submit_poll(
         "submission_refs": refs,
         "association_v2_submission_present": bool(association),
         "orgdet_test_submission_present": bool(orgdet_test),
-        "orgdet_gap_prune_test_submission_present": bool(extra),
+        "orgdet_gap_test_submission_present": bool(orgdet_gap_test),
+        "orgdet_gap_prune_test_submission_present": bool(prune_rows),
         "is_competition_submission": False,
         "is_leaderboard_score": False,
         "human_action": (
@@ -247,7 +271,8 @@ def classify_orgdet_gap_prune_test_submit_poll(
             "version 1 only after READY_FOR_MANUAL_SUBMISSION_REVIEW and a "
             "later authorizing message. Do not submit from the CLI. Do not "
             "submit orgdet-gap-test, orgdet-test, prune-test, or infer-family "
-            "gap-test unless separately authorized."
+            "gap-test unless separately authorized. Public 0.602 is "
+            "orgdet-gap-test 56583783 only and is not this slug."
             if decision == "human_action_required_ui_submit"
             else None
         ),
@@ -265,6 +290,8 @@ def refuse_overwrite_locked_slugs(slug: str) -> None:
         raise ValueError("refusing to overwrite locked learned_unet_orgdet_test_v1 slug")
     if slug == ORGDET_GAP_TEST_KERNEL_SLUG:
         raise ValueError("refusing to overwrite locked learned_unet_orgdet_gap_test_v1 slug")
+    if slug == ORGDET_GAP_PRUNE_TEST_KERNEL_SLUG:
+        raise ValueError("refusing to overwrite locked learned_unet_orgdet_gap_prune_test_v1 slug")
 
 
 def compare_prune_vs_gap_counts(
@@ -308,6 +335,8 @@ __all__ = [
     "LOCKED_ORGDET_GAP_PRUNE_TEST_HASH",
     "ORGDET_GAP_PRUNE_TEST_KERNEL_SLUG",
     "ORGDET_GAP_TEST_KERNEL_SLUG",
+    "ORGDET_GAP_TEST_PUBLIC_SCORE",
+    "ORGDET_GAP_TEST_SUBMISSION_REF",
     "classify_orgdet_gap_prune_test_submit_poll",
     "compare_prune_vs_gap_counts",
     "hidden_projection_from_rehearsal",

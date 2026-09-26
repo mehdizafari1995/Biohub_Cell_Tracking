@@ -797,6 +797,30 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Guards:** does **not** overwrite orgdet-gap-test / orgdet-test / prune-test / gap-test / no-gap test. New slug is not in `FORBIDDEN_SLUGS` until v1 COMPLETE.
 - **Competition submit:** not performed. No public or private leaderboard score. Do **not** submit from the CLI.
 
+## learned_unet_orgdet_gap_test_v1_submit_poll (2026-09-26T19:55:35Z)
+
+- **Status:** read-only poll of `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`. Kernel still **complete**. Outputs still `run_manifest.json` + `submission.csv`. Did **not** download `submission.csv`. Did **not** submit. Did **not** overwrite v1.
+- **Config hash:** `1ce4837ae16bee52`.
+- **Competition list (Kaggle-returned, sanitized):** three rows.
+  - new row **56583783**, status **complete**, date **2026-09-26T16:09:48.773Z**, `fileName` `submission.csv`, public API string **`0.602`**, private score **not returned**, `scriptVersionId` **351808956**, notebook `mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1`.
+  - orgdet-test **56466744**, status **complete**, public API string **`0.612`**, `scriptVersionId` **351557863**.
+  - association_v2 **56399003**, status **complete**, public API string **`0.553`**, `scriptVersionId` **351174414**.
+- **Identity:** proven orgdet-gap-test from the relative `/code/` path. Not association_v2, not orgdet-test, not prune-test, not infer-family gap-test, and **not** `mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1`.
+- **Decision:** `public_score_returned`.
+- **Kaggle-returned public score for this slug:** **`0.602`** (API string; no extra digits). Private score **not returned**. This is **not** a local official holdout score and **not** an orgdet-test score. Do **not** invent extra digits. Do **not** use **0.602**, **0.612**, or **0.553** for tuning. Do **not** resubmit. Do **not** re-poll **56583783** as pending.
+
+## learned_unet_orgdet_gap_prune_test_v1_kernel
+
+- **Status:** private GPU test-time kernel `mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1` version **1 COMPLETE / inferred** at **2026-09-26T19:54:59Z**. Internet off. Discover `test/*.zarr`. **Not submitted.**
+- **Config hash:** `52a30a5843e0a880`. Parent overlay `862e3e7f7ac0330e`. Does **not** overwrite orgdet-gap-test v1.
+- **Output:** `/kaggle/working/submission.csv` 20 766 993 bytes, 396 947 rows, 201 671 nodes, 195 276 edges, 9 499 gap links, 13 629 interpolated, **467 dropped isolates**, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Worker:** 331.08 s (0.83 s/frame), peak RAM 1164 MB.
+- **Holdout overlap:** `6bba_05db0fb1` 88777/86287 matches locked orgdet-gap-prune holdout overlay. Frozen `6bba` was not official-scored again.
+- **Versus locked orgdet-gap-test:** edges stayed **195276**; nodes **202138 → 201671**.
+- **Hidden-test projection:** 82.77 s/volume × 199 ≈ **4.58 h**, under 12 h.
+- **Competition submit:** not performed. This slug is **not** on the competition list. Public **0.602** is orgdet-gap-test **56583783** only.
+- **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Additional UI click is **not** authorized unless a later message separately authorizes it.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

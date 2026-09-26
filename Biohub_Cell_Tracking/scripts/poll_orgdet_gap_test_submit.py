@@ -79,7 +79,8 @@ def main() -> None:
         "notes": (
             "Read-only poll. Did not download submission.csv. Did not submit. "
             "Did not overwrite locked slugs. Association_v2 ref 56399003 public "
-            "API string 0.553 is not an orgdet-gap-test leaderboard score."
+            "API string 0.553 and orgdet-test 56466744 public 0.612 are not an "
+            "orgdet-gap-test leaderboard score. Do not retune from 0.602."
         ),
     }
     args.report.parent.mkdir(parents=True, exist_ok=True)
