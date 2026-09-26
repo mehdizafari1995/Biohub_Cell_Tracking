@@ -847,6 +847,16 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Additional UI click is **not** authorized unless a later message separately authorizes it.
 - **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_elf_error_decomp_44b6 / learned_unet_orgdet_fnn_v1_tune / holdout
+
+- **Status:** local official-scorer 44b6 ELF residue, then one preregistered forward-NN keep overlay. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Decomp:** locked ELF combined matched **0.709838**. Official residue **910 / 203 / 140**. Predicted divisions **0**. 30/203 conflict FPs were not the source NN at t+1 versus 10/910 TPs. Turning / degree / all-interp / another 8.0 µm dt=1 filter stayed closed.
+- **Config hash:** `95e9300eb84ba71c`. Parent ELF `292c4f1f968f948d`. Gate official 44b6 **> 0.709838 + 0.002000** = **0.711838**. Hash locked before the 44b6 score.
+- **Official 44b6:** **0.724653** vs ELF **0.709838** (delta **+0.014815**). Edge Jaccard 0.74020. Recall 0.974. Divisions 0/0/2. Dropped 2949 non-forward-NN dt=1 edges. Runtime 72.14 s, peak 530 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_v1`.
+- **Official one-shot 6bba:** **0.752091** vs ELF **0.737787**. Edge Jaccard 0.77110. Recall 0.955. Divisions 0/0/5. Dropped 3566 non-forward-NN dt=1 edges. Runtime 114.96 s, peak 734 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_v1`. New holdout champion. Do **not** score 6bba again.
+- **Public-test worker:** not packaged this cycle. Next run should package `mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1` without overwriting elf-test v1.
+- **Public 0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
