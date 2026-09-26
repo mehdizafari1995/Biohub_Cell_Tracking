@@ -8,7 +8,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 2. Keep draft PR #4 (`cursor/competition-operational-strategy-3381`) open. Official holdout is done. Do **not** retune.
 3. Keep draft PR #5 (`cursor/complementary-detection-v1`) open. `reject_complementary_v1`. Do **not** retune.
 4. Keep draft PR #6 (`cursor/linkable-complementary-v1`) open. `reject_linkable_v1`. Do **not** retune.
-5. Continue draft PR #7 (`cursor/learned-unet-v1`). Holdout champion is `learned_unet_orgdet_gap_prune_v1` hash `862e3e7f7ac0330e`: official 44b6 **0.693437 vs orgdet-gap 0.687221**; official 6bba **0.723018 vs 0.722805**. Preferred public-test worker is `learned_unet_orgdet_gap_prune_test_v1` hash `52a30a5843e0a880` v1 **COMPLETE / inferred / `audit_ok`**. `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** retune. Do **not** score 6bba again. Do **not** overwrite v1. `learned_unet_orgilp_v1` hash `dbc6134cddf2048d` official 44b6 **0.676811 vs 0.687221** is **rejected**. Retrain lanes remain rejected. Do **not** attach 199-video public weights.
+5. Continue draft PR #7 (`cursor/learned-unet-v1`). Holdout champion is `learned_unet_orgdet_gap_prune_v1` hash `862e3e7f7ac0330e`: official 44b6 **0.693437 vs orgdet-gap 0.687221**; official 6bba **0.723018 vs 0.722805**. Preferred public-test worker is `learned_unet_orgdet_gap_prune_test_v1` hash `52a30a5843e0a880` v1 **COMPLETE / inferred / `audit_ok`**. `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Do **not** retune. Do **not** score 6bba again. Do **not** overwrite v1. `learned_unet_orgdet_tcf_v1` hash `a6b46dfcf410478f` official 44b6 **0.695181 vs 0.693437** missed the preregistered **+0.002000** gate (**0.695437**) and is **rejected**. Frozen `6bba` was not opened. Do **not** retune fragment length. `learned_unet_orgilp_v1` hash `dbc6134cddf2048d` official 44b6 **0.676811 vs 0.687221** is **rejected**. Retrain lanes remain rejected. Do **not** attach 199-video public weights.
 6. Do **not** submit any learned slug from the CLI.
 
 ## Next (this family)
@@ -20,8 +20,9 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 5. Keep `learned_unet_orgdet_test_v1` locked. Hash `c45c859610d29e90`. Kernel v1 COMPLETE / `audit_ok`. UI submit ref **56466744** public API **`0.612`**. Do **not** overwrite v1. Do **not** resubmit. Do **not** retune from **0.612**.
 6. Keep `learned_unet_orgilp_v1` rejected. Hash `dbc6134cddf2048d`. Official 44b6 **0.676811**. Frozen `6bba` not opened. Do **not** retune. Do **not** launch `learned_unet_orgilp_gap_v1`.
 7. Keep `learned_unet_retrain` 44b6 lanes rejected. Do **not** retune. Do **not** open `6bba` for retrain.
-8. Keep rejected overlays (link/motion/hung/conflict/orgop/orgilp/division) closed. Do not retune.
-9. If continuing independent improvement on PR #7, pick one new 44b6-first hypothesis that is **not** a rejected overlay and is not another 12 µm assignment. Preregister the hash and rejection threshold before scoring. Open frozen 6bba only after a strict 44b6 win versus **0.693437**. Do **not** use **0.602**, **0.612**, or **0.553** for tuning.
+8. Keep rejected overlays (link/motion/hung/conflict/orgop/orgilp/division/tcf) closed. Do not retune.
+9. Keep `learned_unet_orgdet_tcf_v1` rejected. Hash `a6b46dfcf410478f`. Official 44b6 **0.695181** vs prune **0.693437** (delta **+0.001743**, gate **+0.002000**). Frozen `6bba` not opened. Do **not** retune `min_component_nodes`. Do **not** relaunch TCF.
+10. If continuing independent improvement on PR #7, pick one new 44b6-first hypothesis that is **not** a rejected overlay, is not another 12 µm assignment, and is **not** another short-fragment length retune. Preregister the hash and rejection threshold before scoring. Open frozen 6bba only after a strict 44b6 win versus **0.693437** of at least **+0.002000**. Do **not** use **0.602**, **0.612**, or **0.553** for tuning.
 
 ## HUMAN_ACTION_REQUIRED
 
@@ -30,7 +31,7 @@ Use issue #1 as the command channel. Do one highest-priority unblocked task per 
 
 ## Later (blocked or expensive)
 
-- complementary_v1, linkable_v1, learned_unet_division_v1, learned_unet_link_v1, learned_unet_link_v2, learned_unet_motion_v1, learned_unet_hung_v1, learned_unet_conflict_v1, learned_unet_orgop_v1, learned_unet_orgilp_v1, and the `learned_unet_retrain` 44b6 lanes are closed.
+- complementary_v1, linkable_v1, learned_unet_division_v1, learned_unet_link_v1, learned_unet_link_v2, learned_unet_motion_v1, learned_unet_hung_v1, learned_unet_conflict_v1, learned_unet_orgop_v1, learned_unet_orgilp_v1, learned_unet_orgdet_tcf_v1, and the `learned_unet_retrain` 44b6 lanes are closed.
 - Copying public 199-video / DeepCenter checkpoints is forbidden for any KEEP_CANDIDATE path.
 - **56466744** and **56583783** are terminal. Public API **`0.612`** and **`0.602`** are recorded. Do not re-poll them as pending. Do not invent extra digits. Do not retune from **0.612**, **0.602**, or **0.553**. Additional UI submit of prune-test remains unauthorized unless a later message separately authorizes that extra click.
 

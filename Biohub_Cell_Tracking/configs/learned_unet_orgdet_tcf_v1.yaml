@@ -1,0 +1,41 @@
+# learned_unet_orgdet_tcf_v1 — drop short temporally inconsistent
+# fragments after locked learned_unet_orgdet_gap_prune_v1.
+# Detection / consecutive dt=1 / gap gates stay at orgdet+gap+prune
+# (862e3e7f7ac0330e). This is not another 12 µm assignment.
+# 44b6 error decomp: association-dominated FN; size<=7 fragments had
+# 0 sparse-GT matches on both tuning sequences. Tune on 44b6 only.
+# Official 44b6 must exceed prune 0.693437 by >= 0.002000
+# (threshold 0.695437). Do not open 6bba until that keep.
+# Do not overwrite locked slugs. Not a competition submission.
+
+label: learned_unet_orgdet_tcf_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+orgdet_label: learned_unet_orgdet_v1
+orgdet_gap_label: learned_unet_orgdet_gap_v1
+orgdet_gap_prune_label: learned_unet_orgdet_gap_prune_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+orgdet_config_hash: 80b20589198148b7
+orgdet_gap_config_hash: ee31f36151325f9a
+orgdet_gap_prune_config_hash: 862e3e7f7ac0330e
+source_graphs: locked_learned_unet_orgdet_graphs
+retunes_detection: true
+retunes_consecutive_links: false
+retunes_gap_gates: false
+uses_intensity: false
+uses_transformer: false
+uses_velocity: false
+uses_ilp: false
+linker: orgdet_gap_prune_then_drop_short_fragments
+min_component_nodes: 8
+safe_short_track_max_nodes: 7
+drop_short_fragments: true
+assignment: unchanged_locked_orgdet_gap_prune
+tune_keep_threshold: 0.6954371804770478
+tune_margin: 0.002
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false

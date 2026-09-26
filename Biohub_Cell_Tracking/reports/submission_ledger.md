@@ -821,6 +821,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Competition submit:** not performed. This slug is **not** on the competition list. Public **0.602** is orgdet-gap-test **56583783** only.
 - **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Additional UI click is **not** authorized unless a later message separately authorizes it.
 
+## learned_unet_orgdet_error_decomp_44b6 / learned_unet_orgdet_tcf_v1_tune
+
+- **Status:** local official-scorer 44b6-only error decomposition, then one preregistered short-fragment TCF overlay. **Not a Kaggle run. Not a leaderboard score.** Frozen `6bba` was **not** opened.
+- **Decomp:** locked orgdet / orgdet-gap / orgdet-gap-prune combined scores matched **0.679578 / 0.687221 / 0.693437**. Prune residue official **908 / 229 / 142**. Detection FN edges **27**, association FN edges **115**. Unsupported t±1 leftovers **0**. Size≤7 fragments **1954** nodes with **0** sparse-GT matches.
+- **Config hash:** `a6b46dfcf410478f`. Parent prune `862e3e7f7ac0330e`. Gate official 44b6 **> 0.693437 + 0.002000** = **0.695437**.
+- **Official 44b6:** **0.695181** vs prune **0.693437** (delta **+0.001743**). Edge Jaccard unchanged. Dropped 1954 nodes. Runtime 10.63 s, peak 512 MB.
+- **Decision:** `reject_learned_unet_orgdet_tcf_v1`. Do **not** retune fragment length. Do **not** score 6bba. Do **not** use public **0.602** / **0.612** / **0.553**.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
