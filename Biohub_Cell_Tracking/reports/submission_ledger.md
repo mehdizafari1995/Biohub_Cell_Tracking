@@ -908,6 +908,14 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_orgdet_fnn_div_v1 **0.724653** vs locked FNN **0.724653**. Official TP/FP/FN **906 / 174 / 144** identical to FNN. Divisions **0/0/2**. Extra edges **51** (16 + 35 unmatched forks). Official event scorer recovered **0 / 2** annotated forks. Runtime 16.1 s, peak 514 MB. Decision `reject_learned_unet_orgdet_fnn_div_v1`. Do not retune. Do not open `6bba`.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_v1_tune_and_holdout
+
+- **Status:** local official scorer on both frozen-tuning `44b6` sequences, then one-shot frozen `6bba`. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Config hash:** `a66075085ac64400`. Parent FNN `95e9300eb84ba71c`. Appearance from the two exported tuning Zarrs, then holdout Zarrs after the 44b6 keep. No kernel.
+- **Local official tuning:** learned_unet_orgdet_fnn_acf_v1 **0.734620** vs locked FNN **0.724653**. Official TP/FP/FN **907 / 160 / 143**. Divisions **0/0/2**. Dropped **1657** inconsistent dt=1 edges. Runtime 15.11 s, peak 562 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_acf_v1`.
+- **Local official holdout:** learned_unet_orgdet_fnn_acf_v1 **0.755503** vs locked FNN **0.752091**. Official TP/FP/FN **1462 / 205 / 221**. Divisions **0/0/5**. Dropped **879** inconsistent dt=1 edges. Runtime 13.63 s, peak 767 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_acf_v1`. New holdout champion. Do not score 6bba again.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
