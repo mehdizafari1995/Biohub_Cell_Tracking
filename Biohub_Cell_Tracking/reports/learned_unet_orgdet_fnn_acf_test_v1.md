@@ -1,7 +1,7 @@
 # learned_unet_orgdet_fnn_acf_test_v1
 
 Same family as `learned_unet_orgdet_fnn_acf_v1` (draft PR #7). Do **not**
-merge. Do **not** overwrite
+merge. Do **not** overwrite this slug or
 `mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1` v1,
 fnn-test v1, or elf-test v1. Do **not** retune hash `2d13d0e3c90df093`.
 Do **not** score frozen `6bba` again. Do **not** submit.
@@ -31,28 +31,46 @@ Do **not** retune `max_rel_appearance`.
 ## Kernel
 
 Private GPU slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1`
-packaged. Internet off. Attaches competition +
-`mahdimzafari/biohub-learned-unet-v1`.
+version **1 COMPLETE / inferred** at 2026-09-27. Internet off. Attaches
+competition + `mahdimzafari/biohub-learned-unet-v1`.
 **Not a competition submission. Not a leaderboard score.**
 
-## Cost estimate (before rehearsal)
+| metric | orgdet-fnn-fast-test v1 | orgdet-fnn-acf-test v1 |
+|---|---|---|
+| nodes | 197058 | **196290** |
+| edges | 180125 | **178473** |
+| gap links | 9499 | **9499** |
+| interpolated | 13629 | **13629** |
+| dropped isolates | 5080 | **5848** |
+| dropped long dt=1 | 7441 | **7441** |
+| dropped non-forward-NN | 7710 | **7710** |
+| dropped inconsistent dt=1 | — | **1652** |
+| divisions | 0 | 0 |
+| runtime | 320.23 s | **323.98 s** |
+| peak RAM | 1186 MB | **1187 MB** |
+| worker audit | ok | ok |
+| independent audit | ok | ok |
 
-- Public: fnn-fast-test measured **320.23 s / 4 volumes** plus **15 s**
-  3×3×3-mean appearance filter ≈ **380 s**
-- Hidden: **95.06 s/volume × 199 ≈ 5.25 h**, peak ~1.2 GB, under the
-  12 h GPU limit and the 90% fail-closed gate
-- A local package is not a Kaggle run
+Per-sequence: `44b6_0113de3b` 26352/24745, `44b6_0b24845f` 74670/65853,
+`6bba_05b6850b` 8159/7369, `6bba_05db0fb1` **87109/80506** matches
+locked orgdet-fnn-acf holdout overlay (626 inconsistent dt=1).
+
+Hidden-test projection from this rehearsal: **80.99 s/volume × 199 ≈
+4.48 h**, peak ~1.2 GB, under the 12 h GPU limit and the 90%
+fail-closed gate.
 
 ## Status
 
-**PACKAGED AND PUSHED.** Version **1 running**. New slug is **not**
-in `FORBIDDEN_SLUGS` until v1 COMPLETE. Preferred packaged public-test
-worker remains fnn-fast-test until this kernel is COMPLETE / `audit_ok`.
-Do **not** overwrite fnn-fast-test v1. Do **not** push a second version.
-Do **not** submit from the CLI.
+**READY_FOR_MANUAL_SUBMISSION_REVIEW.** Label
+`KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`. Preferred packaged public-test
+worker for the ACF holdout champion. CSV stays under ignored
+`artifacts/kaggle/`. Slug is in `FORBIDDEN_SLUGS`. Do **not** overwrite
+v1.
 
 ## Next
 
-Poll until COMPLETE. Collect into ignored `artifacts/kaggle/`. Do
-**not** submit. Do **not** score 6bba again. Do **not** retune
-`max_rel_appearance`. Do **not** use **0.602**, **0.612**, or **0.553**.
+Do **not** submit this slug from the CLI. Additional UI submit is
+**not** authorized unless a later message separately authorizes that
+extra click. Do **not** retune from **0.602**, **0.612**, or **0.553**.
+A later 44b6-first hypothesis must still beat ACF **0.734620** by
+**+0.002000**.

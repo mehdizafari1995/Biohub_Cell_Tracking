@@ -916,11 +916,15 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official holdout:** learned_unet_orgdet_fnn_acf_v1 **0.755503** vs locked FNN **0.752091**. Official TP/FP/FN **1462 / 205 / 221**. Divisions **0/0/5**. Dropped **879** inconsistent dt=1 edges. Runtime 13.63 s, peak 767 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_acf_v1`. New holdout champion. Do not score 6bba again.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
-## learned_unet_orgdet_fnn_acf_test_v1_packaged
+## learned_unet_orgdet_fnn_acf_test_v1_packaged / complete
 
-- **Status:** private GPU public-test notebook packaged. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1`. Hash `2d13d0e3c90df093`. Parent overlay `a66075085ac64400` (official 44b6 **0.734620**; official 6bba **0.755503**). Parent fnn-fast-test `9b9763e26bc0f037`. Vectorized FNN then 3×3×3-mean appearance filter. Does **not** overwrite fnn-fast-test v1, fnn-test v1, or elf-test v1. **Not a competition submission. Not a leaderboard score.**
-- **Estimate:** fnn-fast-test 320.23 s public + 15 s appearance filter. Hidden **5.25 h**, under 12 h.
-- **Guards:** does **not** overwrite fnn-fast-test v1. New slug is not in `FORBIDDEN_SLUGS` until v1 COMPLETE. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
+- **Status:** private GPU public-test notebook packaged, pushed, and **COMPLETE / inferred**. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1`. Hash `2d13d0e3c90df093`. Parent overlay `a66075085ac64400` (official 44b6 **0.734620**; official 6bba **0.755503**). Parent fnn-fast-test `9b9763e26bc0f037`. Vectorized FNN then 3×3×3-mean appearance filter. Does **not** overwrite fnn-fast-test v1, fnn-test v1, or elf-test v1. **Not a competition submission. Not a leaderboard score.**
+- **Output:** `/kaggle/working/submission.csv` 19 585 900 bytes, 374 763 rows, 196 290 nodes, 178 473 edges, 9 499 gap links, 13 629 interpolated, **5 848 dropped isolates**, **7 441 long dt=1**, **7 710 non-forward-NN**, **1 652 inconsistent dt=1**, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Holdout overlap:** `6bba_05db0fb1` **87109/80506** matches locked orgdet-fnn-acf holdout overlay. Gap / long-dt1 / non-forward-NN counts match fnn-fast-test (9499 / 7441 / 7710).
+- **Hidden-test projection:** 80.99 s/volume × 199 ≈ **4.48 h**, under 12 h and the 90% fail-closed gate. Runtime **323.98 s** vs parent fnn-fast-test **320.23 s**. Peak RAM 1187 MB.
+- **Competition submit:** not performed. This slug is **not** on the competition list.
+- **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Preferred packaged public-test worker for the ACF holdout champion. Additional UI click is **not** authorized unless a later message separately authorizes it.
+- **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** overwrite fnn-fast-test v1, fnn-test v1, or elf-test v1. Do **not** submit from the CLI. Do **not** retune `max_rel_appearance`. Public **0.602 / 0.612 / 0.553** were not used.
 
 ## Policy
 

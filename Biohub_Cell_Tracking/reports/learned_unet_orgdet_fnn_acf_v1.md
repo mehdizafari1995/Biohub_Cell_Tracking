@@ -104,7 +104,8 @@ holdout champion. Public **0.602 / 0.612 / 0.553** were not used.
 
 ## Next
 
-Package `learned_unet_orgdet_fnn_acf_test_v1` only. Do **not** overwrite
+Public-test ACF worker `learned_unet_orgdet_fnn_acf_test_v1` v1 is
+**COMPLETE / inferred / `audit_ok`**. Do **not** overwrite that slug,
 fnn-fast-test v1, fnn-test v1, or elf-test v1. Do **not** submit from
 the CLI. Do **not** score 6bba again. Do **not** retune
 `max_rel_appearance`.

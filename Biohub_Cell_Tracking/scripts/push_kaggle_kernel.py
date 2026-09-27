@@ -58,6 +58,8 @@ FORBIDDEN_SLUGS = {
     "mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1",
     # Faster FNN test-time v1 COMPLETE / inferred 2026-09-27. Public-test CSV locked. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1",
+    # ACF test-time v1 COMPLETE / inferred 2026-09-27. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
     # Retrain v1 COMPLETE / trained 2026-09-22. Hash 92a419926fa7e40b. Do not overwrite.
     "mahdimzafari/biohub-learned-unet-retrain-v1",
     # Retrain lane A v2 COMPLETE / inferred 2026-09-22. 44b6 graphs locked. Do not overwrite.
