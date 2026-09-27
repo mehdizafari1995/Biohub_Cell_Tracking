@@ -45,14 +45,14 @@ packaged. Internet off. Attaches competition +
 
 ## Status
 
-**PACKAGED.** New slug is **not** in `FORBIDDEN_SLUGS` until v1
-COMPLETE. Preferred packaged public-test worker remains fnn-fast-test
-until this kernel is COMPLETE / `audit_ok`. Do **not** overwrite
-fnn-fast-test v1. Do **not** submit from the CLI.
+**PACKAGED AND PUSHED.** Version **1 running**. New slug is **not**
+in `FORBIDDEN_SLUGS` until v1 COMPLETE. Preferred packaged public-test
+worker remains fnn-fast-test until this kernel is COMPLETE / `audit_ok`.
+Do **not** overwrite fnn-fast-test v1. Do **not** push a second version.
+Do **not** submit from the CLI.
 
 ## Next
 
-Push this new slug only. Poll until COMPLETE. Collect into ignored
-`artifacts/kaggle/`. Do **not** submit. Do **not** score 6bba again.
-Do **not** retune `max_rel_appearance`. Do **not** use **0.602**,
-**0.612**, or **0.553**.
+Poll until COMPLETE. Collect into ignored `artifacts/kaggle/`. Do
+**not** submit. Do **not** score 6bba again. Do **not** retune
+`max_rel_appearance`. Do **not** use **0.602**, **0.612**, or **0.553**.

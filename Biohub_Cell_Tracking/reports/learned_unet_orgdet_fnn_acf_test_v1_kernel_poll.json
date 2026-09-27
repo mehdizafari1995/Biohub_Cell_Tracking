@@ -1,0 +1,27 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
+  "polled_utc": "2026-09-27T06:05:56Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
+    "status": "running",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": false,
+    "is_error": false,
+    "is_running": true,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [],
+  "decision": "status_only",
+  "orgdet_fnn_acf_test_config_hash": "2d13d0e3c90df093",
+  "code_version": "2d9eb3d",
+  "downloaded": false,
+  "extracted": {},
+  "is_kaggle_run": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "Private GPU orgdet-fnn-acf test-time poll. Not a competition submission. CSV stays under ignored artifacts/kaggle/. Not a leaderboard score. Do not score frozen 6bba holdout again. Do not overwrite mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1."
+}
