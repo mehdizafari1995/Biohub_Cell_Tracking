@@ -545,6 +545,32 @@ Private **GPU** test-time notebook. Same locked overlay as `learned_unet_orgdet_
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_orgdet_fnn_rank_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_fnn_rank_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_fnn_rank_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_fnn_rank_v1",
+        "code_file": "kaggle_learned_unet_orgdet_fnn_rank_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-fnn-rank-v1",
+        "title": "Biohub Learned UNet Orgdet Fnn Rank V1",
+        "enable_gpu": True,
+        "kernel_sources": [
+            "mahdimzafari/biohub-learned-unet-orgop-v1",
+            "mahdimzafari/biohub-geff-export",
+            "mahdimzafari/biohub-tuning-zarr-export",
+        ],
+        "markdown": """# Biohub learned_unet_orgdet_fnn_rank_v1
+
+Private **GPU** 44b6-only helper. **Not a competition submission.**
+
+- New slug. Hash `2748c4a2b2823c0a`. Parent FNN `95e9300eb84ba71c`.
+- Prefer already exported tuning Zarrs `44b6_12dfb391` / `44b6_267148e4`. Do **not** open a 69-volume train.
+- Ranks locked-envelope candidates, then constrained 1-in / 2-out selection. Hard negatives. 44b6 only.
+- Official 44b6 must exceed FNN **0.724653** by **≥ 0.002000** (gate **0.726653**) before any `6bba` look.
+- Writes JSON graphs + `rank_manifest.json`. Does **not** write `submission.csv`.
+- Attach the competition dataset, `biohub-learned-unet-orgop-v1`, `biohub-geff-export`, and `biohub-tuning-zarr-export`. **Internet OFF**. **GPU ON**.
+- Do **not** overwrite fnn-fast-test v1 or any locked slug. Do **not** Submit to Competition.
+""",
+    },
     "learned_unet_retrain_v1": {
         "source": "notebooks/kaggle_learned_unet_retrain_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_retrain_v1.ipynb",

@@ -882,7 +882,7 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Status:** local official-scorer 44b6 FNN detector oracle, then one preregistered learned-ranking hypothesis. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
 - **Restore:** ignored `biohub-geff-export` + `biohub-learned-unet-orgop-v1` outputs. Locked FNN rebuild official **0.724653** (exact match). Frozen `6bba` was not opened.
 - **Oracle:** GT edges 1050; both endpoints detected 1023; detection-unavoidable 27 (2.57%); association-fixable in-candidate 113; candidate-edge recall **0.996**. Official candidate-oracle **1.048979** (1019/0/31, divisions 2/0/0). Official detection-oracle **1.052563** (1023/0/27, divisions 2/0/0). Runtime 29.49 s, peak 516.5 MB.
-- **Config hash:** `2748c4a2b2823c0a`. Parent FNN `95e9300eb84ba71c`. Gate official 44b6 **> 0.724653 + 0.002000** = **0.726653**. Hash locked before any ranker score. Status `preregistered_not_scored`.
+- **Config hash:** `2748c4a2b2823c0a`. Parent FNN `95e9300eb84ba71c`. Gate official 44b6 **> 0.724653 + 0.002000** = **0.726653**. Hash locked before any ranker score. Later official-scored and rejected (see below).
 - **Public-test worker:** unchanged. FNN-fast-test v1 stays COMPLETE / READY / not submission-authorized.
 - **Public 0.602 / 0.612 / 0.553** were not used.
 
@@ -892,6 +892,21 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Result:** `canary_ok`. Finite link loss 1.361 → 8.50e-5, nonzero pair-head grads 0.547, ranking **6 / 6**, min true−hard logit **20.677**, reload max abs **0.0**, 1.12 s, 375.4 MB.
 - **Graph pairs:** 6 true / 5 hard-negative / 5 out-of-envelope excluded; two-child fork allowed; dt ∈ {1, 2}.
 - **Guards:** does **not** overwrite fnn-fast-test v1. Does **not** launch a ranker helper. Public **0.602 / 0.612 / 0.553** were not used.
+
+## learned_unet_orgdet_fnn_rank_v1_tune
+
+- **Status:** local official scorer on both frozen-tuning `44b6` sequences. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.** Frozen `6bba` was not opened.
+- **Config hash:** `2748c4a2b2823c0a`. Parent FNN `95e9300eb84ba71c`. Helper packaged as `mahdimzafari/biohub-learned-unet-orgdet-fnn-rank-v1`. **Not pushed.**
+- **Local official tuning:** learned_unet_orgdet_fnn_rank_v1 **0.006663** vs locked FNN **0.724653**. Official TP/FP/FN **8 / 124 / 1042**. Divisions **0/309/2**. Recall 0.974. 1751832 envelope candidates; 1019 true / 1750813 hard. Runtime 405.9 s, peak 3814 MB. Decision `reject_learned_unet_orgdet_fnn_rank_v1`. Do not retune. Do not open `6bba`.
+- **Cutoff defect:** a first pass with an extra logit>0 cutoff wrote 0 edges (official **0.0**). That cutoff is not in the locked payload. Rank-order + constraints was the scored operating point.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
+## learned_unet_orgdet_fnn_div_v1_tune
+
+- **Status:** local official scorer on both frozen-tuning `44b6` sequences. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.** Frozen `6bba` was not opened.
+- **Config hash:** `e184e6ce5bd90e46`. Parent FNN `95e9300eb84ba71c`. Division gates `0fa756963e5d42d1`. No kernel.
+- **Local official tuning:** learned_unet_orgdet_fnn_div_v1 **0.724653** vs locked FNN **0.724653**. Official TP/FP/FN **906 / 174 / 144** identical to FNN. Divisions **0/0/2**. Extra edges **51** (16 + 35 unmatched forks). Official event scorer recovered **0 / 2** annotated forks. Runtime 16.1 s, peak 514 MB. Decision `reject_learned_unet_orgdet_fnn_div_v1`. Do not retune. Do not open `6bba`.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
 ## Policy
 

@@ -6,9 +6,9 @@
 # 0.724653; candidate-edge recall 0.996. Not another 12 µm assignment,
 # short-fragment retune, or 8.0 µm dt=1 retune. 44b6 train only. Hard
 # negatives. Fail closed unless the link head shows nonzero learning.
-# Official 44b6 must exceed FNN 0.724653 by >= 0.002000 (threshold
-# 0.726653) before any one-shot 6bba versus 0.752091. Do not overwrite
-# locked slugs. Not a competition submission. Not yet scored.
+# Official 44b6 scored 0.006663 vs FNN 0.724653. Status
+# rejected_on_tuning. Frozen 6bba not opened. Do not retune. Do not
+# overwrite locked slugs. Not a competition submission.
 
 label: learned_unet_orgdet_fnn_rank_v1
 parent_label: learned_unet_orgdet_fnn_v1

@@ -1,0 +1,182 @@
+{
+  "status": "tuning_scored",
+  "decision": "reject_learned_unet_orgdet_fnn_div_v1",
+  "role": "tuning",
+  "split": "tuning:v1.json",
+  "config_hash": "e184e6ce5bd90e46",
+  "orgdet_fnn_locked_reference": 0.7246526336456757,
+  "tune_keep_threshold": 0.7266526336456757,
+  "tune_margin": 0.002,
+  "learned_orgdet_fnn_div_combined": 0.7246526336456757,
+  "n_extra_edges": 51,
+  "runtime_estimate": {
+    "n_volumes": 2,
+    "overlay_sec_per_volume": 36.0,
+    "division_overhead": 2.0,
+    "estimate_sec": 76.0,
+    "estimate_hours": 0.021111111111111112,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_budget": 900.0,
+    "source": "CPU locked orgdet+gap+prune+ELF+FNN then locked division_v2 second-child proposals; no transformer; no ILP; no new UNet",
+    "is_kaggle_run": false,
+    "is_leaderboard_score": false
+  },
+  "overlays": [
+    {
+      "dataset": "44b6_12dfb391",
+      "n_nodes": 64543,
+      "n_edges_before": 61554,
+      "n_edges_after": 61570,
+      "n_extra_edges": 16,
+      "n_forks_before": 0,
+      "n_forks_after": 16,
+      "n_division_proposals": 16,
+      "n_division_rejected": {
+        "predecessor": 2989,
+        "dt": 0,
+        "parent_child": 1501285,
+        "sibling_sep": 3562,
+        "alignment": 369,
+        "alternative_parent": 2261,
+        "intensity": 0
+      },
+      "overlay": "learned_unet_orgdet_fnn_div_v1",
+      "config_hash": "e184e6ce5bd90e46"
+    },
+    {
+      "dataset": "44b6_267148e4",
+      "n_nodes": 30476,
+      "n_edges_before": 27258,
+      "n_edges_after": 27293,
+      "n_extra_edges": 35,
+      "n_forks_before": 0,
+      "n_forks_after": 35,
+      "n_division_proposals": 35,
+      "n_division_rejected": {
+        "predecessor": 3218,
+        "dt": 0,
+        "parent_child": 725713,
+        "sibling_sep": 2525,
+        "alignment": 493,
+        "alternative_parent": 2558,
+        "intensity": 0
+      },
+      "overlay": "learned_unet_orgdet_fnn_div_v1",
+      "config_hash": "e184e6ce5bd90e46"
+    }
+  ],
+  "division_events": [
+    {
+      "dataset": "44b6_12dfb391",
+      "events": [
+        {
+          "dataset": "44b6_12dfb391",
+          "parent_id": 172000000050,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        }
+      ],
+      "division_tp": 0,
+      "division_fn": 1,
+      "division_fp": 0,
+      "tp_forks": [],
+      "fp_forks": [],
+      "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    },
+    {
+      "dataset": "44b6_267148e4",
+      "events": [
+        {
+          "dataset": "44b6_267148e4",
+          "parent_id": 16000000001,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        }
+      ],
+      "division_tp": 0,
+      "division_fn": 1,
+      "division_fp": 0,
+      "tp_forks": [],
+      "fp_forks": [],
+      "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    }
+  ],
+  "official_summary": {
+    "n": 2,
+    "edge_jaccard": 0.7401960784313726,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 2,
+    "node_recall": 0.9742476432197245,
+    "adj_edge_jaccard": 0.7246526336456757,
+    "n_adj": 2,
+    "score": 0.7246526336456757,
+    "scorer": "royerlab/tracking_cellmot.metrics",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "source_url": "https://github.com/royerlab/kaggle-cell-tracking-competition"
+  },
+  "per_sequence": [
+    {
+      "dataset": "44b6_12dfb391",
+      "edge_tp": 704,
+      "edge_fp": 86,
+      "edge_fn": 69,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 1,
+      "num_pred_nodes": 64543,
+      "node_recall": 0.9949238578680203,
+      "edge_jaccard": 0.819557625145518,
+      "adj_edge_jaccard": 0.8113567408783559,
+      "division_jaccard": 0.0,
+      "score": 0.8113567408783559,
+      "total_node_ratio": 0.10006476683937823,
+      "estimated_n_nodes": 58672.0,
+      "scorer": "royerlab/tracking_cellmot.metrics",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    },
+    {
+      "dataset": "44b6_267148e4",
+      "edge_tp": 202,
+      "edge_fp": 88,
+      "edge_fn": 75,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 1,
+      "num_pred_nodes": 30476,
+      "node_recall": 0.9535714285714286,
+      "edge_jaccard": 0.5534246575342465,
+      "adj_edge_jaccard": 0.5206010497747925,
+      "division_jaccard": 0.0,
+      "score": 0.5206010497747925,
+      "total_node_ratio": 0.593099843178254,
+      "estimated_n_nodes": 19130.0,
+      "scorer": "royerlab/tracking_cellmot.metrics",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    }
+  ],
+  "code_version": "d3e1e1f",
+  "runtime_sec": 16.13432216644287,
+  "peak_memory_mb": 514.19921875,
+  "official_deps": {
+    "official_repo": "https://github.com/royerlab/kaggle-cell-tracking-competition",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "tracksdata_repo": "https://github.com/royerlab/tracksdata",
+    "tracksdata_commit": "7523bb39ed9ab1bf88512911fd6c69e46fcad188",
+    "tracksdata": "0.1.0rc10",
+    "polars": "1.44.2",
+    "geff": "1.3.1.1.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  },
+  "opened_holdout": false,
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false,
+  "notes": "Local official score of locked orgdet+gap+prune+ELF+FNN plus locked division_v2 second-child proposals. Compared to locked learned_unet_orgdet_fnn_v1. Not a leaderboard score. Do not retune. Not another 12 \u00b5m assignment. Not a rank_v1 retune. Do not use public 0.602 / 0.612 / 0.553."
+}

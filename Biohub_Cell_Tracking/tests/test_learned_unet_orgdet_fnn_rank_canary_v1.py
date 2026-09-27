@@ -121,8 +121,12 @@ def test_canary_is_not_a_kernel_and_does_not_overwrite_rank_hash():
     make = importlib.util.module_from_spec(spec2)
     spec2.loader.exec_module(make)
     assert "learned_unet_orgdet_fnn_rank_canary_v1" not in make.KERNELS
-    assert "learned_unet_orgdet_fnn_rank_v1" not in make.KERNELS
+    assert "learned_unet_orgdet_fnn_rank_v1" in make.KERNELS
+    assert make.KERNELS["learned_unet_orgdet_fnn_rank_v1"]["kernel_id"] == (
+        "mahdimzafari/biohub-learned-unet-orgdet-fnn-rank-v1"
+    )
     assert "mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1" in push.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgdet-fnn-rank-v1" not in push.FORBIDDEN_SLUGS
     assert LOCKED_RANK_HASH == "2748c4a2b2823c0a"
 
 
