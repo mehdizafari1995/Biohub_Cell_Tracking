@@ -933,6 +933,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_orgdet_fnn_acf_bnn_v1 **0.734152** vs locked ACF **0.734620**. Official TP/FP/FN **901 / 154 / 149**. Divisions **0/0/2**. Dropped **1148** non-backward-NN dt=1 edges. Runtime 16.83 s, peak 557 MB. Decision `reject_learned_unet_orgdet_fnn_acf_bnn_v1`. Missed the preregistered **+0.002000** gate (**0.736620**). Do not retune. Do not open `6bba`.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_ipc_v1_tune
+
+- **Status:** local official scorer on both frozen-tuning `44b6` sequences. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.** Frozen `6bba` was not opened.
+- **Config hash:** `7302409595bee523`. Parent ACF `a66075085ac64400`. Rejected BNN `bdb38cf13e226ced`. No kernel.
+- **Local official tuning:** learned_unet_orgdet_fnn_acf_ipc_v1 **0.734620** vs locked ACF **0.734620**. Official TP/FP/FN **907 / 160 / 143**. Divisions **0/0/2**. Dropped **0** conflict incoming dt=1 edges. Conflict children **0**. Runtime 19.62 s, peak 552 MB. Decision `reject_learned_unet_orgdet_fnn_acf_ipc_v1`. After locked ACF no child has two incoming dt=1 edges, so the overlay is a no-op and missed the preregistered **+0.002000** gate (**0.736620**). Do not retune. Do not open `6bba`.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
