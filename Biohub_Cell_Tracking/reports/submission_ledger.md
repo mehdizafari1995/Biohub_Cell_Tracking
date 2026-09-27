@@ -867,6 +867,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Manual submit:** **not** `READY_FOR_MANUAL_SUBMISSION_REVIEW` because of the 90% hidden-runtime gate. Preferred packaged fallback remains elf-test.
 - **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_fast_test_v1_packaged
+
+- **Status:** private GPU public-test notebook packaged. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1`. Hash `9b9763e26bc0f037`. Parent overlay `95e9300eb84ba71c` (official 44b6 **0.724653**; official 6bba **0.752091**). Parent fnn-test `1af763e6ffc23188`. Vectorized forward-NN scan. Does **not** overwrite fnn-test v1. **Not a competition submission. Not a leaderboard score.**
+- **Hidden-test estimate before rehearsal:** orgdet-elf-test 352.87 s / 4 volumes + 0.2 s vectorized NN ≈ **4.89 h**, under the 90% / 12 h fail-closed gate.
+- **Competition submit:** not performed. Do **not** submit from the CLI.
+- **Guards:** do **not** overwrite fnn-test v1 or elf-test v1. Do **not** retune `nn_tie_eps`. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

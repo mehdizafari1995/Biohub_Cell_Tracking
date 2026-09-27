@@ -151,28 +151,80 @@ def refuse_non_holdout_stems(stems: Iterable[str]) -> None:
         raise ValueError(f"learned_unet_orgdet_fnn_v1 holdout refuses non-holdout stem {stem}")
 
 
-def drop_non_forward_nn_edges(graph: TrackGraph, tie_eps: float = NN_TIE_EPS) -> TrackGraph:
-    """Keep dt=1 edges whose destination is a nearest neighbor of the source at t+1."""
+def _empty_fnn_graph(graph: TrackGraph, tie_eps: float) -> TrackGraph:
+    out = TrackGraph(
+        dataset=graph.dataset,
+        node_id=np.zeros((0,), dtype=np.int64),
+        t=np.zeros((0,), dtype=np.int64),
+        z=np.zeros((0,), dtype=np.int64),
+        y=np.zeros((0,), dtype=np.int64),
+        x=np.zeros((0,), dtype=np.int64),
+        edges=np.zeros((0, 2), dtype=np.int64),
+        estimated_n_nodes=graph.estimated_n_nodes,
+    )
+    out.metadata = dict(graph.metadata)
+    out.metadata["n_dropped_non_forward_nn_edges"] = 0
+    out.metadata["n_kept_forward_nn_edges"] = 0
+    out.metadata["n_kept_non_dt1_edges"] = 0
+    out.metadata["nn_tie_eps"] = float(tie_eps)
+    return out
+
+
+def _fnn_min_forward_dist(xyz: np.ndarray, by_t_idx: Mapping[int, list[int]]) -> dict[int, float | None]:
+    """Per-source min physical distance to any node at t+1. None if that frame is empty."""
+    min_fwd: dict[int, float | None] = {}
+    for t, idxs in by_t_idx.items():
+        nxt = by_t_idx.get(int(t) + 1)
+        if not nxt:
+            for i in idxs:
+                min_fwd[int(i)] = None
+            continue
+        src_xyz = xyz[np.asarray(idxs, dtype=np.int64)]
+        nxt_xyz = xyz[np.asarray(nxt, dtype=np.int64)]
+        dists = np.linalg.norm(src_xyz[:, None, :] - nxt_xyz[None, :, :], axis=2)
+        for i, m in zip(idxs, dists.min(axis=1)):
+            min_fwd[int(i)] = float(m)
+    return min_fwd
+
+
+def _assemble_fnn_graph(
+    graph: TrackGraph,
+    kept: list[tuple[int, int]],
+    dropped: int,
+    kept_fwd: int,
+    kept_non_dt1: int,
+    tie_eps: float,
+) -> TrackGraph:
+    out = TrackGraph(
+        dataset=graph.dataset,
+        node_id=graph.node_id,
+        t=graph.t,
+        z=graph.z,
+        y=graph.y,
+        x=graph.x,
+        edges=np.asarray(kept, dtype=np.int64).reshape(-1, 2) if kept else np.zeros((0, 2), dtype=np.int64),
+        estimated_n_nodes=graph.estimated_n_nodes,
+    )
+    out.metadata = dict(graph.metadata)
+    out.metadata["n_dropped_non_forward_nn_edges"] = int(dropped)
+    out.metadata["n_kept_forward_nn_edges"] = int(kept_fwd)
+    out.metadata["n_kept_non_dt1_edges"] = int(kept_non_dt1)
+    out.metadata["n_nodes_before_fnn"] = int(graph.n_nodes)
+    out.metadata["n_edges_before_fnn"] = int(graph.n_edges)
+    out.metadata["nn_tie_eps"] = float(tie_eps)
+    leftover = set(int(x) for x in out.node_id)
+    if any(src not in leftover or dst not in leftover for src, dst in kept):
+        raise RuntimeError("fnn kept a dangling edge; refusing")
+    return out
+
+
+def drop_non_forward_nn_edges_naive(graph: TrackGraph, tie_eps: float = NN_TIE_EPS) -> TrackGraph:
+    """Reference per-edge scan. Same keep/drop rule as the vectorized path."""
     if float(tie_eps) != float(NN_TIE_EPS):
         raise RuntimeError("learned_unet_orgdet_fnn_v1 would retune nn_tie_eps; refusing")
     nids = [int(x) for x in graph.node_id]
     if not nids:
-        out = TrackGraph(
-            dataset=graph.dataset,
-            node_id=np.zeros((0,), dtype=np.int64),
-            t=np.zeros((0,), dtype=np.int64),
-            z=np.zeros((0,), dtype=np.int64),
-            y=np.zeros((0,), dtype=np.int64),
-            x=np.zeros((0,), dtype=np.int64),
-            edges=np.zeros((0, 2), dtype=np.int64),
-            estimated_n_nodes=graph.estimated_n_nodes,
-        )
-        out.metadata = dict(graph.metadata)
-        out.metadata["n_dropped_non_forward_nn_edges"] = 0
-        out.metadata["n_kept_forward_nn_edges"] = 0
-        out.metadata["n_kept_non_dt1_edges"] = 0
-        out.metadata["nn_tie_eps"] = float(tie_eps)
-        return out
+        return _empty_fnn_graph(graph, tie_eps)
     xyz = physical_coords(graph.coords_zyx(), SCALE_ZYX)
     index = graph.id_to_index()
     by_t: dict[int, list[int]] = defaultdict(list)
@@ -196,36 +248,59 @@ def drop_non_forward_nn_edges(graph: TrackGraph, tie_eps: float = NN_TIE_EPS) ->
         if not nxt:
             dropped += 1
             continue
-        dest_xyz = xyz[j]
-        src_xyz = xyz[i]
-        dest_dist = float(np.linalg.norm(dest_xyz - src_xyz))
-        min_dist = min(float(np.linalg.norm(xyz[index[n]] - src_xyz)) for n in nxt)
+        dest_dist = float(np.linalg.norm(xyz[j] - xyz[i]))
+        min_dist = min(float(np.linalg.norm(xyz[index[n]] - xyz[i])) for n in nxt)
         if dest_dist <= min_dist + float(tie_eps):
             kept.append((s, d))
             kept_fwd += 1
         else:
             dropped += 1
-    out = TrackGraph(
-        dataset=graph.dataset,
-        node_id=graph.node_id,
-        t=graph.t,
-        z=graph.z,
-        y=graph.y,
-        x=graph.x,
-        edges=np.asarray(kept, dtype=np.int64).reshape(-1, 2) if kept else np.zeros((0, 2), dtype=np.int64),
-        estimated_n_nodes=graph.estimated_n_nodes,
-    )
-    out.metadata = dict(graph.metadata)
-    out.metadata["n_dropped_non_forward_nn_edges"] = int(dropped)
-    out.metadata["n_kept_forward_nn_edges"] = int(kept_fwd)
-    out.metadata["n_kept_non_dt1_edges"] = int(kept_non_dt1)
-    out.metadata["n_nodes_before_fnn"] = int(graph.n_nodes)
-    out.metadata["n_edges_before_fnn"] = int(graph.n_edges)
-    out.metadata["nn_tie_eps"] = float(tie_eps)
-    leftover = set(int(x) for x in out.node_id)
-    if any(src not in leftover or dst not in leftover for src, dst in kept):
-        raise RuntimeError("fnn kept a dangling edge; refusing")
-    return out
+    return _assemble_fnn_graph(graph, kept, dropped, kept_fwd, kept_non_dt1, tie_eps)
+
+
+def drop_non_forward_nn_edges(graph: TrackGraph, tie_eps: float = NN_TIE_EPS) -> TrackGraph:
+    """Keep dt=1 edges whose destination is a nearest neighbor of the source at t+1.
+
+    Same keep/drop rule as the original per-edge scan. Frame-wise pairwise
+    distances replace the O(edges * nodes_at_t+1) Python loop that made
+    public-test FNN 798 s. Do not retune ``nn_tie_eps``.
+    """
+    if float(tie_eps) != float(NN_TIE_EPS):
+        raise RuntimeError("learned_unet_orgdet_fnn_v1 would retune nn_tie_eps; refusing")
+    nids = [int(x) for x in graph.node_id]
+    if not nids:
+        return _empty_fnn_graph(graph, tie_eps)
+    xyz = physical_coords(graph.coords_zyx(), SCALE_ZYX)
+    index = graph.id_to_index()
+    by_t_idx: dict[int, list[int]] = defaultdict(list)
+    for nid, t in zip(graph.node_id, graph.t):
+        by_t_idx[int(t)].append(int(index[int(nid)]))
+    min_fwd = _fnn_min_forward_dist(xyz, by_t_idx)
+    kept: list[tuple[int, int]] = []
+    dropped = 0
+    kept_fwd = 0
+    kept_non_dt1 = 0
+    for src, dst in np.asarray(graph.edges).reshape(-1, 2) if graph.n_edges else []:
+        s, d = int(src), int(dst)
+        if s not in index or d not in index:
+            raise RuntimeError("fnn saw a dangling edge; refusing")
+        i, j = index[s], index[d]
+        dt = int(graph.t[j]) - int(graph.t[i])
+        if dt != 1:
+            kept.append((s, d))
+            kept_non_dt1 += 1
+            continue
+        min_dist = min_fwd.get(i)
+        if min_dist is None:
+            dropped += 1
+            continue
+        dest_dist = float(np.linalg.norm(xyz[j] - xyz[i]))
+        if dest_dist <= float(min_dist) + float(tie_eps):
+            kept.append((s, d))
+            kept_fwd += 1
+        else:
+            dropped += 1
+    return _assemble_fnn_graph(graph, kept, dropped, kept_fwd, kept_non_dt1, tie_eps)
 
 
 def apply_orgdet_fnn_overlay(graph: TrackGraph) -> TrackGraph:

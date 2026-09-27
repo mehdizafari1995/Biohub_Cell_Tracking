@@ -1,0 +1,108 @@
+from __future__ import annotations
+
+import importlib.util
+import sys
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "notebooks"))
+
+from biohub_tracking.learned_collect import (  # noqa: E402
+    ORGDET_ELF_TEST_SLUG,
+    ORGDET_FNN_FAST_TEST_CONFIG_HASH,
+    ORGDET_FNN_FAST_TEST_SLUG,
+    ORGDET_FNN_TEST_SLUG,
+)
+from biohub_tracking.learned_orgdet_fnn import LOCKED_ORGDET_FNN_HASH  # noqa: E402
+from biohub_tracking.learned_orgdet_fnn_fast_test import (  # noqa: E402
+    LOCKED_ORGDET_FNN_FAST_TEST_HASH,
+    ORGDET_FNN_FAST_TEST_KERNEL_SLUG,
+    hidden_projection_from_rehearsal,
+    orgdet_fnn_fast_test_config_hash as locked_hash,
+    orgdet_fnn_fast_test_config_payload as locked_payload,
+    refuse_overwrite_locked_slugs,
+    runtime_estimate,
+)
+from biohub_tracking.learned_orgdet_fnn_test import LOCKED_ORGDET_FNN_TEST_HASH  # noqa: E402
+from kaggle_learned_unet_orgdet_fnn_fast_test_v1 import (  # noqa: E402
+    KERNEL_SLUG,
+    infer_config_hash as nb_hash,
+    infer_config_payload as nb_payload,
+    runtime_estimate as nb_estimate,
+)
+
+_MAKE = importlib.util.spec_from_file_location("make_kaggle_kernel", ROOT / "scripts" / "make_kaggle_kernel.py")
+assert _MAKE and _MAKE.loader
+_make_mod = importlib.util.module_from_spec(_MAKE)
+_MAKE.loader.exec_module(_make_mod)
+
+_PUSH = importlib.util.spec_from_file_location("push_kaggle_kernel", ROOT / "scripts" / "push_kaggle_kernel.py")
+assert _PUSH and _PUSH.loader
+_push_mod = importlib.util.module_from_spec(_PUSH)
+_PUSH.loader.exec_module(_push_mod)
+
+_FETCH = importlib.util.spec_from_file_location("fetch_kernel_output", ROOT / "scripts" / "fetch_kernel_output.py")
+assert _FETCH and _FETCH.loader
+_fetch_mod = importlib.util.module_from_spec(_FETCH)
+_FETCH.loader.exec_module(_fetch_mod)
+
+
+def test_payload_matches_notebook_yaml_and_locked_hash():
+    payload = locked_payload()
+    assert payload == nb_payload()
+    assert locked_hash(payload) == nb_hash(payload)
+    assert locked_hash(payload) == LOCKED_ORGDET_FNN_FAST_TEST_HASH
+    assert locked_hash(payload) == ORGDET_FNN_FAST_TEST_CONFIG_HASH
+    assert locked_hash(payload) == "9b9763e26bc0f037"
+    assert locked_hash(payload) != LOCKED_ORGDET_FNN_TEST_HASH
+    assert payload["orgdet_fnn_config_hash"] == LOCKED_ORGDET_FNN_HASH == "95e9300eb84ba71c"
+    assert payload["orgdet_fnn_test_parent_hash"] == LOCKED_ORGDET_FNN_TEST_HASH == "1af763e6ffc23188"
+    assert payload["keep_forward_nn_only"] is True
+    assert payload["nn_impl"] == "vectorized"
+    assert payload["nn_tie_eps"] == 1e-9
+    assert payload["writes_submission_csv"] is True
+    assert payload["discovers_test_zarrs"] is True
+    yaml_cfg = yaml.safe_load((ROOT / "configs" / "learned_unet_orgdet_fnn_fast_test_v1.yaml").read_text())
+    assert yaml_cfg["kernel_slug"] == KERNEL_SLUG == ORGDET_FNN_FAST_TEST_SLUG == ORGDET_FNN_FAST_TEST_KERNEL_SLUG
+    assert yaml_cfg["orgdet_fnn_config_hash"] == payload["orgdet_fnn_config_hash"]
+    assert yaml_cfg["orgdet_fnn_test_parent_hash"] == payload["orgdet_fnn_test_parent_hash"]
+    assert yaml_cfg["linker"] == payload["linker"]
+    assert yaml_cfg["nn_impl"] == "vectorized"
+    assert yaml_cfg["keep_forward_nn_only"] is True
+
+
+def test_refuses_overwrite_of_locked_slugs():
+    refuse_overwrite_locked_slugs(ORGDET_FNN_FAST_TEST_KERNEL_SLUG)
+    for slug, match in (
+        (ORGDET_FNN_TEST_SLUG, "orgdet_fnn_test"),
+        (ORGDET_ELF_TEST_SLUG, "orgdet_elf_test"),
+    ):
+        try:
+            refuse_overwrite_locked_slugs(slug)
+        except ValueError as exc:
+            assert match in str(exc)
+        else:
+            raise AssertionError(f"expected refuse for {slug}")
+
+
+def test_new_slug_is_pushable_and_fetchable():
+    assert ORGDET_FNN_FAST_TEST_SLUG not in _push_mod.FORBIDDEN_SLUGS
+    assert ORGDET_FNN_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
+    assert ORGDET_ELF_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
+    assert ORGDET_FNN_FAST_TEST_SLUG in _fetch_mod.ALLOWED_SLUGS
+    assert "learned_unet_orgdet_fnn_fast_test_v1" in _make_mod.KERNELS
+    assert _make_mod.KERNELS["learned_unet_orgdet_fnn_fast_test_v1"]["kernel_id"] == ORGDET_FNN_FAST_TEST_SLUG
+
+
+def test_runtime_estimate_under_limit():
+    est = runtime_estimate(199)
+    assert est["under_limit"] is True
+    assert est["estimate_hours"] < 10.8
+    assert est["is_leaderboard_score"] is False
+    assert nb_estimate(4)["under_limit"] is True
+    hidden = hidden_projection_from_rehearsal(353.0)
+    assert hidden["fail_closed_approaches_12h"] is False
+    assert hidden["is_leaderboard_score"] is False

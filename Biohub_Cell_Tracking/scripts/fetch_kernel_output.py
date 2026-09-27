@@ -45,6 +45,7 @@ ALLOWED_SLUGS = {
     "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1",
     "mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1",
     "mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1",
+    "mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1",
     "mahdimzafari/biohub-learned-unet-retrain-v1",
     "mahdimzafari/biohub-learned-unet-retrain-infer-v1",
     "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1",

@@ -462,3 +462,20 @@ def test_collect_script_locks_train_slug_and_allows_status_only():
     assert ORGDET_FNN_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
     assert ORGDET_FNN_TEST_SLUG != ORGDET_ELF_TEST_SLUG
     assert ORGDET_FNN_TEST_SLUG != ORGDET_GAP_PRUNE_TEST_SLUG
+    from biohub_tracking.learned_collect import (
+        ORGDET_FNN_FAST_TEST_CONFIG_HASH,
+        ORGDET_FNN_FAST_TEST_SLUG,
+    )
+
+    orgdet_fnn_fast_spec = importlib.util.spec_from_file_location(
+        "collect_learned_unet_orgdet_fnn_fast_test_v1",
+        ROOT / "scripts" / "collect_learned_unet_orgdet_fnn_fast_test_v1.py",
+    )
+    assert orgdet_fnn_fast_spec and orgdet_fnn_fast_spec.loader
+    orgdet_fnn_fast_mod = importlib.util.module_from_spec(orgdet_fnn_fast_spec)
+    orgdet_fnn_fast_spec.loader.exec_module(orgdet_fnn_fast_mod)
+    assert orgdet_fnn_fast_mod.ORGDET_FNN_FAST_TEST_SLUG == ORGDET_FNN_FAST_TEST_SLUG
+    assert ORGDET_FNN_FAST_TEST_CONFIG_HASH == "9b9763e26bc0f037"
+    assert ORGDET_FNN_FAST_TEST_SLUG in fetch_mod.ALLOWED_SLUGS
+    assert ORGDET_FNN_FAST_TEST_SLUG != ORGDET_FNN_TEST_SLUG
+    assert ORGDET_FNN_FAST_TEST_SLUG != ORGDET_ELF_TEST_SLUG

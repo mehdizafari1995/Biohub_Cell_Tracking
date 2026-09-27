@@ -26,6 +26,7 @@ from biohub_tracking.learned_orgdet_fnn import (
     TUNE_MARGIN,
     apply_orgdet_fnn_overlay,
     drop_non_forward_nn_edges,
+    drop_non_forward_nn_edges_naive,
     holdout_decision,
     orgdet_fnn_config_hash,
     orgdet_fnn_config_payload,
@@ -150,6 +151,23 @@ def test_drop_non_forward_keeps_non_dt1_edges():
     assert set(map(tuple, out.edges)) == {(1, 2)}
     assert out.metadata["n_kept_non_dt1_edges"] == 1
     assert out.metadata["n_dropped_non_forward_nn_edges"] == 0
+
+
+def test_vectorized_fnn_matches_naive_keep_drop():
+    graph = _graph(
+        [1, 2, 3, 4, 5, 6],
+        [0, 0, 1, 1, 1, 2],
+        [0, 1, 0, 0, 2, 0],
+        [0, 0, 0, 4, 0, 0],
+        [0, 8, 1, 10, 20, 1],
+        [(1, 3), (1, 4), (1, 5), (2, 3), (2, 5), (3, 6), (4, 6)],
+    )
+    fast = drop_non_forward_nn_edges(graph)
+    naive = drop_non_forward_nn_edges_naive(graph)
+    assert set(map(tuple, fast.edges)) == set(map(tuple, naive.edges))
+    assert fast.metadata["n_dropped_non_forward_nn_edges"] == naive.metadata["n_dropped_non_forward_nn_edges"]
+    assert fast.metadata["n_kept_forward_nn_edges"] == naive.metadata["n_kept_forward_nn_edges"]
+    assert fast.metadata["n_kept_non_dt1_edges"] == naive.metadata["n_kept_non_dt1_edges"]
 
 
 def test_drop_non_forward_refuses_retuned_eps():

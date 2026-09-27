@@ -1,6 +1,6 @@
 # Project state
 
-Last updated: 2026-09-26 (`learned_unet_orgdet_fnn_test_v1` hash `1af763e6ffc23188` v1 COMPLETE / inferred / `audit_ok`, independent `audit_ok`, `6bba_05db0fb1` 87339/81132 matches locked FNN holdout; hidden 11.04 h under 12 h but `fail_closed_approaches_12h`, not READY; holdout champion remains `learned_unet_orgdet_fnn_v1` hash `95e9300eb84ba71c` official 44b6 **0.724653** / 6bba **0.752091**; preferred packaged public-test fallback remains `learned_unet_orgdet_elf_test_v1` hash `ad375d39e13098d1`; orgdet-gap-test UI submit ref **56583783** public API **`0.602`**, orgdet-test **56466744** public API **`0.612`**, private scores not returned). Authoritative implementation: `Biohub_Cell_Tracking/`.
+Last updated: 2026-09-27 (`learned_unet_orgdet_fnn_fast_test_v1` hash `9b9763e26bc0f037` packaged as a new immutable public-test slug; same locked FNN overlay `95e9300eb84ba71c`, vectorized NN scan, does **not** overwrite fnn-test v1 hash `1af763e6ffc23188`; holdout champion remains `learned_unet_orgdet_fnn_v1` official 44b6 **0.724653** / 6bba **0.752091**; preferred packaged public-test fallback remains `learned_unet_orgdet_elf_test_v1` hash `ad375d39e13098d1` until this rehearsal is COMPLETE and hidden-safe; orgdet-gap-test UI submit ref **56583783** public API **`0.602`**, orgdet-test **56466744** public API **`0.612`**, private scores not returned). Authoritative implementation: `Biohub_Cell_Tracking/`.
 
 ## Repository
 
