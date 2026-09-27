@@ -926,6 +926,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Preferred packaged public-test worker for the ACF holdout champion. Additional UI click is **not** authorized unless a later message separately authorizes it.
 - **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** overwrite fnn-fast-test v1, fnn-test v1, or elf-test v1. Do **not** submit from the CLI. Do **not** retune `max_rel_appearance`. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_bnn_v1_tune
+
+- **Status:** local official scorer on both frozen-tuning `44b6` sequences. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.** Frozen `6bba` was not opened.
+- **Config hash:** `bdb38cf13e226ced`. Parent ACF `a66075085ac64400`. No kernel.
+- **Local official tuning:** learned_unet_orgdet_fnn_acf_bnn_v1 **0.734152** vs locked ACF **0.734620**. Official TP/FP/FN **901 / 154 / 149**. Divisions **0/0/2**. Dropped **1148** non-backward-NN dt=1 edges. Runtime 16.83 s, peak 557 MB. Decision `reject_learned_unet_orgdet_fnn_acf_bnn_v1`. Missed the preregistered **+0.002000** gate (**0.736620**). Do not retune. Do not open `6bba`.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
