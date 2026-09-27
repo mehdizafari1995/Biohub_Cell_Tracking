@@ -500,6 +500,28 @@ Private **GPU** test-time notebook at locked orgdet+gap+prune plus long-dt1 edge
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_orgdet_fnn_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_fnn_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_fnn_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_fnn_test_v1",
+        "code_file": "kaggle_learned_unet_orgdet_fnn_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1",
+        "title": "Biohub Learned UNet Orgdet Fnn Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgdet_fnn_test_v1
+
+Private **GPU** test-time notebook at locked orgdet+gap+prune+ELF plus forward-NN keep. Discovers every `test/*.zarr`.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1` v1, orgdet-gap-prune-test, orgdet-gap-test, orgdet-test, prune-test, gap-test, no-gap test, or orgdet-holdout.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Locked orgdet+gap+prune+elf+fnn: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, greedy 12 µm, association_v2 gap-close, drop leftover degree-0, drop dt=1 edges longer than 8.0 µm, then keep only forward nearest-neighbor dt=1 edges. Hash `1af763e6ffc23188`. Parent overlay `95e9300eb84ba71c` (official 44b6 **0.724653 vs ELF 0.709838**; official 6bba **0.752091 vs 0.737787**).
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: orgdet-elf-test 352.87 s public + cheap CPU forward-NN keep. Hidden test ~4.9 h, under 12 h.
+- Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
+""",
+    },
     "learned_unet_retrain_v1": {
         "source": "notebooks/kaggle_learned_unet_retrain_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_retrain_v1.ipynb",

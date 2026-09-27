@@ -854,8 +854,18 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Config hash:** `95e9300eb84ba71c`. Parent ELF `292c4f1f968f948d`. Gate official 44b6 **> 0.709838 + 0.002000** = **0.711838**. Hash locked before the 44b6 score.
 - **Official 44b6:** **0.724653** vs ELF **0.709838** (delta **+0.014815**). Edge Jaccard 0.74020. Recall 0.974. Divisions 0/0/2. Dropped 2949 non-forward-NN dt=1 edges. Runtime 72.14 s, peak 530 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_v1`.
 - **Official one-shot 6bba:** **0.752091** vs ELF **0.737787**. Edge Jaccard 0.77110. Recall 0.955. Divisions 0/0/5. Dropped 3566 non-forward-NN dt=1 edges. Runtime 114.96 s, peak 734 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_v1`. New holdout champion. Do **not** score 6bba again.
-- **Public-test worker:** not packaged this cycle. Next run should package `mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1` without overwriting elf-test v1.
+- **Public-test worker:** packaged and collected this cycle as `learned_unet_orgdet_fnn_test_v1`.
 - **Public 0.602 / 0.612 / 0.553** were not used.
+
+## learned_unet_orgdet_fnn_test_v1_packaged / complete
+
+- **Status:** private GPU public-test notebook packaged, pushed, and **COMPLETE / inferred**. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1`. Hash `1af763e6ffc23188`. Parent overlay `95e9300eb84ba71c` (official 44b6 **0.724653**; official 6bba **0.752091**). Does **not** overwrite orgdet-elf-test v1. **Not a competition submission. Not a leaderboard score.**
+- **Output:** `/kaggle/working/submission.csv` 19 713 671 bytes, 377 183 rows, 197 058 nodes, 180 125 edges, 9 499 gap links, 13 629 interpolated, **5 080 dropped isolates**, **7 441 long dt=1**, **7 710 non-forward-NN**, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`.
+- **Holdout overlap:** `6bba_05db0fb1` **87339/81132** matches locked orgdet-fnn holdout overlay. Gap links and long-dt1 counts match elf-test (9499 / 7441).
+- **Hidden-test projection:** 199.70 s/volume × 199 ≈ **11.04 h**, under 12 h but `fail_closed_approaches_12h`.
+- **Competition submit:** not performed. This slug is **not** on the competition list.
+- **Manual submit:** **not** `READY_FOR_MANUAL_SUBMISSION_REVIEW` because of the 90% hidden-runtime gate. Preferred packaged fallback remains elf-test.
+- **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
 
 ## Policy
 

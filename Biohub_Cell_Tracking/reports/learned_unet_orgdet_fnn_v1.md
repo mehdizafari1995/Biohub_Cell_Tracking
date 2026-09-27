@@ -94,8 +94,11 @@ champion. Public **0.602 / 0.612 / 0.553** were not used.
 
 ## Next
 
-Package one new private internet-off public-test slug
-`mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1`. Do **not**
-overwrite `mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1` v1.
-Do **not** submit from the CLI. Additional UI submit is **not**
-authorized unless a later message separately authorizes that extra click.
+Public-test slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1`
+v1 is **COMPLETE / inferred / `audit_ok`**. Independent `audit_ok`.
+`6bba_05db0fb1` **87339/81132** matches this overlay. Hidden **11.04 h**
+trips `fail_closed_approaches_12h`, so it is **not**
+`READY_FOR_MANUAL_SUBMISSION_REVIEW`. Preferred packaged fallback remains
+elf-test. Do **not** overwrite either slug. Do **not** submit from the
+CLI. Additional UI submit is **not** authorized unless a later message
+separately authorizes that extra click.

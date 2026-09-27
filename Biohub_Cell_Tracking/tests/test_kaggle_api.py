@@ -38,6 +38,7 @@ def test_push_script_refuses_locked_helper_and_prediction_kernels():
     assert "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1" in mod.FORBIDDEN_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1" in mod.FORBIDDEN_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" in mod.FORBIDDEN_SLUGS
     assert mod.RETRAIN_LAUNCH_AUTHORIZED is True
 
@@ -73,6 +74,7 @@ def test_fetch_kernel_output_allows_helper_slugs_only():
     assert "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1" in mod.ALLOWED_SLUGS
+    assert "mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-infer-v1" in mod.ALLOWED_SLUGS
     assert "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1" in mod.ALLOWED_SLUGS
