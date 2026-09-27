@@ -877,6 +877,15 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Preferred packaged public-test worker for the FNN holdout champion. Additional UI click is **not** authorized unless a later message separately authorizes it.
 - **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** overwrite fnn-test v1 or elf-test v1. Do **not** submit from the CLI. Do **not** retune `nn_tie_eps`. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_oracle_44b6 / learned_unet_orgdet_fnn_rank_v1_preregistered
+
+- **Status:** local official-scorer 44b6 FNN detector oracle, then one preregistered learned-ranking hypothesis. **Not a Kaggle run. Not a competition submission. Not a leaderboard score.**
+- **Restore:** ignored `biohub-geff-export` + `biohub-learned-unet-orgop-v1` outputs. Locked FNN rebuild official **0.724653** (exact match). Frozen `6bba` was not opened.
+- **Oracle:** GT edges 1050; both endpoints detected 1023; detection-unavoidable 27 (2.57%); association-fixable in-candidate 113; candidate-edge recall **0.996**. Official candidate-oracle **1.048979** (1019/0/31, divisions 2/0/0). Official detection-oracle **1.052563** (1023/0/27, divisions 2/0/0). Runtime 29.49 s, peak 516.5 MB.
+- **Config hash:** `2748c4a2b2823c0a`. Parent FNN `95e9300eb84ba71c`. Gate official 44b6 **> 0.724653 + 0.002000** = **0.726653**. Hash locked before any ranker score. Status `preregistered_not_scored`.
+- **Public-test worker:** unchanged. FNN-fast-test v1 stays COMPLETE / READY / not submission-authorized.
+- **Public 0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

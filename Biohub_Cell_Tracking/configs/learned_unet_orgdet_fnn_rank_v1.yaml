@@ -1,0 +1,40 @@
+# learned_unet_orgdet_fnn_rank_v1 — preregistered learned ranking /
+# constrained 1-1 selection inside the locked 12 µm / sqrt(dt) /
+# max_gap=2 envelope on locked FNN detections.
+# Hash 2748c4a2b2823c0a locked before any ranker score.
+# Official 44b6 FNN oracle: candidate-set upper bound 1.048979 vs FNN
+# 0.724653; candidate-edge recall 0.996. Not another 12 µm assignment,
+# short-fragment retune, or 8.0 µm dt=1 retune. 44b6 train only. Hard
+# negatives. Fail closed unless the link head shows nonzero learning.
+# Official 44b6 must exceed FNN 0.724653 by >= 0.002000 (threshold
+# 0.726653) before any one-shot 6bba versus 0.752091. Do not overwrite
+# locked slugs. Not a competition submission. Not yet scored.
+
+label: learned_unet_orgdet_fnn_rank_v1
+parent_label: learned_unet_orgdet_fnn_v1
+parent_hash: 95e9300eb84ba71c
+parent_orgdet_gap_hash: ee31f36151325f9a
+source_graphs: locked_learned_unet_orgdet_fnn_graphs
+linker: fnn_detections_then_learned_rank_inside_locked_candidate_envelope
+candidate_gate_um: 12.0
+candidate_max_dt: 2
+candidate_gap_scale: sqrt_dt
+hard_negatives: true
+train_specimen: "44b6"
+verify_nonzero_link_head: true
+retunes_detection: false
+retunes_consecutive_links: false
+retunes_gap_gates: false
+retunes_max_dt1_edge_um: false
+retunes_nn_tie_eps: false
+uses_intensity: false
+uses_transformer: true
+uses_velocity: false
+uses_ilp: false
+assignment: unchanged_locked_candidate_envelope
+tune_keep_threshold: 0.7266526336456757
+tune_margin: 0.002
+opened_holdout: false
+is_12um_assignment: false
+is_rejected_overlay: false
+writes_submission_csv: false
