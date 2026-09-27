@@ -867,12 +867,15 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Manual submit:** **not** `READY_FOR_MANUAL_SUBMISSION_REVIEW` because of the 90% hidden-runtime gate. Preferred packaged fallback remains elf-test.
 - **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
 
-## learned_unet_orgdet_fnn_fast_test_v1_packaged
+## learned_unet_orgdet_fnn_fast_test_v1_packaged / complete
 
-- **Status:** private GPU public-test notebook packaged. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1`. Hash `9b9763e26bc0f037`. Parent overlay `95e9300eb84ba71c` (official 44b6 **0.724653**; official 6bba **0.752091**). Parent fnn-test `1af763e6ffc23188`. Vectorized forward-NN scan. Does **not** overwrite fnn-test v1. **Not a competition submission. Not a leaderboard score.**
-- **Hidden-test estimate before rehearsal:** orgdet-elf-test 352.87 s / 4 volumes + 0.2 s vectorized NN ≈ **4.89 h**, under the 90% / 12 h fail-closed gate.
-- **Competition submit:** not performed. Do **not** submit from the CLI.
-- **Guards:** do **not** overwrite fnn-test v1 or elf-test v1. Do **not** retune `nn_tie_eps`. Public **0.602 / 0.612 / 0.553** were not used.
+- **Status:** private GPU public-test notebook packaged, pushed, and **COMPLETE / inferred**. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1`. Hash `9b9763e26bc0f037`. Parent overlay `95e9300eb84ba71c` (official 44b6 **0.724653**; official 6bba **0.752091**). Parent fnn-test `1af763e6ffc23188`. Vectorized forward-NN scan. Does **not** overwrite fnn-test v1. **Not a competition submission. Not a leaderboard score.**
+- **Output:** `/kaggle/working/submission.csv` 19 713 671 bytes, 377 183 rows, 197 058 nodes, 180 125 edges, 9 499 gap links, 13 629 interpolated, **5 080 dropped isolates**, **7 441 long dt=1**, **7 710 non-forward-NN**, 0 predicted divisions. Worker audit `audit_ok`. Independent stream audit `audit_ok`. File kept under ignored `artifacts/kaggle/`. Counts match locked fnn-test.
+- **Holdout overlap:** `6bba_05db0fb1` **87339/81132** matches locked orgdet-fnn holdout overlay. Gap links and long-dt1 counts match elf-test (9499 / 7441).
+- **Hidden-test projection:** 80.06 s/volume × 199 ≈ **4.43 h**, under 12 h and the 90% fail-closed gate. Runtime **320.23 s** vs parent fnn-test **798.80 s**. Peak RAM 1186 MB.
+- **Competition submit:** not performed. This slug is **not** on the competition list.
+- **Manual submit:** `READY_FOR_MANUAL_SUBMISSION_REVIEW`. Preferred packaged public-test worker for the FNN holdout champion. Additional UI click is **not** authorized unless a later message separately authorizes it.
+- **Guards:** slug is now in `FORBIDDEN_SLUGS`. Do **not** overwrite v1. Do **not** overwrite fnn-test v1 or elf-test v1. Do **not** submit from the CLI. Do **not** retune `nn_tie_eps`. Public **0.602 / 0.612 / 0.553** were not used.
 
 ## Policy
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -88,13 +89,34 @@ def test_refuses_overwrite_of_locked_slugs():
             raise AssertionError(f"expected refuse for {slug}")
 
 
-def test_new_slug_is_pushable_and_fetchable():
-    assert ORGDET_FNN_FAST_TEST_SLUG not in _push_mod.FORBIDDEN_SLUGS
+def test_new_slug_is_locked_after_complete_and_fetchable():
+    assert ORGDET_FNN_FAST_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert ORGDET_FNN_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert ORGDET_ELF_TEST_SLUG in _push_mod.FORBIDDEN_SLUGS
     assert ORGDET_FNN_FAST_TEST_SLUG in _fetch_mod.ALLOWED_SLUGS
     assert "learned_unet_orgdet_fnn_fast_test_v1" in _make_mod.KERNELS
     assert _make_mod.KERNELS["learned_unet_orgdet_fnn_fast_test_v1"]["kernel_id"] == ORGDET_FNN_FAST_TEST_SLUG
+
+
+def test_keep_orgdet_fnn_fast_test_complete_report_matches_holdout_overlap():
+    report = json.loads((ROOT / "reports" / "learned_unet_orgdet_fnn_fast_test_v1_complete.json").read_text())
+    assert report["status"] == "inferred"
+    assert report["config_hash"] == LOCKED_ORGDET_FNN_FAST_TEST_HASH
+    assert report["audit_ok"] is True
+    assert report["independent_audit_ok"] is True
+    assert report["is_leaderboard_score"] is False
+    assert report["ready_for_manual_submission_review"] is True
+    assert report["n_nodes"] == 197058
+    assert report["n_edges"] == 180125
+    assert report["n_dropped_non_forward_nn_edges"] == 7710
+    assert report["n_dropped_long_dt1_edges"] == 7441
+    assert report["n_gap_links"] == 9499
+    assert report["holdout_overlap_6bba_05db0fb1"]["matches_orgdet_fnn_holdout_v1"] is True
+    assert report["holdout_overlap_6bba_05db0fb1"]["n_nodes"] == 87339
+    assert report["holdout_overlap_6bba_05db0fb1"]["n_edges"] == 81132
+    assert report["compare_vs_orgdet_fnn_test"]["ok"] is True
+    assert report["hidden_projection"]["under_limit"] is True
+    assert report["hidden_projection"]["fail_closed_approaches_12h"] is False
 
 
 def test_runtime_estimate_under_limit():
