@@ -47,8 +47,10 @@ Hash `2748c4a2b2823c0a`. Parent FNN `95e9300eb84ba71c`.
 - Writes no `submission.csv`
 
 Do **not** retune `nn_tie_eps`, `max_dt1_edge_um`, or the 12 µm gate.
-Do **not** score 6bba until a 44b6 keep. Do **not** launch a full
-ranker helper until the canary is `canary_ok`.
+Do **not** score 6bba until a 44b6 keep. The link-head canary
+`learned_unet_orgdet_fnn_rank_canary_v1` hash `f7dc3d3292ce813d` is
+**`canary_ok`**. A full ranker helper may now be packaged; it was
+**not** launched this cycle.
 
 ## Cost estimate (before launch)
 
@@ -62,5 +64,6 @@ ranker helper until the canary is `canary_ok`.
 
 ## Status
 
-`preregistered_not_scored`. Not a Kaggle run. Not a leaderboard score.
-Public **0.602 / 0.612 / 0.553** were not used.
+`preregistered_not_scored`. Link-head canary `f7dc3d3292ce813d` is
+**`canary_ok`**. Ranker still not official-scored. Not a Kaggle run.
+Not a leaderboard score. Public **0.602 / 0.612 / 0.553** were not used.

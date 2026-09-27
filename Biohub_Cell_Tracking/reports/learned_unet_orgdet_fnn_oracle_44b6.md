@@ -93,9 +93,10 @@ See `configs/learned_unet_orgdet_fnn_rank_v1.yaml` and
   (848 KB) + extracted 44b6/6bba GEFFs and two 44b6 graphs. No volumes
   or weights were committed.
 - Full appearance ranker would need 44b6 train Zarrs (tens of GB) and a
-  new private GPU helper. Do **not** launch that until a link-head
-  canary is `canary_ok`.
-- A canary can start from locked FNN/orgop graphs plus the two already
-  exported tuning Zarrs if appearance features are required.
+  new private GPU helper. The link-head canary
+  `learned_unet_orgdet_fnn_rank_canary_v1` hash `f7dc3d3292ce813d` is
+  now **`canary_ok`**. The helper was **not** launched this cycle.
+- Prefer the two already exported tuning Zarrs
+  (`44b6_12dfb391`, `44b6_267148e4`) before any 69-volume train.
 - No new public-test kernel. Hidden-runtime of FNN-fast-test stays
   **4.43 h**.

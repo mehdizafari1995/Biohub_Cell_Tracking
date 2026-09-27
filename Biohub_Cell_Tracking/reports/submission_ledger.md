@@ -886,6 +886,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Public-test worker:** unchanged. FNN-fast-test v1 stays COMPLETE / READY / not submission-authorized.
 - **Public 0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_rank_canary_v1
+
+- **Status:** local CPU canary hash `f7dc3d3292ce813d`. Parent rank `2748c4a2b2823c0a`. **No kernel pushed.** Frozen `6bba` was not opened. Ranker was not official-scored. No `submission.csv`.
+- **Result:** `canary_ok`. Finite link loss 1.361 → 8.50e-5, nonzero pair-head grads 0.547, ranking **6 / 6**, min true−hard logit **20.677**, reload max abs **0.0**, 1.12 s, 375.4 MB.
+- **Graph pairs:** 6 true / 5 hard-negative / 5 out-of-envelope excluded; two-child fork allowed; dt ∈ {1, 2}.
+- **Guards:** does **not** overwrite fnn-fast-test v1. Does **not** launch a ranker helper. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
