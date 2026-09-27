@@ -916,6 +916,12 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official holdout:** learned_unet_orgdet_fnn_acf_v1 **0.755503** vs locked FNN **0.752091**. Official TP/FP/FN **1462 / 205 / 221**. Divisions **0/0/5**. Dropped **879** inconsistent dt=1 edges. Runtime 13.63 s, peak 767 MB. Decision `keep_candidate_learned_unet_orgdet_fnn_acf_v1`. New holdout champion. Do not score 6bba again.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_test_v1_packaged
+
+- **Status:** private GPU public-test notebook packaged. New slug `mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1`. Hash `2d13d0e3c90df093`. Parent overlay `a66075085ac64400` (official 44b6 **0.734620**; official 6bba **0.755503**). Parent fnn-fast-test `9b9763e26bc0f037`. Vectorized FNN then 3×3×3-mean appearance filter. Does **not** overwrite fnn-fast-test v1, fnn-test v1, or elf-test v1. **Not a competition submission. Not a leaderboard score.**
+- **Estimate:** fnn-fast-test 320.23 s public + 15 s appearance filter. Hidden **5.25 h**, under 12 h.
+- **Guards:** does **not** overwrite fnn-fast-test v1. New slug is not in `FORBIDDEN_SLUGS` until v1 COMPLETE. Do **not** submit from the CLI. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

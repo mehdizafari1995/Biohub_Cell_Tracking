@@ -545,6 +545,29 @@ Private **GPU** test-time notebook. Same locked overlay as `learned_unet_orgdet_
 - Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
 """,
     },
+    "learned_unet_orgdet_fnn_acf_test_v1": {
+        "source": "notebooks/kaggle_learned_unet_orgdet_fnn_acf_test_v1.py",
+        "notebook": "notebooks/kaggle_learned_unet_orgdet_fnn_acf_test_v1.ipynb",
+        "kernel_dir": "kaggle_kernel/learned_unet_orgdet_fnn_acf_test_v1",
+        "code_file": "kaggle_learned_unet_orgdet_fnn_acf_test_v1.ipynb",
+        "kernel_id": "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
+        "title": "Biohub Learned UNet Orgdet Fnn Acf Test V1",
+        "enable_gpu": True,
+        "kernel_sources": ["mahdimzafari/biohub-learned-unet-v1"],
+        "markdown": """# Biohub learned_unet_orgdet_fnn_acf_test_v1
+
+Private **GPU** test-time notebook. Same locked overlay as `learned_unet_orgdet_fnn_acf_v1` / `learned_unet_orgdet_fnn_fast_test_v1`, then the locked appearance-consistency filter. Discovers every `test/*.zarr`.
+
+- New slug. Do **not** overwrite `mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1` v1, fnn-test, orgdet-elf-test, orgdet-gap-prune-test, orgdet-gap-test, orgdet-test, prune-test, gap-test, no-gap test, or orgdet-holdout.
+- Loads locked `learned_unet_v1` 44b6-only weights. Refuses public 199-video / DeepCenter checkpoints.
+- Locked orgdet+gap+prune+elf+fnn+acf: `det_threshold=0.99`, `pool_kernel_um=3.0`, flip TTA, greedy 12 µm, association_v2 gap-close, drop leftover degree-0, drop dt=1 edges longer than 8.0 µm, keep only forward nearest-neighbor dt=1 edges, then drop dt=1 edges whose 3×3×3-mean relative appearance exceeds 0.38. Hash `2d13d0e3c90df093`. Parent overlay `a66075085ac64400` (official 44b6 **0.734620 vs FNN 0.724653**; official 6bba **0.755503 vs 0.752091**). Parent fnn-fast-test `9b9763e26bc0f037`.
+- Sample appearance from each public-test Zarr after locked FNN. Do **not** retune `max_rel_appearance`.
+- Writes `/kaggle/working/submission.csv` and `run_manifest.json`.
+- Attach the competition dataset and `mahdimzafari/biohub-learned-unet-v1`. **Internet OFF**. **GPU ON**.
+- Estimate: fnn-fast-test 320.23 s public + 15 s appearance filter. Hidden test ~5.3 h, under 12 h.
+- Do **not** retune. Do **not** score 6bba again. Do **not** Submit to Competition from this packaging step. Weights stay out of git.
+""",
+    },
     "learned_unet_orgdet_fnn_rank_v1": {
         "source": "notebooks/kaggle_learned_unet_orgdet_fnn_rank_v1.py",
         "notebook": "notebooks/kaggle_learned_unet_orgdet_fnn_rank_v1.ipynb",
