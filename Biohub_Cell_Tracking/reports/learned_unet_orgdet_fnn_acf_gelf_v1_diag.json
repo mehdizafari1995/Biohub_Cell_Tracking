@@ -1,0 +1,84 @@
+{
+  "status": "diagnostic",
+  "decision": "reject_learned_unet_orgdet_fnn_acf_gelf_v1",
+  "role": "tuning",
+  "split": "tuning:v1.json",
+  "config_hash": "59812f90385ed4d2",
+  "orgdet_fnn_acf_locked_reference": 0.7346197119237633,
+  "tune_keep_threshold": 0.7366197119237633,
+  "max_gap_edge_um_locked": null,
+  "proposal": {
+    "n_chains": 2253,
+    "n_tp": 14,
+    "n_conflict_fp": 4,
+    "n_leftover": 2235,
+    "tp_max_um": 8.75089281159357,
+    "tp_min_um": 0.0,
+    "conflict_fp_max_um": 5.629165124598851,
+    "conflict_fp_min_um": 0.0,
+    "leftover_max_um": 20.61893850323047,
+    "leftover_not_negatives": true,
+    "by_dt": {
+      "2": {
+        "tp": 10,
+        "conflict_fp": 3,
+        "leftover": 1471
+      },
+      "3": {
+        "tp": 4,
+        "conflict_fp": 1,
+        "leftover": 764
+      }
+    },
+    "supported": false,
+    "max_gap_edge_um": 8.8,
+    "reason": "no_conflict_fp_above_gate",
+    "n_conflict_fp_above_gate": 0,
+    "n_tp_above_gate": 0,
+    "n_leftover_above_gate": 262,
+    "retunes_max_dt1_edge_um": false
+  },
+  "overlays": [
+    {
+      "dataset": "44b6_12dfb391",
+      "n_nodes_acf": 64228,
+      "n_edges_acf": 60906,
+      "n_gap_chains": 1251,
+      "n_tp": 7,
+      "n_conflict_fp": 1,
+      "n_leftover": 1243
+    },
+    {
+      "dataset": "44b6_267148e4",
+      "n_nodes_acf": 29914,
+      "n_edges_acf": 26249,
+      "n_gap_chains": 1002,
+      "n_tp": 7,
+      "n_conflict_fp": 3,
+      "n_leftover": 992
+    }
+  ],
+  "n_classified_chains": 2253,
+  "runtime_estimate": {
+    "n_volumes": 2,
+    "overlay_sec_per_volume": 8.0,
+    "gelf_overhead": 1.0,
+    "estimate_sec": 18.0,
+    "estimate_hours": 0.005,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_budget": 1100.0,
+    "source": "CPU locked orgdet+gap+prune+ELF+FNN+ACF then drop gap-close chains whose real-endpoint physical displacement exceeds the locked 44b6 TP-derived gate and new degree-0 leftovers; two sequence Zarrs for the locked ACF parent; no transformer; no ILP; no new UNet",
+    "prefers_tuning_zarrs": true,
+    "is_kaggle_run": false,
+    "is_leaderboard_score": false
+  },
+  "code_version": "3b74bab",
+  "runtime_sec": 13.86836290359497,
+  "peak_memory_mb": 205.265625,
+  "opened_holdout": false,
+  "official_overlay_scored": false,
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false,
+  "notes": "44b6 ACF gap-chain length diagnostic. Real-endpoint physical displacement vs official matched TP vs leftover unmatched. Leftovers are not negatives. No threshold sweep. Not a leaderboard score. Do not retune max_dt1_edge_um or max_rel_appearance. Do not use public 0.602 / 0.612 / 0.553."
+}

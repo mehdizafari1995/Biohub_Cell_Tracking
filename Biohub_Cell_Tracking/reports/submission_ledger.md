@@ -947,6 +947,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local official tuning:** learned_unet_orgdet_fnn_acf_gacf_v1 **0.734745** vs locked ACF **0.734620**. Official TP/FP/FN **907 / 160 / 143**. Divisions **0/0/2**. Dropped **160** inconsistent gap-close edges / **61** chains. Runtime 19.01 s, peak 581 MB. Decision `reject_learned_unet_orgdet_fnn_acf_gacf_v1`. Missed the preregistered **+0.002000** gate (**0.736620**). Official matched edges unchanged; leftover unmatched gap links only. Do not retune. Do not open `6bba`.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_gelf_v1_diag
+
+- **Status:** local 44b6 ACF gap-chain length diagnostic. **Not a Kaggle run. Not a competition submission. Not a leaderboard score. Not an official overlay score.** Frozen `6bba` was not opened.
+- **Config hash:** `59812f90385ed4d2`. Parent ACF `a66075085ac64400`. Rejected GACF `5ce49a6d175c8032`. `max_gap_edge_um` stays null. No kernel.
+- **Local diagnostic:** 2253 gap chains; 14 TP max **8.751 µm**; 4 conflict FPs max **5.629 µm**; 2235 leftovers not used as negatives. Proposed 8.8 µm gate drops **0** conflict FPs. Decision `reject_learned_unet_orgdet_fnn_acf_gelf_v1` (`no_conflict_fp_above_gate`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
