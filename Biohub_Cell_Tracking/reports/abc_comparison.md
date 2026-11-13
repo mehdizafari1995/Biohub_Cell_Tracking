@@ -90,6 +90,16 @@ Combined keep. Decision `keep_candidate_learned_unet_gap_v1`. Do not
 retune. Do not score this overlay on `6bba` again. See
 `reports/learned_unet_gap_v1.md`.
 
+## AA `learned_unet_orgdet_fnn_acf_snm_v1` (rejected; overlay not scored)
+
+Locked ACF detections plus a proposed dt=1 forward-NN second-nearest
+margin filter. Hash `87f46b2bfee49fe8`. 44b6 diagnostic only: 907 TP
+min **0.0 µm**, 160 conflict FPs min **0.081 µm**, 86088 leftovers not
+used as negatives. Decision `reject_learned_unet_orgdet_fnn_acf_snm_v1`
+(`tp_covers_full_margin`). Overlay not official-scored. Frozen `6bba`
+not opened. Not a leaderboard score. See
+`reports/learned_unet_orgdet_fnn_acf_snm_v1.md`.
+
 ## Sanity sequence
 
 `docs/splits/v2.json` adds `44b6_2a2eff9f` (100 frames, 1 GT division). Same specimen prefix as tuning. Locked association_v2 official score 0.801, recall 0.995, 16 switches. This is **not** a third-embryo holdout; the downloaded GEFF inventory only has prefixes `44b6` and `6bba`.

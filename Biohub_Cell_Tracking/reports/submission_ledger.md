@@ -968,6 +968,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local diagnostic:** 80168 unique-pred dt=1 speed-changes; 855 TP max **5.997 µm/frame**; 145 conflict FPs max **4.596 µm/frame**; 79168 leftovers not used as negatives. Proposed 6.0 µm/frame gate drops **0** conflict FPs. Decision `reject_learned_unet_orgdet_fnn_acf_scf_v1` (`no_conflict_fp_above_gate`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`. Runtime 13.14 s, peak 241 MB.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_snm_v1_diag
+
+- **Status:** local 44b6 ACF dt=1 forward-NN second-nearest margin diagnostic. **Not a Kaggle run. Not a competition submission. Not a leaderboard score. Not an official overlay score.** Frozen `6bba` was not opened.
+- **Config hash:** `87f46b2bfee49fe8`. Parent ACF `a66075085ac64400`. Rejected SCF `a259d184c9f99046`. `min_second_nn_margin_um` stays null. No kernel.
+- **Local diagnostic:** 87155 dt=1 hops with a second t+1 neighbor; 907 TP min **0.0 µm**; 160 conflict FPs min **0.081 µm**; 86088 leftovers not used as negatives. Decision `reject_learned_unet_orgdet_fnn_acf_snm_v1` (`tp_covers_full_margin`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`. Runtime 14.85 s, peak 231 MB.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
