@@ -975,6 +975,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local diagnostic:** 87155 dt=1 hops with a second t+1 neighbor; 907 TP min **0.0 µm**; 160 conflict FPs min **0.081 µm**; 86088 leftovers not used as negatives. Decision `reject_learned_unet_orgdet_fnn_acf_snm_v1` (`tp_covers_full_margin`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`. Runtime 14.85 s, peak 231 MB.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_sna_v1_diag
+
+- **Status:** local 44b6 ACF dt=1 dest vs spatial-second-NN 3×3×3-mean appearance diagnostic. **Not a Kaggle run. Not a competition submission. Not a leaderboard score. Not an official overlay score.** Frozen `6bba` was not opened.
+- **Config hash:** `9b8811d3fae3a953`. Parent ACF `a66075085ac64400`. Rejected SNM `87f46b2bfee49fe8`. `min_dest_second_nn_rel_appearance` stays null. No kernel.
+- **Local diagnostic:** 87155 dt=1 hops with a spatial second t+1 neighbor; 907 TP min **1.11e-5**; 160 conflict FPs min **1.38e-4**; 86088 leftovers not used as negatives. Decision `reject_learned_unet_orgdet_fnn_acf_sna_v1` (`tp_covers_full_delta`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`. Runtime 17.89 s, peak 303 MB.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.

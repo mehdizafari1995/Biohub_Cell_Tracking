@@ -100,6 +100,16 @@ used as negatives. Decision `reject_learned_unet_orgdet_fnn_acf_snm_v1`
 not opened. Not a leaderboard score. See
 `reports/learned_unet_orgdet_fnn_acf_snm_v1.md`.
 
+## AB `learned_unet_orgdet_fnn_acf_sna_v1` (rejected; overlay not scored)
+
+Locked ACF detections plus a proposed dt=1 dest vs spatial-second-NN
+3×3×3-mean appearance filter. Hash `9b8811d3fae3a953`. 44b6 diagnostic
+only: 907 TP min **1.11e-5**, 160 conflict FPs min **1.38e-4**, 86088
+leftovers not used as negatives. Decision
+`reject_learned_unet_orgdet_fnn_acf_sna_v1` (`tp_covers_full_delta`).
+Overlay not official-scored. Frozen `6bba` not opened. Not a leaderboard
+score. See `reports/learned_unet_orgdet_fnn_acf_sna_v1.md`.
+
 ## Sanity sequence
 
 `docs/splits/v2.json` adds `44b6_2a2eff9f` (100 frames, 1 GT division). Same specimen prefix as tuning. Locked association_v2 official score 0.801, recall 0.995, 16 switches. This is **not** a third-embryo holdout; the downloaded GEFF inventory only has prefixes `44b6` and `6bba`.
