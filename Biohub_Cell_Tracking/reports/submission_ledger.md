@@ -954,6 +954,13 @@ Local official scores only. association_v2 later received a private kernel (see 
 - **Local diagnostic:** 2253 gap chains; 14 TP max **8.751 µm**; 4 conflict FPs max **5.629 µm**; 2235 leftovers not used as negatives. Proposed 8.8 µm gate drops **0** conflict FPs. Decision `reject_learned_unet_orgdet_fnn_acf_gelf_v1` (`no_conflict_fp_above_gate`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`.
 - **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
 
+## learned_unet_orgdet_fnn_acf_tac_v1_diag
+
+- **Status:** local 44b6 ACF unique-predecessor dt=1 turning-angle diagnostic. **Not a Kaggle run. Not a competition submission. Not a leaderboard score. Not an official overlay score.** Frozen `6bba` was not opened.
+- **Config hash:** `4dfc5514c65496e5`. Parent ACF `a66075085ac64400`. Rejected GELF `59812f90385ed4d2`. `max_turn_deg` stays null. No kernel.
+- **Local diagnostic:** 80168 unique-pred dt=1 two-hops; 563 measurable TP max **180.0 deg** (cosine **-1.0**); 112 conflict FPs also 0–180; 53564 leftovers not used as negatives; 25929 degenerate zero-length hops not gated. Decision `reject_learned_unet_orgdet_fnn_acf_tac_v1` (`tp_covers_full_angle`). Overlay apply remains refuse-closed. Do not sweep leftovers. Do not retune. Do not open `6bba`. Runtime 15.50 s, peak 230 MB.
+- **Kaggle public / private scores:** not applicable; not submitted. Public **0.602 / 0.612 / 0.553** were not used.
+
 ## Policy
 
 1. One new Kaggle submission only when the official frozen-validation score improves, or when a written generalization hypothesis is being tested.
