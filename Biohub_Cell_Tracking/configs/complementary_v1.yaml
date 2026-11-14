@@ -1,0 +1,43 @@
+scale_zyx: [1.625, 0.40625, 0.40625]
+seed: 0
+max_timepoints: null
+timepoint_start: 0
+label: complementary_v1
+
+# Locked from 44b6 tuning (official 0.633135 vs association_v2 0.632460).
+# Rejected on frozen 6bba holdout (0.591384 vs association_v2 0.591570).
+# Do not retune. Do not overwrite baseline_v1 or association_v2.
+# Primary detections stay locked anisotropic DoG + 4 µm NMS.
+detection:
+  method: blob_dog
+  min_sigma: 2.0
+  max_sigma: 5.0
+  threshold: 0.05
+  normalize: minmax
+  min_distance_um: 4.0
+  suppress_duplicates: true
+  anisotropic: true
+  complementary_method: local_max
+  complementary_threshold: 0.04
+  complementary_min_sigma: 2.0
+  complementary_max_sigma: 5.0
+  complementary_min_distance_um: 6.0
+  complementary_intensity_ratio: 0.45
+  complementary_anisotropic: true
+
+# Locked association_v2 linker copied, not overwritten.
+linking:
+  method: association_v2
+  max_distance_um: 12.0
+  allow_divisions: false
+  division_gap_um: 8.0
+  motion_model: none
+  gate_um: 12.0
+  max_gap_frames: 2
+  assignment: greedy
+  intensity_weight: 0.5
+  track_start_penalty_um: 0.0
+  track_end_penalty_um: 0.0
+  boundary_margin_um: 0.0
+  interpolate_gaps: true
+  max_children: 1

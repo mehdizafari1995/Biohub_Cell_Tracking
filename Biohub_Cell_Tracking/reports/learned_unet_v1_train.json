@@ -1,0 +1,41 @@
+{
+  "status": "trained",
+  "label": "learned_unet_v1",
+  "config_hash": "4c38035d6657f2ad",
+  "environment": "kaggle_input",
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "slug": "mahdimzafari/biohub-learned-unet-v1",
+  "version": 3,
+  "splits": {
+    "n_train": 69,
+    "n_test": 2,
+    "test": ["44b6_12dfb391", "44b6_267148e4"],
+    "tuning_specimen": "44b6",
+    "holdout_refused": true
+  },
+  "n_params": 2076706,
+  "best_train_loss": 0.36041347581015626,
+  "history": [
+    {"epoch": 0, "train_loss": 0.4162239255065405, "n_windows": 6117},
+    {"epoch": 1, "train_loss": 0.40449307906712856, "n_windows": 6117},
+    {"epoch": 2, "train_loss": 0.36041347581015626, "n_windows": 6117}
+  ],
+  "last_epoch": 2,
+  "stopped_early_time_budget": false,
+  "wrote_best": true,
+  "wrote_last": true,
+  "runtime_sec": 11731.948331356049,
+  "peak_memory_mb": 1792.73828125,
+  "runtime": {
+    "python": "3.12.13",
+    "cuda_available": true,
+    "torch": "2.10.0+cu128",
+    "cuda_device_count": 2,
+    "cuda_device": "Tesla T4"
+  },
+  "weights_location": "ignored artifacts/kaggle/learned_unet_v1/",
+  "has_submission_csv": false,
+  "notes": "Sanitized train-manifest copy. Weights stay out of git. Not a competition submission. Not a leaderboard score."
+}

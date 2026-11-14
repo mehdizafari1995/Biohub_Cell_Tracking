@@ -1,0 +1,90 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-v1",
+  "polled_utc": "2026-09-20T12:34:56Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [
+    {
+      "name": "dataset_splits.json",
+      "size": null
+    },
+    {
+      "name": "learned_unet_v1_best.pt",
+      "size": null
+    },
+    {
+      "name": "learned_unet_v1_config.json",
+      "size": null
+    },
+    {
+      "name": "learned_unet_v1_last.pt",
+      "size": null
+    },
+    {
+      "name": "train_manifest.json",
+      "size": null
+    }
+  ],
+  "decision": "download_complete_helper",
+  "config_hash": "4c38035d6657f2ad",
+  "code_version": "35a2c6f",
+  "downloaded": true,
+  "extracted": {
+    "dataset_splits.json": "dataset_splits.json",
+    "learned_unet_v1_best.pt": "learned_unet_v1_best.pt",
+    "learned_unet_v1_config.json": "learned_unet_v1_config.json",
+    "learned_unet_v1_last.pt": "learned_unet_v1_last.pt",
+    "train_manifest.json": "train_manifest.json"
+  },
+  "collected": {
+    "status": "trained",
+    "config_hash": "4c38035d6657f2ad",
+    "splits": {
+      "n_train": 69,
+      "n_test": 2,
+      "test": [
+        "44b6_12dfb391",
+        "44b6_267148e4"
+      ]
+    },
+    "wrote_best": true,
+    "wrote_last": true,
+    "weights_name": "learned_unet_v1_best.pt",
+    "has_submission_csv": false,
+    "is_kaggle_run": true,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "reconfirmed_utc": "2026-09-20T23:52:33Z",
+  "reconfirmed_code_version": "ec3bede",
+  "reconfirmed_decision": "status_only",
+  "reconfirmed_kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "reconfirmed_downloaded": false,
+  "notes": "Private GPU helper poll. Not a competition submission. Weights stay under ignored artifacts/kaggle/. Not a leaderboard score. 2026-09-20T23:52:33Z status-only reconfirm: still complete / trained; five outputs unchanged (splits, config, manifest, best/last weights). Did not re-download or overwrite the completed helper."
+}

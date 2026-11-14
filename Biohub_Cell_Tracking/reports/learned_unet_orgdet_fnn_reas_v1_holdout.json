@@ -1,0 +1,218 @@
+{
+  "status": "holdout_scored",
+  "decision": "reject_learned_unet_orgdet_fnn_reas_v1",
+  "role": "holdout",
+  "split": "validation:v1.json",
+  "config_hash": "39fb20d675e21d0e",
+  "orgdet_fnn_locked_reference": 0.7520914330648746,
+  "tune_keep_threshold": 0.7266526336456757,
+  "tune_margin": 0.002,
+  "learned_orgdet_fnn_reas_combined": 0.7503899339642788,
+  "n_reassigned": 191,
+  "runtime_estimate": {
+    "n_volumes": 2,
+    "overlay_sec_per_volume": 36.0,
+    "reassign_overhead": 2.0,
+    "estimate_sec": 76.0,
+    "estimate_hours": 0.021111111111111112,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_budget": 900.0,
+    "source": "CPU locked orgdet+gap+prune+ELF+FNN then claimed-child reassignment under locked division_v2 geometry; no transformer; no ILP; no new UNet; no appearance Zarrs",
+    "is_kaggle_run": false,
+    "is_leaderboard_score": false
+  },
+  "overlays": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "n_nodes": 87339,
+      "n_edges_before": 81132,
+      "n_edges_after": 81132,
+      "n_reassigned": 134,
+      "n_removed_edges": 134,
+      "n_added_edges": 134,
+      "n_forks_before": 0,
+      "n_forks_after": 133,
+      "n_division_proposals": 134,
+      "n_division_rejected": {
+        "predecessor": 6207,
+        "dt": 0,
+        "parent_child": 61477947,
+        "claimed_pool_empty": 0,
+        "sibling_sep": 88436,
+        "alignment": 17351,
+        "closer": 99105,
+        "current_parent_outdeg": 0,
+        "current_child_indeg": 0,
+        "current_parent_time": 0,
+        "unused_child": 3954728
+      },
+      "overlay": "learned_unet_orgdet_fnn_reas_v1",
+      "config_hash": "39fb20d675e21d0e"
+    },
+    {
+      "dataset": "6bba_c328f2fd",
+      "n_nodes": 38539,
+      "n_edges_before": 36481,
+      "n_edges_after": 36481,
+      "n_reassigned": 57,
+      "n_removed_edges": 57,
+      "n_added_edges": 57,
+      "n_forks_before": 0,
+      "n_forks_after": 56,
+      "n_division_proposals": 57,
+      "n_division_rejected": {
+        "predecessor": 2058,
+        "dt": 0,
+        "parent_child": 12637362,
+        "claimed_pool_empty": 0,
+        "sibling_sep": 24760,
+        "alignment": 4644,
+        "closer": 30775,
+        "current_parent_outdeg": 0,
+        "current_child_indeg": 0,
+        "current_parent_time": 0,
+        "unused_child": 573587
+      },
+      "overlay": "learned_unet_orgdet_fnn_reas_v1",
+      "config_hash": "39fb20d675e21d0e"
+    }
+  ],
+  "division_events": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "events": [
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 25000381,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        },
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 53001011,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        },
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 63001217,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        }
+      ],
+      "division_tp": 0,
+      "division_fn": 3,
+      "division_fp": 2,
+      "tp_forks": [],
+      "fp_forks": [
+        16318,
+        34893
+      ],
+      "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    },
+    {
+      "dataset": "6bba_c328f2fd",
+      "events": [
+        {
+          "dataset": "6bba_c328f2fd",
+          "parent_id": 29000074,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        },
+        {
+          "dataset": "6bba_c328f2fd",
+          "parent_id": 67000304,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        }
+      ],
+      "division_tp": 0,
+      "division_fn": 2,
+      "division_fp": 0,
+      "tp_forks": [],
+      "fp_forks": [],
+      "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    }
+  ],
+  "official_summary": {
+    "n": 2,
+    "edge_jaccard": 0.7693522906793049,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 2,
+    "division_fn": 5,
+    "node_recall": 0.9550109152748563,
+    "adj_edge_jaccard": 0.7503899339642788,
+    "n_adj": 2,
+    "score": 0.7503899339642788,
+    "scorer": "royerlab/tracking_cellmot.metrics",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "source_url": "https://github.com/royerlab/kaggle-cell-tracking-competition"
+  },
+  "per_sequence": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "edge_tp": 1052,
+      "edge_fp": 146,
+      "edge_fn": 131,
+      "division_tp": 0,
+      "division_fp": 2,
+      "division_fn": 3,
+      "num_pred_nodes": 87339,
+      "node_recall": 0.9804719283970708,
+      "edge_jaccard": 0.7915726109857035,
+      "adj_edge_jaccard": 0.7716823645328693,
+      "division_jaccard": 0.0,
+      "score": 0.7716823645328693,
+      "total_node_ratio": 0.2512750716332378,
+      "estimated_n_nodes": 69800.0,
+      "scorer": "royerlab/tracking_cellmot.metrics",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    },
+    {
+      "dataset": "6bba_c328f2fd",
+      "edge_tp": 409,
+      "edge_fp": 70,
+      "edge_fn": 91,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 2,
+      "num_pred_nodes": 38539,
+      "node_recall": 0.9295499021526419,
+      "edge_jaccard": 0.7175438596491228,
+      "adj_edge_jaccard": 0.7007449511122497,
+      "division_jaccard": 0.0,
+      "score": 0.7007449511122497,
+      "total_node_ratio": 0.234116818240041,
+      "estimated_n_nodes": 31228.0,
+      "scorer": "royerlab/tracking_cellmot.metrics",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    }
+  ],
+  "code_version": "7e7b398",
+  "runtime_sec": 57.96411633491516,
+  "peak_memory_mb": 741.453125,
+  "official_deps": {
+    "official_repo": "https://github.com/royerlab/kaggle-cell-tracking-competition",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "tracksdata_repo": "https://github.com/royerlab/tracksdata",
+    "tracksdata_commit": "7523bb39ed9ab1bf88512911fd6c69e46fcad188",
+    "tracksdata": "0.1.0rc10",
+    "polars": "1.44.2",
+    "geff": "1.3.1.1.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  },
+  "opened_holdout": true,
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false,
+  "notes": "Local official score of locked orgdet+gap+prune+ELF+FNN plus claimed-child reassignment under locked division_v2 geometry. Compared to locked learned_unet_orgdet_fnn_v1. Not a leaderboard score. Do not retune. Not another 12 \u00b5m assignment. Not a rank_v1 or fnn_div retune. Do not use public 0.602 / 0.612 / 0.553."
+}

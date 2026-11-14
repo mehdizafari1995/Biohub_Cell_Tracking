@@ -1,0 +1,50 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
+  "audit_ok": true,
+  "errors": [],
+  "warnings": [],
+  "n_nodes": 188509,
+  "n_edges": 172148,
+  "n_predicted_divisions": 0,
+  "n_gap_edges": 0,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "csv_bytes": 18841333,
+  "holdout_overlap_nodes_edges": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "role": "frozen_validation_overlap",
+      "embryo": "6bba",
+      "n_nodes": 84328,
+      "n_edges": 78493,
+      "n_predicted_divisions": 0,
+      "coord_min_zyx": [
+        0,
+        0,
+        0
+      ],
+      "coord_max_zyx": [
+        63,
+        252,
+        252
+      ],
+      "t_min": 0,
+      "t_max": 99,
+      "n_consecutive_dt1": 78493,
+      "n_gap_dt_gt1": 0,
+      "n_nonpositive_dt": 0,
+      "n_unknown_endpoint": 0
+    }
+  ],
+  "expected_holdout_nodes_edges": [
+    84328,
+    78493
+  ],
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "note": "Independent local audit of downloaded worker CSV. CSV stays under ignored artifacts/kaggle/. Not a leaderboard score. Frozen 6bba was not official-scored again."
+}

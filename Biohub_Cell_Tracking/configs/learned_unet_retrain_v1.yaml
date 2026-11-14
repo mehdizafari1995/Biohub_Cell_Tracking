@@ -1,0 +1,46 @@
+# learned_unet_retrain_v1 — +3-epoch 44b6-only continuation of locked
+# learned_unet_v1 weights. Hash 92a419926fa7e40b.
+# Resume from learned_unet_v1_last.pt. Do not train from scratch.
+# Do not attach public 199-video / DeepCenter weights.
+# Do not open 6bba. Do not write submission.csv.
+# Do not overwrite mahdimzafari/biohub-learned-unet-v1.
+# LAUNCH_AUTHORIZED=False. Packaged, not a competition submission.
+
+label: learned_unet_retrain_v1
+parent_label: learned_unet_v1
+parent_train_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+internal_val:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+resume_from_weights: learned_unet_v1_last.pt
+parent_epochs: 3
+additional_epochs: 3
+total_epochs_equivalent: 6
+from_scratch: false
+batch_size: 1
+grad_accum: 8
+lr: 0.0001
+downsample: [1, 4, 4]
+unet_layers: [32, 64, 128]
+unet_out_channels: 32
+window_size: 2
+pool_kernel_um: 5.0
+det_loss_weight: 1.0
+det_neg_weight: 0.01
+skip_fullres_temporal: true
+seed: 0
+max_hours: 11.0
+writes_submission_csv: false
+edge_supervision: gt_node_index
+refuses_public_199_video_weights: true
+refuses_deepcenter: true
+infer_after_train_uses_locked_infer_op: true
+kernel_slug: mahdimzafari/biohub-learned-unet-retrain-v1
+parent_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1

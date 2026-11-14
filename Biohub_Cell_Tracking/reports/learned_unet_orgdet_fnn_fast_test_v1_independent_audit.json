@@ -1,0 +1,19 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1",
+  "config_hash": "9b9763e26bc0f037",
+  "audit_ok": true,
+  "errors": [],
+  "warnings": [],
+  "n_nodes": 197058,
+  "n_edges": 180125,
+  "n_rows": 377183,
+  "n_predicted_divisions": 0,
+  "datasets": [
+    "44b6_0113de3b",
+    "44b6_0b24845f",
+    "6bba_05b6850b",
+    "6bba_05db0fb1"
+  ],
+  "is_leaderboard_score": false,
+  "is_competition_submission": false
+}

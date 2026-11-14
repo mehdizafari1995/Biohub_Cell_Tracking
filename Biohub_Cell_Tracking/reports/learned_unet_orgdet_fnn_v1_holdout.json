@@ -1,0 +1,191 @@
+{
+  "status": "holdout_scored",
+  "decision": "keep_candidate_learned_unet_orgdet_fnn_v1",
+  "role": "holdout",
+  "split": "validation:v1.json",
+  "config_hash": "95e9300eb84ba71c",
+  "orgdet_elf_locked_reference": 0.7377873461563521,
+  "tune_keep_threshold": 0.7118380747225755,
+  "tune_margin": 0.002,
+  "learned_orgdet_fnn_combined": 0.7520914330648746,
+  "n_dropped_non_forward_nn_edges": 3566,
+  "runtime_estimate": {
+    "n_volumes": 2,
+    "overlay_sec_per_volume": 6.0,
+    "fnn_overhead": 0.8,
+    "estimate_sec": 13.6,
+    "estimate_hours": 0.0037777777777777775,
+    "kaggle_gpu_limit_hours": 12.0,
+    "under_limit": true,
+    "peak_memory_mb_budget": 900.0,
+    "source": "CPU locked orgdet+gap+prune+ELF then keep only forward nearest-neighbor dt=1 edges and new degree-0 leftovers; no transformer; no ILP; no new UNet",
+    "is_kaggle_run": false,
+    "is_leaderboard_score": false
+  },
+  "overlays": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "n_nodes_before": 84328,
+      "n_nodes_after": 87339,
+      "n_edges_before": 78493,
+      "n_edges_after": 81132,
+      "n_dropped_non_forward_nn_edges": 2827,
+      "n_dropped_isolates": 983,
+      "n_dropped_long_dt1_edges": 2328,
+      "n_nodes_before_fnn": 88322,
+      "n_edges_before_fnn": 83959,
+      "nn_tie_eps": 1e-09,
+      "overlay": "learned_unet_orgdet_fnn_v1",
+      "config_hash": "95e9300eb84ba71c"
+    },
+    {
+      "dataset": "6bba_c328f2fd",
+      "n_nodes_before": 37482,
+      "n_nodes_after": 38539,
+      "n_edges_before": 35147,
+      "n_edges_after": 36481,
+      "n_dropped_non_forward_nn_edges": 739,
+      "n_dropped_isolates": 226,
+      "n_dropped_long_dt1_edges": 560,
+      "n_nodes_before_fnn": 38765,
+      "n_edges_before_fnn": 37220,
+      "nn_tie_eps": 1e-09,
+      "overlay": "learned_unet_orgdet_fnn_v1",
+      "config_hash": "95e9300eb84ba71c"
+    }
+  ],
+  "division_events": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "events": [
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 25000381,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        },
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 53001011,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        },
+        {
+          "dataset": "6bba_05db0fb1",
+          "parent_id": 63001217,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        }
+      ],
+      "division_tp": 0,
+      "division_fn": 3,
+      "division_fp": 0,
+      "tp_forks": [],
+      "fp_forks": [],
+      "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    },
+    {
+      "dataset": "6bba_c328f2fd",
+      "events": [
+        {
+          "dataset": "6bba_c328f2fd",
+          "parent_id": 29000074,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        },
+        {
+          "dataset": "6bba_c328f2fd",
+          "parent_id": 67000304,
+          "official_recovered": false,
+          "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+          "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+        }
+      ],
+      "division_tp": 0,
+      "division_fn": 2,
+      "division_fp": 0,
+      "tp_forks": [],
+      "fp_forks": [],
+      "scorer": "royerlab/tracking_cellmot.division_metrics.score_divisions",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    }
+  ],
+  "official_summary": {
+    "n": 2,
+    "edge_jaccard": 0.7710970464135021,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 5,
+    "node_recall": 0.9550109152748563,
+    "adj_edge_jaccard": 0.7520914330648746,
+    "n_adj": 2,
+    "score": 0.7520914330648746,
+    "scorer": "royerlab/tracking_cellmot.metrics",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "source_url": "https://github.com/royerlab/kaggle-cell-tracking-competition"
+  },
+  "per_sequence": [
+    {
+      "dataset": "6bba_05db0fb1",
+      "edge_tp": 1053,
+      "edge_fp": 143,
+      "edge_fn": 130,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 3,
+      "num_pred_nodes": 87339,
+      "node_recall": 0.9804719283970708,
+      "edge_jaccard": 0.7941176470588235,
+      "adj_edge_jaccard": 0.774163450193831,
+      "division_jaccard": 0.0,
+      "score": 0.774163450193831,
+      "total_node_ratio": 0.2512750716332378,
+      "estimated_n_nodes": 69800.0,
+      "scorer": "royerlab/tracking_cellmot.metrics",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    },
+    {
+      "dataset": "6bba_c328f2fd",
+      "edge_tp": 409,
+      "edge_fp": 70,
+      "edge_fn": 91,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 2,
+      "num_pred_nodes": 38539,
+      "node_recall": 0.9295499021526419,
+      "edge_jaccard": 0.7175438596491228,
+      "adj_edge_jaccard": 0.7007449511122497,
+      "division_jaccard": 0.0,
+      "score": 0.7007449511122497,
+      "total_node_ratio": 0.234116818240041,
+      "estimated_n_nodes": 31228.0,
+      "scorer": "royerlab/tracking_cellmot.metrics",
+      "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2"
+    }
+  ],
+  "code_version": "6b11baa",
+  "runtime_sec": 114.95521354675293,
+  "peak_memory_mb": 733.5078125,
+  "official_deps": {
+    "official_repo": "https://github.com/royerlab/kaggle-cell-tracking-competition",
+    "official_commit": "075fc5f5a52d11077f9dc2b074644618f26939e2",
+    "tracksdata_repo": "https://github.com/royerlab/tracksdata",
+    "tracksdata_commit": "7523bb39ed9ab1bf88512911fd6c69e46fcad188",
+    "tracksdata": "0.1.0rc10",
+    "polars": "1.44.2",
+    "geff": "1.3.1.1.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1"
+  },
+  "opened_holdout": true,
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false,
+  "notes": "Local official score of locked orgdet+gap+prune+ELF plus forward nearest-neighbor keep (drop dt=1 edges whose destination is not a source NN at t+1, then new isolates). Compared to locked learned_unet_orgdet_elf_v1. Not a leaderboard score. Do not retune. Not another 12 \u00b5m assignment. Not another 8.0 \u00b5m dt=1 retune. Do not use public 0.602 / 0.612 / 0.553."
+}

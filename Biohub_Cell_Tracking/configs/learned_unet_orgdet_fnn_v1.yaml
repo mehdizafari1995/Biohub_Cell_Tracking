@@ -1,0 +1,45 @@
+# learned_unet_orgdet_fnn_v1 — keep only forward nearest-neighbor dt=1
+# edges after locked learned_unet_orgdet_elf_v1, then drop new degree-0
+# nodes. Detection / 12 µm linker / gap gates / 8.0 µm ELF stay locked
+# (292c4f1f968f948d). This is not another 12 µm assignment, not a
+# short-fragment retune, and not another 8.0 µm dt=1 length retune.
+# 44b6 ELF residue: 30/203 conflict FPs were not the source NN at t+1
+# versus 10/910 TPs. Tune on 44b6 only. Official 44b6 must exceed ELF
+# 0.709838 by >= 0.002000 (threshold 0.711838). Do not open 6bba until
+# that keep. Do not overwrite locked slugs. Not a competition
+# submission.
+
+label: learned_unet_orgdet_fnn_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+orgdet_label: learned_unet_orgdet_v1
+orgdet_gap_label: learned_unet_orgdet_gap_v1
+orgdet_gap_prune_label: learned_unet_orgdet_gap_prune_v1
+orgdet_elf_label: learned_unet_orgdet_elf_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+orgdet_config_hash: 80b20589198148b7
+orgdet_gap_config_hash: ee31f36151325f9a
+orgdet_gap_prune_config_hash: 862e3e7f7ac0330e
+orgdet_elf_config_hash: 292c4f1f968f948d
+source_graphs: locked_learned_unet_orgdet_graphs
+retunes_detection: false
+retunes_consecutive_links: false
+retunes_gap_gates: false
+retunes_max_dt1_edge_um: false
+uses_intensity: false
+uses_transformer: false
+uses_velocity: false
+uses_ilp: false
+linker: orgdet_elf_then_keep_forward_nn_dt1
+keep_forward_nn_only: true
+drop_degree0_after: true
+nn_tie_eps: 1.0e-9
+assignment: unchanged_locked_orgdet_elf
+tune_keep_threshold: 0.7118380747225755
+tune_margin: 0.002
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false

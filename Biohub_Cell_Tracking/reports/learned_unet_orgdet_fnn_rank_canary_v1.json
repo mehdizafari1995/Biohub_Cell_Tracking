@@ -1,0 +1,92 @@
+{
+  "status": "canary_ok",
+  "decision": "canary_ok",
+  "config_hash": "f7dc3d3292ce813d",
+  "parent_rank_hash": "2748c4a2b2823c0a",
+  "parent_fnn_hash": "95e9300eb84ba71c",
+  "train_config_hash": "4c38035d6657f2ad",
+  "config": {
+    "label": "learned_unet_orgdet_fnn_rank_canary_v1",
+    "parent_label": "learned_unet_orgdet_fnn_rank_v1",
+    "parent_rank_hash": "2748c4a2b2823c0a",
+    "parent_fnn_hash": "95e9300eb84ba71c",
+    "train_config_hash": "4c38035d6657f2ad",
+    "tuning_specimen": "44b6",
+    "holdout_specimens": [
+      "6bba"
+    ],
+    "frozen_holdout": [
+      "6bba_05db0fb1",
+      "6bba_c328f2fd"
+    ],
+    "candidate_gate_um": 12.0,
+    "candidate_max_dt": 2,
+    "candidate_gap_scale": "sqrt_dt",
+    "hard_negatives": true,
+    "n_parents": 4,
+    "n_steps": 80,
+    "lr": 0.001,
+    "seed": 0,
+    "feat_dim": 64,
+    "freeze_unet": true,
+    "edge_activation": "pairwise_logit",
+    "min_true_minus_hard_logit": 0.5,
+    "min_ranking_acc": 1.0,
+    "refuses_public_199_video_weights": true,
+    "writes_submission_csv": false,
+    "kernel_push": false,
+    "opens_6bba": false,
+    "uses_199_video_weights": false,
+    "scores_official_44b6": false,
+    "launches_ranker_helper": false
+  },
+  "result": {
+    "status": "canary_ok",
+    "detection_loss_finite": true,
+    "detection_loss": 0.5247328877449036,
+    "first": {
+      "step": 0,
+      "link_loss": 1.3608689308166504,
+      "grad_l2": 0.547312319278717
+    },
+    "last": {
+      "step": 79,
+      "link_loss": 8.502198033966124e-05,
+      "grad_l2": 0.0012816527159884572
+    },
+    "pair_graph": {
+      "n_true": 6,
+      "n_hard": 5,
+      "n_excluded": 5,
+      "allows_two_children": true,
+      "n_src": 5,
+      "n_tgt": 16
+    },
+    "scores": {
+      "n_rank_pairs": 6,
+      "ranking_acc": 1.0,
+      "min_true_minus_hard_logit": 20.676788330078125,
+      "mean_true_logit": 10.828147888183594,
+      "mean_hard_logit": -10.196566899617514,
+      "noncollapsed": true
+    },
+    "reload_max_abs": 0.0,
+    "finite_losses": true,
+    "nonzero_edge_grad": true,
+    "noncollapsed_pair_scores": true,
+    "checkpoint_reload_exact": true,
+    "runtime_sec": 1.1198759078979492,
+    "peak_memory_mb": 375.43359375,
+    "opened_holdout": false,
+    "wrote_submission_csv": false,
+    "kernel_pushed": false,
+    "used_199_video_weights": false,
+    "scored_official_44b6": false,
+    "launched_ranker_helper": false
+  },
+  "code_version": "1a25b61",
+  "is_kaggle_run": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "CPU transformer canary on graph-pair hard negatives inside the locked 12 \u00b5m / sqrt(dt) envelope. Parent rank 2748c4a2b2823c0a. 6bba refused. Ranker not scored. Not a leaderboard score."
+}

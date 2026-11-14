@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+"""Push a packaged private kernel. Never submits to the competition."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
+from biohub_tracking.kaggle_api import API_ROOT, _token  # noqa: E402
+from make_kaggle_kernel import KERNELS  # noqa: E402
+from biohub_tracking.learned_retrain import (  # noqa: E402
+    LAUNCH_AUTHORIZED as RETRAIN_LAUNCH_AUTHORIZED,
+    RETRAIN_KERNEL_SLUG,
+)
+
+FORBIDDEN_SLUGS = {
+    "mahdimzafari/biohub-baseline-v1",
+    "mahdimzafari/biohub-association-v2",
+    "mahdimzafari/biohub-geff-export",
+    "mahdimzafari/biohub-holdout-zarr-export",
+    "mahdimzafari/biohub-tuning-zarr-export",
+    # v3 COMPLETE 2026-09-20 (trained, hash 4c38035d6657f2ad). Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-v1",
+    # Infer v3 COMPLETE / inferred 2026-09-20. 44b6 graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-infer-v1",
+    # Holdout v1 COMPLETE / inferred 2026-09-20. One-shot 6bba graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-holdout-v1",
+    # Test-time v1 COMPLETE / inferred 2026-09-20. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-test-v1",
+    # Gap test-time v1 COMPLETE / inferred 2026-09-20. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-gap-test-v1",
+    # Linker v1 COMPLETE / inferred 2026-09-20. Official 44b6 0.0 vs infer 0.655751. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-link-v1",
+    # Linker v2 COMPLETE / inferred 2026-09-20. Official 44b6 0.224746 vs infer 0.655751. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-link-v2",
+    # Prune test-time v1 COMPLETE / inferred 2026-09-21. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-prune-test-v1",
+    # Orgop v1 COMPLETE / inferred 2026-09-21. Official 44b6 0.0 vs infer 0.655751. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgop-v1",
+    # Orgdet holdout v1 COMPLETE / inferred 2026-09-21. Official 6bba 0.705226 vs prune 0.701378. Keep. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1",
+    # Orgdet test-time v1 COMPLETE / inferred 2026-09-21. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
+    # Orgdet+gap test-time v1 COMPLETE / inferred 2026-09-22. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
+    # Orgdet+gap+prune test-time v1 COMPLETE / inferred 2026-09-26. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1",
+    # Orgdet+gap+prune+elf test-time v1 COMPLETE / inferred 2026-09-26. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1",
+    # Orgdet+gap+prune+elf+fnn test-time v1 COMPLETE / inferred 2026-09-26. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-fnn-test-v1",
+    # Faster FNN test-time v1 COMPLETE / inferred 2026-09-27. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-fnn-fast-test-v1",
+    # ACF test-time v1 COMPLETE / inferred 2026-09-27. Public-test CSV locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
+    # Retrain v1 COMPLETE / trained 2026-09-22. Hash 92a419926fa7e40b. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-retrain-v1",
+    # Retrain lane A v2 COMPLETE / inferred 2026-09-22. 44b6 graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-retrain-infer-v1",
+    # Retrain lane B v2 COMPLETE / inferred 2026-09-22. 44b6 graphs locked. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-retrain-orgdet-v1",
+    # Retrain lane C v2 COMPLETE / inferred 2026-09-22. Official 44b6 0.0. Rejected. Do not overwrite.
+    "mahdimzafari/biohub-learned-unet-retrain-orgop-v1",
+}
+
+
+def _load_notebook_text(kernel_name: str) -> tuple[str, dict]:
+    spec = KERNELS[kernel_name]
+    kernel_dir = ROOT / spec["kernel_dir"]
+    meta = json.loads((kernel_dir / "kernel-metadata.json").read_text())
+    notebook_path = kernel_dir / spec["code_file"]
+    nb = json.loads(notebook_path.read_text())
+    if meta.get("id") in FORBIDDEN_SLUGS:
+        raise SystemExit(f"refusing to overwrite locked kernel {meta.get('id')}")
+    if meta.get("is_private") is not True:
+        raise SystemExit("refusing to push a non-private kernel")
+    if meta.get("enable_internet") is not False:
+        raise SystemExit("refusing to push a kernel with internet enabled")
+    if "biohub-cell-tracking-during-development" not in (meta.get("competition_sources") or []):
+        raise SystemExit("kernel must attach the competition dataset")
+    for cell in nb.get("cells") or []:
+        if cell.get("cell_type") == "code":
+            cell["outputs"] = []
+    return json.dumps(nb), meta
+
+
+def push_kernel(kernel_name: str) -> dict:
+    if kernel_name not in KERNELS:
+        raise SystemExit(f"unknown kernel {kernel_name!r}")
+    spec = KERNELS[kernel_name]
+    slug = spec["kernel_id"]
+    if slug in FORBIDDEN_SLUGS:
+        raise SystemExit(f"refusing to overwrite locked kernel {slug}")
+    if slug == RETRAIN_KERNEL_SLUG and not RETRAIN_LAUNCH_AUTHORIZED:
+        raise SystemExit(
+            "learned_unet_retrain_v1 launch is not authorized; wait for a "
+            "reviewed cycle. Do not overwrite mahdimzafari/biohub-learned-unet-v1"
+        )
+    text, meta = _load_notebook_text(kernel_name)
+    payload = {
+        "slug": meta["id"],
+        "newTitle": meta["title"],
+        "text": text,
+        "language": "python",
+        "kernelType": "notebook",
+        "isPrivate": True,
+        "enableGpu": bool(meta.get("enable_gpu", False)),
+        "enableTpu": False,
+        "enableInternet": False,
+        "competitionDataSources": ["biohub-cell-tracking-during-development"],
+        "datasetDataSources": [],
+        "kernelDataSources": list(meta.get("kernel_sources") or []),
+        "modelDataSources": [],
+    }
+    body = json.dumps(payload).encode()
+    req = urllib.request.Request(
+        f"{API_ROOT}/kernels/push",
+        data=body,
+        method="POST",
+    )
+    req.add_header("Authorization", f"Bearer {_token()}")
+    req.add_header("User-Agent", "biohub-cell-tracking/0.1")
+    req.add_header("Content-Type", "application/json")
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode(errors="replace")[:500]
+        raise SystemExit(f"kernels/push HTTP {exc.code}: {detail}") from exc
+
+
+def kernel_status(slug: str) -> dict:
+    user, name = slug.split("/", 1)
+    url = f"{API_ROOT}/kernels/status?userName={user}&kernelSlug={name}"
+    req = urllib.request.Request(url)
+    req.add_header("Authorization", f"Bearer {_token()}")
+    req.add_header("User-Agent", "biohub-cell-tracking/0.1")
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.loads(resp.read().decode())
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("kernel", default="association_v2", nargs="?", help="Packaged kernel name")
+    parser.add_argument("--status-only", action="store_true", help="Only print kernel status")
+    args = parser.parse_args()
+    spec = KERNELS[args.kernel]
+    slug = spec["kernel_id"]
+    if slug in FORBIDDEN_SLUGS:
+        raise SystemExit(f"refusing to overwrite locked kernel {slug}")
+    if slug == RETRAIN_KERNEL_SLUG and not RETRAIN_LAUNCH_AUTHORIZED:
+        raise SystemExit(
+            "learned_unet_retrain_v1 launch is not authorized; wait for a "
+            "reviewed cycle. Do not overwrite mahdimzafari/biohub-learned-unet-v1"
+        )
+    if args.status_only:
+        status = kernel_status(slug)
+        print(json.dumps({k: status.get(k) for k in ("status", "failureMessage", "hasFailureMessage")}, indent=2))
+        return
+    result = push_kernel(args.kernel)
+    safe = {
+        "ref": result.get("ref") or result.get("slug") or slug,
+        "versionNumber": result.get("versionNumber") or result.get("currentVersionNumber"),
+        "error": result.get("error") or result.get("message"),
+        "invalidTags": result.get("invalidTags") or [],
+        "invalidKernelSources": result.get("invalidKernelSources") or [],
+        "invalidCompetitionSources": result.get("invalidCompetitionSources") or [],
+        "invalidDatasetSources": result.get("invalidDatasetSources") or [],
+        "keys": sorted(result.keys()),
+    }
+    print(json.dumps(safe, indent=2, default=str))
+    print("NOTE: this is a private kernel push, not a competition submission.")
+    if safe["invalidKernelSources"] or safe["invalidCompetitionSources"] or safe["invalidDatasetSources"]:
+        raise SystemExit("Kaggle rejected one or more attached sources; not a submission")
+
+
+if __name__ == "__main__":
+    main()

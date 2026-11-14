@@ -1,0 +1,40 @@
+# learned_unet_orgdet_fnn_rank_canary_v1 — CPU link-head canary for
+# preregistered learned_unet_orgdet_fnn_rank_v1 (hash 2748c4a2b2823c0a).
+# Canary hash f7dc3d3292ce813d.
+# Hard negatives inside the locked 12 µm / sqrt(dt) / max_gap=2 envelope.
+# Proves finite link loss, nonzero transformer grads, noncollapsed
+# true-vs-hard pair scores, and checkpoint reload exactness.
+# Does not official-score the ranker. Does not open 6bba.
+# Does not write submission.csv. Does not push a kernel.
+# Do not retune 12 µm, ELF, FNN, or TCF. Not a competition submission.
+
+label: learned_unet_orgdet_fnn_rank_canary_v1
+parent_label: learned_unet_orgdet_fnn_rank_v1
+parent_rank_hash: 2748c4a2b2823c0a
+parent_fnn_hash: 95e9300eb84ba71c
+train_config_hash: 4c38035d6657f2ad
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+candidate_gate_um: 12.0
+candidate_max_dt: 2
+candidate_gap_scale: sqrt_dt
+hard_negatives: true
+n_parents: 4
+n_steps: 80
+lr: 0.001
+seed: 0
+feat_dim: 64
+freeze_unet: true
+edge_activation: pairwise_logit
+min_true_minus_hard_logit: 0.5
+min_ranking_acc: 1.0
+refuses_public_199_video_weights: true
+writes_submission_csv: false
+kernel_push: false
+opens_6bba: false
+uses_199_video_weights: false
+scores_official_44b6: false
+launches_ranker_helper: false

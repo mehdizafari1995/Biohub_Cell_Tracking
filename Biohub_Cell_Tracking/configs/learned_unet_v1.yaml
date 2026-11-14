@@ -1,0 +1,31 @@
+# learned_unet_v1 — specimen-separated organizer UNet + transformer.
+# Train on 44b6 only. Do not use 6bba to train or choose hyperparameters.
+# Do not overwrite baseline_v1 / association_v2 / helper kernel slugs.
+# Weights stay out of git. Not a competition submission.
+
+label: learned_unet_v1
+seed: 0
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+internal_val:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+epochs: 3
+batch_size: 1
+grad_accum: 8
+lr: 0.0001
+downsample: [1, 4, 4]
+unet_layers: [32, 64, 128]
+unet_out_channels: 32
+window_size: 2
+pool_kernel_um: 5.0
+det_loss_weight: 1.0
+det_neg_weight: 0.01
+skip_fullres_temporal: true
+max_hours: 11.0
+writes_submission_csv: false
+edge_supervision: gt_node_index
+kernel_slug: mahdimzafari/biohub-learned-unet-v1

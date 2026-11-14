@@ -1,0 +1,22 @@
+{
+  "id": "mahdimzafari/biohub-learned-unet-orgdet-fnn-rank-v1",
+  "title": "Biohub Learned UNet Orgdet Fnn Rank V1",
+  "code_file": "kaggle_learned_unet_orgdet_fnn_rank_v1.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [
+    "mahdimzafari/biohub-learned-unet-orgop-v1",
+    "mahdimzafari/biohub-geff-export",
+    "mahdimzafari/biohub-tuning-zarr-export"
+  ],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}

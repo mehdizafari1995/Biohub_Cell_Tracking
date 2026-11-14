@@ -1,0 +1,20 @@
+{
+  "id": "mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1",
+  "title": "Biohub Learned UNet Orgdet Elf Test V1",
+  "code_file": "kaggle_learned_unet_orgdet_elf_test_v1.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "keywords": [],
+  "dataset_sources": [],
+  "kernel_sources": [
+    "mahdimzafari/biohub-learned-unet-v1"
+  ],
+  "competition_sources": [
+    "biohub-cell-tracking-during-development"
+  ],
+  "model_sources": []
+}

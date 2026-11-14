@@ -1,0 +1,17 @@
+{
+  "label": "learned_unet_motion_v1",
+  "config_hash": "66853b6f1445c18b",
+  "n_volumes_tuning": 2,
+  "estimate_sec_tuning": 16.0,
+  "estimate_hours_hidden_199": 0.48,
+  "kaggle_gpu_limit_hours": 12.0,
+  "under_limit": true,
+  "peak_memory_mb_budget": 1500.0,
+  "measured_tune_sec": 9.816,
+  "measured_tune_peak_mb": 578.5,
+  "needs_gpu": false,
+  "needs_new_unet_pass": false,
+  "source": "CPU constant-velocity relink of locked infer detections",
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false
+}

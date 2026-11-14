@@ -1,0 +1,44 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-link-v2",
+  "polled_utc": "2026-09-20T22:47:44Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-link-v2",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_files": [
+    {
+      "name": "graphs/44b6_12dfb391.json",
+      "size": null
+    },
+    {
+      "name": "graphs/44b6_267148e4.json",
+      "size": null
+    },
+    {
+      "name": "infer_manifest.json",
+      "size": null
+    }
+  ],
+  "decision": "download_complete_helper",
+  "config_hash": "1d4015dc499bd604",
+  "code_version": "e49ed66",
+  "downloaded": true,
+  "extracted": {
+    "44b6_12dfb391.json": "44b6_12dfb391.json",
+    "44b6_267148e4.json": "44b6_267148e4.json",
+    "infer_manifest.json": "infer_manifest.json"
+  },
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "Private GPU transformer-linker v2 poll. Not a competition submission. Graphs stay under ignored artifacts/kaggle/. Not a leaderboard score. Do not score frozen 6bba until a documented 44b6 lock. Do not overwrite rejected link_v1."
+}

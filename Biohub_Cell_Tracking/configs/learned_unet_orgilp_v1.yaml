@@ -1,0 +1,64 @@
+# learned_unet_orgilp_v1 — spatial 12 µm candidates + official tracksdata
+# ILP on locked organizer detections. Hash dbc6134cddf2048d.
+# Repairs rejected orgop_v1 (250c5bfacd4a8198) which wrote 0 softmax>0.5
+# candidate edges. Does not overwrite that slug. Does not read transformer
+# logits. Do not attach public 199-video / DeepCenter weights.
+# Do not open 6bba unless official 44b6 combined beats locked orgdet-gap
+# 0.6872212709981039. Do not write submission.csv.
+# Not a competition submission.
+
+label: learned_unet_orgilp_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+orgop_label: learned_unet_orgop_v1
+orgdet_label: learned_unet_orgdet_v1
+orgdet_gap_label: learned_unet_orgdet_gap_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+rejected_orgop_hash: 250c5bfacd4a8198
+orgdet_config_hash: 80b20589198148b7
+orgdet_gap_config_hash: ee31f36151325f9a
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+infer_stems:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+source_graphs: locked_learned_unet_orgop_graphs
+retunes_detection: false
+uses_intensity: false
+uses_transformer: false
+uses_velocity: false
+uses_ilp: true
+candidate_source: spatial_gate_12um
+edge_activation: spatial_prob_1_minus_dist_over_gate
+edge_threshold: 0.0
+linker: tracksdata_ilp
+gate_um: 12.0
+max_gap_frames: 0
+max_neighbors_per_source: 8
+max_candidate_edges: 2000000
+assignment: tracksdata_ilp
+interpolate_gaps: false
+use_ilp: true
+ilp_edge_weight: -1.0
+ilp_appearance_weight: 0.1
+ilp_disappearance_weight: 0.1
+ilp_division_weight: 1.0
+preflight_required: true
+preflight_min_nodes: 1
+preflight_min_candidate_edges: 1
+preflight_min_solved_edges: 1
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false
+rejection_reference: learned_unet_orgdet_gap_v1
+rejection_threshold: 0.6872212709981039
+kernel_slug: mahdimzafari/biohub-learned-unet-orgilp-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1
+orgop_kernel_slug: mahdimzafari/biohub-learned-unet-orgop-v1

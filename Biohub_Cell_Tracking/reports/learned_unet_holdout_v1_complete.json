@@ -1,0 +1,24 @@
+{
+  "status": "inferred",
+  "slug": "mahdimzafari/biohub-learned-unet-holdout-v1",
+  "version": 1,
+  "config_hash": "d374a21f03dddc04",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "weights_path": "/kaggle/input/notebooks/mahdimzafari/biohub-learned-unet-v1/learned_unet_v1_last.pt",
+  "runtime_sec": 184.44605612754822,
+  "peak_memory_mb": 1176.9921875,
+  "graphs": [
+    {"stem": "6bba_05db0fb1", "status": "predicted", "n_nodes": 97062, "n_edges": 89394},
+    {"stem": "6bba_c328f2fd", "status": "predicted", "n_nodes": 52161, "n_edges": 47595}
+  ],
+  "official_holdout_combined": 0.6936047711123506,
+  "association_v2_locked_holdout": 0.5915697467955445,
+  "decision": "keep_candidate_learned_unet_holdout_v1",
+  "has_submission_csv": false,
+  "retune_after_holdout": false,
+  "notes": "Sanitized holdout v1 record. Graphs stay under ignored artifacts/kaggle/. Not a competition submission. Not a leaderboard score. Do not retune. Do not score 6bba again."
+}

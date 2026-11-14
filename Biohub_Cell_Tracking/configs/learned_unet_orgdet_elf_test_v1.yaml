@@ -1,0 +1,48 @@
+# learned_unet_orgdet_elf_test_v1 — public-test worker at locked
+# orgdet+gap+prune plus long-dt1 edge-length filter.
+# Parent overlay hash 292c4f1f968f948d (official 44b6 0.709838 vs prune
+# 0.693437; official 6bba 0.737787 vs 0.723018). Test-time hash
+# ad375d39e13098d1. New slug. Do not overwrite orgdet-gap-prune-test v1.
+# Discovers test/*.zarr. Not a competition submission from this package.
+
+label: learned_unet_orgdet_elf_test_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+orgdet_label: learned_unet_orgdet_v1
+orgdet_gap_label: learned_unet_orgdet_gap_v1
+orgdet_gap_prune_label: learned_unet_orgdet_gap_prune_v1
+orgdet_elf_label: learned_unet_orgdet_elf_v1
+orgdet_gap_prune_test_label: learned_unet_orgdet_gap_prune_test_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+orgdet_config_hash: 80b20589198148b7
+orgdet_gap_config_hash: ee31f36151325f9a
+orgdet_gap_prune_config_hash: 862e3e7f7ac0330e
+orgdet_elf_config_hash: 292c4f1f968f948d
+orgdet_gap_prune_test_parent_hash: 52a30a5843e0a880
+discovers_test_zarrs: true
+hardcoded_test_stems: []
+opens_train_volumes: false
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+linker: orgdet_gap_prune_then_drop_long_dt1_edges
+motion_model: last_position
+gate_um: 12.0
+max_link_um: 12.0
+max_gap_frames: 2
+gap_scale: sqrt_dt
+assignment: greedy
+interpolate_gaps: true
+drop_degree0: true
+max_dt1_edge_um: 8.0
+drop_long_dt1_edges: true
+drop_degree0_after: true
+max_parents_per_node: 1
+max_children_per_node: 1
+intensity_weight: 0.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: true
+writes_run_manifest: true
+kernel_slug: mahdimzafari/biohub-learned-unet-orgdet-elf-test-v1
+weights_name: learned_unet_v1_best.pt

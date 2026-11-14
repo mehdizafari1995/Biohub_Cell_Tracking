@@ -1,0 +1,42 @@
+scale_zyx: [1.625, 0.40625, 0.40625]
+seed: 0
+max_timepoints: null
+timepoint_start: 0
+label: division_v2
+
+# Locked association_v2 detections + linker. Do not overwrite association_v2.yaml.
+detection:
+  method: blob_dog
+  min_sigma: 2.0
+  max_sigma: 5.0
+  threshold: 0.05
+  normalize: minmax
+  min_distance_um: 4.0
+  suppress_duplicates: true
+  anisotropic: true
+
+linking:
+  method: association_v2
+  max_distance_um: 12.0
+  allow_divisions: true
+  division_gap_um: 8.0
+  motion_model: none
+  gate_um: 12.0
+  max_gap_frames: 2
+  assignment: greedy
+  intensity_weight: 0.5
+  track_start_penalty_um: 0.0
+  track_end_penalty_um: 0.0
+  boundary_margin_um: 0.0
+  interpolate_gaps: true
+  # Conservative gates locked from 44b6 GEFF geometry only. See docs/division_priors.json.
+  min_child_separation_um: 8.3
+  max_parent_child_um: 10.0
+  min_parent_child_um: 0.0
+  intensity_sum_tolerance: 0.45
+  max_children: 2
+  require_parent_predecessor: true
+  require_no_alternative_parent: true
+  alternative_parent_gate_um: 12.0
+  max_sibling_alignment: 0.05
+  min_displacement_um: 1.0

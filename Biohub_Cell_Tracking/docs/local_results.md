@@ -32,7 +32,7 @@ Frozen before tuning in `docs/splits/v1.json` (specimen prefix `44b6` vs `6bba`;
 | tuning | `44b6_12dfb391` | 788 | 773 | 1 | 58672 | 42 / 100 frames (429) |
 | tuning | `44b6_267148e4` | 280 | 277 | 1 | 19130 | 0 / 100 |
 | validation | `6bba_05db0fb1` | 1229 | 1183 | 3 | 69800 | **100 / 100** |
-| validation | `6bba_c328f2fd` | 511 | 500 | 2 | 31228 | partial (~69 / 100) |
+| validation | `6bba_c328f2fd` | 511 | 500 | 2 | 31228 | **100 / 100** |
 
 Complete-sequence official numbers below are **one validation video** (`6bba_05db0fb1`), not the full split and not the hidden test.
 
@@ -88,3 +88,32 @@ Exact submit steps: `docs/kaggle_submit.md`.
 - Greedy one-child linking never predicts divisions; division Jaccard stays 0.
 - Dense-field identity switches remain after the detection improvement.
 - No actual Kaggle scoring rerun.
+
+## Later update (2026-09-18, after the notes above)
+
+Split volumes listed as incomplete above were finished (all four v1 zarrs are 100/100). `docs/splits/v1.json` was not changed. `docs/splits/v2.json` adds sanity sequence `44b6_2a2eff9f` only.
+
+### Actual Kaggle kernel (not a competition submit)
+
+Private kernel `mahdimzafari/biohub-baseline-v1` **version 1** failed: no `zarr` package. **Version 2 COMPLETE** on public test with internet off. Worker numbers from `run_manifest.json`: 595.24 s, 1.49 s/frame, 435 MB, 224788 rows, audit_ok. Decoder `blosc2 4.1.2`. No public or private leaderboard score was returned. Manual submit click: `docs/kaggle_submit.md`.
+
+Runtime projection from **this Kaggle run** (not the local 0.583 s/frame simulation): 1.49 s/frame. If hidden test ≈ train (16 sequences × 100 frames) ≈ 40 minutes. If someone still assumes 200 × 100 frames: 8.3 h, and 2× margin exceeds 12 h. The 200-sequence figure remains unverified.
+
+### Full frozen validation (two sequences, official scorer)
+
+New runs; previous tables above are unchanged.
+
+| experiment | config | official | raw J | adj | div J (TP/FP/FN) | recall | switches | fragments |
+|---|---|---|---|---|---|---|---|---|
+| `val_baseline_v1` | A greedy 15 µm | 0.537 | 0.530 | 0.537 | 0.0 (0/0/5) | 0.804 | 150 | 603 |
+| `val_association_v2` | B 12 µm + gap2 + intensity | **0.592** | 0.589 | 0.592 | 0.0 (0/0/5) | 0.838 | 135 | 483 |
+| `division_v1_val` | C + two-child proposals | 0.590 | 0.587 | 0.590 | 0.0 (0/3/5) | 0.838 | — | — |
+
+`6bba_05db0fb1` A is 0.498, matching `20260918T053718Z_val_aniso`. Comparison write-up: `reports/abc_comparison.md`.
+
+## Later update (2026-09-20, learned transformer linker)
+
+`learned_unet_link_v1` (hash `3a7423c6858ace41`) completed on 44b6 only. Official combined **0.0 vs learned_unet_infer_v1 0.655751**. Detections matched infer (80741/36951) but softmax+0.5 wrote 0 edges. Decision `reject_learned_unet_link_v1`. Frozen `6bba` was not opened. This is not a Kaggle submission and not a leaderboard score.
+
+`learned_unet_link_v2` (hash `1d4015dc499bd604`) completed on 44b6 only. Official combined **0.224746 vs learned_unet_infer_v1 0.655751**. Detections matched infer (80741/36951); no-cutoff assignment wrote 72532/31819 edges inside the 12 µm gate. Decision `reject_learned_unet_link_v2`. Transformer ranking among gated candidates is worse than greedy nearest-neighbor. Frozen `6bba` was not opened. This is not a Kaggle submission and not a leaderboard score.
+

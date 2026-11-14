@@ -1,0 +1,24 @@
+{
+  "status": "complete_inferred",
+  "decision": "keep_candidate_learned_unet_orgdet_holdout_v1",
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-holdout-v1",
+  "version": 1,
+  "config_hash": "912f0c19b572a054",
+  "orgdet_config_hash": "80b20589198148b7",
+  "train_config_hash": "4c38035d6657f2ad",
+  "environment": "kaggle_input",
+  "runtime_sec": 173.79521799087524,
+  "peak_memory_mb": 1185.26171875,
+  "accelerator": "T4 x2",
+  "torch": "2.10.0+cu128",
+  "weights_used": "learned_unet_v1_last.pt",
+  "graphs": [
+    {"stem": "6bba_05db0fb1", "n_nodes": 84328, "n_edges": 78493},
+    {"stem": "6bba_c328f2fd", "n_nodes": 37482, "n_edges": 35147}
+  ],
+  "official_holdout_combined": 0.7052260455024029,
+  "learned_prune_locked_holdout": 0.7013778258203534,
+  "wrote_submission_csv": false,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false
+}

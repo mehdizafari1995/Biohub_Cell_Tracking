@@ -1,0 +1,51 @@
+# learned_unet_orgop_v1 — organizer operating point on locked
+# 44b6-only learned_unet_v1 weights. Hash 250c5bfacd4a8198.
+# Detection threshold 0.99 + official tracksdata ILP
+# (edge -1.0, appear/disappear 0.1, division 1.0).
+# Official 44b6 0.0 vs infer 0.655751. rejected_on_tuning.
+# Do not attach public 199-video / DeepCenter / secondary-seed weights.
+# Do not open 6bba. Do not retune. Do not write submission.csv.
+# Do not overwrite this completed slug or locked train/infer/holdout/
+# test/gap-test/prune-test slugs.
+# Not a competition submission.
+
+label: learned_unet_orgop_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+infer_stems:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+weights_source: locked_learned_unet_v1_44b6_only
+weights_name: learned_unet_v1_best.pt
+fallback_weights_name: learned_unet_v1_last.pt
+refuses_public_199_video_weights: true
+refuses_deepcenter: true
+refuses_secondary_seed_blend: true
+uses_organizer_predict_path: true
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+edge_activation: softmax
+edge_threshold: 0.5
+linker: tracksdata_ilp
+use_ilp: true
+ilp_edge_weight: -1.0
+ilp_appearance_weight: 0.1
+ilp_disappearance_weight: 0.1
+ilp_division_weight: 1.0
+max_gap_frames: 0
+interpolate_gaps: false
+downsample: [1, 4, 4]
+normalize: window_minmax
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false
+kernel_slug: mahdimzafari/biohub-learned-unet-orgop-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1

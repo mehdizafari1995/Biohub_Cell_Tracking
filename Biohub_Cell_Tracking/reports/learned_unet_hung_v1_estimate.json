@@ -1,0 +1,17 @@
+{
+  "label": "learned_unet_hung_v1",
+  "config_hash": "f67bc97d0521dc78",
+  "n_volumes_tuning": 2,
+  "estimate_sec_tuning": 44.96,
+  "estimate_hours_hidden_199": 1.24,
+  "kaggle_gpu_limit_hours": 12.0,
+  "under_limit": true,
+  "peak_memory_mb_budget": 1500.0,
+  "measured_tune_sec": 10.679,
+  "measured_tune_peak_mb": 596.1,
+  "needs_gpu": false,
+  "needs_new_unet_pass": false,
+  "source": "CPU Hungarian last-position relink of locked infer detections",
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false
+}

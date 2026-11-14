@@ -1,0 +1,17 @@
+{
+  "label": "learned_unet_conflict_v1",
+  "config_hash": "8503d804fb9e9f1d",
+  "n_volumes_tuning": 2,
+  "estimate_sec_tuning": 44.96,
+  "estimate_hours_hidden_199": 1.24,
+  "kaggle_gpu_limit_hours": 12.0,
+  "under_limit": true,
+  "peak_memory_mb_budget": 1500.0,
+  "measured_tune_sec": 19.8,
+  "measured_tune_peak_mb": 590.1,
+  "needs_gpu": false,
+  "needs_new_unet_pass": false,
+  "source": "CPU conflict-Hungarian last-position relink of locked infer detections; unique NNs kept; Hungarian only on shared-nearest collisions",
+  "is_kaggle_run": false,
+  "is_leaderboard_score": false
+}

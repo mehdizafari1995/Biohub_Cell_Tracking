@@ -1,0 +1,25 @@
+{
+  "label": "learned_unet_test_v1",
+  "config_hash": "7a8725b818fc609b",
+  "train_config_hash": "4c38035d6657f2ad",
+  "infer_config_hash": "d7578b5f64ddac08",
+  "holdout_config_hash": "d374a21f03dddc04",
+  "sec_per_volume": 92.2,
+  "source": "learned_unet_holdout_v1 v1 184.4s / 2 volumes",
+  "peak_memory_mb_observed": 1177.0,
+  "public_test": {
+    "n_volumes": 4,
+    "estimate_sec": 368.8,
+    "estimate_hours": 0.10244444444444445,
+    "under_limit": true
+  },
+  "hidden_test_train_sized": {
+    "n_volumes": 199,
+    "estimate_sec": 18347.8,
+    "estimate_hours": 5.096611111111111,
+    "under_limit": true
+  },
+  "kaggle_gpu_limit_hours": 12.0,
+  "is_leaderboard_score": false,
+  "note": "Estimate only. Not a Kaggle run and not a leaderboard score."
+}

@@ -1,0 +1,27 @@
+{
+  "slug": "mahdimzafari/biohub-learned-unet-test-v1",
+  "polled_utc": "2026-09-20T14:55:00Z",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-test-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": 1,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "decision": "download_complete_helper",
+  "test_config_hash": "7a8725b818fc609b",
+  "downloaded": true,
+  "extracted": {
+    "submission.csv": "submission.csv",
+    "run_manifest.json": "run_manifest.json"
+  },
+  "is_kaggle_run": true,
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "notes": "Private GPU test-time kernel v1 COMPLETE. CSV extracted under ignored artifacts/kaggle/. Independent schema audit_ok. Not a competition submission. Not a leaderboard score. Do not score frozen 6bba again."
+}

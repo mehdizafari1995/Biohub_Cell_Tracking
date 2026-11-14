@@ -1,0 +1,47 @@
+# learned_unet_orgdet_v1 — 44b6-only greedy 12 µm relink of locked
+# organizer detections. Hash 80b20589198148b7. Do not retune after holdout.
+# Do not overwrite rejected learned_unet_orgop_v1. Do not open 6bba until
+# a documented 44b6 keep. Do not write submission.csv.
+# Do not overwrite locked train/infer/holdout/test/gap-test/prune-test slugs.
+# Not a competition submission.
+
+label: learned_unet_orgdet_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+orgop_label: learned_unet_orgop_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+rejected_orgop_hash: 250c5bfacd4a8198
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+infer_stems:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+source_graphs: locked_learned_unet_orgop_graphs
+retunes_detection: false
+uses_intensity: false
+uses_transformer: false
+uses_velocity: false
+uses_ilp: false
+linker: greedy_gate_12um
+motion_model: last_position
+gate_um: 12.0
+max_link_um: 12.0
+max_gap_frames: 0
+assignment: greedy
+interpolate_gaps: false
+max_parents_per_node: 1
+max_children_per_node: 1
+intensity_weight: 0.0
+det_threshold: 0.99
+det_tta: true
+pool_kernel_um: 3.0
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false
+kernel_slug: mahdimzafari/biohub-learned-unet-orgdet-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1
+orgop_kernel_slug: mahdimzafari/biohub-learned-unet-orgop-v1

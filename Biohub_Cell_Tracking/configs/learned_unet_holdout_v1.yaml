@@ -1,0 +1,39 @@
+# learned_unet_holdout_v1 — one-shot frozen-holdout inference.
+# Locked operating point from learned_unet_infer_v1 (hash d7578b5f64ddac08).
+# Opens only 6bba_05db0fb1 + 6bba_c328f2fd. Never opens 44b6 volumes.
+# Do not overwrite locked train/infer slugs. Do not write submission.csv.
+# Do not retune. Do not score holdout twice. Weights stay out of git.
+
+label: learned_unet_holdout_v1
+train_label: learned_unet_v1
+infer_label: learned_unet_infer_v1
+train_config_hash: 4c38035d6657f2ad
+infer_config_hash: d7578b5f64ddac08
+tuning_specimen: 44b6
+holdout_specimens: [6bba]
+infer_stems:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+frozen_holdout:
+  - 6bba_05db0fb1
+  - 6bba_c328f2fd
+refused_tuning_stems:
+  - 44b6_12dfb391
+  - 44b6_267148e4
+det_threshold: 0.5
+det_tta: true
+pool_kernel_um: 5.0
+linker: greedy_gate_12um
+gate_um: 12.0
+max_gap_frames: 0
+max_parents_per_node: 1
+max_children_per_node: 1
+downsample: [1, 4, 4]
+normalize: window_minmax
+scale_zyx: [1.625, 0.40625, 0.40625]
+writes_submission_csv: false
+one_shot_holdout: true
+kernel_slug: mahdimzafari/biohub-learned-unet-holdout-v1
+train_kernel_slug: mahdimzafari/biohub-learned-unet-v1
+infer_kernel_slug: mahdimzafari/biohub-learned-unet-infer-v1
+weights_name: learned_unet_v1_best.pt

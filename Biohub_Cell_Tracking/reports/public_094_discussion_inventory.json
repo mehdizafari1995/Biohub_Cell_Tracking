@@ -1,0 +1,136 @@
+{
+  "audit_id": "public_094_discussion_inventory",
+  "timestamp_utc": "2026-09-21T07:51:24Z",
+  "code_version": "5a57870",
+  "orgop_hash": "250c5bfacd4a8198",
+  "orgop_launch_authorized": false,
+  "kernel_launched": false,
+  "competition_submitted": false,
+  "topics_n_returned": 20,
+  "topics_total_count": 112,
+  "topics_first_page_only": true,
+  "requested_ids": [
+    716952,
+    730160,
+    734604,
+    735352,
+    738217,
+    740392
+  ],
+  "by_id_lookups": [
+    {
+      "id": 716952,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 730160,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 734604,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 740392,
+      "retrieved": false,
+      "http_status": 404,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false
+    }
+  ],
+  "kernel_search_740392_n": 0,
+  "discussions": [
+    {
+      "id": 716952,
+      "retrieved": false,
+      "title": null,
+      "votes": null,
+      "commentCount": null,
+      "postDate": null,
+      "lastCommentPostDate": null,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false,
+      "http_status": 404
+    },
+    {
+      "id": 730160,
+      "retrieved": false,
+      "title": null,
+      "votes": null,
+      "commentCount": null,
+      "postDate": null,
+      "lastCommentPostDate": null,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false,
+      "http_status": 404
+    },
+    {
+      "id": 734604,
+      "retrieved": false,
+      "title": null,
+      "votes": null,
+      "commentCount": null,
+      "postDate": null,
+      "lastCommentPostDate": null,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false,
+      "http_status": 404
+    },
+    {
+      "id": 735352,
+      "retrieved": true,
+      "title": "Possible big leaderboard shakeup",
+      "votes": 9,
+      "commentCount": 12,
+      "postDate": "2026-08-15T08:25:14.0797571Z",
+      "lastCommentPostDate": "2026-09-17T15:49:49.82Z",
+      "kind": "topics_api_metadata",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 738217,
+      "retrieved": true,
+      "title": "focus3d : one of the best 3d cell segmentation",
+      "votes": 36,
+      "commentCount": 50,
+      "postDate": "2026-08-30T15:24:33.9075585Z",
+      "lastCommentPostDate": "2026-09-20T08:19:52.7733333Z",
+      "kind": "topics_api_metadata",
+      "used_as_source": false,
+      "body_retrieved": false
+    },
+    {
+      "id": 740392,
+      "retrieved": false,
+      "title": null,
+      "votes": null,
+      "commentCount": null,
+      "postDate": null,
+      "lastCommentPostDate": null,
+      "kind": "topic_id_not_found",
+      "used_as_source": false,
+      "body_retrieved": false,
+      "http_status": 404
+    }
+  ],
+  "focus3d_title_matches": true,
+  "unread_740392_kind": "topic_id_not_found",
+  "notes": "Read-only topics API plus by-id lookup. HTML bodies are SPA shells and were not used as sources. 740392 is absent from the first hot page and the by-id endpoint 404s; kernel search is empty. Did not launch retrain or orgop. Did not submit. Public 0.553 unused."
+}
