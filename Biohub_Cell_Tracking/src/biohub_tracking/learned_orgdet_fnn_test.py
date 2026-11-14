@@ -293,7 +293,9 @@ def classify_orgdet_fnn_test_submit_poll(
     extra = [
         row
         for row, label in zip(rows, labels)
-        if str(row.get("ref")) not in known and str(row.get("kernelSlug") or "") != ORGDET_FNN_TEST_KERNEL_SLUG
+        if str(row.get("ref")) not in known
+        and str(row.get("kernelSlug") or "") != ORGDET_FNN_TEST_KERNEL_SLUG
+        and label != "orgdet_fnn_acf_test"
     ]
     if kernel_failed:
         decision = "record_kernel_error"

@@ -74,6 +74,8 @@ def classify_submission_notebook(slug: str | None, ref: Any = None) -> str:
         return "orgdet_gap_test"
     if text == "mahdimzafari/biohub-learned-unet-orgdet-gap-prune-test-v1":
         return "orgdet_gap_prune_test"
+    if text == "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1":
+        return "orgdet_fnn_acf_test"
     if text == ASSOCIATION_V2_KERNEL_SLUG or str(ref) == str(ASSOCIATION_V2_SUBMISSION_REF):
         return "association_v2"
     if text:

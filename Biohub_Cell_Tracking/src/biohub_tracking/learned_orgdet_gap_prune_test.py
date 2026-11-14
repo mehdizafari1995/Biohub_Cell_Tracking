@@ -236,7 +236,9 @@ def classify_orgdet_gap_prune_test_submit_poll(
     extra = [
         row
         for row, label in zip(rows, labels)
-        if str(row.get("ref")) not in known and label != "orgdet_gap_prune_test"
+        if str(row.get("ref")) not in known
+        and label != "orgdet_gap_prune_test"
+        and label != "orgdet_fnn_acf_test"
     ]
     association = [row for row in rows if str(row.get("ref")) == str(association_ref)]
     orgdet_test = [row for row in rows if str(row.get("ref")) == str(orgdet_test_ref)]

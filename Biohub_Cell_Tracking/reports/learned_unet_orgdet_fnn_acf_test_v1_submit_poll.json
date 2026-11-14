@@ -1,0 +1,107 @@
+{
+  "polled_utc": "2026-11-14T08:36:59Z",
+  "code_version": "b913c78",
+  "orgdet_fnn_acf_test_config_hash": "2d13d0e3c90df093",
+  "kernel": {
+    "slug": "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
+    "status": "complete",
+    "failureMessage": null,
+    "hasFailureMessage": false,
+    "versionNumber": null,
+    "lastRunTime": null,
+    "is_complete": true,
+    "is_error": false,
+    "is_running": false,
+    "is_competition_submission": false,
+    "is_leaderboard_score": false
+  },
+  "output_names": [
+    "run_manifest.json",
+    "submission.csv"
+  ],
+  "submissions": [
+    {
+      "ref": 56644919,
+      "status": "complete",
+      "publicScore": "0.63186",
+      "privateScore": "0.66560",
+      "private_score_returned": true,
+      "date": "2026-09-28T15:14:43.263Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": 353195733,
+      "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1"
+    },
+    {
+      "ref": 56583783,
+      "status": "complete",
+      "publicScore": "0.60220",
+      "privateScore": "0.63459",
+      "private_score_returned": true,
+      "date": "2026-09-26T16:09:48.773Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": 351808956,
+      "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1"
+    },
+    {
+      "ref": 56466744,
+      "status": "complete",
+      "publicScore": "0.61209",
+      "privateScore": "0.63041",
+      "private_score_returned": true,
+      "date": "2026-09-22T14:13:11.68Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": 351557863,
+      "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1"
+    },
+    {
+      "ref": 56399003,
+      "status": "complete",
+      "publicScore": "0.55325",
+      "privateScore": "0.47819",
+      "private_score_returned": true,
+      "date": "2026-09-20T15:12:52.307Z",
+      "fileName": "submission.csv",
+      "errorDescription": null,
+      "scriptVersionId": 351174414,
+      "kernelSlug": "mahdimzafari/biohub-association-v2"
+    }
+  ],
+  "association_v2_submission_ref": 56399003,
+  "association_v2_public_score": "0.553",
+  "orgdet_test_submission_ref": 56466744,
+  "orgdet_test_public_score": "0.612",
+  "orgdet_gap_test_submission_ref": 56583783,
+  "orgdet_gap_test_public_score": "0.602",
+  "orgdet_fnn_acf_test_submission_ref": 56644919,
+  "orgdet_fnn_acf_test_public_score": "0.63186",
+  "orgdet_fnn_acf_test_private_score": "0.66560",
+  "orgdet_fnn_acf_test_script_version_id": 353195733,
+  "orgdet_fnn_acf_test_submitted_utc": "2026-09-28T15:14:43.263Z",
+  "competition_deadline_utc": "2026-09-29T23:59:00Z",
+  "slug": "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1",
+  "decision": "public_score_returned",
+  "kernel_complete": true,
+  "kernel_failed": false,
+  "n_submissions": 4,
+  "submission_refs": [
+    56644919,
+    56583783,
+    56466744,
+    56399003
+  ],
+  "orgdet_fnn_acf_test_submission_present": true,
+  "orgdet_fnn_acf_test_identity_proven": true,
+  "new_submission_public_score": "0.63186",
+  "new_submission_private_score": "0.66560",
+  "new_submission_status": "complete",
+  "new_submission_refs": [
+    56644919
+  ],
+  "is_competition_submission": false,
+  "is_leaderboard_score": false,
+  "human_action": "Do not resubmit. Recorded publicScore 0.63186 / privateScore 0.66560 is orgdet-fnn-acf-test 56644919 only and is not a tune target. Competition deadline 2026-09-29T23:59:00Z has passed. Do not invent extra digits. Do not poll this ref as pending.",
+  "notes": "Read-only poll. Did not download submission.csv. Did not submit. Did not overwrite locked slugs. Identity of 56644919 is mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1 scriptVersionId 353195733. First-recorded public strings 0.553 / 0.612 / 0.602 remain historical. Do not retune from 0.63186 / 0.66560 or from any other public or private score. Competition deadline 2026-09-29T23:59:00Z has passed."
+}

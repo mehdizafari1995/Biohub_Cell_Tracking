@@ -20,14 +20,26 @@ from biohub_tracking.learned_collect import (  # noqa: E402
 )
 from biohub_tracking.learned_orgdet_fnn_acf import LOCKED_ORGDET_FNN_ACF_HASH  # noqa: E402
 from biohub_tracking.learned_orgdet_fnn_acf_test import (  # noqa: E402
+    ASSOCIATION_V2_PUBLIC_SCORE,
+    ASSOCIATION_V2_SUBMISSION_REF,
     LOCKED_ORGDET_FNN_ACF_TEST_HASH,
     ORGDET_FNN_ACF_TEST_KERNEL_SLUG,
+    ORGDET_FNN_ACF_TEST_PRIVATE_SCORE,
+    ORGDET_FNN_ACF_TEST_PUBLIC_SCORE,
+    ORGDET_FNN_ACF_TEST_SCRIPT_VERSION_ID,
+    ORGDET_FNN_ACF_TEST_SUBMISSION_REF,
+    ORGDET_GAP_TEST_PUBLIC_SCORE,
+    ORGDET_GAP_TEST_SUBMISSION_REF,
+    ORGDET_TEST_PUBLIC_SCORE,
+    ORGDET_TEST_SUBMISSION_REF,
+    classify_orgdet_fnn_acf_test_submit_poll,
     hidden_projection_from_rehearsal,
     orgdet_fnn_acf_test_config_hash as locked_hash,
     orgdet_fnn_acf_test_config_payload as locked_payload,
     refuse_overwrite_locked_slugs,
     runtime_estimate,
 )
+from biohub_tracking.learned_orgdet_test import classify_submission_notebook  # noqa: E402
 from biohub_tracking.learned_orgdet_fnn_fast_test import (  # noqa: E402
     LOCKED_ORGDET_FNN_FAST_TEST_HASH,
 )
@@ -125,6 +137,77 @@ def test_keep_orgdet_fnn_acf_test_complete_report_matches_holdout_overlap():
     assert report["compare_vs_orgdet_fnn_fast_test"]["ok"] is True
     assert report["hidden_projection"]["under_limit"] is True
     assert report["hidden_projection"]["fail_closed_approaches_12h"] is False
+
+
+def test_classify_orgdet_fnn_acf_test_submit_poll_records_returned_scores():
+    association = {
+        "ref": ASSOCIATION_V2_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ASSOCIATION_V2_PUBLIC_SCORE,
+        "kernelSlug": "mahdimzafari/biohub-association-v2",
+    }
+    orgdet_test = {
+        "ref": ORGDET_TEST_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ORGDET_TEST_PUBLIC_SCORE,
+        "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-test-v1",
+    }
+    gap_test = {
+        "ref": ORGDET_GAP_TEST_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ORGDET_GAP_TEST_PUBLIC_SCORE,
+        "kernelSlug": "mahdimzafari/biohub-learned-unet-orgdet-gap-test-v1",
+    }
+    ui_needed = classify_orgdet_fnn_acf_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json", "submission.csv"],
+        submissions=[association, orgdet_test, gap_test],
+    )
+    assert ui_needed["decision"] == "human_action_required_ui_submit"
+    assert ui_needed["orgdet_fnn_acf_test_submission_present"] is False
+    assert ui_needed["is_leaderboard_score"] is False
+    acf = {
+        "ref": ORGDET_FNN_ACF_TEST_SUBMISSION_REF,
+        "status": "complete",
+        "publicScore": ORGDET_FNN_ACF_TEST_PUBLIC_SCORE,
+        "privateScore": ORGDET_FNN_ACF_TEST_PRIVATE_SCORE,
+        "date": "2026-09-28T15:14:43.263Z",
+        "kernelSlug": ORGDET_FNN_ACF_TEST_KERNEL_SLUG,
+        "scriptVersionId": ORGDET_FNN_ACF_TEST_SCRIPT_VERSION_ID,
+    }
+    assert classify_submission_notebook(acf["kernelSlug"], acf["ref"]) == "orgdet_fnn_acf_test"
+    scored = classify_orgdet_fnn_acf_test_submit_poll(
+        kernel_complete=True,
+        kernel_failed=False,
+        output_names=["run_manifest.json", "submission.csv"],
+        submissions=[association, orgdet_test, gap_test, acf],
+    )
+    assert scored["decision"] == "public_score_returned"
+    assert scored["orgdet_fnn_acf_test_identity_proven"] is True
+    assert scored["new_submission_public_score"] == ORGDET_FNN_ACF_TEST_PUBLIC_SCORE
+    assert scored["new_submission_private_score"] == ORGDET_FNN_ACF_TEST_PRIVATE_SCORE
+    assert scored["is_leaderboard_score"] is False
+    assert "not a tune target" in scored["human_action"]
+    poll_src = (ROOT / "scripts" / "poll_orgdet_fnn_acf_test_submit.py").read_text()
+    assert "list_competition_submissions" in poll_src
+    assert "competitions/submit" not in poll_src
+    assert "kernels/push" not in poll_src
+    assert "download_kernel_output" not in poll_src
+    live = json.loads(
+        (ROOT / "reports" / "learned_unet_orgdet_fnn_acf_test_v1_submit_poll.json").read_text()
+    )
+    assert live["orgdet_fnn_acf_test_config_hash"] == LOCKED_ORGDET_FNN_ACF_TEST_HASH
+    assert live["is_leaderboard_score"] is False
+    assert live["is_competition_submission"] is False
+    assert live["decision"] == "public_score_returned"
+    assert live["new_submission_public_score"] == ORGDET_FNN_ACF_TEST_PUBLIC_SCORE
+    assert live["new_submission_private_score"] == ORGDET_FNN_ACF_TEST_PRIVATE_SCORE
+    assert live["new_submission_refs"] == [ORGDET_FNN_ACF_TEST_SUBMISSION_REF]
+    assert live["orgdet_fnn_acf_test_identity_proven"] is True
+    blob = json.dumps(live)
+    assert "token=" not in blob
+    assert "https://" not in blob
 
 
 def test_runtime_estimate_under_limit():

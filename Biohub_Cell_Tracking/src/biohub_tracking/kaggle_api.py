@@ -190,7 +190,8 @@ def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
     public = item.get("publicScore")
     if public is not None:
         public = str(public)
-    private_present = bool(item.get("hasPrivateScore")) and bool(str(item.get("privateScore") or "").strip())
+    private_raw = str(item.get("privateScore") or "").strip()
+    private_present = bool(item.get("hasPrivateScore")) and bool(private_raw)
     error = item.get("errorDescription")
     if isinstance(error, str) and not error.strip():
         error = None
@@ -199,6 +200,7 @@ def sanitize_submission(raw: Mapping[str, Any] | None) -> dict[str, Any]:
         "ref": item.get("ref") or item.get("id"),
         "status": item.get("status"),
         "publicScore": public,
+        "privateScore": private_raw if private_present else None,
         "private_score_returned": private_present,
         "date": item.get("date") or item.get("submittedDate") or item.get("dateSubmitted"),
         "fileName": item.get("fileName"),

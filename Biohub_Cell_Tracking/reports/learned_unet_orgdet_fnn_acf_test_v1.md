@@ -61,16 +61,21 @@ fail-closed gate.
 
 ## Status
 
-**READY_FOR_MANUAL_SUBMISSION_REVIEW.** Label
-`KEEP_CANDIDATE_NOT_SUBMISSION_AUTHORIZED`. Preferred packaged public-test
-worker for the ACF holdout champion. CSV stays under ignored
+Mahdi UI-submitted this notebook. Read-only poll recorded competition
+ref **56644919**, status **complete**, public API **`0.63186`**, private
+API **`0.66560`**, notebook identity proven (`scriptVersionId`
+**353195733**). Decision `public_score_returned`. Label
+`KEEP_CANDIDATE_PUBLIC_AND_PRIVATE_RETURNED`. Preferred packaged
+public-test worker for the ACF holdout champion. CSV stays under ignored
 `artifacts/kaggle/`. Slug is in `FORBIDDEN_SLUGS`. Do **not** overwrite
-v1.
+v1. Do **not** resubmit. Do **not** retune from **0.63186** or
+**0.66560**. This is **not** a local official holdout score.
 
 ## Next
 
-Do **not** submit this slug from the CLI. Additional UI submit is
-**not** authorized unless a later message separately authorizes that
-extra click. Do **not** retune from **0.602**, **0.612**, or **0.553**.
-A later 44b6-first hypothesis must still beat ACF **0.734620** by
-**+0.002000**.
+Do **not** submit this slug from the CLI. Do **not** resubmit.
+Competition deadline **2026-09-29T23:59:00Z** has passed. Do **not**
+retune from **0.63186**, **0.66560**, **0.602**, **0.612**, or
+**0.553**. A later 44b6-first hypothesis must still beat ACF
+**0.734620** by **+0.002000**. Next cron: **do nothing** unless a later
+message names a new unused lever.

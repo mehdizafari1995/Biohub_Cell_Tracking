@@ -160,6 +160,7 @@ def classify_orgdet_gap_test_submit_poll(
         for row, label in zip(rows, labels)
         if str(row.get("ref")) not in {str(association_ref), str(orgdet_test_ref)}
         and label != "orgdet_gap_test"
+        and label != "orgdet_fnn_acf_test"
         and str(row.get("ref")) != str(orgdet_gap_test_ref)
     ]
     gap_newest = gap_rows[0] if gap_rows else None

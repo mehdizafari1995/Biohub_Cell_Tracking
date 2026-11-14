@@ -117,6 +117,7 @@ def test_sanitize_submission_drops_urls_and_empty_private_score():
     safe = kaggle_api.sanitize_submission(raw)
     assert safe["ref"] == 56399003
     assert safe["publicScore"] == "0.553"
+    assert safe["privateScore"] is None
     assert safe["private_score_returned"] is False
     assert safe["kernelSlug"] == "mahdimzafari/biohub-association-v2"
     assert safe["scriptVersionId"] == 351174414
@@ -126,6 +127,28 @@ def test_sanitize_submission_drops_urls_and_empty_private_score():
     blob = json.dumps(safe)
     assert "SECRET" not in blob
     assert "token=" not in blob
+    scored = kaggle_api.sanitize_submission(
+        {
+            "ref": 56644919,
+            "status": "complete",
+            "publicScore": "0.63186",
+            "privateScore": "0.66560",
+            "hasPrivateScore": True,
+            "date": "2026-09-28T15:14:43.263Z",
+            "fileName": "submission.csv",
+            "urlNullable": (
+                "/code/mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1"
+                "?scriptVersionId=353195733"
+            ),
+        }
+    )
+    assert scored["ref"] == 56644919
+    assert scored["publicScore"] == "0.63186"
+    assert scored["privateScore"] == "0.66560"
+    assert scored["private_score_returned"] is True
+    assert scored["kernelSlug"] == "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1"
+    assert scored["scriptVersionId"] == 353195733
+    assert "url" not in scored
     assert kaggle_api.parse_submission_notebook_identity(
         {"url": "https://www.kaggle.com/code/x/y?token=SECRET"}
     ) == {"kernelSlug": None, "scriptVersionId": None}

@@ -93,6 +93,12 @@ from .learned_test import (
 )
 
 ORGDET_FNN_ACF_TEST_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1"
+ORGDET_FNN_ACF_TEST_SUBMISSION_REF = 56644919
+ORGDET_FNN_ACF_TEST_PUBLIC_SCORE = "0.63186"
+ORGDET_FNN_ACF_TEST_PRIVATE_SCORE = "0.66560"
+ORGDET_FNN_ACF_TEST_SCRIPT_VERSION_ID = 353195733
+ORGDET_FNN_ACF_TEST_SUBMITTED_UTC = "2026-09-28T15:14:43.263Z"
+COMPETITION_DEADLINE_UTC = "2026-09-29T23:59:00Z"
 ORGDET_GAP_KERNEL_SLUG = "mahdimzafari/biohub-learned-unet-orgdet-gap-v1"
 FNN_FAST_TEST_MEASURED_PUBLIC_SEC = 320.22962474823
 FNN_FAST_TEST_MEASURED_PUBLIC_VOLUMES = 4
@@ -236,6 +242,10 @@ assert ORGDET_TEST_SUBMISSION_REF == 56466744
 assert ORGDET_TEST_PUBLIC_SCORE == "0.612"
 assert ORGDET_GAP_TEST_SUBMISSION_REF == 56583783
 assert ORGDET_GAP_TEST_PUBLIC_SCORE == "0.602"
+assert ORGDET_FNN_ACF_TEST_SUBMISSION_REF == 56644919
+assert ORGDET_FNN_ACF_TEST_PUBLIC_SCORE == "0.63186"
+assert ORGDET_FNN_ACF_TEST_PRIVATE_SCORE == "0.66560"
+assert ORGDET_FNN_ACF_TEST_SCRIPT_VERSION_ID == 353195733
 assert float(NN_TIE_EPS) == 1e-9
 assert float(MAX_REL_APPEARANCE) == 0.38
 assert float(APPEARANCE_EPS) == 1e-6
@@ -321,31 +331,53 @@ def classify_orgdet_fnn_acf_test_submit_poll(
     association_ref: int = ASSOCIATION_V2_SUBMISSION_REF,
     orgdet_test_ref: int = ORGDET_TEST_SUBMISSION_REF,
     orgdet_gap_test_ref: int = ORGDET_GAP_TEST_SUBMISSION_REF,
+    orgdet_fnn_acf_test_ref: int = ORGDET_FNN_ACF_TEST_SUBMISSION_REF,
 ) -> dict[str, Any]:
-    """Classify a read-only orgdet-fnn-acf-test submit poll. Never submits."""
+    """Classify a read-only orgdet-fnn-acf-test submit poll. Never submits.
+
+    Proven notebook identity decides whether a competition row is this
+    kernel. Association_v2 ``56399003``, orgdet-test ``56466744``, and
+    orgdet-gap-test ``56583783`` are not this slug. Do not retune from
+    ``0.63186`` / ``0.66560`` or from the earlier ``0.612`` / ``0.602`` /
+    ``0.553`` strings.
+    """
     names = [str(name) for name in output_names]
     rows = [dict(row) for row in submissions]
     refs = [row.get("ref") for row in rows]
-    known = {str(association_ref), str(orgdet_test_ref), str(orgdet_gap_test_ref)}
+    known = {
+        str(association_ref),
+        str(orgdet_test_ref),
+        str(orgdet_gap_test_ref),
+        str(orgdet_fnn_acf_test_ref),
+    }
     labels = [classify_submission_notebook(row.get("kernelSlug"), row.get("ref")) for row in rows]
     acf_rows = [
         row
         for row, label in zip(rows, labels)
-        if str(row.get("kernelSlug") or "") == ORGDET_FNN_ACF_TEST_KERNEL_SLUG
+        if label == "orgdet_fnn_acf_test"
+        or str(row.get("kernelSlug") or "") == ORGDET_FNN_ACF_TEST_KERNEL_SLUG
+        or str(row.get("ref")) == str(orgdet_fnn_acf_test_ref)
     ]
     extra = [
         row
         for row, label in zip(rows, labels)
         if str(row.get("ref")) not in known
+        and label != "orgdet_fnn_acf_test"
         and str(row.get("kernelSlug") or "") != ORGDET_FNN_ACF_TEST_KERNEL_SLUG
     ]
+    acf_newest = acf_rows[0] if acf_rows else None
+    acf_score = str((acf_newest or {}).get("publicScore") or "").strip()
+    acf_private = str((acf_newest or {}).get("privateScore") or "").strip()
+    acf_status = str((acf_newest or {}).get("status") or "").strip().lower()
     if kernel_failed:
         decision = "record_kernel_error"
     elif not kernel_complete:
         decision = "wait_kernel"
     elif "submission.csv" not in names:
         decision = "kernel_missing_csv"
-    elif acf_rows or extra:
+    elif acf_rows and acf_status == "complete" and acf_score:
+        decision = "public_score_returned"
+    elif extra or (acf_rows and not (acf_status == "complete" and acf_score)):
         decision = "new_submission_present"
     else:
         decision = "human_action_required_ui_submit"
@@ -357,14 +389,33 @@ def classify_orgdet_fnn_acf_test_submit_poll(
         "output_names": names,
         "n_submissions": len(rows),
         "submission_refs": refs,
+        "orgdet_fnn_acf_test_submission_present": bool(acf_rows),
+        "orgdet_fnn_acf_test_identity_proven": bool(acf_rows),
+        "new_submission_public_score": acf_score or None,
+        "new_submission_private_score": acf_private or None,
+        "new_submission_status": (acf_newest or {}).get("status"),
+        "new_submission_refs": [row.get("ref") for row in acf_rows],
         "is_competition_submission": False,
         "is_leaderboard_score": False,
         "human_action": (
-            "Mahdi must Submit to Competition from the Kaggle UI on "
-            "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1 version 1 "
-            "only after READY_FOR_MANUAL_SUBMISSION_REVIEW and a later "
-            "authorizing message. Do not submit from the CLI."
-            if decision == "human_action_required_ui_submit"
-            else None
+            "Do not resubmit. Recorded publicScore 0.63186 / privateScore "
+            "0.66560 is orgdet-fnn-acf-test 56644919 only and is not a tune "
+            "target. Competition deadline 2026-09-29T23:59:00Z has passed. "
+            "Do not invent extra digits. Do not poll this ref as pending."
+            if decision == "public_score_returned"
+            else (
+                "Mahdi must Submit to Competition from the Kaggle UI on "
+                "mahdimzafari/biohub-learned-unet-orgdet-fnn-acf-test-v1 version 1 "
+                "only after READY_FOR_MANUAL_SUBMISSION_REVIEW and a later "
+                "authorizing message. Do not submit from the CLI."
+                if decision == "human_action_required_ui_submit"
+                else (
+                    "Do not resubmit. Poll until Kaggle returns a terminal "
+                    "status and publicScore. Do not use any returned public "
+                    "score for tuning."
+                    if decision == "new_submission_present"
+                    else None
+                )
+            )
         ),
     }
